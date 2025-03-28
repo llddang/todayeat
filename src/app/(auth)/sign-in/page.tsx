@@ -1,4 +1,6 @@
-import { signIn } from '@/libs/utils/apis/auth.api';
+import AuthSignInWithGoogleButton from '@/components/_auth/auth-sign-in-with-google-button';
+import AuthSignInWithKakaoButton from '@/components/_auth/auth-sign-in-with-kakao-button';
+import { signIn } from '@/libs/utils/apis/auth-server.api';
 
 const SignInPage = () => {
   const handleSubmit = async (formData: FormData) => {
@@ -9,6 +11,7 @@ const SignInPage = () => {
 
     await signIn(email, password);
   };
+
   return (
     <section>
       <form action={handleSubmit}>
@@ -18,6 +21,8 @@ const SignInPage = () => {
         <input name="password" type="password" />
         <button type="submit">로그인</button>
       </form>
+      <AuthSignInWithGoogleButton />
+      <AuthSignInWithKakaoButton />
     </section>
   );
 };
