@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write --ignore-path .gitignore .",
+    "format:check": "prettier --ignore-path .gitignore ."
   },
   "dependencies": {
     "next": "14.2.25",
