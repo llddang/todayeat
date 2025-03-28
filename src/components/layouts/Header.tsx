@@ -1,0 +1,20 @@
+import AuthSignOutButton from '@/components/_auth/auth-sign-out-button';
+import SITE_MAP from '@/constants/site-map.constant';
+import { getAuth } from '@/libs/utils/apis/auth.api';
+import Link from 'next/link';
+
+const Header = async () => {
+  const { isAuthenticated } = await getAuth();
+  return (
+    <header>
+      <nav className="space-x-4">
+        <Link href={SITE_MAP.HOME}>홈</Link>
+        <Link href={SITE_MAP.SIGN_IN}>로그인</Link>
+        <Link href={SITE_MAP.SIGN_UP}>회원가입</Link>
+      </nav>
+      <AuthSignOutButton />
+      {`${isAuthenticated}`}
+    </header>
+  );
+};
+export default Header;
