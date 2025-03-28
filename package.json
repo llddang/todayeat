@@ -11,6 +11,8 @@
     "format:check": "prettier --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@supabase/ssr": "^0.6.1",
+    "@supabase/supabase-js": "^2.49.3",
     "next": "14.2.25",
     "react": "^18",
     "react-dom": "^18"
