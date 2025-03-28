@@ -1,4 +1,4 @@
-import { signOut } from '@/libs/utils/apis/auth.api';
+import { signOut } from '@/libs/utils/apis/auth-server.api';
 
 const AuthSignOutButton = () => {
   return (
