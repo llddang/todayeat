@@ -1,4 +1,4 @@
-import { signUp } from '@/libs/utils/apis/auth.api';
+import { signUp } from '@/libs/utils/apis/auth-server.api';
 
 const SignUpPage = () => {
   const handleSubmit = async (formData: FormData) => {
