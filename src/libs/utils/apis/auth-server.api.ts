@@ -55,11 +55,12 @@ export const signOut = async () => {
  */
 export const getAuth = async (): Promise<UserAuthDTO> => {
   const supabase = getServerClient();
-  const { data, error } = await supabase.auth.getSession();
+  const { data, error } = await supabase.auth.getUser();
+  if (error && error.message === 'Auth session missing!') return { id: '', email: '', isAuthenticated: false };
   if (error) throw error;
 
-  const id = data.session?.user.id || '';
-  const email = data.session?.user.email || '';
+  const id = data.user.id || '';
+  const email = data.user.email || '';
 
   return { id, email, isAuthenticated: !!id };
 };
