@@ -49,6 +49,20 @@ export const signOut = async () => {
 };
 
 /**
+ * 중복되는 이메일이 있는지 확인하는 함수
+ * @param {string} email 검증할 사용자의 이메일
+ * @throws {AuthError} supabase에서 전송하는 에러
+ * @returns {boolean} 존재하면 true, 존재하지 않으면 false 반환
+ */
+export const checkEmailExists = async (email: string): Promise<boolean> => {
+  const supabase = getServerClient();
+  const { data, error } = await supabase.from('users').select('email').eq('email', email).single();
+
+  if (error && error.code !== 'PGRST116') throw error;
+  return !!data;
+};
+
+/**
  * 인가된 유저의 정보를 가져오는 함수
  * @throws {AuthError} supabase에서 전송하는 에러
  * @returns {UserAuthDTO} 슈퍼베이스의 유저, 세션 정보
