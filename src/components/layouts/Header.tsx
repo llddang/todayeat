@@ -11,6 +11,7 @@ const Header = async () => {
         <Link href={SITE_MAP.HOME}>홈</Link>
         <Link href={SITE_MAP.SIGN_IN}>로그인</Link>
         <Link href={SITE_MAP.SIGN_UP}>회원가입</Link>
+        <Link href={SITE_MAP.CHANGE_PASSWORD}>비밀번호 변경</Link>
       </nav>
       <AuthSignOutButton />
       로그인 했니 ? : {`${isAuthenticated}`}
