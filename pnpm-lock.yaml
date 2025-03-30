@@ -11,9 +11,6 @@ importers:
       '@supabase/ssr':
         specifier: ^0.6.1
         version: 0.6.1(@supabase/supabase-js@2.49.3)
-      '@supabase/storage-js':
-        specifier: ^2.7.1
-        version: 2.7.1
       '@supabase/supabase-js':
         specifier: ^2.49.3
         version: 2.49.3
