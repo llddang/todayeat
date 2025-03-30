@@ -5,6 +5,7 @@ import { getAuth } from '@/libs/apis/auth-server.api';
 
 const Header = async () => {
   const { isAuthenticated } = await getAuth();
+
   return (
     <header className="flex justify-between">
       <nav className="space-x-4">

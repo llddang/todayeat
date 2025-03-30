@@ -36,6 +36,7 @@ const AuthSignInForm = () => {
       .catch((e) => alert(e.message))
       .finally(() => setIsPending(false));
   };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
