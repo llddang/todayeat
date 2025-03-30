@@ -1,9 +1,10 @@
+import { Button } from '@/components/ui/button';
 import { signOut } from '@/libs/apis/auth-server.api';
 
 const AuthSignOutButton = () => {
   return (
     <form action={signOut}>
-      <button>로그아웃</button>
+      <Button>로그아웃</Button>
     </form>
   );
 };
