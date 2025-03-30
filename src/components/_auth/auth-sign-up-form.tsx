@@ -1,16 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { UserSignUpDTO } from '@/types/DTO/user.dto';
 import FormSchema from '@/constants/form-schema.constant';
 import { checkEmailExists, signUp } from '@/libs/apis/auth-server.api';
-import { useRouter } from 'next/navigation';
+import { UserSignUpDTO } from '@/types/DTO/user.dto';
 
 type SignUpForm = UserSignUpDTO & { confirmPassword: string };
 const signUpDefaultValue = {
