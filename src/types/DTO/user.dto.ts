@@ -16,6 +16,10 @@ export type UserSnakeCaseDTO = {
   created_at: string;
 };
 
+export type UserSignUpDTO = Pick<UserDTO, 'email' | 'name'> & {
+  password: string;
+};
+
 export type UserSignInDTO = Pick<UserDTO, 'email'> & {
   password: string;
 };
