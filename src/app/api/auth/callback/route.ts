@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server';
 import { getServerClient } from '@/libs/utils/supabase/server.util';
+import SITE_MAP from '@/constants/site-map.constant';
 // The client you created from the Server-Side Auth instructions
 
 export const GET = async (request: Request) => {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get('code');
   // if "next" is in param, use it as the redirect URL
-  const next = searchParams.get('next') ?? '/';
+  const next = searchParams.get('next') ?? SITE_MAP.HOME;
 
   if (code) {
     const supabase = getServerClient();

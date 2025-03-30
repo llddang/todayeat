@@ -1,5 +1,5 @@
 const SITE_MAP = {
-  HOME: '/home',
+  HOME: '/',
   SIGN_IN: '/sign-in',
   SIGN_UP: '/sign-up'
 } as const;

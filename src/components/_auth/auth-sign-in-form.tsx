@@ -11,6 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import FormSchema from '@/constants/form-schema.constant';
 import { signIn } from '@/libs/apis/auth-server.api';
 import { UserSignInDTO } from '@/types/DTO/user.dto';
+import SITE_MAP from '@/constants/site-map.constant';
 
 const signInDefaultValue: UserSignInDTO = {
   email: '',
@@ -31,7 +32,7 @@ const AuthSignInForm = () => {
   const handleSubmit = async ({ email, password }: UserSignInDTO) => {
     setIsPending(true);
     signIn(email, password)
-      .then(() => router.push('/'))
+      .then(() => router.push(SITE_MAP.HOME))
       .catch((e) => alert(e.message))
       .finally(() => setIsPending(false));
   };

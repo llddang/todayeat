@@ -11,6 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import FormSchema from '@/constants/form-schema.constant';
 import { checkEmailExists, signUp } from '@/libs/apis/auth-server.api';
 import { UserSignUpDTO } from '@/types/DTO/user.dto';
+import SITE_MAP from '@/constants/site-map.constant';
 
 type SignUpForm = UserSignUpDTO & { confirmPassword: string };
 const signUpDefaultValue = {
@@ -62,7 +63,7 @@ const AuthSignUpForm = () => {
   const handleSubmit = async ({ email, name, password }: SignUpForm) => {
     setIsPending(true);
     signUp(email, password, name)
-      .then(() => router.push('/'))
+      .then(() => router.push(SITE_MAP.HOME))
       .catch((e) => alert(e.message))
       .finally(() => setIsPending(false));
   };
