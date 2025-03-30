@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -16,12 +17,9 @@ const signInDefaultValue: UserSignInDTO = {
   password: ''
 };
 
-const signInSchema = z.object({
-  email: FormSchema.NON_EMPTY_SCHEMA,
-  password: FormSchema.NON_EMPTY_SCHEMA
-});
-
 const AuthSignInForm = () => {
+  const [isPending, setIsPending] = useState(false);
+
   const router = useRouter();
 
   const form = useForm<UserSignInDTO>({
@@ -31,13 +29,15 @@ const AuthSignInForm = () => {
   });
 
   const handleSubmit = async ({ email, password }: UserSignInDTO) => {
+    setIsPending(true);
     signIn(email, password)
       .then(() => router.push('/'))
-      .catch((e) => alert(e.message));
+      .catch((e) => alert(e.message))
+      .finally(() => setIsPending(false));
   };
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="email"
@@ -64,9 +64,16 @@ const AuthSignInForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">로그인</Button>
+        <Button type="submit" disabled={isPending}>
+          로그인
+        </Button>
       </form>
     </Form>
   );
 };
 export default AuthSignInForm;
+
+const signInSchema = z.object({
+  email: FormSchema.NON_EMPTY_SCHEMA,
+  password: FormSchema.NON_EMPTY_SCHEMA
+});
