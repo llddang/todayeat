@@ -35,7 +35,7 @@ const AuthChangePasswordForm = () => {
     try {
       await signIn(user?.email || '', currentPassword);
       await changePassword(newPassword).catch((e) => alert(e.message));
-    } catch (e) {
+    } catch {
       form.setError('currentPassword', {
         type: 'manual',
         message: '현재 비밀번호 값과 동일하지 않습니다.'
