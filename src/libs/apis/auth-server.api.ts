@@ -2,6 +2,7 @@
 
 import { getServerClient } from '@/libs/utils/supabase/server.util';
 import { SupabaseAuthDTO, UserAuthDTO } from '@/types/DTO/user.dto';
+import { User } from '@supabase/supabase-js';
 
 /**
  * 사용자의 정보를 받아 회원가입하는 함수
@@ -51,7 +52,7 @@ export const signOut = async () => {
 /**
  * 중복되는 이메일이 있는지 확인하는 함수
  * @param {string} email 검증할 사용자의 이메일
- * @throws {AuthError} supabase에서 전송하는 에러
+ * @throws {PostgrestError} supabase에서 전송하는 에러
  * @returns {boolean} 존재하면 true, 존재하지 않으면 false 반환
  */
 export const checkEmailExists = async (email: string): Promise<boolean> => {
@@ -60,6 +61,21 @@ export const checkEmailExists = async (email: string): Promise<boolean> => {
 
   if (error && error.code !== 'PGRST116') throw error;
   return !!data;
+};
+
+/**
+ * 중복되는 이메일이 있는지 확인하는 함수
+ * @param {string} newPassword 새로운 비밀번호
+ * @throws {AuthError} supabase에서 전송하는 에러
+ * @returns {User} 존재하면 true, 존재하지 않으면 false 반환
+ */
+export const changePassword = async (newPassword: string): Promise<User> => {
+  const supabase = getServerClient();
+  const { data, error } = await supabase.auth.updateUser({
+    password: newPassword
+  });
+  if (error) throw error;
+  return data.user;
 };
 
 /**
