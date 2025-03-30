@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import AuthSignOutButton from '@/component/_auth/auth-sign-out-button';
+import AuthSignOutButton from '@/components/_auth/auth-sign-out-button';
 import SITE_MAP from '@/constants/site-map.constant';
 import { getAuth } from '@/libs/apis/auth-server.api';
 

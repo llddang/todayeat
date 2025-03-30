@@ -1,5 +1,5 @@
-import AuthSignInWithGoogleButton from '@/component/_auth/auth-sign-in-with-google-button';
-import AuthSignInWithKakaoButton from '@/component/_auth/auth-sign-in-with-kakao-button';
+import AuthSignInWithGoogleButton from '@/components/_auth/auth-sign-in-with-google-button';
+import AuthSignInWithKakaoButton from '@/components/_auth/auth-sign-in-with-kakao-button';
 import { signIn } from '@/libs/apis/auth-server.api';
 
 const SignInPage = () => {
