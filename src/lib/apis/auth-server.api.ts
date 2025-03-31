@@ -64,7 +64,7 @@ export const checkEmailExists = async (email: string): Promise<boolean> => {
 };
 
 /**
- * 중복되는 이메일이 있는지 확인하는 함수
+ * 기존의 비밀번호를 새로운 비밀번호로 변경하는 함수
  * @param {string} newPassword 새로운 비밀번호
  * @throws {AuthError} supabase에서 전송하는 에러
  * @returns {User} 존재하면 true, 존재하지 않으면 false 반환
