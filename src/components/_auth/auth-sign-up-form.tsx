@@ -14,11 +14,11 @@ import { UserSignUpDTO } from '@/types/DTO/user.dto';
 import SITE_MAP from '@/constants/site-map.constant';
 
 type SignUpForm = UserSignUpDTO & { confirmPassword: string };
-const signUpDefaultValue = {
+const signUpDefaultValue: SignUpForm = {
   email: '',
   password: '',
   confirmPassword: '',
-  name: ''
+  nickname: ''
 };
 
 const AuthSignUpForm = () => {
@@ -60,9 +60,9 @@ const AuthSignUpForm = () => {
       .finally(() => setIsCheckingEmail(false));
   };
 
-  const handleSubmit = async ({ email, name, password }: SignUpForm) => {
+  const handleSubmit = async ({ email, nickname, password }: SignUpForm) => {
     setIsPending(true);
-    signUp(email, password, name)
+    signUp(email, password, nickname)
       .then(() => router.push(SITE_MAP.HOME))
       .catch((e) => alert(e.message))
       .finally(() => setIsPending(false));
@@ -97,7 +97,7 @@ const AuthSignUpForm = () => {
         </FormItem>
         <FormField
           control={form.control}
-          name="name"
+          name="nickname"
           render={({ field }) => (
             <FormItem>
               <FormLabel>이름</FormLabel>
@@ -148,7 +148,7 @@ const signUpSchema = z
     email: FormSchema.EMAIL_SCHEMA,
     password: FormSchema.PASSWORD_SCHEMA,
     confirmPassword: FormSchema.CONFIRM_PASSWORD_SCHEMA,
-    name: FormSchema.NAME_SCHEMA
+    nickname: FormSchema.NAME_SCHEMA
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: '비밀번호가 일치하지 않습니다',

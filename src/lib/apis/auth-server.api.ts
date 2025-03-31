@@ -8,17 +8,17 @@ import { User } from '@supabase/supabase-js';
  * 사용자의 정보를 받아 회원가입하는 함수
  * @param {string} email 사용자의 이메일
  * @param {string} password 사용자의 비밀번호
- * @param {string} name 사용자의 이름
+ * @param {string} nickname 사용자의 이름
  * @throws {AuthError} : supabase에서 전송하는 에러
  * @returns {SupabaseAuthDto} 슈퍼베이스의 유저, 세션 정보
  */
-export const signUp = async (email: string, password: string, name: string): Promise<SupabaseAuthDTO> => {
+export const signUp = async (email: string, password: string, nickname: string): Promise<SupabaseAuthDTO> => {
   const supabase = getServerClient();
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      data: { name }
+      data: { nickname }
     }
   });
   if (error) throw error;
