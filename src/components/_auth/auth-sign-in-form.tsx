@@ -47,7 +47,7 @@ const AuthSignInForm = () => {
             <FormItem>
               <FormLabel>이메일</FormLabel>
               <FormControl>
-                <Input placeholder="example@naver.com" {...field} />
+                <Input placeholder="test@email.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

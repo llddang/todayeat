@@ -76,7 +76,7 @@ const AuthSignUpForm = () => {
           <FormControl>
             <div className="flex gap-2">
               <Input
-                placeholder="example@naver.com"
+                placeholder="test@email.com"
                 value={emailValue}
                 onChange={handleEmailChange}
                 onBlur={() => form.trigger('email')}
