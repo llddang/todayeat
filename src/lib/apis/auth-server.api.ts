@@ -1,6 +1,6 @@
 'use server';
 
-import { getServerClient } from '@/libs/utils/supabase/server.util';
+import { getServerClient } from '@/lib/utils/supabase/server.util';
 import { SupabaseAuthDTO, UserAuthDTO } from '@/types/DTO/user.dto';
 import { User } from '@supabase/supabase-js';
 

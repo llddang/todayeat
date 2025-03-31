@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { signOut } from '@/libs/apis/auth-server.api';
+import { signOut } from '@/lib/apis/auth-server.api';
 
 const AuthSignOutButton = () => {
   return (

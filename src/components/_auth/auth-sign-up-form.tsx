@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import FormSchema from '@/constants/form-schema.constant';
-import { checkEmailExists, signUp } from '@/libs/apis/auth-server.api';
+import { checkEmailExists, signUp } from '@/lib/apis/auth-server.api';
 import { UserSignUpDTO } from '@/types/DTO/user.dto';
 import SITE_MAP from '@/constants/site-map.constant';
 

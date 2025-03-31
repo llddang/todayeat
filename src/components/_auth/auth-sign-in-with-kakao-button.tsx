@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { signInWithKakao } from '@/libs/apis/auth-browser.api';
+import { signInWithKakao } from '@/lib/apis/auth-browser.api';
 
 const AuthSignInWithKakaoButton = () => {
   return <Button onClick={signInWithKakao}>카카오 로그인</Button>;

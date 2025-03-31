@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import AuthChangePasswordForm from '@/components/_auth/auth-change-password-form';
-import { getAuth } from '@/libs/apis/auth-server.api';
+import { getAuth } from '@/lib/apis/auth-server.api';
 import SITE_MAP from '@/constants/site-map.constant';
 
 const ChangePasswordPage = async () => {
