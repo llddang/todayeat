@@ -4,7 +4,7 @@ export type UserDTO = {
   id: string;
   email: string;
   name: string;
-  profileImage: string;
+  profileImage: string | null;
   createdAt: string;
 };
 
@@ -12,7 +12,7 @@ export type UserSnakeCaseDTO = {
   id: string;
   email: string;
   name: string;
-  profile_image: string;
+  profile_image: string | null;
   created_at: string;
 };
 
