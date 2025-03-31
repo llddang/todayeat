@@ -1,9 +1,15 @@
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import ENV from '@/constants/env.constant';
+import ENV_ERROR from '@/constants/env-error.constant';
 
-export const getServerClient = (cookieStore: ReturnType<typeof cookies>) => {
-  return createServerClient(ENV.SUPABASE_URL!, ENV.SUPABASE_ANON_KEY!, {
+export const getServerClient = () => {
+  const cookieStore = cookies();
+
+  if (!ENV.SUPABASE_URL) throw new Error(ENV_ERROR.SUPABASE_URL);
+  if (!ENV.SUPABASE_ANON_KEY) throw new Error(ENV_ERROR.SUPABASE_ANON_KEY);
+
+  return createServerClient(ENV.SUPABASE_URL, ENV.SUPABASE_ANON_KEY, {
     cookies: {
       getAll() {
         return cookieStore.getAll();
