@@ -32,18 +32,17 @@ const AuthChangePasswordForm = () => {
       data: { user }
     } = await browserClient.auth.getUser();
 
-    try {
-      await signIn(user?.email || '', currentPassword);
-      await changePassword(newPassword).catch((e) => alert(e.message));
-    } catch {
-      form.setError('currentPassword', {
-        type: 'manual',
-        message: '현재 비밀번호 값과 동일하지 않습니다.'
-      });
-      return;
-    } finally {
+    const { error } = await signIn(user?.email || '', currentPassword);
+    if (error) {
       setIsPending(false);
+      return form.setError('currentPassword', {
+        type: 'manual',
+        message: error.message
+      });
     }
+    const { error: changePasswordError } = await changePassword(newPassword);
+    setIsPending(false);
+    if (changePasswordError) alert(`${changePasswordError.action} ${changePasswordError.message}`);
   };
 
   return (

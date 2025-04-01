@@ -31,10 +31,10 @@ const AuthSignInForm = () => {
 
   const handleSubmit = async ({ email, password }: UserSignInDTO) => {
     setIsPending(true);
-    signIn(email, password)
-      .then(() => router.push(SITE_MAP.HOME))
-      .catch((e) => alert(e.message))
-      .finally(() => setIsPending(false));
+    const { error } = await signIn(email, password);
+    setIsPending(false);
+    if (error) return alert(`${error.action} ${error.message}`);
+    router.push(SITE_MAP.HOME);
   };
 
   return (

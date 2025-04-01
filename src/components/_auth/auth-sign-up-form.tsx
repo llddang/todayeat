@@ -47,25 +47,24 @@ const AuthSignUpForm = () => {
     if (!email || emailFieldState.invalid) return form.trigger('email');
 
     setIsCheckingEmail(true);
-    checkEmailExists(email)
-      .then((isExist) => {
-        if (isExist)
-          form.setError('email', {
-            type: 'manual',
-            message: '이미 존재하는 이메일입니다.'
-          });
-        setEmailVerified(!isExist);
-      })
-      .catch((e) => alert(e.message))
-      .finally(() => setIsCheckingEmail(false));
+    const { data, error } = await checkEmailExists(email);
+    setIsCheckingEmail(false);
+    if (error) return alert(`${error.action} ${error.message}`);
+    if (data) {
+      form.setError('email', {
+        type: 'manual',
+        message: '이미 존재하는 이메일입니다.'
+      });
+      setEmailVerified(true);
+    }
   };
 
   const handleSubmit = async ({ email, nickname, password }: SignUpForm) => {
     setIsPending(true);
-    signUp(email, password, nickname)
-      .then(() => router.push(SITE_MAP.HOME))
-      .catch((e) => alert(e.message))
-      .finally(() => setIsPending(false));
+    const { error } = await signUp(email, password, nickname);
+    setIsPending(false);
+    if (error) return alert(`${error.action} ${error.message}`);
+    router.push(SITE_MAP.HOME);
   };
 
   return (
