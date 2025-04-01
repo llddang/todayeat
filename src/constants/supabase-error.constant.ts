@@ -160,15 +160,15 @@ export const STORAGE_ERROR_MESSAGE = {
   },
   '500': {
     message: '서버에 문제가 생겼습니다.',
-    action: '관리자에게 문의해주세요.'
+    action: '불편을 드려 죄송합니다. 관리자에게 문의해 주세요'
   },
   '503': {
     message: '서비스를 일시적으로 사용할 수 없습니다.',
-    action: '잠시 후 다시 시도해주세요.'
+    action: '불편을 드려 죄송합니다. 잠시 후 다시 시도해주세요.'
   },
   '504': {
     message: '서버 응답 시간이 초과되었습니다.',
-    action: '잠시 후 다시 시도하거나 관리자에게 문의해주세요.'
+    action: '불편을 드려 죄송합니다. 잠시 후 다시 시도하거나 관리자에게 문의해주세요.'
   }
 } as const;
 export type StorageErrorMessageType = keyof typeof STORAGE_ERROR_MESSAGE;
