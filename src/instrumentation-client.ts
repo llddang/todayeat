@@ -2,10 +2,13 @@
 // The added config here will be used whenever a users loads a page in their browser.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
+import ENV_ERROR from '@/constants/env-error.constant';
+import ENV from '@/constants/env.constant';
 import * as Sentry from '@sentry/nextjs';
 
+if (!ENV.SENTRY_DSN) throw new Error(ENV_ERROR.SENTRY_DSN);
 Sentry.init({
-  dsn: '',
+  dsn: ENV.SENTRY_DSN,
 
   // Add optional integrations for additional features
   integrations: [Sentry.replayIntegration()],

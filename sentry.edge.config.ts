@@ -3,10 +3,13 @@
 // Note that this config is unrelated to the Vercel Edge Runtime and is also required when running locally.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
+import ENV_ERROR from '@/constants/env-error.constant';
+import ENV from '@/constants/env.constant';
 import * as Sentry from '@sentry/nextjs';
 
+if (!ENV.SENTRY_DSN) throw new Error(ENV_ERROR.SENTRY_DSN);
 Sentry.init({
-  dsn: '',
+  dsn: ENV.SENTRY_DSN,
 
   // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
   tracesSampleRate: 1,
