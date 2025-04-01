@@ -1,4 +1,5 @@
 import { Session, User } from '@supabase/supabase-js';
+import { SnakeCaseObject } from '@/types/common.type';
 
 export type UserDTO = {
   id: string;
@@ -8,13 +9,7 @@ export type UserDTO = {
   createdAt: string;
 };
 
-export type UserSnakeCaseDTO = {
-  id: string;
-  email: string;
-  nickname: string;
-  profile_image: string | null;
-  created_at: string;
-};
+export type UserSnakeCaseDTO = SnakeCaseObject<UserDTO>;
 
 export type UserSignUpDTO = Pick<UserDTO, 'email' | 'nickname'> & {
   password: string;
