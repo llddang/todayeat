@@ -50,13 +50,12 @@ const AuthSignUpForm = () => {
     const { data, error } = await checkEmailExists(email);
     setIsCheckingEmail(false);
     if (error) return alert(`${error.action} ${error.message}`);
-    if (data) {
-      form.setError('email', {
+    if (data)
+      return form.setError('email', {
         type: 'manual',
         message: '이미 존재하는 이메일입니다.'
       });
-      setEmailVerified(true);
-    }
+    setEmailVerified(true);
   };
 
   const handleSubmit = async ({ email, nickname, password }: SignUpForm) => {
