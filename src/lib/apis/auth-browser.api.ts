@@ -1,5 +1,4 @@
-import ENV_ERROR from '@/constants/env-error.constant';
-import ENV from '@/constants/env.constant';
+import { ENV, ENV_ERROR } from '@/constants/env.constant';
 import { browserClient } from '@/lib/utils/supabase/client.util';
 
 /** 구글을 통해 로그인하는 함수 */
