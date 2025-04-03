@@ -6,6 +6,8 @@ export type UserDTO = {
   email: string;
   nickname: string;
   profileImage: string | null;
+  gender: string | null;
+  dailyCaloriesGoal: number | null;
   createdAt: string;
 };
 
@@ -18,6 +20,8 @@ export type UserSignUpDTO = Pick<UserDTO, 'email' | 'nickname'> & {
 export type UserSignInDTO = Pick<UserDTO, 'email'> & {
   password: string;
 };
+
+export type UpdateUserDTO = Pick<UserDTO, 'nickname' | 'profileImage' | 'gender' | 'dailyCaloriesGoal'>;
 
 export type SupabaseAuthDTO = {
   user: User | null;
