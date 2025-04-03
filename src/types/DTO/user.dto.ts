@@ -1,12 +1,13 @@
 import { Session, User } from '@supabase/supabase-js';
 import { SnakeCaseObject } from '@/types/common.type';
+import { GenderKey } from '@/types/gender.type';
 
 export type UserDTO = {
   id: string;
   email: string;
   nickname: string;
   profileImage: string | null;
-  gender: string | null;
+  gender: GenderKey | null;
   dailyCaloriesGoal: number | null;
   createdAt: string;
 };
