@@ -59,7 +59,7 @@ export function camelToSnakeObject<T extends object>(obj: T): SnakeCaseObject<T>
   const result: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(obj)) {
     const newKey = camelToSnake(key);
-    if (typeof value === 'object') result[newKey] = snakeToCamelObject(value);
+    if (typeof value === 'object') result[newKey] = camelToSnakeObject(value);
     else result[newKey] = value;
   }
 
