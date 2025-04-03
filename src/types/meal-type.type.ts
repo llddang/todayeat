@@ -21,4 +21,4 @@ export type MealTypeKey = keyof typeof MealTypeMap;
 export type MealTypeValue = (typeof MealTypeMap)[MealTypeKey]['label'];
 export type MealTypeItem = (typeof MealTypeMap)[MealTypeKey];
 
-export const MealTypeArray: MealTypeItem[] = Object.values(MealTypeMap);
+export const mealTypeArray: MealTypeItem[] = Object.values(MealTypeMap);
