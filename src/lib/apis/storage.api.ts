@@ -13,12 +13,16 @@ import { SupabaseBucketValue } from '@/types/supabase-bucket.type';
  *
  * @async
  * @param {SupabaseBucketValue} bucketName - 업로드할 Supabase 버킷 이름 ('meal' 또는 'profile-image')
- * @param {File} file - 업로드할 파일 객체
+ * @param {FormData} formData - 업로드할 파일 객체
  * @returns {Promise<ErrorResponse<string>>} 성공 시 data에 업로드된 파일의 공개 URL을 포함하고, 실패 시 error에 오류 정보를 포함하는 객체
  */
-export const uploadImage = async (bucketName: SupabaseBucketValue, file: File): Promise<ErrorResponse<string>> => {
+export const uploadImage = async (
+  bucketName: SupabaseBucketValue,
+  formData: FormData
+): Promise<ErrorResponse<string>> => {
   const supabase = getServerClient();
 
+  const file = formData.get('file') as File;
   const filename = crypto.randomUUID() + sanitizeFilename(file.name);
 
   const { error: uploadError } = await supabase.storage.from(bucketName).upload(filename, file);
