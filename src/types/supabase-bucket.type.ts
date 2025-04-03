@@ -3,5 +3,5 @@ export const SupabaseBucket = {
   PROFILE_IMAGE: 'profile-image'
 } as const;
 
-export type SupabaseBucketType = keyof typeof SupabaseBucket;
-export type SupabaseBucketValue = (typeof SupabaseBucket)[keyof typeof SupabaseBucket];
+export type SupabaseBucketKey = keyof typeof SupabaseBucket;
+export type SupabaseBucketValue = (typeof SupabaseBucket)[SupabaseBucketKey];
