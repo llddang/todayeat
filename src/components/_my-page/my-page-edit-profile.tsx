@@ -1,121 +1,133 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { ErrorResponse } from '@/types/error.type';
-import { SupabaseBucketValue } from '@/types/supabase-bucket.type';
-import { UserDTO } from '@/types/DTO/user.dto';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { SupabaseBucket } from '@/types/supabase-bucket.type';
+import { ImageFileWithPreview } from '@/types/image.type';
 import { getUser, updateUser } from '@/lib/apis/user.api';
 import { uploadImage } from '@/lib/apis/storage.api';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import FormSchema from '@/constants/form-schema.constant';
 
-/**
- * 마이페이지 프로필 수정 컴포넌트
- * 사용자 프로필 이미지와 닉네임을 수정할 수 있는 폼을 제공합니다.
- */
+const formSchema = z.object({
+  nickname: FormSchema.NICKNAME_SCHEMA,
+  newProfileImage: z.any().optional()
+});
+
+type FormValues = z.infer<typeof formSchema>;
+
 const MyPageEditProfile = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true); // 데이터 로딩 상태
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // 로그인 상태
-  const [userData, setUserData] = useState<UserDTO | null>(null); // 사용자 데이터
-  const [nicknameInput, setNicknameInput] = useState<UserDTO['nickname']>(''); // 닉네임 입력 값
-  const [profileImage, setProfileImage] = useState<UserDTO['profileImage'] | null>(null); // 프로필 이미지 URL (미리보기)
-  const [imageFile, setImageFile] = useState<File | null>(null); // 선택된 이미지 파일
   const [isUploading, setIsUploading] = useState<boolean>(false); // 업로드 진행 상태
+
+  const prevNicknameRef = useRef<string>('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [profileImageData, setProfileImageData] = useState<ImageFileWithPreview>({
+    previewUrl: null,
+    file: null
+  });
+
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      nickname: '',
+      newProfileImage: null
+    }
+  });
 
   useEffect(() => {
     const fetchUserData = async () => {
-      try {
-        const userInfo = await getUser();
+      setIsLoading(true);
 
-        setIsLoggedIn(!!userInfo);
-        setUserData(userInfo);
-        setNicknameInput(userInfo.nickname);
-        setProfileImage(userInfo.profileImage);
-      } catch (error) {
-        console.error(error);
-        alert('사용자 정보를 불러오는데 실패했습니다.');
-      } finally {
-        setIsLoading(false);
-      }
+      // ? 미들웨어에서 인증 처리를 하므로 별도의 에러 처리 없이 진행
+      const userInfo = await getUser();
+
+      form.reset({
+        nickname: userInfo.nickname || '',
+        newProfileImage: null
+      });
+
+      prevNicknameRef.current = userInfo.nickname;
+
+      setProfileImageData({
+        previewUrl: userInfo.profileImage,
+        file: null
+      });
+
+      setIsLoading(false);
     };
 
     fetchUserData();
-  }, []);
+  }, [form]);
 
   useEffect(() => {
     return () => {
-      if (profileImage && profileImage.startsWith('blob:')) {
-        URL.revokeObjectURL(profileImage);
+      if (profileImageData.previewUrl?.startsWith('blob:')) {
+        URL.revokeObjectURL(profileImageData.previewUrl);
       }
     };
-  }, [profileImage]);
+  }, [profileImageData.previewUrl]);
 
-  /**
-   * 닉네임 입력값 변경 핸들러
-   * @param {React.ChangeEvent<HTMLInputElement>} e - 이벤트 객체
-   */
-  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNicknameInput(e.target.value);
-  };
-
-  /**
-   * 프로필 이미지 파일 변경 핸들러
-   *
-   * 파일 입력 필드를 통해 새 이미지가 선택될 때 호출됩니다.
-   * 선택된 이미지 파일을 상태에 저장하고, URL.createObjectURL을 사용하여
-   * 브라우저 메모리에 임시 URL을 생성해 이미지 미리보기를 제공합니다.
-   *
-   * @param {React.ChangeEvent<HTMLInputElement>} e - 파일 입력 이벤트 객체
-   */
   const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setImageFile(file);
-      const imageUrl = URL.createObjectURL(file);
-      setProfileImage(imageUrl);
+      if (profileImageData.previewUrl?.startsWith('blob:')) {
+        URL.revokeObjectURL(profileImageData.previewUrl);
+      }
+
+      const previewUrl = URL.createObjectURL(file);
+      setProfileImageData({ file, previewUrl });
+      form.setValue('newProfileImage', file);
     }
   };
 
-  /**
-   * 프로필 수정 제출 핸들러
-   *
-   * 폼 제출 시 호출되며, 다음 작업을 수행합니다:
-   * 1. 이미지 파일이 선택된 경우 서버(Storage)에 업로드
-   * 2. 닉네임이나 프로필 이미지가 변경된 경우 사용자 정보 업데이트
-   * 3. 상황별 알림 메시지 표시
-   *
-   * @param {React.FormEvent<HTMLFormElement>} e - 폼 제출 이벤트 객체
-   */
-  const handleSubmitChanges = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmitChanges = async (formData: FormValues) => {
     setIsUploading(true);
 
     try {
-      let imageUrl = userData?.profileImage || null;
+      const prevNickname = prevNicknameRef.current;
+      const prevImageUrl = profileImageData.previewUrl;
 
-      if (imageFile) {
-        const formData = new FormData();
-        formData.append('file', imageFile);
+      let newImageUrl = prevImageUrl;
 
-        const bucketName: SupabaseBucketValue = 'profile-images';
-        const result: ErrorResponse<string> = await uploadImage(bucketName, formData);
+      if (profileImageData.file) {
+        const uploadForm = new FormData();
+        uploadForm.append('file', profileImageData.file);
+
+        const result = await uploadImage(SupabaseBucket.PROFILE_IMAGES, uploadForm);
+
         if (result.error) {
-          throw new Error(result.error.message || '이미지 업로드에 실패했습니다.');
+          alert('프로필 사진 업로드에 실패했습니다.');
+          setIsUploading(false);
+          return;
         }
 
-        // 임시 URL인 경우 메모리 해제 (메모리 누수 방지)
-        if (profileImage?.startsWith('blob:')) {
-          URL.revokeObjectURL(profileImage);
-        }
-
-        // 스토리지에 업로드된 이미지 URL로 변수 업데이트
-        imageUrl = result.data;
+        newImageUrl = result.data;
       }
 
-      if (nicknameInput !== userData?.nickname || imageUrl !== userData?.profileImage) {
+      // 데이터 변경 여부 확인
+      const isDataChanged = formData.nickname !== prevNickname || newImageUrl !== prevImageUrl;
+
+      if (isDataChanged) {
         await updateUser({
-          nickname: nicknameInput,
-          profileImage: imageUrl
+          nickname: formData.nickname,
+          profileImage: newImageUrl
         });
+
+        form.reset({
+          nickname: formData.nickname,
+          newProfileImage: null
+        });
+
+        // 선택된 파일 상태 초기화
+        setProfileImageData({ previewUrl: newImageUrl, file: null });
+
         alert('프로필이 성공적으로 업데이트되었습니다.');
       } else {
         alert('변경된 정보가 없습니다.');
@@ -129,35 +141,64 @@ const MyPageEditProfile = () => {
   };
 
   if (isLoading) return <div>로딩중</div>;
-  if (!isLoggedIn) return <div>로그인이 필요합니다.</div>;
 
   return (
     <div>
-      {userData && (
-        <form onSubmit={handleSubmitChanges}>
-          <label>
-            <span className="sr-only">프로필 사진</span>
-            <div className="relative h-20 w-20 cursor-pointer overflow-hidden rounded-full after:relative after:flex after:h-full after:w-full after:items-center after:justify-center after:bg-slate-950 after:bg-opacity-50 after:text-white after:opacity-0 after:content-['수정하기'] hover:after:opacity-100">
-              {<Image src={profileImage || '/test.png'} alt={userData.nickname} fill priority sizes="30vw" />}
-            </div>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                handleProfileImageChange(e);
-              }}
-              className="hidden"
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSubmitChanges)} className="relative w-full">
+          <div className="space-y-[2.3rem]">
+            <FormItem>
+              <FormLabel className="sr-only">프로필 사진</FormLabel>
+              <FormControl>
+                <div className="flex flex-col items-center">
+                  <div
+                    className="relative aspect-square w-[6.25rem] cursor-pointer overflow-hidden rounded-full"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <Image
+                      src={profileImageData.previewUrl || '/test.png'}
+                      alt={form.watch('nickname') || '프로필 이미지'}
+                      fill
+                      priority
+                      sizes="30vw"
+                    />
+                  </div>
+                  <Input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleProfileImageChange}
+                    className="hidden"
+                  />
+                </div>
+              </FormControl>
+            </FormItem>
+
+            <FormField
+              control={form.control}
+              name="nickname"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>닉네임</FormLabel>
+                  <FormControl>
+                    <Input {...field} className="h-auto rounded-[0.5rem] p-[1rem] shadow-none" />
+                  </FormControl>
+                  <FormDescription>닉네임은 특수문자 없이 2~8자 사이로 입력해 주세요.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </label>
-          <label>
-            <span>닉네임</span>
-            <input type="text" value={nicknameInput} onChange={(e) => handleNicknameChange(e)} className="border-2" />
-          </label>
-          <button type="submit" disabled={isUploading} className="bg-yellow-500">
-            {isUploading ? '업로드중' : '수정하기'}
-          </button>
+          </div>
+
+          <Button
+            type="submit"
+            disabled={isUploading}
+            className="fixed bottom-[1.25rem] left-[1.25rem] right-[1.25rem] h-auto bg-[#D9D9D9] px-[0.75rem] py-[1rem] text-black shadow-none"
+          >
+            {isUploading ? '업로드중...' : '수정하기'}
+          </Button>
         </form>
-      )}
+      </Form>
     </div>
   );
 };
