@@ -1,7 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import { type NextRequest, NextResponse } from 'next/server';
-import ENV from '@/constants/env.constant';
-import ENV_ERROR from '@/constants/env-error.constant';
+import { ENV, ENV_ERROR } from '@/constants/env.constant';
 
 export const createClient = (request: NextRequest) => {
   // Create an unmodified response

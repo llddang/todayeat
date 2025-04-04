@@ -1,6 +1,5 @@
 import { createBrowserClient } from '@supabase/ssr';
-import ENV from '@/constants/env.constant';
-import ENV_ERROR from '@/constants/env-error.constant';
+import { ENV, ENV_ERROR } from '@/constants/env.constant';
 
 export const getBrowserClient = () => {
   if (!ENV.SUPABASE_URL) throw new Error(ENV_ERROR.SUPABASE_URL);

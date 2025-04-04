@@ -9,9 +9,7 @@ export type SnakeCaseObject<T> =
     ? Array<SnakeCaseObject<U>>
     : T extends object
       ? { [K in keyof T as CamelToSnake<K & string>]: SnakeCaseObject<T[K]> }
-      : T extends string
-        ? CamelToSnake<T>
-        : T;
+      : T;
 
 // Snake -> Camel
 export type SnakeToCamel<S extends string> = S extends `${infer P}_${infer C}${infer R}`
@@ -22,6 +20,4 @@ export type CamelCaseObject<T> =
     ? Array<CamelCaseObject<U>>
     : T extends object
       ? { [K in keyof T as SnakeToCamel<K & string>]: CamelCaseObject<T[K]> }
-      : T extends string
-        ? SnakeToCamel<T>
-        : T;
+      : T;
