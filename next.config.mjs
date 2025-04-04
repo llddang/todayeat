@@ -4,6 +4,16 @@ const require = createRequire(import.meta.url);
 
 /** @type {import('next').NextConfig} */
 let nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'suyakhdwritcdxpvcotf.supabase.co',
+        port: '',
+        pathname: '/**'
+      }
+    ]
+  },
   webpack: (config) => {
     if (process.env.SENTRY !== 'true') config.resolve.alias['@sentry/nextjs'] = require.resolve('./src/sentryDev.ts');
     return config;
