@@ -26,18 +26,28 @@ const MyPageEditProfile = () => {
       try {
         const userInfo = await getUser();
 
-        setIsLoading(false);
         setIsLoggedIn(!!userInfo);
         setUserData(userInfo);
         setNicknameInput(userInfo.nickname);
         setProfileImage(userInfo.profileImage);
       } catch (error) {
         console.error(error);
+        alert('사용자 정보를 불러오는데 실패했습니다.');
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchUserData();
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (profileImage && profileImage.startsWith('blob:')) {
+        URL.revokeObjectURL(profileImage);
+      }
+    };
+  }, [profileImage]);
 
   /**
    * 닉네임 입력값 변경 핸들러
