@@ -1,6 +1,6 @@
 export const SupabaseBucket = {
   MEAL: 'meal',
-  PROFILE_IMAGE: 'profile-image'
+  PROFILE_IMAGES: 'profile-images'
 } as const;
 
 export type SupabaseBucketKey = keyof typeof SupabaseBucket;
