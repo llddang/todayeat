@@ -4,12 +4,15 @@ import { GenderKey } from '@/types/gender.type';
 
 export type UserDTO = {
   id: string;
+  createdAt: string;
   email: string;
   nickname: string;
   profileImage: string | null;
   gender: GenderKey | null;
   dailyCaloriesGoal: number | null;
-  createdAt: string;
+  height: number | null;
+  weight: number | null;
+  age: number | null;
 };
 
 export type UserSnakeCaseDTO = SnakeCaseObject<UserDTO>;
@@ -22,7 +25,7 @@ export type UserSignInDTO = Pick<UserDTO, 'email'> & {
   password: string;
 };
 
-export type UpdateUserDTO = Pick<UserDTO, 'nickname' | 'profileImage' | 'gender' | 'dailyCaloriesGoal'>;
+export type UpdateUserDTO = Omit<UserDTO, 'id' | 'createdAt' | 'email'>;
 
 export type SupabaseAuthDTO = {
   user: User | null;
