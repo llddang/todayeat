@@ -21,7 +21,7 @@ export const getUser = async (): Promise<UserDTO> => {
  * 유저 정보를 변경하는 함수
  *
  * @param {Partial<UpdateUserDTO>} userInfo 수정할 일부 정보
- * @returns {Promise<UserDTO>} 변경 이수 수정된 값
+ * @returns {Promise<UserDTO>} 변경 이후 수정된 값
  */
 export const updateUser = async (userInfo: Partial<UpdateUserDTO>): Promise<UserDTO> => {
   const supabase = getServerClient();
