@@ -1,4 +1,4 @@
-import ImageContent from '@/types/gemini-api.type';
+import ImageContent from '@/types/gemini.type';
 
 export const convertImageFileToBase64 = async (file: File): Promise<ImageContent> => {
   const mimeType = file.type;
@@ -19,9 +19,9 @@ export const convertImageFileToBase64 = async (file: File): Promise<ImageContent
 
 export const convertImageUrlToBase64 = async (url: string): Promise<ImageContent> => {
   const response = await fetch(url);
-  const buffer = await response.arrayBuffer();
+  const buffer: ArrayBuffer = await response.arrayBuffer();
 
-  const mimeType = response.headers.get('content-type') || 'image/jpg';
+  const mimeType = response.headers.get('content-type') || 'image/jpeg';
 
   return {
     inlineData: {
