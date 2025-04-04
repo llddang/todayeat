@@ -1,34 +1,27 @@
 import ImageContent from '@/types/gemini.type';
 import { create } from 'zustand';
 
-export type FilesState = {
+type FilesStore = {
   files: File[] | null;
   encodedFiles: ImageContent[];
-};
-
-export type FilesActions = {
-  setImageFiles: (files: NonNullable<FilesState['files']>) => void;
+  setImageFiles: (files: NonNullable<FilesStore['files']>) => void;
   setEncodedFiles: (encodedFiles: ImageContent[]) => void;
 };
 
-type FilesStore = FilesState & FilesActions;
-
-const initialEncodedFiles = [
-  {
-    inlineData: {
-      data: '',
-      mimeType: ''
-    }
-  }
-];
-
-const initialFiles = {
+const initialValue = {
   files: null,
-  encodedFiles: initialEncodedFiles
+  encodedFiles: [
+    {
+      inlineData: {
+        data: '',
+        mimeType: ''
+      }
+    }
+  ]
 };
 
 const useFilesStore = create<FilesStore>()((set) => ({
-  ...initialFiles,
+  ...initialValue,
   setImageFiles: (files) => set((state) => ({ ...state, files })),
   setEncodedFiles: (encodedFiles) => set((state) => ({ ...state, encodedFiles }))
 }));
