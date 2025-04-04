@@ -1,9 +1,11 @@
 'use server';
 
+import { User } from '@supabase/supabase-js';
 import { getServerClient } from '@/lib/utils/supabase/server.util';
+import { ENV } from '@/constants/env.constant';
+import SITE_MAP from '@/constants/site-map.constant';
 import { SupabaseAuthDTO, UserAuthDTO } from '@/types/DTO/user.dto';
 import { categoriesError, ErrorResponse } from '@/types/error.type';
-import { User } from '@supabase/supabase-js';
 
 /**
  * 사용자의 정보를 받아 회원가입하는 함수
@@ -81,6 +83,20 @@ export const changePassword = async (newPassword: string): Promise<ErrorResponse
   });
   if (error) return { data: null, error: categoriesError(error) };
   return { data: data.user, error: null };
+};
+
+/**
+ * 이메일을 통해서 비밀번호를 재설정하는 함수
+ * @param {string} email 비밀번호를 받을 이메일
+ * @returns {Promise<ErrorResponse<0>>}
+ */
+export const resetPasswordByEmail = async (email: string): Promise<ErrorResponse<0>> => {
+  const supabase = getServerClient();
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${ENV.PROJECT_URL}/${SITE_MAP.UPDATE_PASSWORD}`
+  });
+  if (error) return { data: null, error: categoriesError(error) };
+  return { data: 0, error };
 };
 
 /**
