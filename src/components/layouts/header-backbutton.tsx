@@ -11,7 +11,7 @@ const BackButton = () => {
   if (!canGoBack) return null;
 
   return (
-    <button onClick={() => router.back()} className="mr-2">
+    <button onClick={() => router.back()} className="absolute left-4 mr-2">
       ← Back
     </button>
   );
