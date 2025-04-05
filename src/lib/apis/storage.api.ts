@@ -12,7 +12,7 @@ import { SupabaseBucketValue } from '@/types/supabase-bucket.type';
  * 파일을 업로드한 후 공개 URL을 반환합니다.
  *
  * @async
- * @param {SupabaseBucketValue} bucketName - 업로드할 Supabase 버킷 이름 ('meal' 또는 'profile-image')
+ * @param {SupabaseBucketValue} bucketName - 업로드할 Supabase 버킷 이름 ('meal' 또는 'profile-images')
  * @param {FormData} formData - 업로드할 파일 객체
  * @returns {Promise<ErrorResponse<string>>} 성공 시 data에 업로드된 파일의 공개 URL을 포함하고, 실패 시 error에 오류 정보를 포함하는 객체
  */

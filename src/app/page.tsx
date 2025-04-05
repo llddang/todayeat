@@ -1,10 +1,12 @@
 import ErrorHandler from '@/components/commons/error-handler';
 
-export default function HomePage() {
+const HomePage = () => {
   return (
     <div>
       <ErrorHandler />
       Home Page
     </div>
   );
-}
+};
+
+export default HomePage;
