@@ -17,6 +17,10 @@ export type UserDTO = {
   purpose: string | null;
 };
 
+export type userPhysicalProfileKey = 'gender' | 'height' | 'weight' | 'age' | 'activityLevel' | 'purpose';
+
+export type UserPhysicalProfileDTO = Pick<UserDTO, userPhysicalProfileKey>;
+
 export type UserSnakeCaseDTO = SnakeCaseObject<UserDTO>;
 
 export type UserSignUpDTO = Pick<UserDTO, 'email' | 'nickname'> & {
