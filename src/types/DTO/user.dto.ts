@@ -13,6 +13,8 @@ export type UserDTO = {
   height: number | null;
   weight: number | null;
   age: number | null;
+  activityLevel: string;
+  purpose: string | null;
 };
 
 export type UserSnakeCaseDTO = SnakeCaseObject<UserDTO>;
