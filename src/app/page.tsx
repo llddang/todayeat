@@ -1,9 +1,12 @@
 import ErrorHandler from '@/components/commons/error-handler';
+import { Suspense } from 'react';
 
 const HomePage = () => {
   return (
     <div>
-      <ErrorHandler />
+      <Suspense>
+        <ErrorHandler />
+      </Suspense>
       Home Page
     </div>
   );
