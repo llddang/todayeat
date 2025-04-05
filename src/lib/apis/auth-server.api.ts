@@ -88,15 +88,15 @@ export const changePassword = async (newPassword: string): Promise<ErrorResponse
 /**
  * 이메일을 통해서 비밀번호를 재설정하는 함수
  * @param {string} email 비밀번호를 받을 이메일
- * @returns {Promise<ErrorResponse<0>>}
+ * @returns {Promise<ErrorResponse<Record<string, never>>>}
  */
-export const resetPasswordByEmail = async (email: string): Promise<ErrorResponse<0>> => {
+export const resetPasswordByEmail = async (email: string): Promise<ErrorResponse<Record<string, never>>> => {
   const supabase = getServerClient();
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: `${ENV.PROJECT_URL}/${SITE_MAP.UPDATE_PASSWORD}`
   });
   if (error) return { data: null, error: categoriesError(error) };
-  return { data: 0, error };
+  return { data: {}, error };
 };
 
 /**
