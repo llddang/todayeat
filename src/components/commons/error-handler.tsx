@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import PUBLIC_ERROR_MESSAGE, { isPublicErrorMessage } from '@/constants/public-error-message.constant';
 
 const ErrorHandler = () => {
   const searchParams = useSearchParams();
@@ -9,11 +10,13 @@ const ErrorHandler = () => {
 
   useEffect(() => {
     const errorCode = searchParams.get('error_code');
-    if (errorCode === 'Unauthenticated') {
-      alert('로그인이 필요한 서비스입니다. 로그인 후 이용해주세요.');
-      const newUrl = window.location.pathname;
-      router.replace(newUrl);
-    }
+    if (!errorCode) return;
+    if (!isPublicErrorMessage(errorCode)) return;
+
+    const errorConfig = PUBLIC_ERROR_MESSAGE[errorCode];
+
+    alert(errorConfig.message);
+    router.replace(window.location.pathname);
   }, [searchParams, router]);
 
   return null;
