@@ -1,14 +1,14 @@
 import { ACTIVITY_LEVEL, NUTRITION_PURPOSE } from '@/constants/nutrition.constant';
 import { DailyNutrition } from '@/types/DTO/meal.dto';
 import { UserPhysicalProfileDTO } from '@/types/DTO/user.dto';
-import { AverageNutrition, NutritionRatio, NutritionResult } from '@/types/nutrition.type';
+import { AverageNutrition, NutritionRatio, NutritionGoal } from '@/types/nutrition.type';
 
 /**
  * 사용자의 신체 정보와 목표를 기반으로 하루 권장 섭취 열량과 탄단지 비율을 계산하는 함수입니다.
  *
  * @function calculateNutrition
  * @param {UserPhysicalProfileDTO} - 사용자 성별, 키, 몸무게, 나이, 활동 수준, 운동 목적 정보
- * @returns {NutritionResult | undefined} NutritionResult 객체 또는 유효하지 않은 입력 시 undefined 반환
+ * @returns {NutritionGoal | undefined} NutritionGoal 객체 또는 유효하지 않은 입력 시 undefined 반환
  *
  * @description
  * - BMR(기초대사량) 공식을 기반으로 활동계수 및 목적계수를 곱하여 총 권장 섭취 열량을 계산합니다.
@@ -30,7 +30,7 @@ export const calculateNutrition = ({
   age,
   activityLevel,
   purpose
-}: UserPhysicalProfileDTO): NutritionResult => {
+}: UserPhysicalProfileDTO): NutritionGoal => {
   if (!gender || !height || !weight || !age || !purpose) return defaultDailyNutrition;
 
   const activityFactor = ACTIVITY_LEVEL[activityLevel];
@@ -118,15 +118,12 @@ const getPercentage = (value: number, base: number | null): number => {
  * 하루 기준 섭취 목표 대비 실제 하루 총 섭취량의 백분율을 계산합니다.
  *
  * @function calculateNutritionRatioFromDailyTotal
- * @param {NutritionResult} daily - 하루 권장 섭취량
+ * @param {NutritionGoal} daily - 하루 권장 섭취량
  * @param {DailyNutrition} total - 실제 섭취량
  * @returns {NutritionRatio} 각 항목별 실제 섭취량의 백분율
  */
 
-export const calculateNutritionRatioFromDailyTotal = (
-  daily: NutritionResult,
-  total: DailyNutrition
-): NutritionRatio => {
+export const calculateNutritionRatioFromDailyTotal = (daily: NutritionGoal, total: DailyNutrition): NutritionRatio => {
   return {
     caloriesRatio: getPercentage(total.totalCalories, daily.dailyCaloriesGoal),
     carbohydrateRatio: getPercentage(total.totalCarbohydrate, daily.dailyCarbohydrateGoal),
@@ -138,15 +135,12 @@ export const calculateNutritionRatioFromDailyTotal = (
  * 하루 기준 섭취 목표 대비 일정 기간 평균 섭취량의 백분율을 계산합니다.
  *
  * @function calculateNutritionRatioFromPeriod
- * @param {NutritionResult} daily - 하루 권장 섭취량
+ * @param {NutritionGoal} daily - 하루 권장 섭취량
  * @param {AverageNutrition} average - 일정 기간 평균 섭취량
  * @returns {NutritionRatio} 각 항목별 평균 섭취량의 백분율
  */
 
-export const calculateNutritionRatioFromPeriod = (
-  daily: NutritionResult,
-  average: AverageNutrition
-): NutritionRatio => {
+export const calculateNutritionRatioFromPeriod = (daily: NutritionGoal, average: AverageNutrition): NutritionRatio => {
   return {
     caloriesRatio: getPercentage(average.averageCalories, daily.dailyCaloriesGoal),
     carbohydrateRatio: getPercentage(average.averageCarbohydrate, daily.dailyCarbohydrateGoal),
