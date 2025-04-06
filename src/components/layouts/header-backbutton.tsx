@@ -1,12 +1,14 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const BackButton = () => {
-  const pathname = usePathname();
   const router = useRouter();
+  const params = useSearchParams();
+  const step = params.get('step') ?? '0';
+  const currentStep = Number(step);
 
-  const canGoBack = pathname.includes('step');
+  const canGoBack = currentStep > 0;
 
   if (!canGoBack) return null;
 
