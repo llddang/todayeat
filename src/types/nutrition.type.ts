@@ -12,8 +12,15 @@ export type NutritionPurposeValue = {
 export type NutritionPurpose = Record<NutritionPurposeKey, NutritionPurposeValue>;
 
 export type NutritionResult = {
-  dailyCaloriesGoal: number;
-  dailyCarbohydrate: number;
-  dailyProtein: number;
-  dailyFat: number;
+  dailyCaloriesGoal: number | null;
+  dailyCarbohydrateGoal: number | null;
+  dailyProteinGoal: number | null;
+  dailyFatGoal: number | null;
+};
+
+export type AverageNutrition = {
+  averageCalories: number;
+  averageCarbohydrate: number;
+  averageFat: number;
+  averageProtein: number;
 };
