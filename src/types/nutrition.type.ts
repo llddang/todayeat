@@ -11,7 +11,7 @@ export type NutritionPurposeValue = {
 
 export type NutritionPurpose = Record<NutritionPurposeKey, NutritionPurposeValue>;
 
-export type NutritionResult = {
+export type NutritionGoal = {
   dailyCaloriesGoal: number | null;
   dailyCarbohydrateGoal: number | null;
   dailyProteinGoal: number | null;
