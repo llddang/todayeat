@@ -23,6 +23,10 @@ const defaultDailyNutrition = {
   dailyFatGoal: null
 };
 
+const CALORIES_PER_GRAM_CARB = 4;
+const CALORIES_PER_GRAM_PROTEIN = 4;
+const CALORIES_PER_GRAM_FAT = 9;
+
 export const calculateNutrition = ({
   gender,
   height,
@@ -36,17 +40,18 @@ export const calculateNutrition = ({
   const activityFactor = ACTIVITY_LEVEL[activityLevel];
   const { FACTOR, RATIO } = NUTRITION_PURPOSE[purpose];
 
-  if (!activityFactor) return defaultDailyNutrition;
+  if (!activityLevel || !Object.keys(ACTIVITY_LEVEL).includes(activityLevel)) return defaultDailyNutrition;
+  if (!Object.keys(NUTRITION_PURPOSE).includes(purpose)) return defaultDailyNutrition;
 
-  const baseCalories =
-    gender === 'MAN' ? 10 * weight + 6.25 * height - 5 * age + 5 : 10 * weight + 6.25 * height - 5 * age - 161;
+  const commonBMR = 10 * weight + 6.25 * height - 5 * age;
+  const baseCalories = gender === 'MAN' ? commonBMR + 5 : commonBMR - 161;
 
   const dailyCaloriesGoal = Math.round(baseCalories * activityFactor * FACTOR);
 
   const [carbRatio, proteinRatio, fatRatio] = RATIO;
-  const dailyCarbohydrateGoal = Math.round((dailyCaloriesGoal * carbRatio) / 4);
-  const dailyProteinGoal = Math.round((dailyCaloriesGoal * proteinRatio) / 4);
-  const dailyFatGoal = Math.round((dailyCaloriesGoal * fatRatio) / 9);
+  const dailyCarbohydrateGoal = Math.round((dailyCaloriesGoal * carbRatio) / CALORIES_PER_GRAM_CARB);
+  const dailyProteinGoal = Math.round((dailyCaloriesGoal * proteinRatio) / CALORIES_PER_GRAM_PROTEIN);
+  const dailyFatGoal = Math.round((dailyCaloriesGoal * fatRatio) / CALORIES_PER_GRAM_FAT);
 
   return {
     dailyCaloriesGoal,
@@ -73,22 +78,20 @@ export const calculateNutritionAverage = (meals: DailyNutrition[]): AverageNutri
       averageProtein: 0
     };
   }
+  const initialTotalValue = {
+    totalCalories: 0,
+    totalCarbohydrate: 0,
+    totalFat: 0,
+    totalProtein: 0
+  };
 
-  const total = meals.reduce(
-    (acc, nutrition) => {
-      acc.totalCalories += nutrition.totalCalories;
-      acc.totalCarbohydrate += nutrition.totalCarbohydrate;
-      acc.totalFat += nutrition.totalFat;
-      acc.totalProtein += nutrition.totalProtein;
-      return acc;
-    },
-    {
-      totalCalories: 0,
-      totalCarbohydrate: 0,
-      totalFat: 0,
-      totalProtein: 0
-    }
-  );
+  const total = meals.reduce((acc, nutrition) => {
+    acc.totalCalories += nutrition.totalCalories;
+    acc.totalCarbohydrate += nutrition.totalCarbohydrate;
+    acc.totalFat += nutrition.totalFat;
+    acc.totalProtein += nutrition.totalProtein;
+    return acc;
+  }, initialTotalValue);
 
   const count = meals.length;
 
