@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
-const BackButton = () => {
+const HeaderBackButton = () => {
   const router = useRouter();
   const params = useSearchParams();
   const step = params.get('step') ?? '0';
@@ -19,4 +19,4 @@ const BackButton = () => {
   );
 };
 
-export default BackButton;
+export default HeaderBackButton;
