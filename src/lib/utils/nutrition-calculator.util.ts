@@ -43,8 +43,8 @@ export const calculateNutrition = ({
   if (!activityLevel || !Object.keys(ACTIVITY_LEVEL).includes(activityLevel)) return defaultDailyNutrition;
   if (!Object.keys(NUTRITION_PURPOSE).includes(purpose)) return defaultDailyNutrition;
 
-  const baseCalories =
-    gender === 'MAN' ? 10 * weight + 6.25 * height - 5 * age + 5 : 10 * weight + 6.25 * height - 5 * age - 161;
+  const commonBMR = 10 * weight + 6.25 * height - 5 * age;
+  const baseCalories = gender === 'MAN' ? commonBMR + 5 : commonBMR - 161;
 
   const dailyCaloriesGoal = Math.round(baseCalories * activityFactor * FACTOR);
 
