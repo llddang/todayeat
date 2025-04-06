@@ -1,7 +1,7 @@
 import { ACTIVITY_LEVEL, NUTRITION_PURPOSE } from '@/constants/nutrition.constant';
 import { DailyNutrition } from '@/types/DTO/meal.dto';
 import { UserPhysicalProfileDTO } from '@/types/DTO/user.dto';
-import { AverageNutrition, NutritionResult } from '@/types/nutrition.type';
+import { AverageNutrition, NutritionRatio, NutritionResult } from '@/types/nutrition.type';
 
 /**
  * 사용자의 신체 정보와 목표를 기반으로 하루 권장 섭취 열량과 탄단지 비율을 계산하는 함수입니다.
@@ -56,6 +56,14 @@ export const calculateNutrition = ({
   };
 };
 
+/**
+ * 여러 날의 식사 데이터를 기반으로 평균 섭취 열량과 영양소 비율을 계산합니다.
+ *
+ * @function calculateNutritionAverage
+ * @param {DailyNutrition[]} meals - 하루 식단별 영양소 총합 배열
+ * @returns {AverageNutrition} 평균 섭취 열량 및 각 영양소 평균값
+ */
+
 export const calculateNutritionAverage = (meals: DailyNutrition[]): AverageNutrition => {
   if (meals.length === 0) {
     return {
@@ -89,5 +97,60 @@ export const calculateNutritionAverage = (meals: DailyNutrition[]): AverageNutri
     averageCarbohydrate: Math.round(total.totalCarbohydrate / count),
     averageFat: Math.round(total.totalFat / count),
     averageProtein: Math.round(total.totalProtein / count)
+  };
+};
+
+/**
+ * 기준값에 대한 백분율을 계산합니다.
+ *
+ * @function getPercentage
+ * @param {number} value - 실제 값
+ * @param {number | null} base - 기준값 (null 또는 0일 경우 0% 반환)
+ * @returns {number} 기준 대비 백분율 (정수, 소수점 없음)
+ */
+
+const getPercentage = (value: number, base: number | null): number => {
+  if (!base || base === 0) return 0;
+  return Math.round((value / base) * 100);
+};
+
+/**
+ * 하루 기준 섭취 목표 대비 실제 하루 총 섭취량의 백분율을 계산합니다.
+ *
+ * @function calculateNutritionRatioFromDailyTotal
+ * @param {NutritionResult} daily - 하루 권장 섭취량
+ * @param {DailyNutrition} total - 실제 섭취량
+ * @returns {NutritionRatio} 각 항목별 실제 섭취량의 백분율
+ */
+
+export const calculateNutritionRatioFromDailyTotal = (
+  daily: NutritionResult,
+  total: DailyNutrition
+): NutritionRatio => {
+  return {
+    caloriesRatio: getPercentage(total.totalCalories, daily.dailyCaloriesGoal),
+    carbohydrateRatio: getPercentage(total.totalCarbohydrate, daily.dailyCarbohydrateGoal),
+    proteinRatio: getPercentage(total.totalProtein, daily.dailyProteinGoal),
+    fatRatio: getPercentage(total.totalFat, daily.dailyFatGoal)
+  };
+};
+/**
+ * 하루 기준 섭취 목표 대비 일정 기간 평균 섭취량의 백분율을 계산합니다.
+ *
+ * @function calculateNutritionRatioFromPeriod
+ * @param {NutritionResult} daily - 하루 권장 섭취량
+ * @param {AverageNutrition} average - 일정 기간 평균 섭취량
+ * @returns {NutritionRatio} 각 항목별 평균 섭취량의 백분율
+ */
+
+export const calculateNutritionRatioFromPeriod = (
+  daily: NutritionResult,
+  average: AverageNutrition
+): NutritionRatio => {
+  return {
+    caloriesRatio: getPercentage(average.averageCalories, daily.dailyCaloriesGoal),
+    carbohydrateRatio: getPercentage(average.averageCarbohydrate, daily.dailyCarbohydrateGoal),
+    proteinRatio: getPercentage(average.averageProtein, daily.dailyProteinGoal),
+    fatRatio: getPercentage(average.averageFat, daily.dailyFatGoal)
   };
 };
