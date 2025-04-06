@@ -24,3 +24,10 @@ export type AverageNutrition = {
   averageFat: number;
   averageProtein: number;
 };
+
+export type NutritionRatio = {
+  caloriesRatio: number;
+  carbohydrateRatio: number;
+  proteinRatio: number;
+  fatRatio: number;
+};
