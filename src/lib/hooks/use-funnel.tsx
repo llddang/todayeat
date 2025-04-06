@@ -5,13 +5,24 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 const QUERY_PARAM = 'step';
 
-const useFunnel = <T extends string>(initialStep: T) => {
+const useFunnel = <T extends string>(validSteps: readonly T[], initialStep: T) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
   const urlStep = searchParams.get(QUERY_PARAM) as T;
-  const [step, setInternalStep] = useState<T>(urlStep || initialStep);
+
+  const isValidateStep = (step: string | null): step is T => {
+    if (!step) return false;
+    return validSteps.includes(step as T);
+  };
+
+  const getInitialStep = () => {
+    if (isValidateStep(urlStep)) return urlStep;
+    return initialStep;
+  };
+
+  const [step, setInternalStep] = useState<T>(getInitialStep);
 
   useEffect(() => {
     if (step === urlStep) return;
