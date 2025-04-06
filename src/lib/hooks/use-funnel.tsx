@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useState, ReactElement } from 'react';
+import { ReactNode, useState, ReactElement, useEffect } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 const QUERY_PARAM = 'step';
@@ -12,6 +12,14 @@ const useFunnel = <T extends string>(initialStep: T) => {
 
   const urlStep = searchParams.get(QUERY_PARAM) as T;
   const [step, setInternalStep] = useState<T>(urlStep || initialStep);
+
+  useEffect(() => {
+    if (step === urlStep) return;
+
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.set(QUERY_PARAM, step);
+    router.replace(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
+  }, [urlStep, step, pathname, router, searchParams]);
 
   const setStep = (newStep: T) => {
     if (step === newStep) return;
