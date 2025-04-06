@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import BackButton from './header-backbutton';
+import BackButton from './header-back-button';
 import SITE_MAP from '@/constants/site-map.constant';
 import { Suspense } from 'react';
 
