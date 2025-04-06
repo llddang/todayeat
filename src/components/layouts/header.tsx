@@ -7,7 +7,7 @@ const Header = async () => {
   const { isAuthenticated } = await getAuth();
 
   return (
-    <header className="flex justify-between">
+    <header className="flex justify-between bg-yellow-200">
       <nav className="space-x-4">
         <Link href={SITE_MAP.HOME}>홈</Link>
         <Link href={SITE_MAP.SIGN_IN}>로그인</Link>
