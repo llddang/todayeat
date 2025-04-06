@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -5,17 +6,20 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 const QUERY_PARAM = 'step';
 
-type FunnelComponentsProps<T extends string> = {
-  [K in T]: () => JSX.Element;
+type FunnelComponentProps<K extends Record<string, any>, T extends Extract<keyof K, string>> = {
+  [Step in T]: (props: {
+    setStep: <NextStep extends T>(nextStep: NextStep, requireData: K[NextStep]) => void;
+  }) => JSX.Element;
 };
-type UseFunnelReturnType<T extends string> = readonly [
-  {
-    (props: FunnelComponentsProps<T>): JSX.Element;
-  },
-  (step: T) => void
+type UseFunnelReturnType<K extends Record<string, any>, T extends Extract<keyof K, string>> = readonly [
+  (props: FunnelComponentProps<K, T>) => JSX.Element,
+  <NextStep extends T>(nextStep: NextStep, requireData: K[NextStep]) => void
 ];
 
-const useFunnel = <T extends string>(validSteps: readonly T[], initialStep: T): UseFunnelReturnType<T> => {
+const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, string>>(
+  initialStep: T,
+  validateStep: Record<T, () => boolean>
+): UseFunnelReturnType<K, T> => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -24,11 +28,11 @@ const useFunnel = <T extends string>(validSteps: readonly T[], initialStep: T): 
 
   const isValidateStep = (step: string | null): step is T => {
     if (!step) return false;
-    return validSteps.includes(step as T);
+    return step in validateStep;
   };
 
   const getInitialStep = () => {
-    if (isValidateStep(urlStep)) return urlStep;
+    if (isValidateStep(urlStep) && validateStep[urlStep]()) return urlStep;
     return initialStep;
   };
 
@@ -42,8 +46,10 @@ const useFunnel = <T extends string>(validSteps: readonly T[], initialStep: T): 
     router.replace(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
   }, [urlStep, step, pathname, router, searchParams]);
 
-  const setStep = (newStep: T) => {
+  const setStep = (newStep: T, requireData: K[T]) => {
     if (step === newStep) return;
+    if (!validateStep[newStep]) return;
+
     setInternalStep(newStep);
 
     const newSearchParams = new URLSearchParams(searchParams.toString());
@@ -51,8 +57,8 @@ const useFunnel = <T extends string>(validSteps: readonly T[], initialStep: T): 
     router.push(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
   };
 
-  const Funnel = (props: FunnelComponentsProps<T>) => {
-    return <>{props[step]()}</>;
+  const Funnel = (props: FunnelComponentProps<K, T>) => {
+    return <>{props[step]({ setStep })}</>;
   };
 
   return [Funnel, setStep] as const;
