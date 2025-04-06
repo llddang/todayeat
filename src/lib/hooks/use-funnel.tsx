@@ -1,21 +1,16 @@
 'use client';
 
-import { ReactNode, useState, ReactElement, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 const QUERY_PARAM = 'step';
 
-type StepComponentProps<T> = {
-  name: T;
-  children: ReactNode;
+type FunnelComponentsProps<T extends string> = {
+  [K in T]: () => JSX.Element;
 };
-type FunnelComponentsProps<T> = {
-  children: ReactElement<StepComponentProps<T>>[];
-};
-type UseFunnelReturnType<T> = readonly [
+type UseFunnelReturnType<T extends string> = readonly [
   {
-    ({ children }: FunnelComponentsProps<T>): JSX.Element;
-    step: ({ children }: StepComponentProps<T>) => JSX.Element;
+    (props: FunnelComponentsProps<T>): JSX.Element;
   },
   (step: T) => void
 ];
@@ -56,15 +51,9 @@ const useFunnel = <T extends string>(validSteps: readonly T[], initialStep: T): 
     router.push(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
   };
 
-  const Step = ({ children }: StepComponentProps<T>) => {
-    return <>{children}</>;
+  const Funnel = (props: FunnelComponentsProps<T>) => {
+    return <>{props[step]()}</>;
   };
-
-  const Funnel = ({ children }: FunnelComponentsProps<T>) => {
-    const currentStep = children.find((child) => child.props.name === step);
-    return <>{currentStep}</>;
-  };
-  Funnel.step = Step;
 
   return [Funnel, setStep] as const;
 };
