@@ -6,7 +6,6 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SupabaseBucket } from '@/types/supabase-bucket.type';
-import { ImageFileWithPreview } from '@/types/image.type';
 import { updateUser } from '@/lib/apis/user.api';
 import { uploadImage } from '@/lib/apis/storage.api';
 import { Input } from '@/components/ui/input';
@@ -18,12 +17,12 @@ import { cleanupBlobUrl } from '@/lib/utils/cleanup-blob-url.util';
 
 /**
  * 사용자 프로필 수정 폼을 위한 유효성 검증 스키마
- * @property {z.ZodString} nickname - 사용자 닉네임 유효성 검증 스키마
- * @property {z.ZodAny} newProfileImage - 새 프로필 이미지 (선택 사항)
+ * - nickname: 닉네임 유효성 검증 스키마 (2~8자 한글/영문/숫자)
+ * - newProfileImage: 새 프로필 이미지 파일 (선택 사항)
  */
 const formSchema = z.object({
   nickname: FormSchema.NICKNAME_SCHEMA,
-  newProfileImage: z.any().optional()
+  newProfileImage: FormSchema.IMAGE_FILE_SCHEMA.nullable()
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -39,28 +38,23 @@ type FormValues = z.infer<typeof formSchema>;
 const MyPageEditProfile = ({ userInfo }: { userInfo: UserDTO }): JSX.Element => {
   /**
    * 프로필 상태 관리
-   * - isUploading: 업로드 진행 중 상태
-   * - profileImage: 프로필 이미지 정보 (미리보기 URL과 파일)
+   * - isUploading: 업로드 진행 중 상태를 나타냄
+   * - profilePreviewUrl: 프로필 이미지 미리보기 URL
    */
   const [profileState, setProfileState] = useState({
     isUploading: false,
-    profileImage: {
-      previewUrl: userInfo?.profileImage || null,
-      file: null
-    } as ImageFileWithPreview
+    profilePreviewUrl: userInfo?.profileImage || null
   });
 
-  /**
-   * 이전 닉네임 값을 참조하기 위한 ref
-   * 변경 여부를 확인하는 데 사용됨
-   */
-  const prevNicknameRef = useRef<string>(userInfo.nickname);
   /**
    * 파일 입력 요소에 접근하기 위한 ref
    * 프로필 이미지 클릭 시 파일 선택 다이얼로그를 표시하는 데 사용
    */
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  /**
+   * 프로필 수정 폼 초기화 및 유효성 검증 설정
+   */
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -75,13 +69,16 @@ const MyPageEditProfile = ({ userInfo }: { userInfo: UserDTO }): JSX.Element => 
    */
   useEffect(() => {
     return () => {
-      cleanupBlobUrl(profileState.profileImage.previewUrl);
+      cleanupBlobUrl(profileState.profilePreviewUrl);
     };
-  }, [profileState.profileImage.previewUrl]);
+  }, []);
 
   /**
    * 프로필 이미지 변경 처리 핸들러
-   * 사용자가 새 이미지를 선택하면 미리보기 URL을 생성하고 상태 업데이트
+   * 사용자가 새 이미지를 선택하면:
+   * 1. 기존 Blob URL 정리
+   * 2. 새 이미지의 미리보기 URL 생성
+   * 3. 프로필 상태 및 폼 값 업데이트
    *
    * @param {React.ChangeEvent<HTMLInputElement>} e - 파일 입력 변경 이벤트
    */
@@ -90,85 +87,112 @@ const MyPageEditProfile = ({ userInfo }: { userInfo: UserDTO }): JSX.Element => 
 
     if (!file) return;
 
-    cleanupBlobUrl(profileState.profileImage.previewUrl);
+    cleanupBlobUrl(profileState.profilePreviewUrl);
 
     const previewUrl = URL.createObjectURL(file);
     setProfileState((prev) => ({
       ...prev,
-      profileImage: { file, previewUrl }
+      profilePreviewUrl: previewUrl
     }));
+
     form.setValue('newProfileImage', file);
   };
 
   /**
    * 프로필 변경 사항 제출 처리 핸들러
-   * 사용자 프로필 변경 사항을 저장하고 상태를 업데이트
+   * 폼 제출 시 사용자 프로필 변경 사항을 처리하는 메인 함수
    *
-   * @param {FormValues} formData - 폼 제출 데이터
+   * 1. 이미지 업로드 처리
+   * 2. 변경 사항 확인
+   * 3. 사용자 정보 업데이트
+   * 4. 성공 처리
+   *
+   * @param {FormValues} formData - 폼 제출 데이터 (닉네임, 새 프로필 이미지)
    */
-  const handleSubmitChanges = async (formData: FormValues) => {
-    setProfileState((prev) => ({ ...prev, isUploading: true }));
+  const handleSubmitProfileChanges = async (formData: FormValues): Promise<void> => {
+    setIsUploading(true);
 
-    const prevNickname = prevNicknameRef.current;
-    const prevImageUrl = profileState.profileImage.previewUrl;
-    let newImageUrl = prevImageUrl;
+    const prevImageUrl = profileState.profilePreviewUrl;
 
-    // 새 프로필 이미지가 있는 경우 업로드 처리
-    if (profileState.profileImage.file) {
-      const uploadForm = new FormData();
-      uploadForm.append('file', profileState.profileImage.file);
+    const newImageUrl = await handleProfileImageUpload(prevImageUrl);
+    if (newImageUrl === null) return;
 
-      const result = await uploadImage(SupabaseBucket.PROFILE_IMAGES, uploadForm);
-
-      if (result.error) {
-        alert(`${result.error.message} ${result.error.action}`);
-
-        setProfileState((prev) => ({ ...prev, isUploading: false }));
-        return;
-      }
-      newImageUrl = result.data;
-    }
-
-    // 데이터 변경 여부 확인
-    const isDataChanged = formData.nickname !== prevNickname || newImageUrl !== prevImageUrl;
-
-    if (!isDataChanged) {
+    // 변경 사항이 없는 경우 (닉네임과 이미지 모두 동일)
+    if (formData.nickname === userInfo.nickname && newImageUrl === prevImageUrl) {
       alert('변경된 정보가 없습니다.');
-      setProfileState((prev) => ({ ...prev, isUploading: false }));
+      setIsUploading(false);
       return;
     }
 
-    try {
-      // 사용자 정보 업데이트 API 호출
-      await updateUser({
-        nickname: formData.nickname,
-        profileImage: newImageUrl
-      });
+    await updateUser({
+      nickname: formData.nickname,
+      profileImage: newImageUrl
+    });
 
-      form.reset({
-        nickname: formData.nickname,
-        newProfileImage: null
-      });
+    handleProfileUpdateSuccess(formData.nickname, newImageUrl);
+    setIsUploading(false);
+  };
 
-      alert('프로필 수정이 완료되었습니다.');
+  /**
+   * 업로드 상태 설정 헬퍼 함수
+   * 프로필 이미지 업로드 중임을 표시하는 상태를 관리
+   *
+   * @param {boolean} isUploading - 업로드 진행 상태
+   */
+  const setIsUploading = (isUploading: boolean): void => {
+    setProfileState((prev) => ({ ...prev, isUploading }));
+  };
 
-      // 선택된 파일 상태 초기화
-      setProfileState((prev) => ({
-        ...prev,
-        isUploading: false,
-        profileImage: { previewUrl: newImageUrl, file: null }
-      }));
-    } catch (error) {
-      console.error('프로필 업데이트 에러: ', error);
-      alert('프로필 업데이트 중 오류가 발생했습니다.');
-      setProfileState((prev) => ({ ...prev, isUploading: false }));
+  /**
+   * 프로필 이미지 스토리지 업로드 처리 함수
+   * 새 이미지가 있는 경우에만 업로드를 수행하고 이미지 URL을 반환
+   *
+   * 1. 새 이미지 파일 확인
+   * 2. 이미지 업로드 API 호출 및 FormData 생성
+   * 3. 업로드 결과 처리 및 URL 반환
+   *
+   * @param {string | null} prevImageUrl - 이전 이미지 URL
+   * @returns {Promise<string | null>} 새 이미지 URL 또는 에러 시 null
+   */
+  const handleProfileImageUpload = async (prevImageUrl: string | null): Promise<string | null> => {
+    const newProfileImageFile = form.getValues('newProfileImage');
+    if (!newProfileImageFile) return prevImageUrl;
+
+    const uploadForm = new FormData();
+    uploadForm.append('file', newProfileImageFile);
+
+    const result = await uploadImage(SupabaseBucket.PROFILE_IMAGES, uploadForm);
+
+    if (result.error) {
+      alert(`${result.error.message} ${result.error.action}`);
+      setIsUploading(false);
+      return null; // 업로드 실패
     }
+
+    return result.data; // 새 이미지 URL 반환
+  };
+
+  /**
+   * 프로필 업데이트 성공 처리 함수
+   * 성공 메시지 표시 및 폼/상태 초기화
+   *
+   * @param {string} nickname - 업데이트된 닉네임
+   * @param {string | null} newImageUrl - 업데이트된 이미지 URL
+   */
+  const handleProfileUpdateSuccess = (nickname: string, newImageUrl: string | null) => {
+    form.reset({ nickname, newProfileImage: null });
+    alert('프로필 수정이 완료되었습니다.');
+
+    setProfileState((prev) => ({
+      ...prev,
+      profilePreviewUrl: newImageUrl
+    }));
   };
 
   return (
     <div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmitChanges)} className="relative w-full">
+        <form onSubmit={form.handleSubmit(handleSubmitProfileChanges)} className="relative w-full">
           <div className="space-y-[2.3rem]">
             <FormItem>
               <FormLabel className="sr-only">프로필 사진</FormLabel>
@@ -179,7 +203,7 @@ const MyPageEditProfile = ({ userInfo }: { userInfo: UserDTO }): JSX.Element => 
                     onClick={() => fileInputRef.current?.click()}
                   >
                     <Image
-                      src={profileState.profileImage.previewUrl || '/test.png'}
+                      src={profileState.profilePreviewUrl || '/test.png'}
                       alt={form.watch('nickname') || '프로필 이미지'}
                       fill
                       priority
@@ -216,7 +240,7 @@ const MyPageEditProfile = ({ userInfo }: { userInfo: UserDTO }): JSX.Element => 
           <Button
             type="submit"
             disabled={profileState.isUploading}
-            className="fixed bottom-[1.25rem] left-[1.25rem] right-[1.25rem] h-auto bg-[#D9D9D9] px-[0.75rem] py-[1rem] text-black shadow-none"
+            className="fixed bottom-[1.25rem] left-[1.25rem] right-[1.25rem] h-auto bg-[#D9D9D9] px-[0.75rem] py-[1rem] text-black shadow-none hover:bg-[#D9D9D9]"
           >
             {profileState.isUploading ? '변경중' : '수정하기'}
           </Button>
