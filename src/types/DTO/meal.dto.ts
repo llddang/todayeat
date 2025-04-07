@@ -27,7 +27,6 @@ export type MealDTO = {
   menuCount: number;
   mealDetails: MealDetailDTO[];
 };
-export type DailyNutrition = Pick<MealDTO, 'totalCalories' | 'totalCarbohydrate' | 'totalFat' | 'totalProtein'>;
 export type MealOverviewDTO = Omit<MealDTO, 'mealDetails'>;
 export type CreateMealDTO = Pick<MealDTO, 'foodImages' | 'ateAt' | 'mealType' | 'memo'>;
 export type CreateMealDetailDTO = Omit<MealDetailDTO, 'id' | 'mealId'>;
