@@ -1,3 +1,4 @@
+import { MealDetailDTO, MealDTO } from '@/types/DTO/meal.dto';
 import { UserPhysicalProfileDTO } from '@/types/DTO/user.dto';
 import {
   ACTIVITY_LEVEL_OPTIONS,
@@ -6,7 +7,8 @@ import {
   NUTRITION_PURPOSE_OPTIONS,
   NutritionGoal,
   NutritionPurposeValue,
-  NutritionRatio
+  NutritionRatio,
+  TotalMealNutrition
 } from '@/types/nutrition.type';
 
 /**
@@ -35,7 +37,7 @@ const CALORIES_PER_GRAM = {
   FAT: 9
 };
 
-const initialTotalValue = {
+export const initialTotalValue = {
   totalCalories: 0,
   totalCarbohydrate: 0,
   totalFat: 0,
@@ -79,12 +81,32 @@ export const calculateNutrition = ({
 /**
  * 주어진 식단 배열의 전체 영양 정보를 합산하여 반환합니다.
  *
- * @param {MealNutrition[]} data - 합산할 식단 영양 정보 배열입니다.
- * @param {MealNutrition} initialValue - 합산의 시작점이 되는 초기 영양 정보 객체입니다.
- * @returns {MealNutrition} - 전체 합산된 영양 정보를 포함한 객체를 반환합니다.
+ * @param {MealNutrition[]} data - 합산할 한끼 식단 영양 정보 배열입니다.
+ * @param {TotalMealNutrition} initialValue - 합산의 시작점이 되는 초기 영양 정보 객체입니다.
+ * @returns {TotalMealNutrition} - 전체 합산된 영양 정보를 포함한 객체를 반환합니다.
  */
-export const calculateTotalNutrition = (data: MealNutrition[], initialValue: MealNutrition): MealNutrition => {
-  return data.reduce(
+export const calculateTotalNutrition = (
+  data: MealDTO[],
+  initialValue: TotalMealNutrition = initialTotalValue
+): TotalMealNutrition => {
+  console.log(data);
+  const mealDetailsArr = data.map((meal) => {
+    return meal.mealDetails;
+  });
+  console.log(mealDetailsArr);
+  const a = mealDetailsArr.map((meal) =>
+    meal.reduce(
+      (acc, nutrition) => {
+        acc.totalCalories += nutrition.calories;
+        acc.totalCarbohydrate += nutrition.carbohydrate;
+        acc.totalFat += nutrition.fat;
+        acc.totalProtein += nutrition.protein;
+        return acc;
+      },
+      { ...initialValue }
+    )
+  );
+  return a.reduce(
     (acc, nutrition) => {
       acc.totalCalories += nutrition.totalCalories;
       acc.totalCarbohydrate += nutrition.totalCarbohydrate;
@@ -114,6 +136,7 @@ export const calculateNutritionAverage = (meals: MealNutrition[]): AverageNutrit
     };
   }
 
+  // count를 length로 가져가면 안되는구나? 날짜가 기준값이여야하네!!!
   const total = calculateTotalNutrition(meals, initialTotalValue);
   const count = meals.length;
 
