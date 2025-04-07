@@ -5,10 +5,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 const HeaderBackButton = () => {
   const router = useRouter();
   const params = useSearchParams();
-  const step = params.get('step') ?? '0';
-  const currentStep = Number(step);
 
-  const canGoBack = currentStep > 0;
+  const step = params.get('step') ?? '';
+  const canGoBack = step.includes('step');
 
   if (!canGoBack) return null;
 
