@@ -1,14 +1,13 @@
-import { ACTIVITY_LEVEL, NUTRITION_PURPOSE } from '@/constants/nutrition.constant';
-import { DailyNutrition } from '@/types/DTO/meal.dto';
+import { ACTIVITY_LEVEL, NUTRITION_PURPOSE, NutritionPurposeValue } from '@/constants/nutrition.constant';
 import { UserPhysicalProfileDTO } from '@/types/DTO/user.dto';
-import { AverageNutrition, NutritionRatio, NutritionGoal } from '@/types/nutrition.type';
+import { AverageNutrition, MealNutrition, NutritionGoal, NutritionRatio } from '@/types/nutrition.type';
 
 /**
  * 사용자의 신체 정보와 목표를 기반으로 하루 권장 섭취 열량과 탄단지 비율을 계산하는 함수입니다.
  *
  * @function calculateNutrition
  * @param {UserPhysicalProfileDTO} - 사용자 성별, 키, 몸무게, 나이, 활동 수준, 운동 목적 정보
- * @returns {NutritionGoal | undefined} NutritionGoal 객체 또는 유효하지 않은 입력 시 undefined 반환
+ * @returns {NutritionGoal} NutritionGoal 객체
  *
  * @description
  * - BMR(기초대사량) 공식을 기반으로 활동계수 및 목적계수를 곱하여 총 권장 섭취 열량을 계산합니다.
@@ -17,15 +16,22 @@ import { AverageNutrition, NutritionRatio, NutritionGoal } from '@/types/nutriti
  */
 
 const defaultDailyNutrition = {
-  dailyCaloriesGoal: null,
-  dailyCarbohydrateGoal: null,
-  dailyProteinGoal: null,
-  dailyFatGoal: null
+  dailyCaloriesGoal: 0,
+  dailyCarbohydrateGoal: 0,
+  dailyProteinGoal: 0,
+  dailyFatGoal: 0
 };
 
 const CALORIES_PER_GRAM_CARB = 4;
 const CALORIES_PER_GRAM_PROTEIN = 4;
 const CALORIES_PER_GRAM_FAT = 9;
+
+const initialTotalValue = {
+  totalCalories: 0,
+  totalCarbohydrate: 0,
+  totalFat: 0,
+  totalProtein: 0
+};
 
 export const calculateNutrition = ({
   gender,
@@ -38,7 +44,7 @@ export const calculateNutrition = ({
   if (!gender || !height || !weight || !age || !purpose) return defaultDailyNutrition;
 
   const activityFactor = ACTIVITY_LEVEL[activityLevel];
-  const { FACTOR, RATIO } = NUTRITION_PURPOSE[purpose];
+  const { FACTOR, RATIO }: NutritionPurposeValue = NUTRITION_PURPOSE[purpose];
 
   if (!activityLevel || !Object.keys(ACTIVITY_LEVEL).includes(activityLevel)) return defaultDailyNutrition;
   if (!Object.keys(NUTRITION_PURPOSE).includes(purpose)) return defaultDailyNutrition;
@@ -48,7 +54,7 @@ export const calculateNutrition = ({
 
   const dailyCaloriesGoal = Math.round(baseCalories * activityFactor * FACTOR);
 
-  const [carbRatio, proteinRatio, fatRatio] = RATIO;
+  const { carbRatio, proteinRatio, fatRatio } = RATIO;
   const dailyCarbohydrateGoal = Math.round((dailyCaloriesGoal * carbRatio) / CALORIES_PER_GRAM_CARB);
   const dailyProteinGoal = Math.round((dailyCaloriesGoal * proteinRatio) / CALORIES_PER_GRAM_PROTEIN);
   const dailyFatGoal = Math.round((dailyCaloriesGoal * fatRatio) / CALORIES_PER_GRAM_FAT);
@@ -61,15 +67,28 @@ export const calculateNutrition = ({
   };
 };
 
+export const calculateTotalNutrition = (data: MealNutrition[], initialValue: MealNutrition): MealNutrition => {
+  return data.reduce(
+    (acc, nutrition) => {
+      acc.totalCalories += nutrition.totalCalories;
+      acc.totalCarbohydrate += nutrition.totalCarbohydrate;
+      acc.totalFat += nutrition.totalFat;
+      acc.totalProtein += nutrition.totalProtein;
+      return acc;
+    },
+    { ...initialValue }
+  ); // 초기값은 복사해서 사용
+};
+
 /**
  * 여러 날의 식사 데이터를 기반으로 평균 섭취 열량과 영양소 비율을 계산합니다.
  *
  * @function calculateNutritionAverage
- * @param {DailyNutrition[]} meals - 하루 식단별 영양소 총합 배열
+ * @param {MealNutrition[]} meals - 하루 식단별 영양소 총합 배열
  * @returns {AverageNutrition} 평균 섭취 열량 및 각 영양소 평균값
  */
 
-export const calculateNutritionAverage = (meals: DailyNutrition[]): AverageNutrition => {
+export const calculateNutritionAverage = (meals: MealNutrition[]): AverageNutrition => {
   if (meals.length === 0) {
     return {
       averageCalories: 0,
@@ -78,14 +97,10 @@ export const calculateNutritionAverage = (meals: DailyNutrition[]): AverageNutri
       averageProtein: 0
     };
   }
-  const initialTotalValue = {
-    totalCalories: 0,
-    totalCarbohydrate: 0,
-    totalFat: 0,
-    totalProtein: 0
-  };
 
-  const total = meals.reduce((acc, nutrition) => {
+  const total = calculateTotalNutrition(meals, initialTotalValue);
+
+  meals.reduce((acc, nutrition) => {
     acc.totalCalories += nutrition.totalCalories;
     acc.totalCarbohydrate += nutrition.totalCarbohydrate;
     acc.totalFat += nutrition.totalFat;
@@ -122,11 +137,22 @@ const getPercentage = (value: number, base: number | null): number => {
  *
  * @function calculateNutritionRatioFromDailyTotal
  * @param {NutritionGoal} daily - 하루 권장 섭취량
- * @param {DailyNutrition} total - 실제 섭취량
+ * @param {MealNutrition} dailyTotal - 실제 섭취량
  * @returns {NutritionRatio} 각 항목별 실제 섭취량의 백분율
  */
 
-export const calculateNutritionRatioFromDailyTotal = (daily: NutritionGoal, total: DailyNutrition): NutritionRatio => {
+export const calculateNutritionRatioFromDailyTotal = (
+  daily: NutritionGoal,
+  dailyTotal: MealNutrition[]
+): NutritionRatio => {
+  const total = dailyTotal.reduce((acc, nutrition) => {
+    acc.totalCalories += nutrition.totalCalories;
+    acc.totalCarbohydrate += nutrition.totalCarbohydrate;
+    acc.totalFat += nutrition.totalFat;
+    acc.totalProtein += nutrition.totalProtein;
+    return acc;
+  }, initialTotalValue);
+
   return {
     caloriesRatio: getPercentage(total.totalCalories, daily.dailyCaloriesGoal),
     carbohydrateRatio: getPercentage(total.totalCarbohydrate, daily.dailyCarbohydrateGoal),
