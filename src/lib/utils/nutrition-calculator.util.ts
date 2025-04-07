@@ -125,6 +125,12 @@ export const calculateNutritionAverage = (
       averageProtein: 0
     };
   }
+  const initialTotalValue = {
+    totalCalories: 0,
+    totalCarbohydrate: 0,
+    totalFat: 0,
+    totalProtein: 0
+  };
 
   const diffInms = +new Date(endDate) - +new Date(startDate);
   const diffInDays = diffInms / (1000 * 60 * 60 * 24) + 1;
