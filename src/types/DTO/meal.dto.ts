@@ -20,10 +20,6 @@ export type MealDTO = {
   ateAt: string;
   mealType: MealTypeKey;
   memo: string | null;
-  totalCalories: number;
-  totalCarbohydrate: number;
-  totalProtein: number;
-  totalFat: number;
   menuCount: number;
   mealDetails: MealDetailDTO[];
 };
