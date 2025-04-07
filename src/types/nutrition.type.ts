@@ -1,4 +1,4 @@
-import { MealDTO } from '@/types/DTO/meal.dto';
+import { MealDetailDTO } from './DTO/meal.dto';
 
 export type NutritionGoal = {
   dailyCaloriesGoal: number;
@@ -20,8 +20,14 @@ export type NutritionRatio = {
   proteinRatio: number;
   fatRatio: number;
 };
+export type TotalMealNutrition = {
+  totalCalories: number;
+  totalCarbohydrate: number;
+  totalFat: number;
+  totalProtein: number;
+};
 
-export type MealNutrition = Pick<MealDTO, 'totalCalories' | 'totalCarbohydrate' | 'totalFat' | 'totalProtein'>;
+export type MealNutrition = Pick<MealDetailDTO, 'calories' | 'carbohydrate' | 'protein' | 'fat'>;
 
 /**
  * 활동 수준별 활동 계수를 정의한 상수 객체입니다.
@@ -31,7 +37,6 @@ export type MealNutrition = Pick<MealDTO, 'totalCalories' | 'totalCarbohydrate' 
  * - 예: VERY_LOW → 거의 움직이지 않음, HIGH → 주 6~7일 고강도 운동 등
  */
 
-// ActivityLevel의 enum 타입 객체
 export const ActivityLevel = {
   VERY_LOW: 'VERY_LOW',
   LOW: 'LOW',
@@ -42,7 +47,6 @@ export const ActivityLevel = {
 
 export type ActivityLevelKey = keyof typeof ActivityLevel;
 
-// ActivityLevel의 enum 값을 통해 사용하는 곳에서 호출되는 객체에 대한 설명
 export const ACTIVITY_LEVEL_OPTIONS: Record<ActivityLevelKey, { description: string; factor: number }> = {
   VERY_LOW: { description: '거의 움직이지 않아요', factor: 1.2 },
   LOW: { description: '아주 가볍게 활동해요', factor: 1.375 },
@@ -55,7 +59,7 @@ export const NutritionPurpose = {
   WEIGHT_LOSS: 'WEIGHT_LOSS',
   WEIGHT_MAINTENANCE: 'WEIGHT_MAINTENANCE',
   MUSCLE_GAIN: 'MUSCLE_GAIN'
-};
+} as const;
 
 export const NUTRITION_PURPOSE_OPTIONS = {
   WEIGHT_LOSS: {
