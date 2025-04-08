@@ -62,13 +62,7 @@ type FunnelComponentProps<K extends Record<string, any>, T extends Extract<keyof
  * [Funnel 컴포넌트, setStep 함수]를 튜플로 반환
  */
 type UseFunnelReturnType<K extends Record<string, any>, T extends Extract<keyof K, string>> = readonly [
-  (props: FunnelComponentProps<K, T>) => JSX.Element,
-  {
-    <NextStep extends T>(nextStep: NextStep, data: RequiredFieldsForNewStep<K[NextStep], K[T]>): void;
-    <NextStep extends T>(
-      nextStep: NextStep
-    ): IsEmptyObject<RequiredFieldsForNewStep<K[NextStep], K[T]>> extends true ? void : never;
-  }
+  (props: FunnelComponentProps<K, T>) => JSX.Element
 ];
 
 /**
@@ -213,7 +207,7 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
     return props[step]({ setStep, data: stepData as K[T] });
   };
 
-  return [Funnel, setStep] as const;
+  return [Funnel] as const;
 };
 
 export default useFunnel;
