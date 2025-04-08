@@ -21,10 +21,11 @@ export type UserDTO = {
   purpose: NutritionPurposeKey | null;
 };
 
-export type UserPhysicalProfileDTO = Pick<
-  UserDTO,
-  'gender' | 'height' | 'weight' | 'age' | 'activityLevel' | 'purpose'
->;
+export type UserPhysicalProfileDTO = {
+  [K in Extract<keyof UserDTO, 'gender' | 'height' | 'weight' | 'age' | 'activityLevel' | 'purpose'>]: NonNullable<
+    UserDTO[K]
+  >;
+};
 
 export type UserSnakeCaseDTO = SnakeCaseObject<UserDTO>;
 
