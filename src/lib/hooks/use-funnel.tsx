@@ -5,24 +5,26 @@ import { useState, useEffect } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 const QUERY_PARAM = 'step';
+const SESSION_KEY = 'funnel_data';
 
 type FunnelComponentProps<K extends Record<string, any>, T extends Extract<keyof K, string>> = {
-  [Step in T]: (props: {
-    setStep: <NextStep extends T>(nextStep: NextStep, requireData: K[NextStep]) => void;
-  }) => JSX.Element;
+  [Step in T]: (props: { setStep: <NextStep extends T>(nextStep: NextStep, data: K[NextStep]) => void }) => JSX.Element;
 };
 type UseFunnelReturnType<K extends Record<string, any>, T extends Extract<keyof K, string>> = readonly [
   (props: FunnelComponentProps<K, T>) => JSX.Element,
-  <NextStep extends T>(nextStep: NextStep, requireData: K[NextStep]) => void
+  <NextStep extends T>(nextStep: NextStep, data: K[NextStep]) => void
 ];
 
 const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, string>>(
   initialStep: T,
-  validateStep: Record<T, () => boolean>
+  validateStep: Record<T, (data: K[T]) => boolean>,
+  initialData?: K[T]
 ): UseFunnelReturnType<K, T> => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+
+  const safeSessionStorage = typeof window !== 'undefined' ? window.sessionStorage : null;
 
   const urlStep = searchParams.get(QUERY_PARAM) as T;
 
@@ -32,7 +34,7 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
   };
 
   const getInitialStep = () => {
-    if (isValidateStep(urlStep) && validateStep[urlStep]()) return urlStep;
+    if (isValidateStep(urlStep) && initialData && validateStep[urlStep](initialData)) return urlStep;
     return initialStep;
   };
 
@@ -46,10 +48,11 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
     router.replace(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
   }, [urlStep, step, pathname, router, searchParams]);
 
-  const setStep = (newStep: T, requireData: K[T]) => {
+  const setStep = (newStep: T, requiredData: K[T]) => {
     if (step === newStep) return;
-    if (!validateStep[newStep]) return;
+    if (!validateStep[newStep](requiredData)) return;
 
+    safeSessionStorage?.setItem(SESSION_KEY, JSON.stringify(requiredData));
     setInternalStep(newStep);
 
     const newSearchParams = new URLSearchParams(searchParams.toString());
@@ -58,7 +61,7 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
   };
 
   const Funnel = (props: FunnelComponentProps<K, T>) => {
-    return <>{props[step]({ setStep })}</>;
+    return props[step]({ setStep });
   };
 
   return [Funnel, setStep] as const;
