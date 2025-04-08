@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import * as Sentry from '@sentry/nextjs';
 import { FUNNEL_QUERY_PARAM } from '@/constants/common.constant';
+import { isClient, isServer } from '@/lib/utils/predicate.util';
 
 // 세션 스토리지 기본 키값
 const DEFAULT_SESSION_ID = 'todayeat-funnel-data';
@@ -119,9 +120,9 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
     if (initialized.current) return;
 
     try {
-      if (typeof window === 'undefined') return;
+      if (isServer()) return;
 
-      const sessionData = window.sessionStorage.getItem(sessionId) ?? '{}';
+      const sessionData = sessionStorage.getItem(sessionId) ?? '{}';
       const parsedData = JSON.parse(sessionData) as K[T];
 
       setStepData(parsedData);
@@ -173,9 +174,7 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
     setStepData(newData);
 
     // 세션 스토리지에 데이터 저장
-    if (typeof window !== 'undefined') {
-      window.sessionStorage.setItem(sessionId, JSON.stringify(newData));
-    }
+    if (isClient()) sessionStorage.setItem(sessionId, JSON.stringify(newData));
 
     // URL 업데이트
     const newSearchParams = new URLSearchParams(searchParams.toString());
