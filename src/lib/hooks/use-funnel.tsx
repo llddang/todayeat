@@ -14,15 +14,27 @@ type RequiredKeys<T> = {
 }[keyof T];
 type NewRequiredKeys<T, U> = Exclude<RequiredKeys<T>, RequiredKeys<U>>;
 type RequiredFieldsForNewStep<TNext, TCurrent> = Pick<TNext, NewRequiredKeys<TNext, TCurrent>>;
+type IsEmptyObject<T> = T extends Record<string, never> ? true : false;
 type FunnelComponentProps<K extends Record<string, any>, T extends Extract<keyof K, string>> = {
   [Step in T]: (props: {
-    setStep: <NextStep extends T>(nextStep: NextStep, data: RequiredFieldsForNewStep<K[NextStep], K[Step]>) => void;
+    setStep: {
+      <NextStep extends T>(nextStep: NextStep, data: RequiredFieldsForNewStep<K[NextStep], K[Step]>): void;
+      <NextStep extends T>(
+        nextStep: NextStep
+      ): IsEmptyObject<RequiredFieldsForNewStep<K[NextStep], K[Step]>> extends true ? void : never;
+    };
     data: K[Step];
   }) => JSX.Element;
 };
+
 type UseFunnelReturnType<K extends Record<string, any>, T extends Extract<keyof K, string>> = readonly [
   (props: FunnelComponentProps<K, T>) => JSX.Element,
-  <NextStep extends T>(nextStep: NextStep, data: RequiredFieldsForNewStep<K[NextStep], K[T]>) => void
+  {
+    <NextStep extends T>(nextStep: NextStep, data: RequiredFieldsForNewStep<K[NextStep], K[T]>): void;
+    <NextStep extends T>(
+      nextStep: NextStep
+    ): IsEmptyObject<RequiredFieldsForNewStep<K[NextStep], K[T]>> extends true ? void : never;
+  }
 ];
 
 const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, string>>(
@@ -67,13 +79,13 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
     router.replace(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
   }, [urlStep, step, pathname, router, searchParams]);
 
-  function setStep<NextStep extends T>(
+  function setStepImplementation<NextStep extends T>(
     nextStep: NextStep,
-    requiredData: RequiredFieldsForNewStep<K[NextStep], K[typeof step]>
+    requiredData?: RequiredFieldsForNewStep<K[NextStep], K[typeof step]>
   ): void {
     if (step === nextStep) return;
 
-    const newData = { ...stepData, ...requiredData } as K[NextStep];
+    const newData = { ...stepData, ...(requiredData || {}) } as K[NextStep];
 
     if (!validateStep[nextStep](newData)) return;
 
@@ -84,6 +96,12 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
     newSearchParams.set(QUERY_PARAM, nextStep);
     router.push(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
   }
+
+  const setStep = setStepImplementation as typeof setStepImplementation & {
+    <NextStep extends T>(
+      nextStep: NextStep
+    ): IsEmptyObject<RequiredFieldsForNewStep<K[NextStep], K[typeof step]>> extends true ? void : never;
+  };
 
   const Funnel = (props: FunnelComponentProps<K, T>) => {
     return props[step]({ setStep, data: stepData as K[T] });
