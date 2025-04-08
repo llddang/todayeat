@@ -15,7 +15,7 @@ const CALORIES_PER_GRAM = {
   FAT: 9
 };
 
-const initialTotalValue = {
+const initialNutritionValue = {
   calories: 0,
   carbohydrate: 0,
   fat: 0,
@@ -80,7 +80,7 @@ export const calculateTotalNutrition = (mealsData: MealDTO[]): MealNutrition => 
         acc.protein += meal.protein;
         return acc;
       },
-      { ...initialTotalValue }
+      { ...initialNutritionValue }
     );
 };
 
@@ -113,9 +113,7 @@ const countUniqueDates = (mealsData: MealDTO[]): number => {
  */
 export const calculateNutritionAverage = (mealsData: MealDTO[]): MealNutrition => {
   if (mealsData.length === 0) {
-    return {
-      ...initialTotalValue
-    };
+    return initialNutritionValue;
   }
 
   // 날짜 수가 0인 경우 1로 설정하여 division by zero 방지
