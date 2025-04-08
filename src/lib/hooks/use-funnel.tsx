@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
@@ -40,7 +39,7 @@ type IsEmptyObject<T> = T extends Record<string, never> ? true : false;
  * @template Step - 모든 가능한 스텝 타입
  * @template CurrentStep - 현재 스텝 타입
  */
-type StepComponentProps<K extends Record<string, any>, Step extends string, CurrentStep extends Step> = {
+type StepComponentProps<K extends Record<string, unknown>, Step extends string, CurrentStep extends Step> = {
   setStep: {
     <NextStep extends Step>(nextStep: NextStep, data: RequiredFieldsForNewStep<K[NextStep], K[CurrentStep]>): void;
     <NextStep extends Step>(
@@ -54,7 +53,7 @@ type StepComponentProps<K extends Record<string, any>, Step extends string, Curr
  * Funnel 컴포넌트에 전달되는 props 타입
  * 각 스텝별 렌더링 함수를 매핑
  */
-type FunnelComponentProps<K extends Record<string, any>, T extends Extract<keyof K, string>> = {
+type FunnelComponentProps<K extends Record<string, unknown>, T extends Extract<keyof K, string>> = {
   [Step in T]: (props: StepComponentProps<K, T, Step>) => JSX.Element;
 };
 
@@ -62,7 +61,7 @@ type FunnelComponentProps<K extends Record<string, any>, T extends Extract<keyof
  * useFunnel 훅의 반환 타입
  * Funnel 컴포넌트
  */
-type UseFunnelReturnType<K extends Record<string, any>, T extends Extract<keyof K, string>> = (
+type UseFunnelReturnType<K extends Record<string, unknown>, T extends Extract<keyof K, string>> = (
   props: FunnelComponentProps<K, T>
 ) => JSX.Element;
 
@@ -75,7 +74,7 @@ type UseFunnelReturnType<K extends Record<string, any>, T extends Extract<keyof 
  * @param sessionId - 세션 스토리지에 사용할 키 (기본값: 'todayeat-funnel-data')
  * @returns Funnel 컴포넌트
  */
-const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, string>>(
+const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K, string>>(
   initialStep: T,
   validateStep: Record<T, (data: K[T]) => boolean>,
   sessionId: string = DEFAULT_SESSION_ID
