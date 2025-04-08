@@ -4,7 +4,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import * as Sentry from '@sentry/nextjs';
 import { FUNNEL_QUERY_PARAM } from '@/constants/common.constant';
 import { isClient, isServer } from '@/lib/utils/predicate.util';
 
@@ -103,21 +102,25 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
   const [funnelData, setFunnelData] = useState<Partial<K[T]>>({});
 
   useEffect(() => {
+    if (isServer()) return;
+
+    const sessionData = sessionStorage.getItem(sessionId) ?? '{}';
+    let parsedData: K[T];
+
     try {
-      if (isServer()) return;
+      parsedData = JSON.parse(sessionData);
+    } catch (parseError) {
+      console.error('Failed to parse session data:', parseError);
+      parsedData = {} as K[T];
+      sessionStorage.setItem(sessionId, '{}');
+    }
 
-      const sessionData = sessionStorage.getItem(sessionId) ?? '{}';
-      const parsedData = JSON.parse(sessionData) as K[T];
+    setFunnelData(parsedData);
 
-      setFunnelData(parsedData);
-
-      if (!validateStep[currentStep](parsedData)) {
-        const newSearchParams = new URLSearchParams(searchParams.toString());
-        newSearchParams.set(FUNNEL_QUERY_PARAM, initialStep);
-        router.replace(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
-      }
-    } catch (error) {
-      Sentry.captureException('Failed to initialize funnel data:' + error);
+    if (!validateStep[currentStep](parsedData)) {
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.set(FUNNEL_QUERY_PARAM, initialStep);
+      router.replace(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
     }
   }, []);
 
@@ -138,8 +141,7 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
     const newData = { ...funnelData, ...(requiredData || {}) } as K[NextStep];
 
     if (!validateStep[nextStep](newData)) {
-      console.warn(`Invalid data for step ${nextStep}`);
-      return;
+      return console.error(`Invalid data for step ${nextStep} and ${newData}`);
     }
 
     setFunnelData(newData);
