@@ -70,10 +70,6 @@ export const calculateNutrition = ({
  * @returns {MealNutrition} - 전체 합산된 영양 정보를 포함한 객체를 반환합니다.
  */
 export const calculateTotalNutrition = (mealsData: MealDTO[]): MealNutrition => {
-  console.log(mealsData);
-
-  const flatMapMeals = mealsData.flatMap((meal) => meal.mealDetails);
-  console.log('flatMapMeals===>', flatMapMeals);
   return mealsData
     .flatMap((meal) => meal.mealDetails)
     .reduce(
@@ -89,33 +85,41 @@ export const calculateTotalNutrition = (mealsData: MealDTO[]): MealNutrition => 
 };
 
 /**
- * 여러 날의 식사 데이터를 기반으로 평균 섭취 열량과 영양소를 계산합니다.
+ * 식사 데이터 배열에서 고유한 날짜 수를 계산합니다.
  *
- * @function calculateNutritionAverage
- * @param {MealDTO[]} mealsData - 기간 내의 한 끼니별 데이터 배열
- * @param {string} startDate - 계산 시작 날짜 (YYYY-MM-DD 형식)
- * @param {string} endDate - 계산 종료 날짜 (YYYY-MM-DD 형식)
- * @returns {MealNutrition} 평균 섭취 열량 및 각 영양소 평균값
+ * @function countUniqueDates
+ * @param {MealDTO[]} mealsData - 식사 데이터 배열
+ * @returns {number} 고유한 날짜 수 (최소 1)
  */
-export const calculateNutritionAverage = (mealsData: MealDTO[]): MealNutrition => {
-  if (mealsData.length === 0) {
-    return {
-      calories: 0,
-      carbohydrate: 0,
-      fat: 0,
-      protein: 0
-    };
-  }
-
+const countUniqueDates = (mealsData: MealDTO[]): number => {
   const uniqueDates = new Set<string>();
+
   mealsData.forEach((meal) => {
-    if (meal.ateAt) {
+    if (meal.ateAt && meal.ateAt.includes('T')) {
       const date = meal.ateAt.split('T')[0];
       uniqueDates.add(date);
     }
   });
 
-  const dayCount = uniqueDates.size;
+  return uniqueDates.size || 1;
+};
+
+/**
+ * 여러 날의 식사 데이터를 기반으로 평균 섭취 열량과 영양소를 계산합니다.
+ *
+ * @function calculateNutritionAverage
+ * @param {MealDTO[]} mealsData - 기간 내의 한 끼니별 데이터 배열
+ * @returns {MealNutrition} 평균 섭취 열량 및 각 영양소 평균값
+ */
+export const calculateNutritionAverage = (mealsData: MealDTO[]): MealNutrition => {
+  if (mealsData.length === 0) {
+    return {
+      ...initialTotalValue
+    };
+  }
+
+  // 날짜 수가 0인 경우 1로 설정하여 division by zero 방지
+  const dayCount = countUniqueDates(mealsData);
   const total = calculateTotalNutrition(mealsData);
 
   return {
@@ -142,43 +146,16 @@ const getPercentage = (value: number, base: number | null): number => {
 
 /**
  * 영양소 목표 대비 실제 섭취량의 백분율을 계산합니다.
- * 날짜 범위가 제공되면 해당 기간의 평균을 계산하고, 그렇지 않으면 전체 식사 데이터의 합계를 사용합니다.
+ * 항상 중복되지 않는 날짜 수를 기준으로 평균을 계산합니다.
  *
  * @function calculateNutritionRatio
  * @param {NutritionGoal} goal - 하루 권장 섭취량
  * @param {MealDTO[]} mealsData - 식사 데이터
- * @param {object} options - 선택적 매개변수
- * @param {string} [options.startDate] - 시작 날짜 (기간 계산시 사용)
- * @param {string} [options.endDate] - 종료 날짜 (기간 계산시 사용)
  * @returns {MealNutrition} 각 항목별 실제 섭취량의 백분율
  */
-export const calculateNutritionRatio = (
-  goal: NutritionGoal,
-  mealsData: MealDTO[],
-  options?: { startDate?: string; endDate?: string }
-): MealNutrition => {
-  console.log(mealsData);
-  let nutritionValues: MealNutrition;
+export const calculateNutritionRatio = (goal: NutritionGoal, mealsData: MealDTO[]): MealNutrition => {
+  const nutritionValues = calculateNutritionAverage(mealsData);
 
-  if (options?.startDate && options?.endDate) {
-    // 기간에 대한 평균 계산
-    const diffInMs = Number(new Date(options.endDate)) - Number(new Date(options.startDate));
-    const diffInDays = diffInMs / (1000 * 60 * 60 * 24) + 1;
-
-    const total = calculateTotalNutrition(mealsData);
-
-    nutritionValues = {
-      calories: Math.round(total.calories / diffInDays),
-      carbohydrate: Math.round(total.carbohydrate / diffInDays),
-      fat: Math.round(total.fat / diffInDays),
-      protein: Math.round(total.protein / diffInDays)
-    };
-  } else {
-    // 하루 총합 계산
-    nutritionValues = calculateTotalNutrition(mealsData);
-  }
-
-  // 백분율 계산
   return {
     calories: getPercentage(nutritionValues.calories, goal.dailyCaloriesGoal),
     carbohydrate: getPercentage(nutritionValues.carbohydrate, goal.dailyCarbohydrateGoal),
