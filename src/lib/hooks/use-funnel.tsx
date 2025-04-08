@@ -7,7 +7,6 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import * as Sentry from '@sentry/nextjs';
 
 const QUERY_PARAM = 'step';
-const SESSION_KEY = 'todayeat-funnel-data';
 
 type RequiredKeys<T> = {
   [K in keyof T]-?: undefined extends T[K] ? never : K;
@@ -40,6 +39,7 @@ type UseFunnelReturnType<K extends Record<string, any>, T extends Extract<keyof 
 const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, string>>(
   initialStep: T,
   validateStep: Record<T, (data: K[T]) => boolean>,
+  sessionId: string = 'todayeat-funnel-data',
   initialData?: Partial<K[T]>
 ): UseFunnelReturnType<K, T> => {
   const searchParams = useSearchParams();
@@ -66,7 +66,7 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
     if (initialized.current) return;
 
     try {
-      const sessionData = window?.sessionStorage.getItem(SESSION_KEY) ?? '{}';
+      const sessionData = window?.sessionStorage.getItem(sessionId) ?? '{}';
       const parsedData = JSON.parse(sessionData);
       const newData = { ...initialData, ...parsedData } as K[T];
       setStepData(newData);
@@ -76,7 +76,7 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
     }
 
     initialized.current = true;
-  }, [initialData, initialStep, urlStep, validateStep]);
+  }, [initialData, initialStep, urlStep, sessionId, validateStep]);
 
   useEffect(() => {
     if (step === urlStep) return;
@@ -97,7 +97,7 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
     if (!validateStep[nextStep](newData)) return;
     setStepData(newData);
 
-    window?.sessionStorage.setItem(SESSION_KEY, JSON.stringify(newData));
+    window?.sessionStorage.setItem(sessionId, JSON.stringify(newData));
     setInternalStep(nextStep);
 
     const newSearchParams = new URLSearchParams(searchParams.toString());
