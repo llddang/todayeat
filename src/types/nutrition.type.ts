@@ -7,25 +7,7 @@ export type NutritionGoal = {
   dailyFatGoal: number;
 };
 
-export type AverageNutrition = {
-  averageCalories: number;
-  averageCarbohydrate: number;
-  averageFat: number;
-  averageProtein: number;
-};
 
-export type NutritionRatio = {
-  caloriesRatio: number;
-  carbohydrateRatio: number;
-  proteinRatio: number;
-  fatRatio: number;
-};
-export type TotalMealNutrition = {
-  totalCalories: number;
-  totalCarbohydrate: number;
-  totalFat: number;
-  totalProtein: number;
-};
 
 export type MealNutrition = Pick<MealDetailDTO, 'calories' | 'carbohydrate' | 'protein' | 'fat'>;
 
@@ -66,7 +48,7 @@ export const NUTRITION_PURPOSE_OPTIONS = {
     name: '체지방 줄이기',
     factor: 0.8,
     ratio: {
-      carbRatio: 0.3,
+      carbohydrateRatio: 0.3,
       proteinRatio: 0.4,
       fatRatio: 0.3
     }
@@ -75,7 +57,7 @@ export const NUTRITION_PURPOSE_OPTIONS = {
     name: '현재 상태 유지하기',
     factor: 1,
     ratio: {
-      carbRatio: 0.45,
+      carbohydrateRatio: 0.45,
       proteinRatio: 0.3,
       fatRatio: 0.25
     }
@@ -84,7 +66,7 @@ export const NUTRITION_PURPOSE_OPTIONS = {
     name: '근육 키우기',
     factor: 1.1,
     ratio: {
-      carbRatio: 0.4,
+      carbohydrateRatio: 0.4,
       proteinRatio: 0.4,
       fatRatio: 0.2
     }
@@ -92,7 +74,7 @@ export const NUTRITION_PURPOSE_OPTIONS = {
 } as const;
 
 export type NutritionPurposeKey = keyof typeof NUTRITION_PURPOSE_OPTIONS;
-export type NutritionPurposeRatio = Record<'carbRatio' | 'proteinRatio' | 'fatRatio', number>;
+export type NutritionPurposeRatio = Record<'carbohydrateRatio' | 'proteinRatio' | 'fatRatio', number>;
 export type NutritionPurposeValue = {
   name: string;
   factor: number;
