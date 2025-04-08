@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import * as Sentry from '@sentry/nextjs';
 import { FUNNEL_QUERY_PARAM } from '@/constants/common.constant';
@@ -84,13 +85,9 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
   const router = useRouter();
   const pathname = usePathname();
 
-  const urlStep = searchParams.get(FUNNEL_QUERY_PARAM) as T;
+  const stepInQueryParam = searchParams.get(FUNNEL_QUERY_PARAM) as T;
 
-  /**
-   * 문자열이 유효한 스텝인지 확인하는 함수
-   * validateStep 객체의 키로 존재하는지 체크
-   */
-  const isValidStep = useCallback(
+  const isValidStepName = useCallback(
     (step: string | null): step is T => {
       if (!step) return false;
       return Object.keys(validateStep).includes(step);
@@ -98,36 +95,23 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
     [validateStep]
   );
 
-  /**
-   * 초기 스텝을 결정하는 함수
-   * URL에 유효한 스텝이 있으면 해당 값 사용, 없으면 초기값 사용
-   */
-  const getInitialStep = (step: string): T => {
-    return isValidStep(step) ? step : initialStep;
+  const getInitialStep = (step: string, initialStep: T): T => {
+    return isValidStepName(step) ? step : initialStep;
   };
 
-  const step = getInitialStep(urlStep);
+  const currentStep = getInitialStep(stepInQueryParam, initialStep);
+  const [funnelData, setFunnelData] = useState<Partial<K[T]>>({});
 
-  const [stepData, setStepData] = useState<Partial<K[T]>>({});
-
-  const initialized = useRef(false);
-
-  /**
-   * 세션 스토리지에서 데이터를 초기화하는 효과
-   * 컴포넌트 마운트 시 한 번만 실행
-   */
   useEffect(() => {
-    if (initialized.current) return;
-
     try {
       if (isServer()) return;
 
       const sessionData = sessionStorage.getItem(sessionId) ?? '{}';
       const parsedData = JSON.parse(sessionData) as K[T];
 
-      setStepData(parsedData);
+      setFunnelData(parsedData);
 
-      if (!validateStep[step](parsedData)) {
+      if (!validateStep[currentStep](parsedData)) {
         const newSearchParams = new URLSearchParams(searchParams.toString());
         newSearchParams.set(FUNNEL_QUERY_PARAM, initialStep);
         router.replace(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
@@ -135,72 +119,46 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
     } catch (error) {
       Sentry.captureException('Failed to initialize funnel data:' + error);
     }
+  }, []);
 
-    initialized.current = true;
-  }, [initialStep, step, sessionId, validateStep, searchParams, router, pathname]);
-
-  /**
-   * 현재 스텝이 변경될 때 URL을 동기화하는 효과
-   */
   useEffect(() => {
-    if (step === urlStep) return;
+    if (currentStep === stepInQueryParam) return;
 
     const newSearchParams = new URLSearchParams(searchParams.toString());
-    newSearchParams.set(FUNNEL_QUERY_PARAM, step);
+    newSearchParams.set(FUNNEL_QUERY_PARAM, currentStep);
     router.replace(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
-  }, [step, urlStep, pathname, router, searchParams]);
+  }, [currentStep, stepInQueryParam, pathname, router, searchParams]);
 
-  /**
-   * 다음 스텝으로 이동하는 내부 구현 함수
-   * 데이터 유효성 검사, 세션 스토리지 저장, URL 업데이트 수행
-   *
-   * @param nextStep - 이동할 다음 스텝
-   * @param requiredData - 다음 스텝으로 넘어가기 위한 필요한 추가 데이터
-   */
   function setStepImplementation<NextStep extends T>(
     nextStep: NextStep,
-    requiredData: RequiredFieldsForNewStep<K[NextStep], K[typeof step]>
+    requiredData: RequiredFieldsForNewStep<K[NextStep], K[typeof currentStep]>
   ): void {
-    if (step === nextStep) return;
+    if (currentStep === nextStep) return;
 
-    const newData = { ...stepData, ...(requiredData || {}) } as K[NextStep];
+    const newData = { ...funnelData, ...(requiredData || {}) } as K[NextStep];
 
-    // 다음 스텝 데이터 유효성 검사
     if (!validateStep[nextStep](newData)) {
       console.warn(`Invalid data for step ${nextStep}`);
       return;
     }
 
-    setStepData(newData);
+    setFunnelData(newData);
 
-    // 세션 스토리지에 데이터 저장
     if (isClient()) sessionStorage.setItem(sessionId, JSON.stringify(newData));
 
-    // URL 업데이트
     const newSearchParams = new URLSearchParams(searchParams.toString());
     newSearchParams.set(FUNNEL_QUERY_PARAM, nextStep);
     router.push(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
   }
 
-  /**
-   * 외부에 노출되는 setStep 함수
-   * 타입 시스템이 다음 스텝으로 이동 시 필요한 데이터를 추론하도록 함
-   */
   const setStep = setStepImplementation as typeof setStepImplementation & {
     <NextStep extends T>(
       nextStep: NextStep
-    ): IsEmptyObject<RequiredFieldsForNewStep<K[NextStep], K[typeof step]>> extends true ? void : never;
+    ): IsEmptyObject<RequiredFieldsForNewStep<K[NextStep], K[typeof currentStep]>> extends true ? void : never;
   };
 
-  /**
-   * 현재 스텝에 해당하는 컴포넌트를 렌더링하는 Funnel 컴포넌트
-   * 각 스텝 컴포넌트에 setStep 함수와 현재 데이터를 전달
-   *
-   * @param props - 각 스텝별 렌더링 함수를 포함하는 객체
-   * @returns 현재 스텝에 해당하는 JSX 요소
-   */
   const Funnel = (props: FunnelComponentProps<K, T>) => {
-    return props[step]({ setStep, data: stepData as K[T] });
+    return props[currentStep]({ setStep, data: funnelData as K[T] });
   };
 
   return Funnel;
