@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import * as Sentry from '@sentry/nextjs';
 
 const QUERY_PARAM = 'step';
-const SESSION_KEY = 'funnel_data';
+const SESSION_KEY = 'todayeat-funnel-data';
 
 type RequiredKeys<T> = {
   [K in keyof T]-?: undefined extends T[K] ? never : K;
@@ -46,18 +46,7 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
   const router = useRouter();
   const pathname = usePathname();
 
-  const safeSessionStorage = typeof window !== 'undefined' ? window.sessionStorage : null;
-
   const urlStep = searchParams.get(QUERY_PARAM) as T;
-  const sessionData = safeSessionStorage?.getItem(SESSION_KEY) ?? '{}';
-
-  let stepData: Partial<K[T]> = initialData || {};
-  try {
-    const parsedData = JSON.parse(sessionData);
-    stepData = { ...stepData, ...parsedData };
-  } catch (e) {
-    Sentry.captureException(e);
-  }
 
   const isValidateStep = (step: string | null): step is T => {
     if (!step) return false;
@@ -65,11 +54,29 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
   };
 
   const getInitialStep = () => {
-    if (isValidateStep(urlStep) && validateStep[urlStep](stepData as K[T])) return urlStep;
+    if (isValidateStep(urlStep)) return urlStep;
     return initialStep;
   };
 
   const [step, setInternalStep] = useState<T>(getInitialStep);
+  const [stepData, setStepData] = useState<Partial<K[T]>>();
+
+  const initialized = useRef(false);
+  useEffect(() => {
+    if (initialized.current) return;
+
+    try {
+      const sessionData = window?.sessionStorage.getItem(SESSION_KEY) ?? '{}';
+      const parsedData = JSON.parse(sessionData);
+      const newData = { ...initialData, ...parsedData } as K[T];
+      setStepData(newData);
+      if (!validateStep[urlStep](newData)) setInternalStep(initialStep);
+    } catch (e) {
+      Sentry.captureException(e);
+    }
+
+    initialized.current = true;
+  }, [initialData, initialStep, urlStep, validateStep]);
 
   useEffect(() => {
     if (step === urlStep) return;
@@ -88,8 +95,9 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
     const newData = { ...stepData, ...(requiredData || {}) } as K[NextStep];
 
     if (!validateStep[nextStep](newData)) return;
+    setStepData(newData);
 
-    safeSessionStorage?.setItem(SESSION_KEY, JSON.stringify(newData));
+    window?.sessionStorage.setItem(SESSION_KEY, JSON.stringify(newData));
     setInternalStep(nextStep);
 
     const newSearchParams = new URLSearchParams(searchParams.toString());
