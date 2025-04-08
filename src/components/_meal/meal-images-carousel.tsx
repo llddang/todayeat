@@ -39,19 +39,17 @@ const ImageCarousel = ({ imageList, pagination = true }: { imageList: string[]; 
         ))}
       </CarouselContent>
 
-      {api && (
+      {api && pagination && (
         <div className="carousel-bottom-area absolute bottom-[0.6rem] left-1/2 -translate-x-1/2 rounded-[3.125rem] bg-[#BFBFBF44] px-[0.75rem] py-[0.5rem] backdrop-blur-xl">
-          {pagination && (
-            <div className="flex gap-2">
-              {Array.from({ length: count }, (_, index) => (
-                <button
-                  key={index}
-                  className={`inline-block h-2 w-2 rounded-full bg-primary ${current === index ? 'opacity-1' : 'opacity-30'}`}
-                  onClick={() => handleClickPagination(index)}
-                ></button>
-              ))}
-            </div>
-          )}
+          <div className="flex gap-2">
+            {Array.from({ length: count }, (_, index) => (
+              <button
+                key={index}
+                className={`inline-block h-2 w-2 rounded-full bg-primary ${current === index ? 'opacity-1' : 'opacity-30'}`}
+                onClick={() => handleClickPagination(index)}
+              ></button>
+            ))}
+          </div>
         </div>
       )}
     </Carousel>
