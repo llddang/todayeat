@@ -23,9 +23,10 @@ type RequiredKeys<T> = {
 type NewRequiredKeys<TNext, TCurrent> = Exclude<RequiredKeys<TNext>, RequiredKeys<TCurrent>>;
 
 /**
- * 다음 스텝으로 이동할 때 필요한 추가 필드를 추출
+ * 다음 스텝으로 이동할 때 필요한 추가 필드 타입
+ * 필수 필드는 반드시 포함, 선택적 필드는 선택적으로 포함
  */
-type RequiredFieldsForNewStep<TNext, TCurrent> = Pick<TNext, NewRequiredKeys<TNext, TCurrent>>;
+type RequiredFieldsForNewStep<TNext, TCurrent> = Pick<TNext, NewRequiredKeys<TNext, TCurrent>> & Partial<TCurrent>;
 
 /**
  * 객체가 비어있는지 확인하는 타입 (Record<string, never>인 경우 true)
