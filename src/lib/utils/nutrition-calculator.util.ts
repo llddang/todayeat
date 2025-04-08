@@ -139,7 +139,7 @@ export const calculateNutritionAverage = (mealsData: MealDTO[]): MealNutrition =
  * @returns {number} 기준 대비 백분율 (정수, 소수점 없음)
  */
 
-const getPercentage = (value: number, base: number | null): number => {
+const getPercentage = (value: number, base: number): number => {
   if (!base) return 0;
   return Math.round((value / base) * 100);
 };
