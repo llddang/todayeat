@@ -102,23 +102,31 @@ const MyPageEditProfile = ({ userInfo }: { userInfo: UserDTO }): JSX.Element => 
    * 프로필 변경 사항 제출 처리 핸들러
    * 폼 제출 시 사용자 프로필 변경 사항을 처리하는 메인 함수
    *
-   * 1. 이미지 업로드 처리
-   * 2. 변경 사항 확인
-   * 3. 사용자 정보 업데이트
-   * 4. 성공 처리
+   * 1. 새 이미지 파일 존재 여부 확인
+   * 2. 새 이미지가 있는 경우에만 업로드 처리
+   * 3. 변경 사항 확인 (닉네임 또는 이미지 변경 여부)
+   * 4. 사용자 정보 업데이트
+   * 5. 성공 처리
    *
    * @param {FormValues} formData - 폼 제출 데이터 (닉네임, 새 프로필 이미지)
    */
   const handleSubmitProfileChanges = async (formData: FormValues): Promise<void> => {
     setIsUploading(true);
 
-    const prevImageUrl = profileState.profilePreviewUrl;
+    const newProfileImageFile = form.getValues('newProfileImage');
+    let imageUrl = profileState.profilePreviewUrl; // 프로필 UI에 노출되고 있는 이미지
 
-    const newImageUrl = await handleProfileImageUpload(prevImageUrl);
-    if (newImageUrl === null) return;
+    if (newProfileImageFile) {
+      const uploadResult = await handleProfileImageUpload(newProfileImageFile);
+      if (!uploadResult) {
+        setIsUploading(false);
+        return;
+      }
+      imageUrl = uploadResult;
+    }
 
     // 변경 사항이 없는 경우 (닉네임과 이미지 모두 동일)
-    if (formData.nickname === userInfo.nickname && newImageUrl === prevImageUrl) {
+    if (formData.nickname === userInfo.nickname && imageUrl === userInfo.profileImage) {
       alert('변경된 정보가 없습니다.');
       setIsUploading(false);
       return;
@@ -126,10 +134,10 @@ const MyPageEditProfile = ({ userInfo }: { userInfo: UserDTO }): JSX.Element => 
 
     await updateUser({
       nickname: formData.nickname,
-      profileImage: newImageUrl
+      profileImage: imageUrl
     });
 
-    handleProfileUpdateSuccess(formData.nickname, newImageUrl);
+    handleProfileUpdateSuccess(formData.nickname, imageUrl);
     setIsUploading(false);
   };
 
@@ -145,21 +153,18 @@ const MyPageEditProfile = ({ userInfo }: { userInfo: UserDTO }): JSX.Element => 
 
   /**
    * 프로필 이미지 스토리지 업로드 처리 함수
-   * 새 이미지가 있는 경우에만 업로드를 수행하고 이미지 URL을 반환
+   * 이미지 파일을 Supabase 스토리지에 업로드하고 결과 URL을 반환합니다.
    *
-   * 1. 새 이미지 파일 확인
-   * 2. 이미지 업로드 API 호출 및 FormData 생성
+   * 1. 이미지 업로드를 위한 FormData 생성
+   * 2. 이미지 업로드 API 호출
    * 3. 업로드 결과 처리 및 URL 반환
    *
-   * @param {string | null} prevImageUrl - 이전 이미지 URL
-   * @returns {Promise<string | null>} 새 이미지 URL 또는 에러 시 null
+   * @param {File} imageFile - 업로드할 이미지 파일
+   * @returns {Promise<string | null>} 업로드된 이미지 URL 또는 에러 시 null
    */
-  const handleProfileImageUpload = async (prevImageUrl: string | null): Promise<string | null> => {
-    const newProfileImageFile = form.getValues('newProfileImage');
-    if (!newProfileImageFile) return prevImageUrl;
-
+  const handleProfileImageUpload = async (imageFile: File): Promise<string | null> => {
     const uploadForm = new FormData();
-    uploadForm.append('file', newProfileImageFile);
+    uploadForm.append('file', imageFile);
 
     const result = await uploadImage(SupabaseBucket.PROFILE_IMAGES, uploadForm);
 
