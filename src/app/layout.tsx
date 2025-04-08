@@ -3,8 +3,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Todayeat',
-  description:
-    'A web application that automatically recognizes food and records nutritional information just by taking a photo.'
+  description: '사진을 찍기만 하면 음식을 자동으로 인식하고 영양 정보를 기록해주는 웹 애플리케이션.'
 };
 
 const RootLayout = ({
