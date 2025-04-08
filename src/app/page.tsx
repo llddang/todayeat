@@ -1,4 +1,6 @@
 import ErrorHandler from '@/components/commons/error-handler';
+import Header from '@/components/layouts/header';
+import MenuBar from '@/components/layouts/menu-bar';
 import { Suspense } from 'react';
 
 const HomePage = () => {
@@ -7,7 +9,9 @@ const HomePage = () => {
       <Suspense>
         <ErrorHandler />
       </Suspense>
+      <Header />
       Home Page
+      <MenuBar />
     </div>
   );
 };
