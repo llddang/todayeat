@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { Suspense } from 'react';
+import ErrorHandler from '@/components/commons/error-handler';
 
 export const metadata: Metadata = {
   title: 'Todayeat',
@@ -13,7 +15,12 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="ko">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <Suspense>
+          <ErrorHandler />
+        </Suspense>
+        {children}
+      </body>
     </html>
   );
 };
