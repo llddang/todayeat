@@ -59,11 +59,11 @@ type FunnelComponentProps<K extends Record<string, any>, T extends Extract<keyof
 
 /**
  * useFunnel 훅의 반환 타입
- * [Funnel 컴포넌트, setStep 함수]를 튜플로 반환
+ * Funnel 컴포넌트
  */
-type UseFunnelReturnType<K extends Record<string, any>, T extends Extract<keyof K, string>> = readonly [
-  (props: FunnelComponentProps<K, T>) => JSX.Element
-];
+type UseFunnelReturnType<K extends Record<string, any>, T extends Extract<keyof K, string>> = (
+  props: FunnelComponentProps<K, T>
+) => JSX.Element;
 
 /**
  * 다단계 폼 프로세스(funnel)를 쉽게 관리하기 위한 커스텀 훅
@@ -73,7 +73,7 @@ type UseFunnelReturnType<K extends Record<string, any>, T extends Extract<keyof 
  * @param validateStep - 각 스텝별 데이터 유효성 검사 함수 맵
  * @param sessionId - 세션 스토리지에 사용할 키 (기본값: 'todayeat-funnel-data')
  * @param initialData - 초기 스텝 데이터 (선택사항)
- * @returns [Funnel 컴포넌트, setStep 함수]
+ * @returns Funnel 컴포넌트
  */
 const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, string>>(
   initialStep: T,
@@ -207,7 +207,7 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
     return props[step]({ setStep, data: stepData as K[T] });
   };
 
-  return [Funnel] as const;
+  return Funnel;
 };
 
 export default useFunnel;
