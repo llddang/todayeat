@@ -72,14 +72,12 @@ type UseFunnelReturnType<K extends Record<string, any>, T extends Extract<keyof 
  * @param initialStep - 초기 스텝 값
  * @param validateStep - 각 스텝별 데이터 유효성 검사 함수 맵
  * @param sessionId - 세션 스토리지에 사용할 키 (기본값: 'todayeat-funnel-data')
- * @param initialData - 초기 스텝 데이터 (선택사항)
  * @returns Funnel 컴포넌트
  */
 const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, string>>(
   initialStep: T,
   validateStep: Record<T, (data: K[T]) => boolean>,
-  sessionId: string = DEFAULT_SESSION_ID,
-  initialData?: Partial<K[T]>
+  sessionId: string = DEFAULT_SESSION_ID
 ): UseFunnelReturnType<K, T> => {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -103,11 +101,12 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
    * 초기 스텝을 결정하는 함수
    * URL에 유효한 스텝이 있으면 해당 값 사용, 없으면 초기값 사용
    */
-  const getInitialStep = (): T => {
-    return isValidStep(urlStep) ? urlStep : initialStep;
+  const getInitialStep = (step: string): T => {
+    return isValidStep(step) ? step : initialStep;
   };
 
-  const [step, setInternalStep] = useState<T>(getInitialStep);
+  const step = getInitialStep(urlStep);
+
   const [stepData, setStepData] = useState<Partial<K[T]>>({});
 
   const initialized = useRef(false);
@@ -123,21 +122,21 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
       if (typeof window === 'undefined') return;
 
       const sessionData = window.sessionStorage.getItem(sessionId) ?? '{}';
-      const parsedData = JSON.parse(sessionData);
-      const newData = { ...initialData, ...parsedData } as K[T];
+      const parsedData = JSON.parse(sessionData) as K[T];
 
-      setStepData(newData);
+      setStepData(parsedData);
 
-      // URL의 스텝이 유효하지만 데이터가 유효하지 않은 경우 초기 스텝으로 리셋
-      if (isValidStep(urlStep) && !validateStep[urlStep](newData)) {
-        setInternalStep(initialStep);
+      if (!validateStep[step](parsedData)) {
+        const newSearchParams = new URLSearchParams(searchParams.toString());
+        newSearchParams.set(FUNNEL_QUERY_PARAM, initialStep);
+        router.replace(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
       }
     } catch (error) {
       Sentry.captureException('Failed to initialize funnel data:' + error);
     }
 
     initialized.current = true;
-  }, [initialData, initialStep, urlStep, sessionId, isValidStep, validateStep]);
+  }, [initialStep, step, sessionId, validateStep, searchParams, router, pathname]);
 
   /**
    * 현재 스텝이 변경될 때 URL을 동기화하는 효과
@@ -155,11 +154,11 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
    * 데이터 유효성 검사, 세션 스토리지 저장, URL 업데이트 수행
    *
    * @param nextStep - 이동할 다음 스텝
-   * @param requiredData - 다음 스텝에 필요한 추가 데이터
+   * @param requiredData - 다음 스텝으로 넘어가기 위한 필요한 추가 데이터
    */
   function setStepImplementation<NextStep extends T>(
     nextStep: NextStep,
-    requiredData?: RequiredFieldsForNewStep<K[NextStep], K[typeof step]>
+    requiredData: RequiredFieldsForNewStep<K[NextStep], K[typeof step]>
   ): void {
     if (step === nextStep) return;
 
@@ -177,8 +176,6 @@ const useFunnel = <K extends Record<string, any>, T extends Extract<keyof K, str
     if (typeof window !== 'undefined') {
       window.sessionStorage.setItem(sessionId, JSON.stringify(newData));
     }
-
-    setInternalStep(nextStep);
 
     // URL 업데이트
     const newSearchParams = new URLSearchParams(searchParams.toString());
