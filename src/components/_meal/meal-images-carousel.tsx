@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/components/ui/carousel';
 
-const ImageCarousel = ({ imageList, pagination = true }: { imageList: string[]; pagination?: boolean }) => {
+const MealImageCarousel = ({ imageList, pagination = true }: { imageList: string[]; pagination?: boolean }) => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
@@ -26,6 +26,9 @@ const ImageCarousel = ({ imageList, pagination = true }: { imageList: string[]; 
     if (api) api.scrollTo(index);
   };
 
+  // 페이지네이션이 사용 가능한 경우 - api 로드 완료 && 페이지네이션 사용 true && 이미지 1개 이상
+  const isPaginationOn = api && pagination && count > 1;
+
   return (
     <Carousel setApi={setApi} className="w-full overflow-hidden rounded-2xl">
       <CarouselContent className="ml-0 gap-4">
@@ -39,21 +42,19 @@ const ImageCarousel = ({ imageList, pagination = true }: { imageList: string[]; 
         ))}
       </CarouselContent>
 
-      {api && pagination && (
-        <div className="carousel-bottom-area absolute bottom-[0.6rem] left-1/2 -translate-x-1/2 rounded-[3.125rem] bg-[#BFBFBF44] px-[0.75rem] py-[0.5rem] backdrop-blur-xl">
-          <div className="flex gap-2">
-            {Array.from({ length: count }, (_, index) => (
-              <button
-                key={index}
-                className={`inline-block h-2 w-2 rounded-full bg-primary ${current === index ? 'opacity-1' : 'opacity-30'}`}
-                onClick={() => handleClickPagination(index)}
-              ></button>
-            ))}
-          </div>
+      {isPaginationOn && (
+        <div className="carousel-bottom-area absolute bottom-[0.6rem] left-1/2 flex -translate-x-1/2 gap-2 rounded-[3.125rem] bg-[#BFBFBF44] px-[0.75rem] py-[0.5rem] backdrop-blur-xl">
+          {Array.from({ length: count }, (_, index) => (
+            <button
+              key={index}
+              className={`inline-block h-2 w-2 rounded-full bg-primary ${current === index ? 'opacity-1' : 'opacity-30'}`}
+              onClick={() => handleClickPagination(index)}
+            ></button>
+          ))}
         </div>
       )}
     </Carousel>
   );
 };
 
-export default ImageCarousel;
+export default MealImageCarousel;
