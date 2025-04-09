@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Suspense } from 'react';
 import ErrorHandler from '@/components/commons/error-handler';
+import GradientBlurBackground from '@/components/layouts/gradient-blur-background';
 
 export const metadata: Metadata = {
   title: 'Todayeat',
@@ -19,7 +20,7 @@ const RootLayout = ({
         <Suspense>
           <ErrorHandler />
         </Suspense>
-        {children}
+        <GradientBlurBackground>{children}</GradientBlurBackground>
       </body>
     </html>
   );
