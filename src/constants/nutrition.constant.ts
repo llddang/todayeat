@@ -1,6 +1,6 @@
-import { ActivityLevelKey, NutritionPurposeKey, NutritionPurposeValue } from '@/types/nutrition.type';
+import { ActivityLevelType, NutritionPurposeType, NutritionPurposeValue } from '@/types/nutrition.type';
 
-export const ACTIVITY_LEVEL_OPTIONS: Record<ActivityLevelKey, { description: string; factor: number }> = {
+export const ACTIVITY_LEVEL_OPTIONS: Record<ActivityLevelType, { description: string; factor: number }> = {
   VERY_LOW: { description: '거의 움직이지 않아요', factor: 1.2 },
   LOW: { description: '아주 가볍게 활동해요', factor: 1.375 },
   MODERATE: { description: '일상적으로 움직여요', factor: 1.55 },
@@ -8,8 +8,7 @@ export const ACTIVITY_LEVEL_OPTIONS: Record<ActivityLevelKey, { description: str
   VERY_HIGH: { description: '하루에 여러 번 강도 높은 운동을 해요', factor: 1.9 }
 } as const;
 
-
-export const NUTRITION_PURPOSE_OPTIONS: Record<NutritionPurposeKey, NutritionPurposeValue> = {
+export const NUTRITION_PURPOSE_OPTIONS: Record<NutritionPurposeType, NutritionPurposeValue> = {
   WEIGHT_LOSS: {
     name: '체지방 줄이기',
     factor: 0.8,

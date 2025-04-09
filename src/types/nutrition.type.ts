@@ -17,7 +17,7 @@ export const ActivityLevel = {
   VERY_HIGH: 'VERY_HIGH'
 } as const;
 
-export type ActivityLevelKey = keyof typeof ActivityLevel;
+export type ActivityLevelType = keyof typeof ActivityLevel;
 
 export const NutritionPurpose = {
   WEIGHT_LOSS: 'WEIGHT_LOSS',
@@ -25,7 +25,7 @@ export const NutritionPurpose = {
   MUSCLE_GAIN: 'MUSCLE_GAIN'
 } as const;
 
-export type NutritionPurposeKey = keyof typeof NutritionPurpose;
+export type NutritionPurposeType = keyof typeof NutritionPurpose;
 export type NutritionPurposeRatio = Record<'carbohydrate' | 'protein' | 'fat', number>;
 export type NutritionPurposeValue = {
   name: string;

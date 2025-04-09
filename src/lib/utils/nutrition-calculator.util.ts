@@ -1,14 +1,8 @@
+import { ACTIVITY_LEVEL_OPTIONS, NUTRITION_PURPOSE_OPTIONS } from '@/constants/nutrition.constant';
 import { MealDTO } from '@/types/DTO/meal.dto';
 import { UserPhysicalProfileDTO } from '@/types/DTO/user.dto';
 import { Gender, GenderKey } from '@/types/gender.type';
-import {
-  ACTIVITY_LEVEL_OPTIONS,
-  MealNutrition,
-  NUTRITION_PURPOSE_OPTIONS,
-  NutritionGoal,
-  NutritionPurposeRatio,
-  NutritionPurposeValue
-} from '@/types/nutrition.type';
+import { MealNutrition, NutritionGoal, NutritionPurposeRatio, NutritionPurposeValue } from '@/types/nutrition.type';
 
 const CALORIES_PER_GRAM = {
   CARBOHYDRATE: 4,
