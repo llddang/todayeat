@@ -59,7 +59,7 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)'
       },
       zIndex: {
-        background: '-100'
+        background: '-10'
       }
     }
   },
