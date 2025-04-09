@@ -32,9 +32,13 @@ export const getSessionStorageItem = <R>(id: string, defaultValue: R): R => {
 export const setSessionStorageItem = (id: string, item: unknown): boolean => {
   if (isServer()) return false;
 
-  sessionStorage.setItem(id, JSON.stringify(item));
-
-  return true;
+  try {
+    sessionStorage.setItem(id, JSON.stringify(item));
+    return true;
+  } catch (error) {
+    console.error('Failed to set item from session storage:', error);
+    return false;
+  }
 };
 
 /**
@@ -45,6 +49,11 @@ export const setSessionStorageItem = (id: string, item: unknown): boolean => {
 export const removeSessionStorageItem = (id: string): boolean => {
   if (isServer()) return false;
 
-  sessionStorage.removeItem(id);
-  return true;
+  try {
+    sessionStorage.removeItem(id);
+    return true;
+  } catch (error) {
+    console.error('Failed to remove item from session storage:', error);
+    return false;
+  }
 };
