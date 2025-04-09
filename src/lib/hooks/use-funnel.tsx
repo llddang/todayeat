@@ -4,7 +4,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FUNNEL_QUERY_PARAM } from '@/constants/common.constant';
-import { isClient, isServer } from '@/lib/utils/predicate.util';
+import { isServer } from '@/lib/utils/predicate.util';
+import { getSessionStorageItem, setSessionStorageItem } from '@/lib/utils/session-storage.util';
 
 // 세션 스토리지 기본 키값
 const DEFAULT_SESSION_ID = 'todayeat-funnel-data';
@@ -103,20 +104,11 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
   useEffect(() => {
     if (isServer()) return;
 
-    const sessionData = sessionStorage.getItem(sessionId) ?? '{}';
-    let parsedData: K[T];
+    const funnelSessionData = getSessionStorageItem(sessionId, {} as K[T]);
 
-    try {
-      parsedData = JSON.parse(sessionData);
-    } catch (parseError) {
-      console.error('Failed to parse session data:', parseError);
-      parsedData = {} as K[T];
-      sessionStorage.setItem(sessionId, '{}');
-    }
+    setFunnelData(funnelSessionData);
 
-    setFunnelData(parsedData);
-
-    if (!validateStep[currentStep](parsedData)) {
+    if (!validateStep[currentStep](funnelSessionData)) {
       const newSearchParams = new URLSearchParams(searchParams.toString());
       newSearchParams.set(FUNNEL_QUERY_PARAM, initialStep);
       router.replace(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
@@ -129,12 +121,12 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
     const newSearchParams = new URLSearchParams(searchParams.toString());
     newSearchParams.set(FUNNEL_QUERY_PARAM, currentStep);
     router.replace(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
-  }, [currentStep, stepInQueryParam, pathname, router, searchParams]);
+  }, [currentStep, stepInQueryParam]);
 
-  function setStepImplementation<NextStep extends T>(
+  const setStepImplementation = <NextStep extends T>(
     nextStep: NextStep,
     requiredData: RequiredFieldsForNewStep<K[NextStep], K[typeof currentStep]>
-  ): void {
+  ): void => {
     if (currentStep === nextStep) return;
 
     const newData = { ...funnelData, ...(requiredData || {}) } as K[NextStep];
@@ -144,13 +136,12 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
     }
 
     setFunnelData(newData);
-
-    if (isClient()) sessionStorage.setItem(sessionId, JSON.stringify(newData));
+    setSessionStorageItem(sessionId, newData);
 
     const newSearchParams = new URLSearchParams(searchParams.toString());
     newSearchParams.set(FUNNEL_QUERY_PARAM, nextStep);
     router.push(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
-  }
+  };
 
   const setStep = setStepImplementation as typeof setStepImplementation & {
     <NextStep extends T>(
