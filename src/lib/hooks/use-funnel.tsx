@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FUNNEL_QUERY_PARAM } from '@/constants/common.constant';
 import { isServer } from '@/lib/utils/predicate.util';
@@ -91,13 +91,10 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
 
   const stepInQueryParam = searchParams.get(FUNNEL_QUERY_PARAM) as T;
 
-  const isValidStepName = useCallback(
-    (step: string | null): step is T => {
-      if (!step) return false;
-      return Object.keys(validateStep).includes(step);
-    },
-    [validateStep]
-  );
+  const isValidStepName = (step: string | null): step is T => {
+    if (!step) return false;
+    return Object.keys(validateStep).includes(step);
+  };
 
   const getInitialStep = (step: string, initialStep: T): T => {
     return isValidStepName(step) ? step : initialStep;
