@@ -1,7 +1,6 @@
 import { Session, User } from '@supabase/supabase-js';
 import { SnakeCaseObject } from '@/types/common.type';
-import { GenderKey } from '@/types/gender.type';
-import { ActivityLevelType, NutritionPurposeType } from '@/types/nutrition.type';
+import { ActivityLevelType, GenderType, PurposeType } from '@/types/user-personal-info.type';
 
 export type UserDTO = {
   id: string;
@@ -9,7 +8,7 @@ export type UserDTO = {
   email: string;
   nickname: string;
   profileImage: string | null;
-  gender: GenderKey | null;
+  gender: GenderType | null;
   dailyCaloriesGoal: number | null;
   dailyCarbohydrateGoal: number | null;
   dailyProteinGoal: number | null;
@@ -18,7 +17,7 @@ export type UserDTO = {
   weight: number | null;
   age: number | null;
   activityLevel: ActivityLevelType;
-  purpose: NutritionPurposeType | null;
+  purpose: PurposeType | null;
 };
 
 export type UserPhysicalProfileDTO = {
