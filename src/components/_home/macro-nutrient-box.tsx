@@ -1,6 +1,5 @@
 import { MACRO_COLOR_MAP } from '@/constants/common.constant';
 import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
-import React from 'react';
 
 export type MacroNutrientBoxProps = {
   label: string;
