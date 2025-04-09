@@ -24,23 +24,35 @@ const initialNutritionValue: MealNutrition = {
 };
 
 /**
- * 사용자의 신체 정보와 목표를 기반으로 하루 권장 섭취 열량과 탄단지 비율을 계산하는 함수입니다.
+ * 기초대사량(BMR)을 계산합니다.
  *
- * @function calculateNutrition
- * @param {UserPhysicalProfileDTO} - 사용자 성별, 키, 몸무게, 나이, 활동 수준, 운동 목적 정보
- * @returns {NutritionGoal} NutritionGoal 객체
+ * @params {number} weight,h - 체중(kg), 신장(cm), 나이
+ * @param {number} height - 신장(cm)
+ * @param {number} age - 나이
+ * @param {GenderKey} gender - 성별 ("MAN" | "WOMAN")
+ * @returns {number} 계산된 기초대사량
  *
  * @description
- * - BMR(기초대사량) 공식을 기반으로 활동계수 및 목적계수를 곱하여 총 권장 섭취 열량을 계산합니다.
- * - 각 영양소(탄수화물, 단백질, 지방)는 해당 비율과 열량 환산값(탄:4, 단:4, 지:9)을 통해 계산됩니다.
- * - 성별에 따라 BMR 계산식이 다르게 적용됩니다.
+ * 성별에 따라 다른 기초대사량 계산식을 적용합니다:
  */
-
 const calculateBMR = (weight: number, height: number, age: number, gender: GenderKey): number => {
   const commonBMR = 10 * weight + 6.25 * height - 5 * age;
   return gender === Gender.MAN.value ? commonBMR + 5 : commonBMR - 161;
 };
 
+/**
+ * 일일 총 칼로리를 기반으로 각 영양소별 권장 섭취량을 계산합니다.
+ *
+ * @param {number} dailyCalories - 일일 총 칼로리
+ * @param {NutritionPurposeRatio} ratio - 각 영양소별 비율
+ * @returns {Object} 탄수화물, 단백질, 지방의 일일 권장 섭취량(g)
+ *
+ * @description
+ * 각 영양소는 다음 열량 환산값을 사용하여 계산됩니다:
+ * - 탄수화물: 4kcal/g
+ * - 단백질: 4kcal/g
+ * - 지방: 9kcal/g
+ */
 const calculateDailyNutrition = (dailyCalories: number, ratio: NutritionPurposeRatio) => {
   return {
     dailyCarbohydrateGoal: Math.round((dailyCalories * ratio.carbohydrate) / CALORIES_PER_GRAM.CARBOHYDRATE),
@@ -49,10 +61,30 @@ const calculateDailyNutrition = (dailyCalories: number, ratio: NutritionPurposeR
   };
 };
 
+/**
+ * 기초대사량(BMR)을 기반으로 일일 권장 칼로리를 계산합니다.
+ *
+ * @param {number} bmr - 기초대사량
+ * @param {number} activityFactor - 활동 수준에 따른 계수
+ * @param {number} purposeFactor - 목적(증량/감량/유지)에 따른 계수
+ * @returns {number} 일일 권장 칼로리 (정수로 반올림)
+ */
 const calculateDailyCalories = (bmr: number, activityFactor: number, purposeFactor: number): number => {
   return Math.round(bmr * activityFactor * purposeFactor);
 };
 
+/**
+ * 사용자의 신체 정보와 목표를 기반으로 하루 권장 섭취 열량과 탄단지 비율을 계산하는 함수입니다.
+ *
+ * @function calculateDailyNutritionGoal
+ * @param {UserPhysicalProfileDTO} - 사용자 성별, 키, 몸무게, 나이, 활동 수준, 운동 목적 정보
+ * @returns {NutritionGoal} NutritionGoal 객체
+ *
+ * @description
+ * - BMR(기초대사량) 공식을 기반으로 활동계수 및 목적계수를 곱하여 총 권장 섭취 열량을 계산합니다.
+ * - 각 영양소(탄수화물, 단백질, 지방)는 해당 비율과 열량 환산값(탄:4, 단:4, 지:9)을 통해 계산됩니다.
+ * - 성별에 따라 BMR 계산식이 다르게 적용됩니다.
+ */
 export const calculateDailyNutritionGoal = ({
   gender,
   height,
@@ -76,7 +108,7 @@ export const calculateDailyNutritionGoal = ({
 /**
  * 주어진 식단 배열의 전체 영양 정보를 합산하여 반환합니다.
  *
- * @param {MealDTO[]} meals - 합산할 한끼 식단 영양 정보 배열입니다.
+ * @param {MealDTO[]} meals - 합산할 한끼 식단정보에 대한 배열입니다.
  * @returns {MealNutrition} - 전체 합산된 영양 정보를 포함한 객체를 반환합니다.
  */
 export const calculateTotalNutrition = (meals: MealDTO[]): MealNutrition => {
@@ -146,7 +178,6 @@ export const calculateNutritionAverage = (meals: MealDTO[]): MealNutrition => {
  * @param {number} base - 기준값 (0일 경우 0% 반환)
  * @returns {number} 기준 대비 백분율 (정수, 소수점 없음)
  */
-
 const getPercentage = (value: number, base: number): number => {
   if (!base) return 0;
   return Math.round((value / base) * 100);

@@ -9,14 +9,6 @@ export type NutritionGoal = {
 
 export type MealNutrition = Pick<MealDetailDTO, 'calories' | 'carbohydrate' | 'protein' | 'fat'>;
 
-/**
- * 활동 수준별 활동 계수를 정의한 상수 객체입니다.
- *
- * @description
- * - 활동 수준(activity level)에 따라 일일 칼로리 소비량 계산에 사용됩니다.
- * - 예: VERY_LOW → 거의 움직이지 않음, HIGH → 주 6~7일 고강도 운동 등
- */
-
 export const ActivityLevel = {
   VERY_LOW: 'VERY_LOW',
   LOW: 'LOW',
@@ -35,13 +27,21 @@ export const ACTIVITY_LEVEL_OPTIONS: Record<ActivityLevelKey, { description: str
   VERY_HIGH: { description: '하루에 여러 번 강도 높은 운동을 해요', factor: 1.9 }
 } as const;
 
+export type NutritionPurposeKey = keyof typeof NutritionPurpose;
+export type NutritionPurposeRatio = Record<'carbohydrate' | 'protein' | 'fat', number>;
+export type NutritionPurposeValue = {
+  name: string;
+  factor: number;
+  ratio: NutritionPurposeRatio;
+};
+
 export const NutritionPurpose = {
   WEIGHT_LOSS: 'WEIGHT_LOSS',
   WEIGHT_MAINTENANCE: 'WEIGHT_MAINTENANCE',
   MUSCLE_GAIN: 'MUSCLE_GAIN'
 } as const;
 
-export const NUTRITION_PURPOSE_OPTIONS = {
+export const NUTRITION_PURPOSE_OPTIONS: Record<NutritionPurposeKey, NutritionPurposeValue> = {
   WEIGHT_LOSS: {
     name: '체지방 줄이기',
     factor: 0.8,
@@ -70,12 +70,3 @@ export const NUTRITION_PURPOSE_OPTIONS = {
     }
   }
 } as const;
-
-export type NutritionPurposeKey = keyof typeof NUTRITION_PURPOSE_OPTIONS;
-export type NutritionPurposeRatio = Record<'carbohydrate' | 'protein' | 'fat', number>;
-export type NutritionPurposeValue = {
-  name: string;
-  factor: number;
-  ratio: NutritionPurposeRatio;
-};
-export type NutritionPurpose = Record<NutritionPurposeKey, NutritionPurposeValue>;
