@@ -20,14 +20,9 @@ export type MealDTO = {
   ateAt: string;
   mealType: MealTypeKey;
   memo: string | null;
-  totalCalories: number;
-  totalCarbohydrate: number;
-  totalProtein: number;
-  totalFat: number;
   menuCount: number;
   mealDetails: MealDetailDTO[];
 };
-
 export type MealOverviewDTO = Omit<MealDTO, 'mealDetails'>;
 export type CreateMealDTO = Pick<MealDTO, 'foodImages' | 'ateAt' | 'mealType' | 'memo'>;
 export type CreateMealDetailDTO = Omit<MealDetailDTO, 'id' | 'mealId'>;
