@@ -1,3 +1,6 @@
+// 퍼널의 URL 쿼리 파라미터 키값
+export const FUNNEL_QUERY_PARAM = 'step';
+
 const MACRO_NAME_MAP: Record<string, string> = {
   carbohydrate: '탄수화물',
   protein: '단백질',
@@ -10,3 +13,4 @@ export const MACRO_COLOR_MAP: Record<string, string> = {
   [MACRO_NAME_MAP.protein]: 'bg-[#9BE7D6]',
   [MACRO_NAME_MAP.fat]: 'bg-[#B8E7FF]'
 };
+
