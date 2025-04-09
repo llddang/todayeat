@@ -17,7 +17,7 @@ export const getSessionStorageItem = <R>(id: string, defaultValue: R): R => {
   } catch (parseError) {
     console.error('Failed to parse session data:', parseError);
     parsedData = {} as R;
-    sessionStorage.setItem(id, '{}');
+    sessionStorage.setItem(id, JSON.stringify(defaultValue));
   }
 
   return parsedData;
