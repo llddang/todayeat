@@ -5,7 +5,7 @@ type GradientBlurBackgroundProps = {
 const GradientBlurBackground = ({ children }: GradientBlurBackgroundProps) => {
   return (
     <div className="relative min-h-screen overflow-hidden">
-      <div className="bg-gradient-blur absolute inset-0 -z-10 h-full w-full" />
+      <div className="bg-gradient-blur z-background absolute inset-0 h-full w-full" />
       {children}
     </div>
   );
