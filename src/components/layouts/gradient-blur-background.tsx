@@ -1,5 +1,7 @@
+import { ReactNode } from 'react';
+
 type GradientBlurBackgroundProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 const GradientBlurBackground = ({ children }: GradientBlurBackgroundProps) => {
