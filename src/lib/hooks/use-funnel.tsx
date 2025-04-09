@@ -5,7 +5,11 @@ import { useState, useEffect, useCallback } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FUNNEL_QUERY_PARAM } from '@/constants/common.constant';
 import { isServer } from '@/lib/utils/predicate.util';
-import { getSessionStorageItem, setSessionStorageItem } from '@/lib/utils/session-storage.util';
+import {
+  getSessionStorageItem,
+  removeSessionStorageItem,
+  setSessionStorageItem
+} from '@/lib/utils/session-storage.util';
 
 // 세션 스토리지 기본 키값
 const DEFAULT_SESSION_ID = 'todayeat-funnel-data';
@@ -48,6 +52,7 @@ type StepComponentProps<K extends Record<string, unknown>, Step extends string, 
     ): IsEmptyObject<RequiredFieldsForNewStep<K[NextStep], K[CurrentStep]>> extends true ? void : never;
   };
   data: K[CurrentStep];
+  clearFunnelData: () => void;
 };
 
 /**
@@ -123,6 +128,11 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
     router.replace(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
   }, [currentStep, stepInQueryParam]);
 
+  const clearFunnelData = () => {
+    removeSessionStorageItem(sessionId);
+    setFunnelData({});
+  };
+
   const setStepImplementation = <NextStep extends T>(
     nextStep: NextStep,
     requiredData: RequiredFieldsForNewStep<K[NextStep], K[typeof currentStep]>
@@ -150,7 +160,7 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
   };
 
   const Funnel = (props: FunnelComponentProps<K, T>) => {
-    return props[currentStep]({ setStep, data: funnelData as K[T] });
+    return props[currentStep]({ setStep, data: funnelData as K[T], clearFunnelData });
   };
 
   return Funnel;
