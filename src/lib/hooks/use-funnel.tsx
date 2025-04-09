@@ -132,11 +132,11 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
 
   const setStepImplementation = <NextStep extends T>(
     nextStep: NextStep,
-    requiredData: RequiredFieldsForNewStep<K[NextStep], K[typeof currentStep]>
+    currentStepData: RequiredFieldsForNewStep<K[NextStep], K[typeof currentStep]>
   ): void => {
     if (currentStep === nextStep) return;
 
-    const newData = { ...funnelData, ...(requiredData || {}) } as K[NextStep];
+    const newData = { ...funnelData, ...(currentStepData || {}) } as K[NextStep];
 
     if (!validateStep[nextStep](newData)) {
       alert('비정상적인 접근입니다.');
