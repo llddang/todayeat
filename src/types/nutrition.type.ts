@@ -9,16 +9,6 @@ export type NutritionGoal = {
 
 export type MealNutrition = Pick<MealDetailDTO, 'calories' | 'carbohydrate' | 'protein' | 'fat'>;
 
-export type ActivityLevelKey = keyof typeof ActivityLevel;
-
-export type NutritionPurposeKey = keyof typeof NutritionPurpose;
-export type NutritionPurposeRatio = Record<'carbohydrate' | 'protein' | 'fat', number>;
-export type NutritionPurposeValue = {
-  name: string;
-  factor: number;
-  ratio: NutritionPurposeRatio;
-};
-
 export const ActivityLevel = {
   VERY_LOW: 'VERY_LOW',
   LOW: 'LOW',
@@ -27,8 +17,18 @@ export const ActivityLevel = {
   VERY_HIGH: 'VERY_HIGH'
 } as const;
 
+export type ActivityLevelKey = keyof typeof ActivityLevel;
+
 export const NutritionPurpose = {
   WEIGHT_LOSS: 'WEIGHT_LOSS',
   WEIGHT_MAINTENANCE: 'WEIGHT_MAINTENANCE',
   MUSCLE_GAIN: 'MUSCLE_GAIN'
 } as const;
+
+export type NutritionPurposeKey = keyof typeof NutritionPurpose;
+export type NutritionPurposeRatio = Record<'carbohydrate' | 'protein' | 'fat', number>;
+export type NutritionPurposeValue = {
+  name: string;
+  factor: number;
+  ratio: NutritionPurposeRatio;
+};
