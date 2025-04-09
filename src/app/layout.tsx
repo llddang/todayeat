@@ -6,7 +6,7 @@ import GradientBlurBackground from '@/components/layouts/gradient-blur-backgroun
 import './globals.css';
 
 const wantedSans = localFont({
-  src: '../../public/fonts/WantedSans-Regular.woff2',
+  src: '../../public/fonts/WantedSansVariable.woff2',
   display: 'swap'
 });
 
