@@ -7,8 +7,7 @@ import './globals.css';
 
 const wantedSans = localFont({
   src: '../../public/fonts/WantedSans-Regular.woff2',
-  display: 'swap',
-  weight: '400'
+  display: 'swap'
 });
 
 export const metadata: Metadata = {
