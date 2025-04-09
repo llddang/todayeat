@@ -139,7 +139,9 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
     const newData = { ...funnelData, ...(requiredData || {}) } as K[NextStep];
 
     if (!validateStep[nextStep](newData)) {
-      return console.error(`Invalid data for step ${nextStep} and ${newData}`);
+      alert('비정상적인 접근입니다.');
+      console.error(`Invalid data for step ${nextStep} and ${newData}`);
+      return;
     }
 
     setFunnelData(newData);
