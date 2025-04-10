@@ -52,11 +52,6 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))'
         },
-        borderRadius: {
-          lg: 'var(--radius)',
-          md: 'calc(var(--radius) - 2px)',
-          sm: 'calc(var(--radius) - 4px)'
-        },
         amber: {
           50: '#FFF9E0',
           100: '#FFEEB1',
@@ -136,6 +131,11 @@ const config: Config = {
           800: '#515151',
           900: '#2F2F2F'
         }
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)'
       },
       zIndex: {
         background: '-10'
