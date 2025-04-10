@@ -12,7 +12,7 @@ const CaloriesSummaryCard = ({ total, goal }: CalorieSummaryCardProps) => {
   const percentage = Math.min(getPercentage(total, goal), 100);
   const offset = CIRCUMFERENCE - (CIRCUMFERENCE * percentage) / 100;
 
-  const handlefeedbackMessage = () => {
+  const handleFeedbackMessage = () => {
     if (total < goal) return `${goal - total}kcal 더 먹을 수 있어요`;
     else return `${total - goal}kcal 더 먹었어요`;
   };
@@ -25,7 +25,7 @@ const CaloriesSummaryCard = ({ total, goal }: CalorieSummaryCardProps) => {
         <p className="text-gray-550 mb-2 text-sm">
           1일 목표 칼로리<span className="ml-1 font-semibold">{formatNumberWithComma(goal)}</span>
         </p>
-        <p className="text-sm font-medium">{handlefeedbackMessage()}</p>
+        <p className="text-sm font-medium">{handleFeedbackMessage()}</p>
       </div>
       <div className="relative h-[6.25rem] w-[6.25rem]">
         <svg className="rotate-90 transform" viewBox="0 0 100 100">
