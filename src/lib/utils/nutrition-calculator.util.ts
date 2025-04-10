@@ -2,7 +2,7 @@ import { ACTIVITY_LEVEL_OPTIONS, NUTRITION_PURPOSE_OPTIONS } from '@/constants/n
 import { MealDTO } from '@/types/DTO/meal.dto';
 import { UserPhysicalProfileDTO } from '@/types/DTO/user.dto';
 import { Gender, GenderKey } from '@/types/gender.type';
-import { MealNutrition, NutritionGoal, NutritionPurposeRatio, NutritionPurposeValue } from '@/types/nutrition.type';
+import { MealNutrition, NutritionGoal, Macronutrient, NutritionPurposeValue } from '@/types/nutrition.type';
 
 const CALORIES_PER_GRAM = {
   CARBOHYDRATE: 4,
@@ -38,7 +38,7 @@ const calculateBMR = (weight: number, height: number, age: number, gender: Gende
  * 일일 총 칼로리를 기반으로 각 영양소별 권장 섭취량을 계산합니다.
  *
  * @param {number} dailyCalories - 일일 총 칼로리
- * @param {NutritionPurposeRatio} ratio - 각 영양소별 비율
+ * @param {Macronutrient} ratio - 각 영양소별 비율
  * @returns {Object} 탄수화물, 단백질, 지방의 일일 권장 섭취량(g)
  *
  * @description
@@ -47,7 +47,7 @@ const calculateBMR = (weight: number, height: number, age: number, gender: Gende
  * - 단백질: 4kcal/g
  * - 지방: 9kcal/g
  */
-const calculateDailyNutrition = (dailyCalories: number, ratio: NutritionPurposeRatio) => {
+const calculateDailyNutrition = (dailyCalories: number, ratio: Macronutrient) => {
   return {
     dailyCarbohydrateGoal: Math.round((dailyCalories * ratio.carbohydrate) / CALORIES_PER_GRAM.CARBOHYDRATE),
     dailyProteinGoal: Math.round((dailyCalories * ratio.protein) / CALORIES_PER_GRAM.PROTEIN),
@@ -172,7 +172,7 @@ export const calculateNutritionAverage = (meals: MealDTO[]): MealNutrition => {
  * @param {number} base - 기준값 (0일 경우 0% 반환)
  * @returns {number} 기준 대비 백분율 (정수, 소수점 없음)
  */
-const getPercentage = (value: number, base: number): number => {
+export const getPercentage = (value: number, base: number): number => {
   if (!base) return 0;
   return Math.round((value / base) * 100);
 };

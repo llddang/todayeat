@@ -8,6 +8,7 @@ export type NutritionGoal = {
 };
 
 export type MealNutrition = Pick<MealDetailDTO, 'calories' | 'carbohydrate' | 'protein' | 'fat'>;
+export type Macronutrient = Omit<MealNutrition, 'calories'>;
 
 export const ActivityLevel = {
   VERY_LOW: 'VERY_LOW',
@@ -26,9 +27,8 @@ export const NutritionPurpose = {
 } as const;
 
 export type NutritionPurposeType = keyof typeof NutritionPurpose;
-export type NutritionPurposeRatio = Record<'carbohydrate' | 'protein' | 'fat', number>;
 export type NutritionPurposeValue = {
   name: string;
   factor: number;
-  ratio: NutritionPurposeRatio;
+  ratio: Macronutrient;
 };
