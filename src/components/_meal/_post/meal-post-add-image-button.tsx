@@ -45,7 +45,11 @@ const MealPostAddImageButton = ({ imageFiles, setImageFiles }: MealPostAddImageB
         onClick={() => inputFileRef.current?.click()}
         className="flex w-full flex-col items-center gap-4 rounded-2xl bg-white px-4 py-7"
       >
-        <Image src={IMAGE_UPLOAD} alt="이미지 업로드 일러스트" className="h-10 w-10" />
+        <Image
+          src={IMAGE_UPLOAD}
+          alt="이미지 업로드 일러스트"
+          className={`h-10 w-10 ${imageFiles.length === MAX_MEAL_IMAGE_COUNT && 'opacity-30 mix-blend-luminosity'}`}
+        />
         <span className="tracking-snug text-sm leading-[140%] text-gray-600">사진은 최대 3개까지 등록 가능합니다.</span>
       </button>
     </>
