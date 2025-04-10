@@ -19,6 +19,7 @@ const MealPostAddImagePreviewGallery = ({ imageFiles, setImageFiles }: MealPostA
     setImageFiles((prev) => prev.filter((file) => getFileId(file) !== fileId));
   };
 
+  // WARN: react strict mode에서 제대로 동작하지 않을 수 있음.
   useEffect(() => {
     return () => {
       previewImages.forEach(({ imageUrl }) => cleanupBlobUrl(imageUrl));
