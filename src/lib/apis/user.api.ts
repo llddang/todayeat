@@ -18,11 +18,7 @@ export const getUser = async (): Promise<UserDTO> => {
 
   const { user_personal_infos, ...rest } = data;
 
-  const personalInfoData = Array.isArray(user_personal_infos)
-    ? user_personal_infos.length > 0
-      ? user_personal_infos[0]
-      : null
-    : user_personal_infos;
+  const personalInfoData = user_personal_infos.length > 0 ? user_personal_infos[0] : null;
 
   return {
     ...snakeToCamelObject(rest),
