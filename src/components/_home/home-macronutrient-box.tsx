@@ -3,13 +3,13 @@ import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
 
 type macroColorMapType = keyof typeof MACRO_COLOR_MAP;
 
-type MacronutrientBoxProps = {
+type HomeMacronutrientBoxProps = {
   label: macroColorMapType;
   value: number;
   goal: number;
 };
 
-const MacronutrientBox = ({ label, value, goal }: MacronutrientBoxProps) => {
+const HomeMacronutrientBox = ({ label, value, goal }: HomeMacronutrientBoxProps) => {
   const percent = Math.min(getPercentage(value, goal), 100);
   const barColor = MACRO_COLOR_MAP[label] || 'bg-gray-300';
 
@@ -31,4 +31,4 @@ const MacronutrientBox = ({ label, value, goal }: MacronutrientBoxProps) => {
   );
 };
 
-export default MacronutrientBox;
+export default HomeMacronutrientBox;

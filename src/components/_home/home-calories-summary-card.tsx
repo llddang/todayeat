@@ -2,12 +2,12 @@ import { CIRCUMFERENCE, RADIUS } from '@/constants/home.constant';
 import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
 import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
 
-type CalorieSummaryCardProps = {
+type HomeCalorieSummaryCardProps = {
   total: number;
   goal: number;
 };
 
-const CaloriesSummaryCard = ({ total, goal }: CalorieSummaryCardProps) => {
+const HomeCaloriesSummaryCard = ({ total, goal }: HomeCalorieSummaryCardProps) => {
   const percentage = Math.min(getPercentage(total, goal), 100);
   const offset = CIRCUMFERENCE - (CIRCUMFERENCE * percentage) / 100;
 
@@ -47,4 +47,4 @@ const CaloriesSummaryCard = ({ total, goal }: CalorieSummaryCardProps) => {
   );
 };
 
-export default CaloriesSummaryCard;
+export default HomeCaloriesSummaryCard;

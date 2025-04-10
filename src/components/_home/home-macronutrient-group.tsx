@@ -1,12 +1,12 @@
 import MacronutrientBox from '@/components/_home/home-macronutrient-box';
 import { Macronutrient } from '@/types/nutrition.type';
 
-type MacronutrientGroupProps = {
+type HomeMacronutrientGroupProps = {
   total: Macronutrient;
   goal: Macronutrient;
 };
 
-const MacroNutrientGroup = ({ total, goal }: MacronutrientGroupProps) => {
+const HomeMacroNutrientGroup = ({ total, goal }: HomeMacronutrientGroupProps) => {
   return (
     <div className="flex gap-3">
       <MacronutrientBox label="탄수화물" value={total.carbohydrate} goal={goal.carbohydrate} />
@@ -16,4 +16,4 @@ const MacroNutrientGroup = ({ total, goal }: MacronutrientGroupProps) => {
   );
 };
 
-export default MacroNutrientGroup;
+export default HomeMacroNutrientGroup;
