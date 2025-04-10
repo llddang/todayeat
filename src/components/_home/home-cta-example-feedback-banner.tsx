@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const CtaExampleFeedbackBanner = () => {
+const HomeCtaExampleFeedbackBanner = () => {
   return (
     <div className="bg-gradient-radial-purple after:bg-sparkle-illustration relative mb-4 rounded-2xl p-4 after:absolute after:bottom-5 after:right-5 after:block after:h-12 after:w-12 after:content-['']">
       <h3 className="before:bg-info-icon mb-2 flex items-center gap-1 font-semibold tracking-tight before:block before:h-5 before:w-5 before:bg-contain before:content-['']">
@@ -21,4 +21,4 @@ const CtaExampleFeedbackBanner = () => {
   );
 };
 
-export default CtaExampleFeedbackBanner;
+export default HomeCtaExampleFeedbackBanner;
