@@ -4,7 +4,6 @@ import { GenderType, ActivityLevelType, PurposeType } from '@/types/user-persona
 
 export type UserPersonalInfoDTO = {
   id: string;
-  createdAt: string;
   userId: string;
   gender: GenderType;
   dailyCaloriesGoal: number;
@@ -24,7 +23,7 @@ export type UserDTO = {
   email: string;
   nickname: string;
   profileImage: string | null;
-  userPersonalInfos: UserPersonalInfoDTO | null;
+  personalInfo: UserPersonalInfoDTO | null;
 };
 
 export type UserPhysicalProfileDTO = Pick<
@@ -37,6 +36,7 @@ export type UserSignUpDTO = Pick<UserDTO, 'email' | 'nickname'> & { password: st
 export type UserSignInDTO = Pick<UserDTO, 'email'> & { password: string };
 
 export type UpdateUserDTO = Omit<UserDTO, 'id' | 'createdAt' | 'email'>;
+export type UpdateUserPersonalInfoDTO = Omit<UserPersonalInfoDTO, 'id' | 'userId'>;
 
 export type SupabaseAuthDTO = {
   user: User | null;
