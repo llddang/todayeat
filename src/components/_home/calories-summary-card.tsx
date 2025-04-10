@@ -1,3 +1,4 @@
+import { CIRCUMFERENCE, RADIUS } from '@/constants/home.constant';
 import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
 import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
 
@@ -7,13 +8,12 @@ type CalorieSummaryCardProps = {
 };
 
 const CaloriesSummaryCard = ({ total, goal }: CalorieSummaryCardProps) => {
-  const RADIUS = 44;
-  const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
   const percentage = Math.min(getPercentage(total, goal), 100);
   const offset = CIRCUMFERENCE - (CIRCUMFERENCE * percentage) / 100;
 
   const handleFeedbackMessage = () => {
     if (total < goal) return `${goal - total}kcal 더 먹을 수 있어요`;
+    else if (goal <= 0) return '';
     else return `${total - goal}kcal 더 먹었어요`;
   };
 
