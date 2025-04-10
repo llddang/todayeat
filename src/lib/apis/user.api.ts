@@ -16,12 +16,12 @@ export const getUser = async (): Promise<UserDTO> => {
 
   if (error) throw error;
 
-  const { user_personal_infos, ...rest } = data;
+  const { user_personal_infos, ...userAuthInfo } = data;
 
   const personalInfoData = user_personal_infos.length > 0 ? user_personal_infos[0] : null;
 
   return {
-    ...snakeToCamelObject(rest),
+    ...snakeToCamelObject(userAuthInfo),
     personalInfo: personalInfoData ? snakeToCamelObject(personalInfoData) : null
   };
 };
