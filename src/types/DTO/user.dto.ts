@@ -1,7 +1,21 @@
 import { Session, User } from '@supabase/supabase-js';
 import { SnakeCaseObject } from '@/types/common.type';
-import { GenderKey } from '@/types/gender.type';
-import { ActivityLevelType, NutritionPurposeType } from '@/types/nutrition.type';
+import { GenderType, ActivityLevelType, PurposeType } from '@/types/user-personal-info.type';
+
+export type UserPersonalInfoDTO = {
+  id: string;
+  userId: string;
+  gender: GenderType;
+  dailyCaloriesGoal: number;
+  dailyCarbohydrateGoal: number;
+  dailyProteinGoal: number;
+  dailyFatGoal: number;
+  height: number;
+  weight: number;
+  age: number;
+  activityLevel: ActivityLevelType;
+  purpose: PurposeType;
+};
 
 export type UserDTO = {
   id: string;
@@ -9,35 +23,20 @@ export type UserDTO = {
   email: string;
   nickname: string;
   profileImage: string | null;
-  gender: GenderKey | null;
-  dailyCaloriesGoal: number | null;
-  dailyCarbohydrateGoal: number | null;
-  dailyProteinGoal: number | null;
-  dailyFatGoal: number | null;
-  height: number | null;
-  weight: number | null;
-  age: number | null;
-  activityLevel: ActivityLevelType;
-  purpose: NutritionPurposeType | null;
+  personalInfo: UserPersonalInfoDTO | null;
 };
 
-export type UserPhysicalProfileDTO = {
-  [K in Extract<keyof UserDTO, 'gender' | 'height' | 'weight' | 'age' | 'activityLevel' | 'purpose'>]: NonNullable<
-    UserDTO[K]
-  >;
-};
+export type UserPhysicalProfileDTO = Pick<
+  UserPersonalInfoDTO,
+  'gender' | 'height' | 'weight' | 'age' | 'activityLevel' | 'purpose'
+>;
 
-export type UserSnakeCaseDTO = SnakeCaseObject<UserDTO>;
+export type UserSignUpDTO = Pick<UserDTO, 'email' | 'nickname'> & { password: string };
 
-export type UserSignUpDTO = Pick<UserDTO, 'email' | 'nickname'> & {
-  password: string;
-};
-
-export type UserSignInDTO = Pick<UserDTO, 'email'> & {
-  password: string;
-};
+export type UserSignInDTO = Pick<UserDTO, 'email'> & { password: string };
 
 export type UpdateUserDTO = Omit<UserDTO, 'id' | 'createdAt' | 'email'>;
+export type UpdateUserPersonalInfoDTO = Omit<UserPersonalInfoDTO, 'id' | 'userId'>;
 
 export type SupabaseAuthDTO = {
   user: User | null;
@@ -49,3 +48,6 @@ export type UserAuthDTO = {
   email: string;
   isAuthenticated: boolean;
 };
+
+export type UserSnakeCaseDTO = SnakeCaseObject<UserDTO>;
+export type UserPersonalInfoSnakeCaseDTO = SnakeCaseObject<UserPersonalInfoDTO>;

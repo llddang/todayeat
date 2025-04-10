@@ -1,4 +1,10 @@
-import { ActivityLevelType, NutritionPurposeType, NutritionPurposeValue } from '@/types/nutrition.type';
+import { PurposeValue } from '@/types/nutrition.type';
+import { GenderType, ActivityLevelType, PurposeType } from '@/types/user-personal-info.type';
+
+export const GENDER_OPTIONS: Record<GenderType, string> = {
+  MAN: '남',
+  WOMAN: '여'
+} as const;
 
 export const ACTIVITY_LEVEL_OPTIONS: Record<ActivityLevelType, { description: string; factor: number }> = {
   VERY_LOW: { description: '거의 움직이지 않아요', factor: 1.2 },
@@ -8,7 +14,7 @@ export const ACTIVITY_LEVEL_OPTIONS: Record<ActivityLevelType, { description: st
   VERY_HIGH: { description: '하루에 여러 번 강도 높은 운동을 해요', factor: 1.9 }
 } as const;
 
-export const NUTRITION_PURPOSE_OPTIONS: Record<NutritionPurposeType, NutritionPurposeValue> = {
+export const NUTRITION_PURPOSE_OPTIONS: Record<PurposeType, PurposeValue> = {
   WEIGHT_LOSS: {
     name: '체지방 줄이기',
     factor: 0.8,
