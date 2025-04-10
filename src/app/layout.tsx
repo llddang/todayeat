@@ -1,8 +1,14 @@
-import type { Metadata } from 'next';
-import './globals.css';
 import { Suspense } from 'react';
+import type { Metadata } from 'next';
+import localFont from 'next/font/local';
 import ErrorHandler from '@/components/commons/error-handler';
 import GradientBlurBackground from '@/components/layouts/gradient-blur-background';
+import './globals.css';
+
+const wantedSans = localFont({
+  src: '../../public/fonts/WantedSansVariable.woff2',
+  display: 'swap'
+});
 
 export const metadata: Metadata = {
   title: 'Todayeat',
@@ -16,7 +22,7 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="ko">
-      <body className="antialiased">
+      <body className={`${wantedSans.className} antialiased`}>
         <Suspense>
           <ErrorHandler />
         </Suspense>
