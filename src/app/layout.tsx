@@ -22,7 +22,7 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="ko">
-      <body className={`${wantedSans.className} antialiased`}>
+      <body className={`${wantedSans.className} text-gray-900 antialiased`}>
         <Suspense>
           <ErrorHandler />
         </Suspense>
