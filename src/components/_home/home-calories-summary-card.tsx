@@ -18,7 +18,7 @@ const CaloriesSummaryCard = ({ total, goal }: CalorieSummaryCardProps) => {
   };
 
   return (
-    <div className="mb-3 flex items-center justify-between rounded-2xl bg-white p-4">
+    <div className="flex items-center justify-between rounded-2xl bg-white p-4">
       <div>
         <h3 className="text-gray-550 mb-1 text-[13px]">총 섭취 칼로리</h3>
         <span className="mb-2 block text-4xl font-bold">{formatNumberWithComma(total)}</span>
