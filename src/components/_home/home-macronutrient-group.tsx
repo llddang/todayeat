@@ -1,4 +1,4 @@
-import MacronutrientBox from '@/components/_home/macronutrient-box';
+import MacronutrientBox from '@/components/_home/home-macronutrient-box';
 import { Macronutrient } from '@/types/nutrition.type';
 
 type MacronutrientGroupProps = {
