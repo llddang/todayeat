@@ -4,6 +4,7 @@ import PIC_LINE from '@/../public/icons/pic_line.svg';
 import CLOSE_LINE from '@/../public/icons/close_line.svg';
 import Image from 'next/image';
 import { cleanupBlobUrl } from '@/lib/utils/cleanup-blob-url.util';
+import { getFileId } from '@/lib/utils/file.util';
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB in bytes
 const MAX_MEAL_IMAGE = 3;
@@ -16,8 +17,6 @@ const MealPostRegisterImage = ({ setImageFiles, imageFiles }: MealPostRegisterIm
   const previewImages = imageFiles.map((file) => ({ imageUrl: URL.createObjectURL(file), fileId: getFileId(file) }));
   const emptyImageCount = MAX_MEAL_IMAGE - imageFiles.length;
   const emptyImages = Array(emptyImageCount).fill(1);
-
-  console.log(previewImages.length, emptyImageCount);
 
   const inputFileRef = useRef<HTMLInputElement>(null);
 
@@ -97,19 +96,6 @@ const MealPostRegisterImage = ({ setImageFiles, imageFiles }: MealPostRegisterIm
   );
 };
 export default MealPostRegisterImage;
-
-const getFileId = (file: File): string => {
-  const fileInfo = [file.name, file.size.toString(), file.lastModified.toString(), file.type].join('|');
-
-  let hash = 0;
-  for (let i = 0; i < fileInfo.length; i++) {
-    const char = fileInfo.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash = hash & hash;
-  }
-
-  return `${hash.toString(16)}-${file.size}-${file.name.replace(/\s+/g, '_')}`;
-};
 
 const EmptyImage = () => {
   return (
