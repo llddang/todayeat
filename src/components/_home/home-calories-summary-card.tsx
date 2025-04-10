@@ -14,6 +14,7 @@ const HomeCaloriesSummaryCard = ({ total, goal }: HomeCalorieSummaryCardProps) =
   const handleFeedbackMessage = () => {
     if (total < goal) return `${goal - total}kcal 더 먹을 수 있어요`;
     else if (goal <= 0) return '';
+    else if (total === goal) return '목표를 달성했어요';
     else return `${total - goal}kcal 더 먹었어요`;
   };
 
