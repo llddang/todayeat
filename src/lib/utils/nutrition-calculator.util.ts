@@ -1,8 +1,8 @@
-import { ACTIVITY_LEVEL_OPTIONS, NUTRITION_PURPOSE_OPTIONS } from '@/constants/nutrition.constant';
+import { ACTIVITY_LEVEL_OPTIONS, NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
 import { MealDTO } from '@/types/DTO/meal.dto';
 import { UserPhysicalProfileDTO } from '@/types/DTO/user.dto';
-import { Gender, GenderKey } from '@/types/gender.type';
-import { MealNutrition, NutritionGoal, Macronutrient, NutritionPurposeValue } from '@/types/nutrition.type';
+import { MealNutrition, NutritionGoal, Macronutrient, PurposeValue } from '@/types/nutrition.type';
+import { Gender, GenderType } from '@/types/user-personal-info.type';
 
 const CALORIES_PER_GRAM = {
   CARBOHYDRATE: 4,
@@ -23,15 +23,15 @@ const initialNutritionValue: MealNutrition = {
  * @params {number} weight,h - 체중(kg), 신장(cm), 나이
  * @param {number} height - 신장(cm)
  * @param {number} age - 나이
- * @param {GenderKey} gender - 성별 ("MAN" | "WOMAN")
+ * @param {GenderType} gender - 성별 ("MAN" | "WOMAN")
  * @returns {number} 계산된 기초대사량
  *
  * @description
  * 성별에 따라 다른 기초대사량 계산식을 적용합니다:
  */
-const calculateBMR = (weight: number, height: number, age: number, gender: GenderKey): number => {
+const calculateBMR = (weight: number, height: number, age: number, gender: GenderType): number => {
   const commonBMR = 10 * weight + 6.25 * height - 5 * age;
-  return gender === Gender.MAN.value ? commonBMR + 5 : commonBMR - 161;
+  return gender === Gender.MAN ? commonBMR + 5 : commonBMR - 161;
 };
 
 /**
@@ -88,7 +88,7 @@ export const calculateDailyNutritionGoal = ({
   purpose
 }: UserPhysicalProfileDTO): NutritionGoal => {
   const activityFactor = ACTIVITY_LEVEL_OPTIONS[activityLevel].factor;
-  const { factor, ratio }: NutritionPurposeValue = NUTRITION_PURPOSE_OPTIONS[purpose];
+  const { factor, ratio }: PurposeValue = NUTRITION_PURPOSE_OPTIONS[purpose];
   const bmr = calculateBMR(weight, height, age, gender);
   const dailyCaloriesGoal = calculateDailyCalories(bmr, activityFactor, factor);
   const dailyNutritionGoal = calculateDailyNutrition(dailyCaloriesGoal, ratio);
