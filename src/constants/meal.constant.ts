@@ -11,3 +11,6 @@ export const MEAL_CATEGORY_OPTIONS: { [key in MealCategoryType]: { name: string;
   DINNER: { name: '저녁', icon: DINNER },
   SNACK: { name: '간식', icon: SNACK }
 } as const;
+
+export const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB in bytes
+export const MAX_MEAL_IMAGE_COUNT = 3;

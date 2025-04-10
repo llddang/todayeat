@@ -2,9 +2,7 @@ import Image from 'next/image';
 import { ChangeEvent, Dispatch, SetStateAction, useRef } from 'react';
 import IMAGE_UPLOAD from '@/../public/illustrations/image-upload.svg';
 import { getFileId } from '@/lib/utils/file.util';
-
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB in bytes
-const MAX_MEAL_IMAGE = 3;
+import { MAX_FILE_SIZE, MAX_MEAL_IMAGE_COUNT } from '@/constants/meal.constant';
 
 type MealPostAddImageButtonProps = {
   imageFiles: File[];
@@ -19,7 +17,7 @@ const MealPostAddImageButton = ({ imageFiles, setImageFiles }: MealPostAddImageB
     const fileArray = Array.from(files);
     e.target.value = '';
 
-    if (fileArray.length + imageFiles.length > MAX_MEAL_IMAGE) return alert('3장까지 첨부 가능합니다.');
+    if (fileArray.length + imageFiles.length > MAX_MEAL_IMAGE_COUNT) return alert('3장까지 첨부 가능합니다.');
 
     const hasOverSizeFile = fileArray.some((file) => file.size >= MAX_FILE_SIZE);
     if (hasOverSizeFile) return alert('10MB 이하의 파일을 첨부해주세요.');
