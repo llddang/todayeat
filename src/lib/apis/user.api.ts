@@ -3,7 +3,7 @@
 import { getAuth } from '@/lib/apis/auth-server.api';
 import { camelToSnakeObject, snakeToCamelObject } from '@/lib/utils/camelize.util';
 import { getServerClient } from '@/lib/utils/supabase/server.util';
-import { UpdateUserDTO, UserDTO } from '@/types/DTO/user.dto';
+import { UpdateUserDTO, UpdateUserPersonalInfoDTO, UserDTO, UserPersonalInfoDTO } from '@/types/DTO/user.dto';
 
 /**
  *  자신의 정보를 불러오는 함수
@@ -41,6 +41,30 @@ export const updateUser = async (userInfo: Partial<UpdateUserDTO>): Promise<User
   const { id: userId } = await getAuth();
   const userInfoSnakeCase = camelToSnakeObject(userInfo);
   const { data, error } = await supabase.from('users').update(userInfoSnakeCase).eq('id', userId).select().single();
+  if (error) throw error;
+  return snakeToCamelObject(data);
+};
+
+export const updateUserPersonalInfo = async (
+  userPersonalInfo: UpdateUserPersonalInfoDTO
+): Promise<UserPersonalInfoDTO> => {
+  const supabase = getServerClient();
+  const { id: userId } = await getAuth();
+
+  const { data: existingData } = await supabase.from('user_personal_infos').select('id').eq('user_id', userId).single();
+
+  const userPersonalInfoSnakeCase = {
+    ...camelToSnakeObject(userPersonalInfo),
+    user_id: userId,
+    ...(existingData ? { id: existingData.id } : {})
+  };
+
+  const { data, error } = await supabase
+    .from('user_personal_infos')
+    .upsert(userPersonalInfoSnakeCase)
+    .select()
+    .single();
+
   if (error) throw error;
   return snakeToCamelObject(data);
 };
