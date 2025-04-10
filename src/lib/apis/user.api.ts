@@ -12,9 +12,22 @@ import { UpdateUserDTO, UserDTO } from '@/types/DTO/user.dto';
  */
 export const getUser = async (): Promise<UserDTO> => {
   const supabase = getServerClient();
-  const { data, error } = await supabase.from('users').select().single();
+  const { data, error } = await supabase.from('users').select('*, user_personal_infos!user_id(*)').single();
+
   if (error) throw error;
-  return snakeToCamelObject(data);
+
+  const { user_personal_infos, ...rest } = data;
+
+  const personalInfoData = Array.isArray(user_personal_infos)
+    ? user_personal_infos.length > 0
+      ? user_personal_infos[0]
+      : null
+    : user_personal_infos;
+
+  return {
+    ...snakeToCamelObject(rest),
+    personalInfo: personalInfoData ? snakeToCamelObject(personalInfoData) : null
+  };
 };
 
 /**
