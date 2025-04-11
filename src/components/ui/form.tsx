@@ -81,7 +81,7 @@ const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
 );
 FormItem.displayName = 'FormItem';
 
-type FormLabelProps = React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> & { disabled: boolean };
+type FormLabelProps = React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> & { disabled?: boolean };
 
 const FormLabel = React.forwardRef<React.ElementRef<typeof LabelPrimitive.Root>, FormLabelProps>(
   ({ className, ...props }, ref) => {
@@ -118,7 +118,7 @@ const FormControl = React.forwardRef<React.ElementRef<typeof Slot>, React.Compon
 FormControl.displayName = 'FormControl';
 
 type FormDescriptionProps = React.HTMLAttributes<HTMLParagraphElement> & {
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 const FormDescription = React.forwardRef<HTMLParagraphElement, FormDescriptionProps>(({ className, ...props }, ref) => {
