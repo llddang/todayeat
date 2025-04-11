@@ -1,4 +1,4 @@
-import { getMessageByDiff } from '@/lib/utils/home.util';
+import { MacronutrientDiffItem } from '@/types/home.type';
 
 export const RADIUS = 44;
 export const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
@@ -15,6 +15,10 @@ export const NUTRITION_FEEDBACKS = {
     low: '건강한 지방은 호르몬 생성과 영양소 흡수에 필요해요. 아보카도, 견과류, 올리브유를 활용해보세요.',
     high: '지방 섭취가 과다하네요. 다음 식사에는 저지방 단백질과 채소 위주로 구성해보세요.'
   },
+  BALANCED: {
+    title: '오늘의 영양 균형이 좋아요',
+    description: '목표에 맞는 균형 잡힌 식단을 유지하고 계세요. 건강한 식습관을 계속 유지하세요!'
+  },
   EXAMPLE: {
     NO_GOAL: {
       title: '단백질이 목표보다 20g 부족해요',
@@ -26,5 +30,14 @@ export const NUTRITION_FEEDBACKS = {
         '아직 피드백을 드릴 수 없어요. 사진으로 식사를 기록하고 목표를 설정해서 개인 맞춤 피드백을 받아 보세요!'
     }
   },
-  BY_DIFF: getMessageByDiff
+  BY_DIFF: {
+    low: (nutrient: MacronutrientDiffItem) => ({
+      title: `${nutrient.label}이 목표보다 ${Math.round(Math.abs(nutrient.diff))}g 부족해요`,
+      description: NUTRITION_FEEDBACKS[nutrient.name]['low']
+    }),
+    high: (nutrient: MacronutrientDiffItem) => ({
+      title: `${nutrient.label}이 목표보다 ${Math.round(nutrient.diff)}g 초과됐어요`,
+      description: NUTRITION_FEEDBACKS[nutrient.name]['high']
+    })
+  }
 };
