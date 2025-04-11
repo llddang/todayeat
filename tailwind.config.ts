@@ -144,7 +144,8 @@ const config: Config = {
         'info-icon': "url('/icons/information_line.svg')",
         'sparkle-illustration': "url('/illustrations/cta-banner-sparkle.svg')",
         'image-upload-illustration': "url('/illustrations/image-upload.svg')",
-        'ai-sparkle': "url('/illustrations/ai-sparkle.svg')"
+        'ai-sparkle-1': "url('/illustrations/ai-sparkle-1.svg')",
+        'ai-sparkle-2': "url('/illustrations/ai-sparkle-2.svg')"
       },
       letterSpacing: {
         snug: '-0.0175rem'
