@@ -54,3 +54,22 @@ export const calculateNutritionDifferences = (
 export const getMostSignificantDiff = (diffs: DiffItem[]): DiffItem => {
   return [...diffs].sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff))[0];
 };
+
+export const GetMessageByDiff = (significantDiff: DiffItem) => {
+  if (significantDiff.diff < 0) {
+    const absDiff = Math.abs(significantDiff.diff);
+    return {
+      title: `${significantDiff.label}이 목표보다 ${Math.round(absDiff)}g 부족해요`,
+      description: getFeedbackDescription(significantDiff.name, 'low')
+    };
+  }
+
+  if (significantDiff.diff > 0) {
+    return {
+      title: `${significantDiff.label}이 목표보다 ${Math.round(significantDiff.diff)}g 초과됐어요`,
+      description: getFeedbackDescription(significantDiff.name, 'high')
+    };
+  }
+
+  return NUTRITION_FEEDBACKS.DEFAULT.BALANCED;
+};
