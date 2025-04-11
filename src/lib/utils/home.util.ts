@@ -71,5 +71,8 @@ export const GetMessageByDiff = (significantDiff: DiffItem) => {
     };
   }
 
-  return NUTRITION_FEEDBACKS.DEFAULT.BALANCED;
+  return {
+    title: '오늘의 영양 균형이 좋아요',
+    description: '목표에 맞는 균형 잡힌 식단을 유지하고 계세요. 건강한 식습관을 계속 유지하세요!'
+  };
 };

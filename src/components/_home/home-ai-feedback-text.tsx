@@ -16,11 +16,11 @@ const HomeAiFeedbackText = ({ nutritionData, nutritionGoal }: HomeAiFeedbackText
 
   const feedbackContent = useMemo(() => {
     if (!hasGoal) {
-      return NUTRITION_FEEDBACKS.DEFAULT.NO_GOAL;
+      return NUTRITION_FEEDBACKS.EXAMPLE.NO_GOAL;
     }
 
     if (hasGoal && !hasMealRecord) {
-      return NUTRITION_FEEDBACKS.DEFAULT.NO_MEAL;
+      return NUTRITION_FEEDBACKS.EXAMPLE.NO_MEAL;
     }
 
     if (hasGoal && hasMealRecord) {
