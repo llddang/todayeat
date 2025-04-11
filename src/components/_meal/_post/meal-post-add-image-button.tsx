@@ -32,9 +32,12 @@ const MealPostAddImageButton = ({ imageFiles, setImageFiles }: MealPostAddImageB
 
   return (
     <>
-      <label className="sr-only">음식 이미지</label>
+      <label htmlFor="meal-image" className="sr-only">
+        음식 이미지
+      </label>
       <input
         ref={inputFileRef}
+        name="meal-image"
         type="file"
         multiple
         accept="image/*"
@@ -50,7 +53,7 @@ const MealPostAddImageButton = ({ imageFiles, setImageFiles }: MealPostAddImageB
           alt="이미지 업로드 일러스트"
           className={`h-10 w-10 ${imageFiles.length === MAX_MEAL_IMAGE_COUNT && 'opacity-30 mix-blend-luminosity'}`}
         />
-        <span className="tracking-snug text-sm leading-[140%] text-gray-600">사진은 최대 3개까지 등록 가능합니다.</span>
+        <span className="text-sm leading-[140%] tracking-snug text-gray-600">사진은 최대 3개까지 등록 가능합니다.</span>
       </button>
     </>
   );
