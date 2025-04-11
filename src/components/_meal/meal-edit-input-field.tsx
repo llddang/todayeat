@@ -12,13 +12,15 @@ const INPUT_MAX_LENGTH = 4;
 
 const MealEditInputField = ({ variety, type = 'text' }: MacronutrientInputFieldProps): JSX.Element => {
   const { register } = useFormContext();
+
+  const name = MEASUREMENT_UNIT[variety].name;
   const unit = MEASUREMENT_UNIT[variety].unit;
 
   return (
     <div className="relative">
       <input
         type={type}
-        {...register(`${unit}`, {
+        {...register(`${name}`, {
           required: true,
           onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
             e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
