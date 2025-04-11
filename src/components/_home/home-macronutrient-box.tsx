@@ -1,18 +1,16 @@
-import { MACRO_COLOR_MAP } from '@/constants/common.constant';
 import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
-
-type macroColorMapType = keyof typeof MACRO_COLOR_MAP;
+import { MacronutrientOptions, MacronutrientType } from '@/types/nutrition.type';
 
 type HomeMacronutrientBoxProps = {
-  label: macroColorMapType;
+  variety: MacronutrientType;
   value: number;
   goal: number;
 };
 
-const HomeMacronutrientBox = ({ label, value, goal }: HomeMacronutrientBoxProps) => {
+const HomeMacronutrientBox = ({ variety, value, goal }: HomeMacronutrientBoxProps) => {
   const percent = Math.min(getPercentage(value, goal), 100);
-  const barColor = MACRO_COLOR_MAP[label] || 'bg-gray-300';
-
+  const barColor = MacronutrientOptions[variety].color || 'bg-gray-300';
+  const label = MacronutrientOptions[variety].label;
   return (
     <div className="flex flex-1 flex-col gap-1.5 rounded-2xl bg-white p-4">
       <span className="text-sm font-medium text-gray-600">{label}</span>
