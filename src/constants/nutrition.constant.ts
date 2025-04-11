@@ -1,4 +1,9 @@
-import { MacronutrientType, MacronutrientValues } from '@/types/nutrition.type';
+import {
+  MacronutrientType,
+  MacronutrientValues,
+  MeasurementUnitType,
+  MeasurementUnitValues
+} from '@/types/nutrition.type';
 
 export const MACRONUTRIENT_OPTIONS: Record<MacronutrientType, MacronutrientValues> = {
   CALORIES: {
@@ -23,13 +28,15 @@ export const MACRONUTRIENT_OPTIONS: Record<MacronutrientType, MacronutrientValue
   }
 } as const;
 
-export const MEASUREMENT_UNIT = {
+export const MEASUREMENT_UNIT: Record<MeasurementUnitType, MeasurementUnitValues> = {
   KCAL: {
     label: '칼로리',
+    name: 'calories',
     unit: 'kcal'
   },
   GRAM: {
     label: '그램',
+    name: 'gram',
     unit: 'g'
   }
 } as const;

@@ -1,4 +1,4 @@
-import { MACRONUTRIENT_OPTIONS, MEASUREMENT_UNIT } from '@/constants/nutrition.constant';
+import { MACRONUTRIENT_OPTIONS } from '@/constants/nutrition.constant';
 import { MealDetailDTO } from '@/types/DTO/meal.dto';
 
 export type NutritionGoal = {
@@ -39,5 +39,10 @@ export const MeasurementUnitEnum = {
   GRAM: 'GRAM'
 } as const;
 
-export type MeasurementUnitType = keyof typeof MEASUREMENT_UNIT;
-export type MeasurementUnitLabelValue = (typeof MEASUREMENT_UNIT)[MeasurementUnitType]['label'];
+export type MeasurementUnitValues = {
+  label: string;
+  name: string;
+  unit: string;
+};
+
+export type MeasurementUnitType = keyof typeof MeasurementUnitEnum;
