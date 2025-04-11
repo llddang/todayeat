@@ -81,14 +81,23 @@ const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
 );
 FormItem.displayName = 'FormItem';
 
-const FormLabel = React.forwardRef<
-  React.ElementRef<typeof LabelPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
->(({ className, ...props }, ref) => {
-  const { error, formItemId } = useFormField();
+type FormLabelProps = React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> & { disabled: boolean };
 
-  return <Label ref={ref} className={cn(error && 'text-destructive', className)} htmlFor={formItemId} {...props} />;
-});
+const FormLabel = React.forwardRef<React.ElementRef<typeof LabelPrimitive.Root>, FormLabelProps>(
+  ({ className, ...props }, ref) => {
+    const { error, formItemId } = useFormField();
+    const isDisabled = props.disabled;
+
+    return (
+      <Label
+        ref={ref}
+        className={cn(error && 'text-red-400', isDisabled && 'text-gray-500', className)}
+        htmlFor={formItemId}
+        {...props}
+      />
+    );
+  }
+);
 FormLabel.displayName = 'FormLabel';
 
 const FormControl = React.forwardRef<React.ElementRef<typeof Slot>, React.ComponentPropsWithoutRef<typeof Slot>>(
@@ -108,15 +117,23 @@ const FormControl = React.forwardRef<React.ElementRef<typeof Slot>, React.Compon
 );
 FormControl.displayName = 'FormControl';
 
-const FormDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
-  ({ className, ...props }, ref) => {
-    const { formDescriptionId } = useFormField();
+type FormDescriptionProps = React.HTMLAttributes<HTMLParagraphElement> & {
+  disabled: boolean;
+};
 
-    return (
-      <p ref={ref} id={formDescriptionId} className={cn('text-[0.8rem] text-muted-foreground', className)} {...props} />
-    );
-  }
-);
+const FormDescription = React.forwardRef<HTMLParagraphElement, FormDescriptionProps>(({ className, ...props }, ref) => {
+  const { formDescriptionId } = useFormField();
+  const isDisabled = props.disabled;
+
+  return (
+    <p
+      ref={ref}
+      id={formDescriptionId}
+      className={cn('typography-body3 ml-1 text-gray-600', isDisabled && 'text-gray-500', className)}
+      {...props}
+    />
+  );
+});
 FormDescription.displayName = 'FormDescription';
 
 const FormMessage = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
@@ -132,7 +149,7 @@ const FormMessage = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<
       <p
         ref={ref}
         id={formMessageId}
-        className={cn('text-[0.8rem] font-medium text-destructive', className)}
+        className={cn('ml-1 text-[0.8rem] font-medium text-red-400', className)}
         {...props}
       >
         {body}
