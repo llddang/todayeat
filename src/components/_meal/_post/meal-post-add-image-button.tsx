@@ -1,6 +1,4 @@
-import Image from 'next/image';
 import { ChangeEvent, Dispatch, SetStateAction, useRef } from 'react';
-import IMAGE_UPLOAD from '@/../public/illustrations/image-upload.svg';
 import { getFileId } from '@/lib/utils/file.util';
 import { MAX_FILE_SIZE, MAX_MEAL_IMAGE_COUNT } from '@/constants/meal.constant';
 
@@ -46,13 +44,8 @@ const MealPostAddImageButton = ({ imageFiles, setImageFiles }: MealPostAddImageB
       />
       <button
         onClick={() => inputFileRef.current?.click()}
-        className="flex w-full flex-col items-center gap-4 rounded-2xl bg-white px-4 py-7"
+        className="before:bg-image-upload-illustration relative flex w-full flex-col items-center gap-4 rounded-2xl bg-white px-4 py-7 before:h-10 before:w-10 before:bg-contain before:bg-no-repeat before:content-['']"
       >
-        <Image
-          src={IMAGE_UPLOAD}
-          alt="이미지 업로드 일러스트"
-          className={`h-10 w-10 ${imageFiles.length === MAX_MEAL_IMAGE_COUNT && 'opacity-30 mix-blend-luminosity'}`}
-        />
         <span className="text-sm leading-[140%] tracking-snug text-gray-600">사진은 최대 3개까지 등록 가능합니다.</span>
       </button>
     </>
