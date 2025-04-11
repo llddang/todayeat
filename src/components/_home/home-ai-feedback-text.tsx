@@ -3,6 +3,7 @@ import { NUTRITION_FEEDBACKS } from '@/constants/home.constant';
 import { MealNutrition, NutritionGoal } from '@/types/nutrition.type';
 import { calculateNutritionDifferences, getMostSignificantDiff } from '@/lib/utils/home.util';
 import { cn } from '@/lib/utils';
+import { Typography } from '@/components/ui/typography';
 
 type HomeAiFeedbackTextProps = {
   nutritionData: MealNutrition | null;
@@ -49,8 +50,12 @@ const HomeAiFeedbackText = ({ nutritionData, nutritionGoal }: HomeAiFeedbackText
   return (
     <div className={containerClass}>
       <div className="flex-1">
-        <span className="mb-1 block text-lg font-semibold tracking-[-0.0225rem]">{feedbackContent.title}</span>
-        <p className="pr-[0.31rem] text-[15px] tracking-snug text-gray-600">{feedbackContent.description}</p>
+        <Typography as="span" variant="subTitle1" className="mb-1 block">
+          {feedbackContent.title}
+        </Typography>
+        <Typography as="p" variant="body2" className="pr-[0.31rem] text-gray-600">
+          {feedbackContent.description}
+        </Typography>
       </div>
     </div>
   );
