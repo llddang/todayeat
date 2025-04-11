@@ -1,4 +1,4 @@
-import ImageContent from '@/types/gemini.type';
+import { ImageContent } from '@/types/gemini.type';
 import { create } from 'zustand';
 
 type MealImagesStore = {
