@@ -1,8 +1,8 @@
-import MealEditNutrientBox from './meal-post-edit-nutrient-box';
 import { MealDetailDTO } from '@/types/DTO/meal.dto';
-import MealEditInputField from './meal-post-edit-input-field';
-import MealEditCardTitle from './meal-post-edit-card-title';
+import MealEditInputField from '@/components/_meal/_post/meal-post-edit-input-field';
+import MealEditCardTitle from '@/components/_meal/_post/meal-post-edit-card-title';
 import { MacronutrientEnum, MeasurementUnitEnum } from '@/types/nutrition.type';
+import MealEditNutrientBox from '@/components/_meal/_post/meal-post-edit-nutrient-box';
 
 type MealEditCardProps = {
   mealDetail: MealDetailDTO;
