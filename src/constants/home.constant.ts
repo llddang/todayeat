@@ -15,12 +15,13 @@ export const NUTRITION_FEEDBACKS = {
   },
   DEFAULT: {
     NO_GOAL: {
-      title: '영양 목표를 설정해 보세요',
-      description: '목표를 설정하면 식사 기록에 맞는 맞춤형 피드백을 받을 수 있어요.'
+      title: '단백질이 목표보다 20g 부족해요',
+      description: '근손실을 막으려면 단백질을 충분히 섭취하는 게 중요해요. 두부, 달걀 같은 단백질 식품을 더해보세요.'
     },
     NO_MEAL: {
-      title: '오늘의 식사를 기록해 보세요',
-      description: '식사를 기록하면 목표 달성률을 확인하고 맞춤 피드백을 받을 수 있어요.'
+      title: '첫 식사를 기록해 보세요!',
+      description:
+        '아직 피드백을 드릴 수 없어요. 사진으로 식사를 기록하고 목표를 설정해서 개인 맞춤 피드백을 받아 보세요!'
     },
     BALANCED: {
       title: '오늘의 영양 균형이 좋아요',
