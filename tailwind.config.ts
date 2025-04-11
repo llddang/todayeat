@@ -142,6 +142,9 @@ const config: Config = {
       },
       backgroundImage: {
         'info-icon': "url('/icons/information_line.svg')",
+        'right-line-gray-400-icon': "url('/icons/right-line-gray-400.svg')",
+        'right-line-gray-600-icon': "url('/icons/right-line-gray-600.svg')",
+        'right-line-gray-800-icon': "url('/icons/right-line-gray-800.svg')",
         'sparkle-illustration': "url('/illustration/cta-banner-sparkle.svg')",
         'image-upload-illustration': "url('/illustrations/image-upload.svg')"
       },
