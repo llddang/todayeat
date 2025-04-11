@@ -1,8 +1,15 @@
-type ImageContent = {
+export type ImageContent = {
   inlineData: {
     data: string;
     mimeType: string;
   };
 };
 
-export default ImageContent;
+export type FoodAnalysisResult = {
+  menuName: string;
+  weight: number;
+  calories: number;
+  carbohydrate: number;
+  protein: number;
+  fat: number;
+};
