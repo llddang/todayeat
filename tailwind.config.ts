@@ -154,7 +154,7 @@ const config: Config = {
     animate,
     plugin(({ addUtilities }) => {
       addUtilities({
-        '.bg-gradient-blur': {
+        '.bg-gradient-main': {
           background: `
             radial-gradient(119.13% 34.32% at 50.13% 50.79%, 
             rgba(255, 249, 224, 0.7) 0%, 
