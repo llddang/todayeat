@@ -1,3 +1,5 @@
+import { GetMessageByDiff } from '@/lib/utils/home.util';
+
 export const RADIUS = 44;
 export const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 export const NUTRITION_FEEDBACKS = {
@@ -27,5 +29,6 @@ export const NUTRITION_FEEDBACKS = {
       title: '오늘의 영양 균형이 좋아요',
       description: '목표에 맞는 균형 잡힌 식단을 유지하고 계세요. 건강한 식습관을 계속 유지하세요!'
     }
-  }
+  },
+  BY_DIFF: GetMessageByDiff
 };
