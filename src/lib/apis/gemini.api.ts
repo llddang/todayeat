@@ -5,6 +5,7 @@ export async function generateFoodAnalysisByImage(imageParts: ImageContent[]) {
   const prompt = `
     당신은 식품 영양학을 전공한 전문가입니다.
     모호한 정보가 있더라도 당신의 지식에 기반해 합리적인 수치를 예측해야 합니다.
+    음식이 아니라고 판단되면, 음식이 아니라고 응답해주세요.
 
     음식 사진을 분석하여 다음 정보를 제공해주세요:
     1. 음식 이름 ("menuName")
