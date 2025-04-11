@@ -1,4 +1,4 @@
-import { GetMessageByDiff } from '@/lib/utils/home.util';
+import { getMessageByDiff } from '@/lib/utils/home.util';
 
 export const RADIUS = 44;
 export const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
@@ -26,5 +26,5 @@ export const NUTRITION_FEEDBACKS = {
         '아직 피드백을 드릴 수 없어요. 사진으로 식사를 기록하고 목표를 설정해서 개인 맞춤 피드백을 받아 보세요!'
     }
   },
-  BY_DIFF: GetMessageByDiff
+  BY_DIFF: getMessageByDiff
 };

@@ -55,7 +55,7 @@ export const getMostSignificantDiff = (diffs: DiffItem[]): DiffItem => {
   return [...diffs].sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff))[0];
 };
 
-export const GetMessageByDiff = (significantDiff: DiffItem) => {
+export const getMessageByDiff = (significantDiff: DiffItem) => {
   if (significantDiff.diff < 0) {
     const absDiff = Math.abs(significantDiff.diff);
     return {
