@@ -25,9 +25,11 @@ const HomeAiFeedbackText = ({ nutritionData, nutritionGoal }: HomeAiFeedbackText
 
     if (hasGoal && hasMealRecord) {
       const diffs = calculateNutritionDifferences(nutritionData, nutritionGoal);
-      const mostSignificantDiff = getMostSignificantDiff(diffs);
+      const mostSignificantNutrient = getMostSignificantDiff(diffs);
 
-      return NUTRITION_FEEDBACKS.BY_DIFF(mostSignificantDiff);
+      if (mostSignificantNutrient.diff < 0) return NUTRITION_FEEDBACKS.BY_DIFF.low(mostSignificantNutrient);
+      else if (mostSignificantNutrient.diff > 0) return NUTRITION_FEEDBACKS.BY_DIFF.high(mostSignificantNutrient);
+      else return NUTRITION_FEEDBACKS.BALANCED;
     }
 
     return null;
