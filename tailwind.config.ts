@@ -143,6 +143,7 @@ const config: Config = {
       backgroundImage: {
         'info-icon': "url('/icons/information_line.svg')",
         'sparkle-illustration': "url('/illustrations/cta-banner-sparkle.svg')",
+        'image-upload-illustration': "url('/illustrations/image-upload.svg')",
         'ai-sparkle': "url('/illustrations/ai-sparkle.svg')"
       },
       letterSpacing: {

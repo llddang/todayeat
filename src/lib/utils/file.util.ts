@@ -73,3 +73,27 @@ export function sanitizeFilename(filename: string, replacement: string = '_'): s
 
   return sanitized;
 }
+
+/**
+ * 파일의 고유 식별자(ID)를 생성하는 함수
+ *
+ * 파일의 내재적 속성(이름, 크기, 마지막 수정 시간, MIME 타입)을 조합하여
+ * 해시 알고리즘을 적용해 고유한 식별자를 생성합니다.
+ * 이 식별자는 같은 파일에 대해 항상 동일하게 유지됩니다.
+ *
+ * @param {File} file - 식별자를 생성할 File 객체
+ * @returns {string} 형식: '[해시값]-[파일크기]-[파일명]' 형태의 고유 식별자
+ *
+ */
+export const getFileId = (file: File): string => {
+  const fileInfo = [file.name, file.size.toString(), file.lastModified.toString(), file.type].join('|');
+
+  let hash = 0;
+  for (let i = 0; i < fileInfo.length; i++) {
+    const char = fileInfo.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash;
+  }
+
+  return `${hash.toString(16)}-${file.size}-${file.name.replace(/\s+/g, '_')}`;
+};
