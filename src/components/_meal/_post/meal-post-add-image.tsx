@@ -8,7 +8,7 @@ type MealPostAddImageProps = {
 };
 const MealPostAddImage = ({ setImageFiles, imageFiles }: MealPostAddImageProps) => {
   return (
-    <div className="w-full space-y-3 rounded-3xl bg-white/50 p-4 backdrop-blur-[50px]">
+    <div className="w-full rounded-3xl bg-white/50 p-4 backdrop-blur-[50px] [&>*:not(:last-child)]:mb-3">
       <MealPostAddImageButton imageFiles={imageFiles} setImageFiles={setImageFiles} />
       {imageFiles.length !== 0 && (
         <MealPostAddImagePreviewGallery imageFiles={imageFiles} setImageFiles={setImageFiles} />
