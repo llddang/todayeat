@@ -1,6 +1,9 @@
 // 퍼널의 URL 쿼리 파라미터 키값
 export const FUNNEL_QUERY_PARAM = 'step';
 
+export const KB = 1024;
+export const MB = 1024 * KB;
+
 const MACRO_NAME_MAP: Record<string, string> = {
   CARBOHYDRATE: '탄수화물',
   PROTEIN: '단백질',
