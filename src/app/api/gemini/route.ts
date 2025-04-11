@@ -30,6 +30,12 @@ export async function POST(req: Request) {
 
     const generatedTextResult = await generateFoodAnalysisByImage(imageParts);
     const parsedResult = parseGeminiResponse(generatedTextResult);
+    if (parsedResult.length === 0) {
+      console.error('유효한 이미지 없음');
+      return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.NO_VALID_FOOD_FOUND), {
+        status: AI_ERROR_MESSAGE.NO_VALID_FOOD_FOUND.status
+      });
+    }
 
     const insertPayload: FoodAnalysisRequestsDetailDTO[] = parsedResult.map((item: FoodAnalysisResult) => ({
       ...item,
