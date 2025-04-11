@@ -1,5 +1,5 @@
 import { SnakeCaseObject } from '@/types/common.type';
-import { MealTypeKey } from '@/types/meal-type.type';
+import { MealCategoryType } from '@/types/meal-category.type';
 
 export type MealDetailDTO = {
   id: string;
@@ -18,13 +18,13 @@ export type MealDTO = {
   userId: string;
   foodImages: string[] | null;
   ateAt: string;
-  mealType: MealTypeKey;
+  mealCategory: MealCategoryType;
   memo: string | null;
   menuCount: number;
   mealDetails: MealDetailDTO[];
 };
 export type MealOverviewDTO = Omit<MealDTO, 'mealDetails'>;
-export type CreateMealDTO = Pick<MealDTO, 'foodImages' | 'ateAt' | 'mealType' | 'memo'>;
+export type CreateMealDTO = Pick<MealDTO, 'foodImages' | 'ateAt' | 'mealCategory' | 'memo'>;
 export type CreateMealDetailDTO = Omit<MealDetailDTO, 'id' | 'mealId'>;
 
 export type MealSnakeCaseDTO = SnakeCaseObject<MealDTO>;

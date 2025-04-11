@@ -139,6 +139,14 @@ const config: Config = {
       },
       zIndex: {
         background: '-10'
+      },
+      backgroundImage: {
+        'info-icon': "url('/icons/information_line.svg')",
+        'sparkle-illustration': "url('/illustration/cta-banner-sparkle.svg')",
+        'image-upload-illustration': "url('/illustrations/image-upload.svg')"
+      },
+      letterSpacing: {
+        snug: '-0.0175rem'
       }
     }
   },
@@ -155,6 +163,9 @@ const config: Config = {
             `,
           filter: 'blur(80px)',
           transform: 'scale(1.2)'
+        },
+        '.bg-gradient-radial-purple': {
+          background: `radial-gradient(72.84% 72.84% at 50% 27.16%, rgba(255, 210, 214, 0.20) 0%, rgba(227, 192, 250, 0.20) 100%), #fff`
         }
       });
     })

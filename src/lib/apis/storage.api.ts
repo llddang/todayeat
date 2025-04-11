@@ -1,7 +1,7 @@
 'use server';
 
 import { getServerClient } from '@/lib/utils/supabase/server.util';
-import { sanitizeFilename } from '@/lib/utils/filename.util';
+import { sanitizeFilename } from '@/lib/utils/file.util';
 import { categoriesError, ErrorResponse } from '@/types/error.type';
 import { SupabaseBucketValue } from '@/types/supabase-bucket.type';
 
