@@ -1,6 +1,6 @@
 import MealEditNutrientBox from './meal-edit-nutrient-box';
 import { MealDetailDTO } from '@/types/DTO/meal.dto';
-import MealEditInputFiled from './meal-edit-input-field';
+import MealEditInputField from './meal-edit-input-field';
 import MealEditCardTitle from './meal-post-edit-card-title';
 import { MacronutrientEnum, MeasurementUnitEnum } from '@/types/nutrition.type';
 
@@ -15,8 +15,8 @@ const MealEditCard = ({ mealDetail }: MealEditCardProps): JSX.Element => {
       <MealEditCardTitle title={mealDetail.menuName} mealId={mealDetail.id} />
       {/* 칼로리 구역 */}
       <div className="flex items-start gap-2 self-stretch">
-        <MealEditInputFiled variety={MeasurementUnitEnum.GRAM} type="text" />
-        <MealEditInputFiled variety={MeasurementUnitEnum.KCAL} type="text" />
+        <MealEditInputField variety={MeasurementUnitEnum.GRAM} type="text" />
+        <MealEditInputField variety={MeasurementUnitEnum.KCAL} type="text" />
       </div>
       {/* 영양소 구역 */}
       <div className="flex items-center gap-4 self-stretch py-1">
