@@ -172,6 +172,90 @@ const config: Config = {
         },
         '.bg-button-gradient': {
           background: `linear-gradient(149deg, rgba(255, 210, 214, 0.32) 4.14%, rgba(209, 149, 248, 0.32) 109.45%), #FFF`
+        },
+        '.typography-title1': {
+          fontSize: '2.25rem',
+          lineHeight: '122%',
+          fontWeight: '700',
+          letterSpacing: '-0.02em'
+        },
+        '.typography-title2': {
+          fontSize: '1.25rem',
+          lineHeight: '136%',
+          fontWeight: '650',
+          letterSpacing: '-0.02em'
+        },
+        '.typography-subTitle1': {
+          fontSize: '1.125rem',
+          lineHeight: '140%',
+          fontWeight: '600',
+          letterSpacing: '-0.02em'
+        },
+        '.typography-subTitle2': {
+          fontSize: '1rem',
+          lineHeight: '140%',
+          fontWeight: '600',
+          letterSpacing: '-0.02em'
+        },
+        '.typography-subTitle3': {
+          fontSize: '0.9375rem',
+          lineHeight: '140%',
+          fontWeight: '600',
+          letterSpacing: '-0.02em'
+        },
+        '.typography-subTitle4': {
+          fontSize: '0.875rem',
+          lineHeight: '140%',
+          fontWeight: '600',
+          letterSpacing: '-0.02em'
+        },
+        '.typography-subTitle5': {
+          fontSize: '0.8125rem',
+          lineHeight: '140%',
+          fontWeight: '600',
+          letterSpacing: '-0.02em'
+        },
+        '.typography-body1': {
+          fontSize: '1rem',
+          lineHeight: '140%',
+          fontWeight: '450',
+          letterSpacing: '-0.02em'
+        },
+        '.typography-body2': {
+          fontSize: '0.9375rem',
+          lineHeight: '140%',
+          fontWeight: '450',
+          letterSpacing: '-0.02em'
+        },
+        '.typography-body3': {
+          fontSize: '0.875rem',
+          lineHeight: '140%',
+          fontWeight: '450',
+          letterSpacing: '-0.02em'
+        },
+        '.typography-body4': {
+          fontSize: '0.8125rem',
+          lineHeight: '140%',
+          fontWeight: '450',
+          letterSpacing: '-0.01em'
+        },
+        '.typography-caption1': {
+          fontSize: '0.8125rem',
+          lineHeight: '140%',
+          fontWeight: '500',
+          letterSpacing: '-0.02em'
+        },
+        '.typography-caption2': {
+          fontSize: '0.75rem',
+          lineHeight: '140%',
+          fontWeight: '500',
+          letterSpacing: '-0.01em'
+        },
+        '.typography-caption3': {
+          fontSize: '0.75rem',
+          lineHeight: '140%',
+          fontWeight: '650',
+          letterSpacing: '-0.02em'
         }
       });
     })
