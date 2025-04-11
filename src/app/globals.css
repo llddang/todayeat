@@ -72,3 +72,60 @@
     @apply bg-background text-foreground;
   }
 }
+@layer utilities {
+  .text-title1 {
+    @apply text-4xl/[122%] font-bold tracking-[-0.02em];
+  }
+
+  .text-title2 {
+    @apply text-xl/[136%] font-[650] tracking-[-0.02em];
+  }
+
+  .text-subTitle1 {
+    @apply text-lg/[140%] font-semibold tracking-[-0.02em];
+  }
+
+  .text-subTitle2 {
+    @apply text-base/[140%] font-semibold tracking-[-0.02em];
+  }
+
+  .text-subTitle3 {
+    @apply text-[0.9375rem]/[140%] font-semibold tracking-[-0.02em];
+  }
+
+  .text-subTitle4 {
+    @apply text-sm/[140%] font-semibold tracking-[-0.02em];
+  }
+
+  .text-subTitle5 {
+    @apply text-[0.8125rem]/[140%] font-semibold tracking-[-0.02em];
+  }
+
+  .text-body1 {
+    @apply text-base/[140%] font-[450] tracking-[-0.02em];
+  }
+
+  .text-body2 {
+    @apply text-[0.9375rem]/[140%] font-[450] tracking-[-0.02em];
+  }
+
+  .text-body3 {
+    @apply text-sm/[140%] font-[450] tracking-[-0.02em];
+  }
+
+  .text-body4 {
+    @apply text-[0.8125rem]/[140%] font-[450] tracking-[-0.01em];
+  }
+
+  .text-caption1 {
+    @apply text-[0.8125rem]/[140%] font-medium tracking-[-0.02em];
+  }
+
+  .text-caption2 {
+    @apply text-xs/[140%] font-medium tracking-[-0.01em];
+  }
+
+  .text-caption3 {
+    @apply text-xs/[140%] font-[650] tracking-[-0.02em];
+  }
+}
