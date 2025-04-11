@@ -11,7 +11,7 @@ import { FoodAnalysisResult } from '@/types/gemini.type';
 
 export async function POST(req: Request) {
   try {
-    const { user_id: userId } = await req.json();
+    const { userId } = await req.json();
     const supabase = getServerClient();
 
     const { data, error } = await getFoodImagesById(userId);
