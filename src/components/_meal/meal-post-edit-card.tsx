@@ -1,6 +1,6 @@
-import MealEditNutrientBox from './meal-edit-nutrient-box';
+import MealEditNutrientBox from './meal-post-edit-nutrient-box';
 import { MealDetailDTO } from '@/types/DTO/meal.dto';
-import MealEditInputField from './meal-edit-input-field';
+import MealEditInputField from './meal-post-edit-input-field';
 import MealEditCardTitle from './meal-post-edit-card-title';
 import { MacronutrientEnum, MeasurementUnitEnum } from '@/types/nutrition.type';
 
