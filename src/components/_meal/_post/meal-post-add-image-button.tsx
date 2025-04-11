@@ -1,12 +1,12 @@
-import { ChangeEvent, Dispatch, SetStateAction, useRef } from 'react';
+import { ChangeEvent, useRef } from 'react';
 import { getFileId } from '@/lib/utils/file.util';
 import { MAX_FILE_SIZE, MAX_MEAL_IMAGE_COUNT } from '@/constants/meal.constant';
 
 type MealPostAddImageButtonProps = {
   imageFiles: File[];
-  setImageFiles: Dispatch<SetStateAction<File[]>>;
+  handleImageFilesChange: (files: File[]) => void;
 };
-const MealPostAddImageButton = ({ imageFiles, setImageFiles }: MealPostAddImageButtonProps) => {
+const MealPostAddImageButton = ({ imageFiles, handleImageFilesChange }: MealPostAddImageButtonProps) => {
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const handleInputFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +25,7 @@ const MealPostAddImageButton = ({ imageFiles, setImageFiles }: MealPostAddImageB
     );
     if (hasDuplicatedImage.length > 0) return alert('동일한 이미지를 업로드할 수 없습니다.');
 
-    setImageFiles((prev) => [...prev, ...fileArray]);
+    handleImageFilesChange([...imageFiles, ...fileArray]);
   };
 
   return (
