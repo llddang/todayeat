@@ -7,9 +7,8 @@ const MACRO_NAME_MAP: Record<string, string> = {
   FAT: '지방'
 } as const;
 
-// TODO config 설정 시 컬러 변경 필요
 export const MACRO_COLOR_MAP: Record<string, string> = {
-  [MACRO_NAME_MAP.CARBOHYDRATE]: 'bg-[#E3C0FA]',
-  [MACRO_NAME_MAP.PROTEIN]: 'bg-[#9BE7D6]',
-  [MACRO_NAME_MAP.FAT]: 'bg-[#B8E7FF]'
+  [MACRO_NAME_MAP.CARBOHYDRATE]: 'bg-purple-100',
+  [MACRO_NAME_MAP.PROTEIN]: 'bg-teal-100',
+  [MACRO_NAME_MAP.FAT]: 'bg-blue-75'
 } as const;
