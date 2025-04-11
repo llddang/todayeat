@@ -5,20 +5,20 @@ import { ReactNode } from 'react';
 const typographyVariants = cva('', {
   variants: {
     variant: {
-      title1: 'text-title1',
-      title2: 'text-title2',
-      subTitle1: 'text-subTitle1',
-      subTitle2: 'text-subTitle2',
-      subTitle3: 'text-subTitle3',
-      subTitle4: 'text-subTitle4',
-      subTitle5: 'text-subTitle5',
-      body1: 'text-body1',
-      body2: 'text-body2',
-      body3: 'text-body3',
-      body4: 'text-body4',
-      caption1: 'text-caption1',
-      caption2: 'text-caption2',
-      caption3: 'text-caption3'
+      title1: 'typography-title1',
+      title2: 'typography-title2',
+      subTitle1: 'typography-subTitle1',
+      subTitle2: 'typography-subTitle2',
+      subTitle3: 'typography-subTitle3',
+      subTitle4: 'typography-subTitle4',
+      subTitle5: 'typography-subTitle5',
+      body1: 'typography-body1',
+      body2: 'typography-body2',
+      body3: 'typography-body3',
+      body4: 'typography-body4',
+      caption1: 'typography-caption1',
+      caption2: 'typography-caption2',
+      caption3: 'typography-caption3'
     }
   },
   defaultVariants: {
