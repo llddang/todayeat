@@ -16,15 +16,16 @@ const MealEditInputField = ({ variety, type = 'text' }: MacronutrientInputFieldP
   const name = MEASUREMENT_UNIT[variety].name;
   const unit = MEASUREMENT_UNIT[variety].unit;
 
+  const handleOnRegisterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
+  };
   return (
     <div className="relative">
       <input
         type={type}
         {...register(`${name}`, {
           required: true,
-          onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-            e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
-          }
+          onChange: handleOnRegisterChange
         })}
         maxLength={INPUT_MAX_LENGTH}
         inputMode="numeric"
