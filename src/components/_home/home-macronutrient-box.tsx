@@ -1,5 +1,6 @@
+import { MACRONUTRIENT_OPTIONS } from '@/constants/nutrition.constant';
 import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
-import { MacronutrientOptions, MacronutrientType } from '@/types/nutrition.type';
+import { MacronutrientType } from '@/types/nutrition.type';
 
 type HomeMacronutrientBoxProps = {
   variety: MacronutrientType;
@@ -9,8 +10,9 @@ type HomeMacronutrientBoxProps = {
 
 const HomeMacronutrientBox = ({ variety, value, goal }: HomeMacronutrientBoxProps) => {
   const percent = Math.min(getPercentage(value, goal), 100);
-  const barColor = MacronutrientOptions[variety].color || 'bg-gray-300';
-  const label = MacronutrientOptions[variety].label;
+  const barColor = MACRONUTRIENT_OPTIONS[variety].color || 'bg-gray-300';
+  const label = MACRONUTRIENT_OPTIONS[variety].label;
+
   return (
     <div className="flex flex-1 flex-col gap-1.5 rounded-2xl bg-white p-4">
       <span className="text-sm font-medium text-gray-600">{label}</span>

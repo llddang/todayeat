@@ -1,6 +1,7 @@
 'use client';
 import { useFormContext } from 'react-hook-form';
-import { MeasurementUnit, MeasurementUnitType } from '@/types/nutrition.type';
+import { MeasurementUnitType } from '@/types/nutrition.type';
+import { MEASUREMENT_UNIT } from '@/constants/nutrition.constant';
 
 type MacronutrientInputFieldProps = {
   variety: MeasurementUnitType;
@@ -11,7 +12,7 @@ const INPUT_MAX_LENGTH = 4;
 
 const MealEditInputField = ({ variety, type = 'text' }: MacronutrientInputFieldProps): JSX.Element => {
   const { register } = useFormContext();
-  const unit = MeasurementUnit[variety].unit;
+  const unit = MEASUREMENT_UNIT[variety].unit;
 
   return (
     <div className="relative">
