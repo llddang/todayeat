@@ -27,7 +27,7 @@ const MealPostAddImagePreviewGallery = ({ imageFiles, setImageFiles }: MealPostA
   }, [previewImages]);
 
   return (
-    <ul className="flex w-full justify-between gap-3">
+    <ul className="flex w-full gap-3">
       {previewImages.map((preview, index) => (
         <MealPostAddImagePreviewBox
           key={preview.fileId}
