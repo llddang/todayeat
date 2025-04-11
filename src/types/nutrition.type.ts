@@ -1,3 +1,4 @@
+import { MACRONUTRIENT_OPTIONS, MEASUREMENT_UNIT } from '@/constants/nutrition.constant';
 import { MealDetailDTO } from '@/types/DTO/meal.dto';
 
 export type NutritionGoal = {
@@ -24,48 +25,19 @@ export const MacronutrientEnum = {
   FAT: 'FAT'
 } as const;
 
-export const MacronutrientOptions = {
-  CALORIES: {
-    label: '칼로리',
-    unit: 'kcal',
-    color: ''
-  },
-  CARBOHYDRATE: {
-    label: '탄수화물',
-    unit: 'g',
-    color: 'bg-purple-100'
-  },
-  PROTEIN: {
-    label: '단백질',
-    unit: 'g',
-    color: 'bg-teal-100'
-  },
-  FAT: {
-    label: '지방',
-    unit: 'g',
-    color: 'bg-blue-75'
-  }
-} as const;
+export type MacronutrientType = keyof typeof MacronutrientEnum;
 
-export type MacronutrientType = keyof typeof MacronutrientOptions;
-export type MacronutrientValues = (typeof MacronutrientOptions)[MacronutrientType];
-export type MacronutrientLabelValue = (typeof MacronutrientOptions)[MacronutrientType]['label'];
+export type MacronutrientValues = {
+  label: string;
+  unit: string;
+  color: string;
+};
+export type MacronutrientLabelValue = (typeof MACRONUTRIENT_OPTIONS)[MacronutrientType]['label'];
 
 export const MeasurementUnitEnum = {
   KCAL: 'KCAL',
   GRAM: 'GRAM'
 } as const;
 
-export const MeasurementUnit = {
-  KCAL: {
-    label: '칼로리',
-    unit: 'kcal'
-  },
-  GRAM: {
-    label: '그램',
-    unit: 'g'
-  }
-} as const;
-
-export type MeasurementUnitType = keyof typeof MeasurementUnit;
-export type MeasurementUnitLabelValue = (typeof MeasurementUnit)[MeasurementUnitType]['label'];
+export type MeasurementUnitType = keyof typeof MEASUREMENT_UNIT;
+export type MeasurementUnitLabelValue = (typeof MEASUREMENT_UNIT)[MeasurementUnitType]['label'];
