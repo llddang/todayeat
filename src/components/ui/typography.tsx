@@ -5,20 +5,20 @@ import { ReactNode } from 'react';
 const typographyVariants = cva('', {
   variants: {
     variant: {
-      title1: 'text-4xl/[122%] font-bold tracking-[-0.02em]',
-      title2: 'text-xl/[136%] font-[650] tracking-[-0.02em]',
-      subTitle1: 'text-lg/[140%] font-semibold tracking-[-0.02em]',
-      subTitle2: 'text-base/[140%] font-semibold tracking-[-0.02em]',
-      subTitle3: 'text-[0.9375rem]/[140%] font-semibold tracking-[-0.02em]',
-      subTitle4: 'text-sm/[140%] font-semibold tracking-[-0.02em]',
-      subTitle5: 'text-[0.8125rem]/[140%] font-semibold tracking-[-0.02em]',
-      body1: 'text-base/[140%] font-[450] tracking-[-0.02em]',
-      body2: 'text-[0.9375rem]/[140%] font-[450] tracking-[-0.02em]',
-      body3: 'text-sm/[140%] font-[450] tracking-[-0.02em]',
-      body4: 'text-[0.8125rem]/[140%] font-[450] tracking-[-0.01em]',
-      caption1: 'text-[0.8125rem]/[140%] font-medium tracking-[-0.02em]',
-      caption2: 'text-xs/[140%] font-medium tracking-[-0.01em]',
-      caption3: 'text-xs/[140%] font-[650] tracking-[-0.02rem]'
+      title1: 'text-title1',
+      title2: 'text-title2',
+      subTitle1: 'text-subTitle1',
+      subTitle2: 'text-subTitle2',
+      subTitle3: 'text-subTitle3',
+      subTitle4: 'text-subTitle4',
+      subTitle5: 'text-subTitle5',
+      body1: 'text-body1',
+      body2: 'text-body2',
+      body3: 'text-body3',
+      body4: 'text-body4',
+      caption1: 'text-caption1',
+      caption2: 'text-caption2',
+      caption3: 'text-caption3'
     }
   },
   defaultVariants: {
