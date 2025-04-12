@@ -142,6 +142,9 @@ const config: Config = {
       },
       backgroundImage: {
         'info-icon': "url('/icons/information_line.svg')",
+        'right-line-gray-400-icon': "url('/icons/right-line-gray-400.svg')",
+        'right-line-gray-600-icon': "url('/icons/right-line-gray-600.svg')",
+        'right-line-gray-800-icon': "url('/icons/right-line-gray-800.svg')",
         'sparkle-illustration': "url('/illustration/cta-banner-sparkle.svg')",
         'image-upload-illustration': "url('/illustrations/image-upload.svg')"
       },
@@ -165,6 +168,9 @@ const config: Config = {
         },
         '.bg-gradient-radial-purple': {
           background: `radial-gradient(72.84% 72.84% at 50% 27.16%, rgba(255, 210, 214, 0.20) 0%, rgba(227, 192, 250, 0.20) 100%), #fff`
+        },
+        '.bg-button-gradient': {
+          background: `linear-gradient(149deg, rgba(255, 210, 214, 0.32) 4.14%, rgba(209, 149, 248, 0.32) 109.45%), #FFF`
         },
         '.typography-title1': {
           fontSize: '2.25rem',
