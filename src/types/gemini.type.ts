@@ -1,3 +1,5 @@
+import { FoodAnalysisRequestsDetailDTO } from '@/types/DTO/food_analysis.dto';
+
 export type ImageContent = {
   inlineData: {
     data: string;
@@ -5,11 +7,4 @@ export type ImageContent = {
   };
 };
 
-export type FoodAnalysisResult = {
-  menuName: string;
-  weight: number;
-  calories: number;
-  carbohydrate: number;
-  protein: number;
-  fat: number;
-};
+export type FoodAnalysisResult = Omit<FoodAnalysisRequestsDetailDTO, 'requestId'>;
