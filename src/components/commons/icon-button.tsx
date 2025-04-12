@@ -19,7 +19,7 @@ const iconButtonVariants = cva(
   }
 );
 
-const iconImageVariants = cva('object-cover', {
+const iconImageVariants = cva('object-cover shrink-0 ', {
   variants: {
     size: {
       sm: 'w-3 h-3 ',
