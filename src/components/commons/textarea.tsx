@@ -3,14 +3,10 @@ import { Typography } from '@/components/ui/typography';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
 
-type Props = React.ComponentProps<'textarea'> & {
-  charCount?: number;
-};
+type TextareaProps = React.ComponentProps<'textarea'>;
 
-const MAX_MEMO_LENGTH = 200;
-
-const MealPostMemoTextarea = React.forwardRef<HTMLTextAreaElement, Props>(
-  ({ className, value, charCount = 0, ...props }, forwardedRef) => {
+const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+  ({ className, value = '', ...props }, forwardedRef) => {
     const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
     React.useImperativeHandle(forwardedRef, () => textareaRef.current!, []);
@@ -30,21 +26,26 @@ const MealPostMemoTextarea = React.forwardRef<HTMLTextAreaElement, Props>(
         <textarea
           className="flex-1 resize-none caret-purple-300 typography-body1 focus:border-none focus:outline-none focus:ring-0 focus-visible:ring-0"
           value={value}
-          maxLength={MAX_MEMO_LENGTH}
           ref={textareaRef}
           {...props}
         />
 
-        <Typography as="div" variant="body4" className="flex items-center justify-end gap-[0.125rem] text-gray-500">
-          <span className="group-focus-within:text-gray-600 group-hover:text-gray-600">{charCount}</span>
-          <span>/</span>
-          <span>{MAX_MEMO_LENGTH}</span>
-        </Typography>
+        <div className="flex items-center justify-end gap-0.5">
+          <Typography as="span" variant="body4" className="text-gray-600">
+            {String(value).length}
+          </Typography>
+          <Typography as="span" variant="body4" className="text-gray-500">
+            /
+          </Typography>
+          <Typography as="span" variant="body4" className="text-gray-500">
+            {props.maxLength}
+          </Typography>
+        </div>
       </div>
     );
   }
 );
 
-MealPostMemoTextarea.displayName = 'MealPostMemoTextarea';
+Textarea.displayName = 'Textarea';
 
-export default MealPostMemoTextarea;
+export default Textarea;
