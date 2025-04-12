@@ -3,15 +3,15 @@ import { GoogleGenAI } from '@google/genai';
 import { ENV, ENV_ERROR } from '@/constants/env.constant';
 import { FoodAnalysisResult } from '@/types/gemini.type';
 
-if (!ENV.GEMINI_KEY) throw new Error(ENV_ERROR.GEMINI_KEY);
+export function getGenerativeAI() {
+  if (!ENV.GEMINI_KEY) throw new Error(ENV_ERROR.GEMINI_KEY);
+  return new GoogleGenerativeAI(ENV.GEMINI_KEY);
+}
 
-// 이미지 분석을 위한 Gemini 인스턴스
-export const generativeAI = new GoogleGenerativeAI(ENV.GEMINI_KEY);
-
-// 칼로리 분석을 위한 Gemini 인스턴스
-export const genAI = new GoogleGenAI({
-  apiKey: ENV.GEMINI_KEY
-});
+export function getGenAI() {
+  if (!ENV.GEMINI_KEY) throw new Error(ENV_ERROR.GEMINI_KEY);
+  return new GoogleGenAI({ apiKey: ENV.GEMINI_KEY });
+}
 
 /**
  * Gemini 응답 문자열을 안전하게 파싱하여 JSON 배열로 변환
