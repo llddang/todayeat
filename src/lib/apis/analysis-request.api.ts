@@ -2,7 +2,7 @@ import { camelToSnakeObject } from '@/lib/utils/camelize.util';
 import { getServerClient } from '@/lib/utils/supabase/server.util';
 import { FoodAnalysisResult } from '@/types/gemini.type';
 
-export async function getFoodImagesById(userId: string) {
+export const getFoodImagesById = async (userId: string) => {
   const supabase = getServerClient();
   const { data, error } = await supabase
     .from('food_analysis_requests')
@@ -11,9 +11,9 @@ export async function getFoodImagesById(userId: string) {
     .single();
 
   return { data, error };
-}
+};
 
-export async function saveFoodAnalysisResult(requestId: string, result: FoodAnalysisResult[]) {
+export const saveFoodAnalysisResult = async (requestId: string, result: FoodAnalysisResult[]) => {
   const supabase = getServerClient();
   const insertPayload = result.map((item) => ({
     ...item,
@@ -21,4 +21,4 @@ export async function saveFoodAnalysisResult(requestId: string, result: FoodAnal
   }));
 
   return await supabase.from('food_analysis_requests_detail').insert(camelToSnakeObject(insertPayload));
-}
+};
