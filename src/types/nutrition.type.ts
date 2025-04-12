@@ -1,4 +1,3 @@
-import { MACRONUTRIENT_OPTIONS } from '@/constants/nutrition.constant';
 import { MealDetailDTO } from '@/types/DTO/meal.dto';
 
 export type NutritionGoal = {
@@ -11,12 +10,7 @@ export type NutritionGoal = {
 export type MealNutrition = Pick<MealDetailDTO, 'calories' | 'carbohydrate' | 'protein' | 'fat'>;
 export type MealNutritionType = keyof MealNutrition;
 export type Macronutrient = Omit<MealNutrition, 'calories'>;
-export type MacronutrientType = keyof Macronutrient;
-export const MacronutrientEnum = {
-  CARBOHYDRATE: 'CARBOHYDRATE',
-  PROTEIN: 'PROTEIN',
-  FAT: 'FAT'
-} as const;
+
 export type MacronutrientEnumType = keyof typeof MacronutrientEnum;
 
 export type PurposeValue = {
@@ -39,7 +33,6 @@ export type MacronutrientValues = {
   unit: string;
   color: string;
 };
-export type MacronutrientLabelValue = (typeof MACRONUTRIENT_OPTIONS)[MacronutrientType]['label'];
 
 export const MeasurementUnitEnum = {
   KCAL: 'KCAL',
