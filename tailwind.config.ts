@@ -154,15 +154,14 @@ const config: Config = {
     animate,
     plugin(({ addUtilities }) => {
       addUtilities({
-        '.bg-gradient-blur': {
+        '.bg-gradient-main': {
           background: `
-            radial-gradient(circle at 30% 30%, #fef6d4, transparent 50%), 
-            radial-gradient(circle at 70% 40%, #ffe4e9, transparent 50%), 
-            radial-gradient(circle at 50% 70%, #f3e8ff, transparent 50%), 
-            radial-gradient(circle at 20% 90%, #e0f7ff, transparent 50%)
-            `,
-          filter: 'blur(80px)',
-          transform: 'scale(1.2)'
+            radial-gradient(119.13% 34.32% at 50.13% 50.79%, 
+            rgba(255, 249, 224, 0.7) 0%, 
+            rgba(255, 237, 239, 0.7) 35.58%, 
+            rgba(251, 246, 254, 0.7) 100%),
+            #FDFDFD
+          `
         },
         '.bg-gradient-radial-purple': {
           background: `radial-gradient(72.84% 72.84% at 50% 27.16%, rgba(255, 210, 214, 0.20) 0%, rgba(227, 192, 250, 0.20) 100%), #fff`
