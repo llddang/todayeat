@@ -10,9 +10,9 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          'rounded-[3.125rem] px-6 bg-gray-900 text-gray-50 hover:bg-gray-800 disabled:text-gray-500 disabled:bg-[#515151]/5',
+          'rounded-[3.125rem] px-6 bg-gray-900 text-gray-50 hover:bg-gray-800 disabled:text-gray-500 disabled:bg-opacity-5',
         secondary:
-          'rounded-[3.125rem] px-6 bg-white border border-solid border-[#E0E0E0]/40 hover:border-purple-10 hover:bg-button-gradient disabled:border-gray-200 disabled:bg-white disabled:text-gray-500',
+          'rounded-[3.125rem] px-6 bg-white border border-solid border-gray-350/40 hover:border-purple-10 hover:bg-button-gradient disabled:border-gray-200 disabled:bg-white disabled:text-gray-500',
         ghost: 'rounded-[3.125rem] px-6 text-gray-600 hover:text-gray-800 disabled:text-gray-400',
         icon: 'text-gray-600 hover:text-gray-800 disabled:text-gray-400 after:bg-no-repeat after:bg-center after:bg-right-line-gray-600-icon hover:after:bg-right-line-gray-800-icon disabled:after:bg-right-line-gray-400-icon'
       },
