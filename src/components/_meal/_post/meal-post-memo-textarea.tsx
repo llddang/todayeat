@@ -13,7 +13,7 @@ const MealPostMemoTextarea = React.forwardRef<HTMLTextAreaElement, Props>(
     return (
       <div
         className={cn(
-          'group flex h-[12.5rem] w-[20.5625rem] flex-col gap-2 rounded-lg border border-gray-300 bg-white p-4 focus-within:!border-gray-800 hover:border-gray-500',
+          'group flex flex-col gap-2 rounded-lg border border-gray-300 bg-white p-4 focus-within:!border-gray-800 hover:border-gray-500',
           className
         )}
       >
