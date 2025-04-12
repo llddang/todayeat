@@ -31,7 +31,7 @@ const buttonLinkVariants = cva(
 );
 
 const buttonLinkDisabledVariants = cva(
-  'py-[0.625rem] inline-flex items-center justify-center gap-1 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring',
+  'py-[0.625rem] inline-flex items-center justify-center gap-1 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring cursor-not-allowed',
   {
     variants: {
       variant: {
