@@ -1,3 +1,8 @@
+export type FoodAnalysisRequestsDTO = {
+  id: string;
+  image_urls: string[];
+};
+
 export type FoodAnalysisRequestsDetailDTO = {
   requestId: string;
   menuName: string;
