@@ -1,18 +1,15 @@
 import { NextResponse } from 'next/server';
 import { AI_ERROR_KEYS, AI_ERROR_MESSAGE, isAIErrorResponse } from '@/constants/ai-error-message.constant';
-import { getFoodImagesById } from '@/lib/apis/analysis-request.api';
+import { createFoodAnalysisResult, getFoodImagesById } from '@/lib/apis/analysis-request.api';
 import { generateFoodAnalysisByImage } from '@/lib/apis/gemini.api';
-import { camelToSnakeObject } from '@/lib/utils/camelize.util';
 import { convertImageUrlToBase64 } from '@/lib/utils/convert-image-to-base64.util';
-import { parseGeminiResponse } from '@/lib/utils/parse-gemini-response.util';
-import { getServerClient } from '@/lib/utils/supabase/server.util';
-import { FoodAnalysisRequestsDetailDTO } from '@/types/DTO/ai.dto';
-import { FoodAnalysisResult } from '@/types/gemini.type';
+import { parseGeminiResponse } from '@/lib/utils/gemini.util';
+import { FoodAnalysisRequestsDetailDTO } from '@/types/DTO/food_analysis.dto';
+import { FoodAnalysisResult, ImageContent } from '@/types/gemini.type';
 
 export async function POST(req: Request) {
   try {
     const { userId } = await req.json();
-    const supabase = getServerClient();
 
     const { data, error } = await getFoodImagesById(userId);
 
@@ -26,10 +23,12 @@ export async function POST(req: Request) {
     const requestId: string = data.id;
     const imageUrls: string[] = data.image_urls;
 
-    const imageParts = await Promise.all(imageUrls.map(convertImageUrlToBase64));
+    const imageParts: ImageContent[] = await Promise.all(imageUrls.map(convertImageUrlToBase64));
 
     const generatedTextResult = await generateFoodAnalysisByImage(imageParts);
+
     const parsedResult = parseGeminiResponse(generatedTextResult);
+
     if (parsedResult.length === 0) {
       console.error('유효한 이미지 없음');
       return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.NO_VALID_FOOD_FOUND), {
@@ -42,9 +41,7 @@ export async function POST(req: Request) {
       requestId: requestId
     }));
 
-    const { error: insertError } = await supabase
-      .from('food_analysis_requests_detail')
-      .insert(camelToSnakeObject<FoodAnalysisRequestsDetailDTO[]>(insertPayload));
+    const { error: insertError } = await createFoodAnalysisResult(insertPayload);
 
     if (insertError) {
       console.error('분석 결과 저장 실패:', insertError);
