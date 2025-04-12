@@ -1,5 +1,5 @@
 import { FOOD_IMAGE_ANALYSIS_PROMPT } from '@/constants/prompt.constant';
-import { generativeAI } from '@/lib/utils/gemini-instance.util';
+import { generativeAI } from '@/lib/utils/gemini.util';
 import { ImageContent } from '@/types/gemini.type';
 
 export const generateFoodAnalysisByImage = async (imageParts: ImageContent[]): Promise<string> => {
