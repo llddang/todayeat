@@ -142,8 +142,13 @@ const config: Config = {
       },
       backgroundImage: {
         'info-icon': "url('/icons/information_line.svg')",
+        'right-line-gray-400-icon': "url('/icons/right-line-gray-400.svg')",
+        'right-line-gray-600-icon': "url('/icons/right-line-gray-600.svg')",
+        'right-line-gray-800-icon': "url('/icons/right-line-gray-800.svg')",
         'sparkle-illustration': "url('/illustration/cta-banner-sparkle.svg')",
-        'image-upload-illustration': "url('/illustrations/image-upload.svg')"
+        'image-upload-illustration': "url('/illustrations/image-upload.svg')",
+        'ai-sparkle-1': "url('/illustrations/ai-sparkle-1.svg')",
+        'ai-sparkle-2': "url('/illustrations/ai-sparkle-2.svg')"
       },
       letterSpacing: {
         snug: '-0.0175rem'
@@ -154,98 +159,100 @@ const config: Config = {
     animate,
     plugin(({ addUtilities }) => {
       addUtilities({
-        '.bg-gradient-blur': {
+        '.bg-gradient-main': {
           background: `
-            radial-gradient(circle at 30% 30%, #fef6d4, transparent 50%), 
-            radial-gradient(circle at 70% 40%, #ffe4e9, transparent 50%), 
-            radial-gradient(circle at 50% 70%, #f3e8ff, transparent 50%), 
-            radial-gradient(circle at 20% 90%, #e0f7ff, transparent 50%)
-            `,
-          filter: 'blur(80px)',
-          transform: 'scale(1.2)'
+            radial-gradient(119.13% 34.32% at 50.13% 50.79%, 
+            rgba(255, 249, 224, 0.7) 0%, 
+            rgba(255, 237, 239, 0.7) 35.58%, 
+            rgba(251, 246, 254, 0.7) 100%),
+            #FDFDFD
+          `
         },
         '.bg-gradient-radial-purple': {
           background: `radial-gradient(72.84% 72.84% at 50% 27.16%, rgba(255, 210, 214, 0.20) 0%, rgba(227, 192, 250, 0.20) 100%), #fff`
         },
-        '.text-title1': {
+        '.bg-button-gradient': {
+          background: `linear-gradient(149deg, rgba(255, 210, 214, 0.32) 4.14%, rgba(209, 149, 248, 0.32) 109.45%), #FFF`
+        },
+        '.typography-title1': {
           fontSize: '2.25rem',
           lineHeight: '122%',
           fontWeight: '700',
           letterSpacing: '-0.02em'
         },
-        '.text-title2': {
+        '.typography-title2': {
           fontSize: '1.25rem',
           lineHeight: '136%',
           fontWeight: '650',
           letterSpacing: '-0.02em'
         },
-        '.text-subTitle1': {
+        '.typography-subTitle1': {
           fontSize: '1.125rem',
           lineHeight: '140%',
           fontWeight: '600',
           letterSpacing: '-0.02em'
         },
-        '.text-subTitle2': {
+        '.typography-subTitle2': {
           fontSize: '1rem',
           lineHeight: '140%',
           fontWeight: '600',
           letterSpacing: '-0.02em'
         },
-        '.text-subTitle3': {
+        '.typography-subTitle3': {
           fontSize: '0.9375rem',
           lineHeight: '140%',
           fontWeight: '600',
           letterSpacing: '-0.02em'
         },
-        '.text-subTitle4': {
+        '.typography-subTitle4': {
           fontSize: '0.875rem',
           lineHeight: '140%',
           fontWeight: '600',
           letterSpacing: '-0.02em'
         },
-        '.text-subTitle5': {
+        '.typography-subTitle5': {
           fontSize: '0.8125rem',
           lineHeight: '140%',
           fontWeight: '600',
           letterSpacing: '-0.02em'
         },
-        '.text-body1': {
+        '.typography-body1': {
           fontSize: '1rem',
           lineHeight: '140%',
           fontWeight: '450',
           letterSpacing: '-0.02em'
         },
-        '.text-body2': {
+        '.typography-body2': {
           fontSize: '0.9375rem',
           lineHeight: '140%',
           fontWeight: '450',
           letterSpacing: '-0.02em'
         },
-        '.text-body3': {
+        '.typography-body3': {
           fontSize: '0.875rem',
           lineHeight: '140%',
           fontWeight: '450',
           letterSpacing: '-0.02em'
         },
-        '.text-body4': {
+        '.typography-body4': {
           fontSize: '0.8125rem',
           lineHeight: '140%',
           fontWeight: '450',
           letterSpacing: '-0.01em'
         },
-        '.text-caption1': {
+        '.typography-caption1': {
           fontSize: '0.8125rem',
           lineHeight: '140%',
           fontWeight: '500',
           letterSpacing: '-0.02em'
         },
-        '.text-caption2': {
+        '.typography-caption2': {
           fontSize: '0.75rem',
           lineHeight: '140%',
           fontWeight: '500',
           letterSpacing: '-0.01em'
         },
-        '.text-caption3': {
+        '.typography-caption3': {
           fontSize: '0.75rem',
           lineHeight: '140%',
           fontWeight: '650',
