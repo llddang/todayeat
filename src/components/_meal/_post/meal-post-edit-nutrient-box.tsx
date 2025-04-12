@@ -7,9 +7,7 @@ type MealEditNutrientBoxProps = {
 };
 
 const MealEditNutrientBox = ({ variety, value }: MealEditNutrientBoxProps) => {
-  const label = MACRONUTRIENT_OPTIONS[variety].label;
-  const unit = MACRONUTRIENT_OPTIONS[variety].unit;
-  const color = MACRONUTRIENT_OPTIONS[variety].color;
+  const { label, unit, color } = MACRONUTRIENT_OPTIONS[variety];
   return (
     <div className="flex shrink-0 flex-grow items-start gap-[0.375rem]">
       <div className="flex h-5 items-center justify-center gap-2">
