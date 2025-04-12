@@ -16,13 +16,12 @@ const MealPostMemoTextarea = React.forwardRef<HTMLTextAreaElement, Props>(
     React.useImperativeHandle(forwardedRef, () => textareaRef.current!, []);
 
     const handleContainerClick = () => {
-      
       textareaRef.current?.focus();
     };
 
     return (
       <div
-        onClick={handleContainerClick} 
+        onClick={handleContainerClick}
         className={cn(
           'group flex flex-col gap-2 rounded-lg border border-gray-300 bg-white p-4 focus-within:!border-gray-800 hover:border-gray-500',
           className
@@ -32,7 +31,7 @@ const MealPostMemoTextarea = React.forwardRef<HTMLTextAreaElement, Props>(
           className="flex-1 resize-none caret-purple-300 typography-body1 focus:border-none focus:outline-none focus:ring-0 focus-visible:ring-0"
           value={value}
           maxLength={MAX_MEMO_LENGTH}
-          ref={textareaRef} 
+          ref={textareaRef}
           {...props}
         />
 
