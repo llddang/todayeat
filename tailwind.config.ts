@@ -146,7 +146,9 @@ const config: Config = {
         'right-line-gray-600-icon': "url('/icons/right-line-gray-600.svg')",
         'right-line-gray-800-icon': "url('/icons/right-line-gray-800.svg')",
         'sparkle-illustration': "url('/illustration/cta-banner-sparkle.svg')",
-        'image-upload-illustration': "url('/illustrations/image-upload.svg')"
+        'image-upload-illustration': "url('/illustrations/image-upload.svg')",
+        'ai-sparkle-1': "url('/illustrations/ai-sparkle-1.svg')",
+        'ai-sparkle-2': "url('/illustrations/ai-sparkle-2.svg')"
       },
       letterSpacing: {
         snug: '-0.0175rem'
