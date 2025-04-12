@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { AI_ERROR_KEYS, AI_ERROR_MESSAGE, isAIErrorResponse } from '@/constants/ai-error-message.constants';
+import { AI_ERROR_KEYS, AI_ERROR_MESSAGE, isAIErrorResponse } from '@/constants/ai-error-message.constant';
 import { getFoodImagesById } from '@/lib/apis/analysis-request.api';
 import { generateFoodAnalysisByImage } from '@/lib/apis/gemini.api';
 import { camelToSnakeObject } from '@/lib/utils/camelize.util';
