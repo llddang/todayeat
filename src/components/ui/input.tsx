@@ -24,10 +24,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type 
         type={type}
         placeholder={props.placeholder}
         id={props.id}
-        className="typography-body1 min-w-0 flex-1 text-gray-900 placeholder:text-gray-500 focus:outline-none disabled:bg-white disabled:text-gray-500"
+        className="min-w-0 flex-1 text-gray-900 caret-purple-300 typography-body1 placeholder:text-gray-500 focus:outline-none disabled:bg-white disabled:text-gray-500"
       />
       {measure && (
-        <span className={cn('typography-body3 block', isDisabled ? 'text-gray-500' : 'text-gray-700')}>{measure}</span>
+        <span className={cn('block typography-body3', isDisabled ? 'text-gray-500' : 'text-gray-700')}>{measure}</span>
       )}
     </div>
   );
