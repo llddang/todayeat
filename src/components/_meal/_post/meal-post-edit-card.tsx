@@ -4,22 +4,22 @@ import MealEditCardTitle from '@/components/_meal/_post/meal-post-edit-card-titl
 import { MacronutrientEnum, MeasurementUnitEnum } from '@/types/nutrition.type';
 import MealEditNutrientBox from '@/components/_meal/_post/meal-post-edit-nutrient-box';
 
-type MealEditCardProps = {
+type MealPostEditCardProps = {
   mealDetail: MealDetailDTO;
 };
 
-const MealEditCard = ({ mealDetail }: MealEditCardProps): JSX.Element => {
+const MealPostEditCard = ({ mealDetail }: MealPostEditCardProps): JSX.Element => {
   return (
-    <div className="flex w-[362px] flex-col items-start gap-[1rem] self-stretch rounded-2xl bg-white/50 px-[0.75rem] py-[1rem] backdrop-blur-[50px]">
+    <div className="flex w-[362px] flex-col items-start gap-[1rem] rounded-2xl bg-white/50 p-3 backdrop-blur-[50px]">
       {/* 헤더 */}
-      <MealEditCardTitle title={mealDetail.menuName} mealId={mealDetail.id} />
+      <MealEditCardTitle title={mealDetail.menuName} />
       {/* 칼로리 구역 */}
-      <div className="flex items-start gap-2 self-stretch">
+      <div className="flex items-start gap-2">
         <MealEditInputField variety={MeasurementUnitEnum.GRAM} type="text" />
         <MealEditInputField variety={MeasurementUnitEnum.KCAL} type="text" />
       </div>
       {/* 영양소 구역 */}
-      <div className="flex items-center gap-4 self-stretch py-1">
+      <div className="flex items-center gap-2 self-stretch py-1 pb-1 pl-1 pt-2">
         <MealEditNutrientBox variety={MacronutrientEnum.CARBOHYDRATE} value={mealDetail.carbohydrate} />
         <MealEditNutrientBox variety={MacronutrientEnum.PROTEIN} value={mealDetail.protein} />
         <MealEditNutrientBox variety={MacronutrientEnum.FAT} value={mealDetail.fat} />
@@ -28,4 +28,4 @@ const MealEditCard = ({ mealDetail }: MealEditCardProps): JSX.Element => {
   );
 };
 
-export default MealEditCard;
+export default MealPostEditCard;
