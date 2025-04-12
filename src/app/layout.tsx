@@ -2,8 +2,8 @@ import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import ErrorHandler from '@/components/commons/error-handler';
-import GradientBlurBackground from '@/components/layouts/gradient-blur-background';
 import './globals.css';
+import MainBackground from '@/components/layouts/main-background';
 
 const wantedSans = localFont({
   src: '../../public/fonts/WantedSansVariable.woff2',
@@ -26,7 +26,7 @@ const RootLayout = ({
         <Suspense>
           <ErrorHandler />
         </Suspense>
-        <GradientBlurBackground>{children}</GradientBlurBackground>
+        <MainBackground>{children}</MainBackground>
       </body>
     </html>
   );
