@@ -85,7 +85,7 @@ const AuthSignUpForm = () => {
                 onClick={handleVerifyEmail}
                 disabled={isCheckingEmail || emailVerified}
                 className="mb-[2px]"
-                variant={emailVerified ? 'outline' : 'default'}
+                variant={emailVerified ? 'secondary' : 'primary'}
               >
                 {isCheckingEmail ? '확인 중...' : emailVerified ? '확인됨' : '이메일 확인'}
               </Button>
