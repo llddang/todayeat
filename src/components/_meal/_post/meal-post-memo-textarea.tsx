@@ -1,4 +1,3 @@
-import { Textarea } from '@/components/ui/textarea';
 import { Typography } from '@/components/ui/typography';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
@@ -19,7 +18,7 @@ const MealPostMemoTextarea = React.forwardRef<HTMLTextAreaElement, Props>(
         )}
       >
         <textarea
-          className="caret-purple-300 flex-1 resize-none typography-body1 focus:border-none focus:outline-none focus:ring-0 focus-visible:ring-0"
+          className="flex-1 resize-none caret-purple-300 typography-body1 focus:border-none focus:outline-none focus:ring-0 focus-visible:ring-0"
           value={value}
           maxLength={MAX_MEMO_LENGTH}
           ref={ref}
