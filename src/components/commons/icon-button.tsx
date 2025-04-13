@@ -27,7 +27,12 @@ export type IconButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>
 const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   ({ size, icon, alt, className, ...props }, ref) => {
     return (
-      <button ref={ref} className={cn(icon, iconButtonVariants({ size }), className)} {...props}>
+      <button
+        ref={ref}
+        type={props.type || 'button'}
+        className={cn(icon, iconButtonVariants({ size }), className)}
+        {...props}
+      >
         <span className="sr-only">{alt}</span>
       </button>
     );
@@ -36,4 +41,4 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
 
 IconButton.displayName = 'IconButton';
 
-export { IconButton, iconButtonVariants };
+export default IconButton;
