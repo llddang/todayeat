@@ -20,7 +20,7 @@ const OptionSelectCard = ({
   description,
   ...props
 }: OptionSelectCardProps) => {
-  const labelClasses = `box-border flex w-full cursor-pointer flex-col items-start gap-2 rounded-2xl border-2 border-transparent bg-white p-[calc(1.25rem-2px)] text-gray-800 ${
+  const labelClasses = `box-border flex cursor-pointer flex-col gap-2 rounded-2xl border-2 border-transparent bg-white p-[calc(1.25rem-2px)] text-gray-800 ${
     checked ? 'border-purple-100/40 bg-gradient-radial-purple' : ''
   }`;
 
@@ -37,11 +37,11 @@ const OptionSelectCard = ({
         {...props}
       />
       <label className={labelClasses} htmlFor={value}>
-        <Typography as="span" variant={description ? 'subTitle2' : 'body1'}>
+        <Typography as="span" variant={checked ? 'subTitle2' : 'body1'}>
           {title}
         </Typography>
         {description && (
-          <Typography as="p" variant="body3" className="text-left text-gray-550">
+          <Typography as="p" variant="body3" className="text-gray-550">
             {description}
           </Typography>
         )}
