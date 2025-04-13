@@ -20,29 +20,31 @@ export async function POST(req: Request) {
 
     const uploadedUrls: string[] = [];
 
-    for (const file of files) {
-      const uploadForm = new FormData();
-      uploadForm.set('file', file);
+    if (files.length > 0) {
+      for (const file of files) {
+        const uploadForm = new FormData();
+        uploadForm.set('file', file);
 
-      const { data: publicUrl, error: uploadError } = await uploadImage('meal-requests', uploadForm);
+        const { data: publicUrl, error: uploadError } = await uploadImage('meal-requests', uploadForm);
 
-      if (uploadError || !publicUrl) {
-        console.error('이미지 업로드 실패:', uploadError);
-        return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.UNKNOWN), {
-          status: AI_ERROR_MESSAGE.UNKNOWN.status
-        });
+        if (uploadError || !publicUrl) {
+          console.error('이미지 업로드 실패:', uploadError);
+          return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.UNKNOWN), {
+            status: AI_ERROR_MESSAGE.UNKNOWN.status
+          });
+        }
+
+        uploadedUrls.push(publicUrl);
       }
 
-      uploadedUrls.push(publicUrl);
-    }
+      const { error: insertTempError } = await createFoodAnalysisRequests(userId, uploadedUrls);
 
-    const { error: insertTempError } = await createFoodAnalysisRequests(userId, uploadedUrls);
-
-    if (insertTempError) {
-      console.error('임시 테이블 저장 실패:', insertTempError);
-      return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.SUPABASE_INSERT_FAILED), {
-        status: AI_ERROR_MESSAGE.SUPABASE_INSERT_FAILED.status
-      });
+      if (insertTempError) {
+        console.error('임시 테이블 저장 실패:', insertTempError);
+        return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.SUPABASE_INSERT_FAILED), {
+          status: AI_ERROR_MESSAGE.SUPABASE_INSERT_FAILED.status
+        });
+      }
     }
 
     const { data, error } = await getFoodImagesById(userId);
