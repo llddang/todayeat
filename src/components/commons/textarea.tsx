@@ -11,7 +11,13 @@ type TextareaProps = Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'ma
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, maxLength, ...props }, forwardedRef) => {
     const textareaRef = React.useRef<HTMLTextAreaElement>(null);
-    const [charCount, setCharCount] = React.useState<number>(0);
+    
+    const initialCharCount =
+      typeof props.defaultValue === 'string' || typeof props.defaultValue === 'number'
+        ? String(props.defaultValue).length
+        : 0;
+
+    const [charCount, setCharCount] = React.useState<number>(initialCharCount);
 
     React.useImperativeHandle(forwardedRef, () => textareaRef.current!, []);
 
