@@ -3,7 +3,7 @@ import React, { ChangeEvent, InputHTMLAttributes } from 'react';
 
 export type TagSelectItemProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
-  'type' | 'onChange' | 'value' | 'name' | 'defaultChecked'
+  'type' | 'onChange' | 'value' | 'name' | 'defaultChecked' | 'children'
 > & {
   groupName: 'MEAL_CATEGORY';
   icon: string;
