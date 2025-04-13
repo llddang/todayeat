@@ -1,15 +1,24 @@
 'use client';
+
 import { Typography } from '@/components/ui/typography';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
 
-type TextareaProps = React.ComponentProps<'textarea'>;
+type TextareaProps = Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'maxLength'> & {
+  maxLength: number;
+};
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, value = '', ...props }, forwardedRef) => {
+  ({ className, maxLength, ...props }, forwardedRef) => {
     const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+    const [charCount, setCharCount] = React.useState<number>(0);
 
     React.useImperativeHandle(forwardedRef, () => textareaRef.current!, []);
+
+    const handleInput = () => {
+      const length = textareaRef.current?.value.length ?? 0;
+      setCharCount(length);
+    };
 
     const handleContainerClick = () => {
       textareaRef.current?.focus();
@@ -25,20 +34,21 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       >
         <textarea
           className="flex-1 resize-none caret-purple-300 typography-body1 focus:border-none focus:outline-none focus:ring-0 focus-visible:ring-0"
-          value={value}
+          maxLength={maxLength}
           ref={textareaRef}
+          onInput={handleInput}
           {...props}
         />
 
         <div className="flex items-center justify-end gap-0.5">
           <Typography as="span" variant="body4" className="text-gray-600">
-            {String(value).length}
+            {charCount}
           </Typography>
           <Typography as="span" variant="body4" className="text-gray-500">
             /
           </Typography>
           <Typography as="span" variant="body4" className="text-gray-500">
-            {props.maxLength}
+            {maxLength}
           </Typography>
         </div>
       </div>
