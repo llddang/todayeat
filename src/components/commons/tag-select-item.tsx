@@ -19,8 +19,7 @@ const TagSelectItem = React.forwardRef<HTMLInputElement, TagSelectItemProps>(
         <input
           ref={ref}
           type="radio"
-          id={label}
-          value={value}
+          id={value}
           className="hidden"
           name={groupName}
           checked={checked}
@@ -29,10 +28,10 @@ const TagSelectItem = React.forwardRef<HTMLInputElement, TagSelectItemProps>(
         />
         <label
           className={`inline-flex h-11 items-center justify-center gap-[0.375rem] rounded-[6.25rem] px-4 ${checked ? 'bg-gray-900 text-gray-50' : 'bg-white text-gray-700'} before:block before:h-4 before:w-4 before:bg-contain before:bg-center ${icon}`}
-          htmlFor={label}
+          htmlFor={value}
         >
           <Typography as="span" variant={checked ? 'subTitle3' : 'body2'}>
-            {value}
+            {label}
           </Typography>
         </label>
       </div>
