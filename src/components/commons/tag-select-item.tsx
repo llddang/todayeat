@@ -20,6 +20,7 @@ const TagSelectItem = React.forwardRef<HTMLInputElement, TagSelectItemProps>(
           ref={ref}
           type="radio"
           id={value}
+          value={value}
           className="hidden"
           name={groupName}
           checked={checked}
