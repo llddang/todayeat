@@ -17,7 +17,7 @@ export const getFoodImagesById = async (
   return { data, error };
 };
 
-export const createFoodAnalysisResult = async (
+export const createFoodAnalysisRequestDetails = async (
   insertPayload: FoodAnalysisRequestsDetailDTO[]
 ): Promise<{
   error: PostgrestError | null;
@@ -31,7 +31,7 @@ export const createFoodAnalysisResult = async (
   return { error };
 };
 
-export const createFoodImageUrls = async (
+export const createFoodAnalysisRequests = async (
   userId: string,
   imageUrls: string[]
 ): Promise<{

@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import { AI_ERROR_KEYS, AI_ERROR_MESSAGE, isAIErrorResponse } from '@/constants/ai-error-message.constant';
-import { createFoodAnalysisResult, createFoodImageUrls, getFoodImagesById } from '@/lib/apis/analysis-request.api';
+import {
+  createFoodAnalysisRequestDetails,
+  createFoodAnalysisRequests,
+  getFoodImagesById
+} from '@/lib/apis/analysis-request.api';
 import { generateFoodAnalysisByImage } from '@/lib/apis/gemini.api';
 import { convertImageUrlToBase64 } from '@/lib/utils/convert-image-to-base64.util';
 import { parseGeminiResponse } from '@/lib/utils/gemini.util';
@@ -32,7 +36,7 @@ export async function POST(req: Request) {
       uploadedUrls.push(publicUrl);
     }
 
-    const { error: insertTempError } = await createFoodImageUrls(userId, uploadedUrls);
+    const { error: insertTempError } = await createFoodAnalysisRequests(userId, uploadedUrls);
 
     if (insertTempError) {
       console.error('임시 테이블 저장 실패:', insertTempError);
@@ -71,7 +75,7 @@ export async function POST(req: Request) {
       requestId: requestId
     }));
 
-    const { error: insertError } = await createFoodAnalysisResult(insertPayload);
+    const { error: insertError } = await createFoodAnalysisRequestDetails(insertPayload);
 
     if (insertError) {
       console.error('분석 결과 저장 실패:', insertError);
