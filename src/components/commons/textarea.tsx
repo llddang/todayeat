@@ -2,65 +2,66 @@
 
 import { Typography } from '@/components/ui/typography';
 import { cn } from '@/lib/utils';
-import * as React from 'react';
+import { FormEvent, forwardRef, useImperativeHandle, useMemo, useRef, useState } from 'react';
 
 type TextareaProps = Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'maxLength'> & {
   maxLength: number;
 };
 
-const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, maxLength, ...props }, forwardedRef) => {
-    const textareaRef = React.useRef<HTMLTextAreaElement>(null);
-    
-    const initialCharCount =
-      typeof props.defaultValue === 'string' || typeof props.defaultValue === 'number'
-        ? String(props.defaultValue).length
-        : 0;
+const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(({ className, maxLength, ...props }, forwardedRef) => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-    const [charCount, setCharCount] = React.useState<number>(initialCharCount);
+  const initialCharCount = useMemo(() => {
+    if (typeof props.defaultValue === 'string' || typeof props.defaultValue === 'number') {
+      return String(props.defaultValue).length;
+    }
+    return 0;
+  }, [props.defaultValue]);
 
-    React.useImperativeHandle(forwardedRef, () => textareaRef.current!, []);
+  const [charCount, setCharCount] = useState<number>(initialCharCount);
 
-    const handleInput = () => {
-      const length = textareaRef.current?.value.length ?? 0;
-      setCharCount(length);
-    };
+  useImperativeHandle(forwardedRef, () => textareaRef.current!, []);
 
-    const handleContainerClick = () => {
-      textareaRef.current?.focus();
-    };
+  const handleInput = (e: FormEvent<HTMLTextAreaElement>) => {
+    const length = e.currentTarget.value.length ?? 0;
+    setCharCount(length);
+    props.onInput?.(e);
+  };
 
-    return (
-      <div
-        onClick={handleContainerClick}
-        className={cn(
-          'group flex flex-col gap-2 rounded-lg border border-gray-300 bg-white p-4 focus-within:!border-gray-800 hover:border-gray-500',
-          className
-        )}
-      >
-        <textarea
-          className="flex-1 resize-none caret-purple-300 typography-body1 focus:border-none focus:outline-none focus:ring-0 focus-visible:ring-0"
-          maxLength={maxLength}
-          ref={textareaRef}
-          onInput={handleInput}
-          {...props}
-        />
+  const handleContainerClick = () => {
+    textareaRef.current?.focus();
+  };
 
-        <div className="flex items-center justify-end gap-0.5">
-          <Typography as="span" variant="body4" className="text-gray-600">
-            {charCount}
-          </Typography>
-          <Typography as="span" variant="body4" className="text-gray-500">
-            /
-          </Typography>
-          <Typography as="span" variant="body4" className="text-gray-500">
-            {maxLength}
-          </Typography>
-        </div>
+  return (
+    <div
+      onClick={handleContainerClick}
+      className={cn(
+        'group flex flex-col gap-2 rounded-lg border border-gray-300 bg-white p-4 focus-within:!border-gray-800 hover:border-gray-500',
+        className
+      )}
+    >
+      <textarea
+        className="flex-1 resize-none caret-purple-300 typography-body1 focus:border-none focus:outline-none focus:ring-0 focus-visible:ring-0"
+        maxLength={maxLength}
+        ref={textareaRef}
+        onInput={handleInput}
+        {...props}
+      />
+
+      <div className="flex items-center justify-end gap-0.5">
+        <Typography as="span" variant="body4" className="text-gray-600">
+          {charCount}
+        </Typography>
+        <Typography as="span" variant="body4" className="text-gray-500">
+          /
+        </Typography>
+        <Typography as="span" variant="body4" className="text-gray-500">
+          {maxLength}
+        </Typography>
       </div>
-    );
-  }
-);
+    </div>
+  );
+});
 
 Textarea.displayName = 'Textarea';
 
