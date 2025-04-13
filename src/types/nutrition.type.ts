@@ -9,6 +9,13 @@ export type NutritionGoal = {
 
 export type MealNutrition = Pick<MealDetailDTO, 'calories' | 'carbohydrate' | 'protein' | 'fat'>;
 export type Macronutrient = Omit<MealNutrition, 'calories'>;
+export type MacronutrientType = keyof Macronutrient;
+export const MacronutrientEnum = {
+  CARBOHYDRATE: 'CARBOHYDRATE',
+  PROTEIN: 'PROTEIN',
+  FAT: 'FAT'
+} as const;
+export type MacronutrientEnumType = keyof typeof MacronutrientEnum;
 
 export type PurposeValue = {
   name: string;
