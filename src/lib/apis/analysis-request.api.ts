@@ -30,3 +30,22 @@ export const createFoodAnalysisResult = async (
 
   return { error };
 };
+
+export const createFoodImageUrls = async (
+  userId: string,
+  imageUrls: string[]
+): Promise<{
+  error: PostgrestError | null;
+}> => {
+  const supabase = getServerClient();
+
+  const { error } = await supabase
+    .from('food_analysis_requests')
+    .upsert({
+      user_id: userId,
+      image_urls: imageUrls
+    })
+    .eq('user_id', userId);
+
+  return { error };
+};
