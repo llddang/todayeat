@@ -1,22 +1,36 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
+import { useFormField } from '@/components/ui/form';
 
-const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
-  ({ className, type, ...props }, ref) => {
-    return (
+type InputProps = React.ComponentProps<'input'> & {
+  measure?: string;
+};
+
+const InputVariants =
+  'flex h-12 items-center gap-2 rounded-lg border-[1px] border-gray-200 bg-white px-4 focus-within:!border-gray-700 hover:border-gray-500';
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type = 'text', measure, ...props }, ref) => {
+  const { error } = useFormField();
+  const isDisabled = props.disabled;
+
+  return (
+    <div className={cn(InputVariants, error && 'border-red-500', isDisabled && 'hover:border-gray-200', className)}>
       <input
-        type={type}
-        className={cn(
-          'flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-          className
-        )}
-        ref={ref}
         {...props}
+        ref={ref}
+        type={type}
+        placeholder={props.placeholder}
+        id={props.id}
+        className="min-w-0 flex-1 text-gray-900 caret-purple-300 typography-body1 placeholder:text-gray-500 focus:outline-none disabled:bg-white disabled:text-gray-500"
       />
-    );
-  }
-);
+      {measure && (
+        <span className={cn('block typography-body3', isDisabled ? 'text-gray-500' : 'text-gray-700')}>{measure}</span>
+      )}
+    </div>
+  );
+});
+
 Input.displayName = 'Input';
 
 export { Input };
