@@ -54,15 +54,14 @@ const buttonLinkDisabledVariants = cva(
   }
 );
 
-export interface ButtonLinkProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
-    VariantProps<typeof buttonLinkVariants> {
-  href: string;
-  disabled?: boolean;
-  prefetch?: boolean;
-  children: React.ReactNode;
-  className?: string;
-}
+export type ButtonLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> &
+  VariantProps<typeof buttonLinkVariants> & {
+    href: string;
+    disabled?: boolean;
+    prefetch?: boolean;
+    children: React.ReactNode;
+    className?: string;
+  };
 
 const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
   ({ className, variant, size, href, disabled = false, prefetch, children, ...props }, ref) => {
@@ -93,5 +92,4 @@ const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
 );
 
 ButtonLink.displayName = 'ButtonLink';
-
-export { ButtonLink, buttonLinkVariants };
+export default ButtonLink;
