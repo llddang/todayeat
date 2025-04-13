@@ -6,18 +6,18 @@ type OptionSelectCardProps = {
   groupName: 'PURPOSE' | 'GENDER' | 'ACTIVITY_LEVEL_OPTIONS';
   title: string;
   value: string;
-  description?: string;
-  checked?: boolean;
+  checked: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  description?: string;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'name' | 'defaultChecked'>;
 
 const OptionSelectCard = ({
   groupName,
   title,
   value,
-  description,
   checked,
   onChange,
+  description,
   ...props
 }: OptionSelectCardProps) => {
   const labelClasses = `box-border flex w-full cursor-pointer flex-col items-start gap-2 rounded-2xl border-2 border-transparent bg-white p-[calc(1.25rem-2px)] text-gray-800 ${
