@@ -6,14 +6,14 @@ const iconButtonVariants = cva(
   {
     variants: {
       size: {
-        sm: ' w-7 h-7 bg-white/80  hover:bg-gray-300/80 before:h-3 before:w-3 ',
+        sm: 'w-7 h-7 bg-white/80  hover:bg-gray-300/80 before:h-3 before:w-3 ',
         md: 'w-9 h-9 bg-white/80 aspect-square  hover:bg-gray-300/80 before:h-4 before:w-4',
-        lg: 'h-10 w-10  bg-transparent hover:bg-gray-100 before:h-[1.375rem] before:w-[1.375rem]',
-        xl: 'h-11 w-11 bg-white/80  hover:bg-gray-300/80 before:h-5 before:w-5 '
+        lg: 'w-10 h-10  bg-transparent hover:bg-gray-100 before:h-[1.375rem] before:w-[1.375rem]',
+        xl: 'w-11 h-11 bg-white/80  hover:bg-gray-300/80 before:h-5 before:w-5 '
       }
     },
     defaultVariants: {
-      size: 'sm'
+      size: 'lg'
     }
   }
 );
