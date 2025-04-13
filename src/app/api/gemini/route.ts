@@ -18,14 +18,19 @@ export async function POST(req: Request) {
     const userId = formData.get('userId')?.toString() as string;
     const files = formData.getAll('files') as File[];
 
-    const uploadedUrls: string[] = [];
-
     if (files.length > 0) {
-      for (const file of files) {
-        const uploadForm = new FormData();
-        uploadForm.set('file', file);
+      const uploadResults = await Promise.all(
+        files.map((file) => {
+          const uploadForm = new FormData();
+          uploadForm.set('file', file);
+          return uploadImage('meal-requests', uploadForm);
+        })
+      );
 
-        const { data: publicUrl, error: uploadError } = await uploadImage('meal-requests', uploadForm);
+      const uploadedUrls: string[] = [];
+
+      for (const result of uploadResults) {
+        const { data: publicUrl, error: uploadError } = result;
 
         if (uploadError || !publicUrl) {
           console.error('이미지 업로드 실패:', uploadError);
