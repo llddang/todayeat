@@ -145,10 +145,14 @@ const config: Config = {
         'right-line-gray-400-icon': "url('/icons/right-line-gray-400.svg')",
         'right-line-gray-600-icon': "url('/icons/right-line-gray-600.svg')",
         'right-line-gray-800-icon': "url('/icons/right-line-gray-800.svg')",
-        'sparkle-illustration': "url('/illustration/cta-banner-sparkle.svg')",
+        'sparkle-illustration': "url('/illustrations/cta-banner-sparkle.svg')",
         'image-upload-illustration': "url('/illustrations/image-upload.svg')",
         'ai-sparkle-1': "url('/illustrations/ai-sparkle-1.svg')",
-        'ai-sparkle-2': "url('/illustrations/ai-sparkle-2.svg')"
+        'ai-sparkle-2': "url('/illustrations/ai-sparkle-2.svg')",
+        'meal-category-breakfast': "url('/illustrations/meal-category-breakfast.svg')",
+        'meal-category-lunch': "url('/illustrations/meal-category-lunch.svg')",
+        'meal-category-dinner': "url('/illustrations/meal-category-dinner.svg')",
+        'meal-category-snack': "url('/illustrations/meal-category-snack.svg')"
       },
       letterSpacing: {
         snug: '-0.0175rem'
