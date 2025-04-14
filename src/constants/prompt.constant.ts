@@ -29,7 +29,9 @@ export const FOOD_IMAGE_ANALYSIS_PROMPT = `
 export const CALORIES_ANALYSIS_PROMPT = `
   당신은 식품 영양학을 전공한 전문가입니다.
   모호한 정보가 있더라도 당신의 지식에 기반해 합리적인 수치를 예측해야 합니다.
+
   음식이 아니라고 판단되면, 음식이 아니라고 평문으로 응답해주세요.
+  음식 중량이 없거나 0이면 1인분 기준의 대략적인 예상 중량을 사용해주세요.
 
   음식 이름과 음식 중량을 이용해 다음 정보를 추정해주세요:
   1. 칼로리 (calories)
