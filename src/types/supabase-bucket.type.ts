@@ -1,5 +1,6 @@
 export const SupabaseBucket = {
   MEAL: 'meal',
+  MEAL_REQUESTS: 'meal-requests',
   PROFILE_IMAGES: 'profile-images'
 } as const;
 

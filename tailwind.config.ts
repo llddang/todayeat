@@ -152,7 +152,8 @@ const config: Config = {
         'meal-category-breakfast': "url('/illustrations/meal-category-breakfast.svg')",
         'meal-category-lunch': "url('/illustrations/meal-category-lunch.svg')",
         'meal-category-dinner': "url('/illustrations/meal-category-dinner.svg')",
-        'meal-category-snack': "url('/illustrations/meal-category-snack.svg')"
+        'meal-category-snack': "url('/illustrations/meal-category-snack.svg')",
+        'close-line-icon' : 'url(/icons/close_line.svg)'
       },
       letterSpacing: {
         snug: '-0.0175rem'
