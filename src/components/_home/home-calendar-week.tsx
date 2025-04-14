@@ -45,16 +45,13 @@ const HomeCalendarWeek = () => {
   }, [weeks, api]);
 
   return (
-    <Carousel setApi={setApi}>
+    <Carousel setApi={setApi} opts={{ startIndex: 2 }}>
       <CarouselContent>
-        {weeks.map((week) => {
-          console.log(week.dates[0].toDateString());
-          return (
-            <CarouselItem key={week.dates[0].getTime()}>
-              <HomeCalendarWeekItem weekDate={week.dates} selectedDate={selectedDate} onDateClick={handleDateClick} />
-            </CarouselItem>
-          );
-        })}
+        {weeks.map((week) => (
+          <CarouselItem key={week.dates[0].getTime()}>
+            <HomeCalendarWeekItem weekDate={week.dates} selectedDate={selectedDate} onDateClick={handleDateClick} />
+          </CarouselItem>
+        ))}
       </CarouselContent>
     </Carousel>
   );
