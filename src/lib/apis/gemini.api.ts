@@ -15,8 +15,8 @@ export const generateCaloriesAnalysisByText = async (foodName: string, weight: n
   const preInfomation = `  
     음식 이름: ${foodName}
     음식 중량: ${weight}g
-    
   `;
+
   const response = await getGenAI().models.generateContent({
     model: 'gemini-2.0-flash',
     contents: preInfomation + CALORIES_ANALYSIS_PROMPT
