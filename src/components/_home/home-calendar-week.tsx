@@ -1,5 +1,5 @@
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 
 interface WeekData {
   id: number;
@@ -30,8 +30,6 @@ const HomeCalendarWeek = () => {
 
         setCurrentDate(newDate);
         setWeeks(getWeekDates(newDate));
-
-        api.scrollTo(2, true);
       }
     };
 
@@ -40,6 +38,11 @@ const HomeCalendarWeek = () => {
       api.off('settle', onSettle);
     };
   }, [api, currentDate]);
+
+  useLayoutEffect(() => {
+    if (!api) return;
+    api.scrollTo(2, true);
+  }, [weeks, api]);
 
   return (
     <Carousel setApi={setApi}>
