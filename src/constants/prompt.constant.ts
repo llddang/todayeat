@@ -38,6 +38,7 @@ export const CALORIES_ANALYSIS_PROMPT = `
   2. 탄수화물 (carbohydrate)
   3. 단백질 (protein)
   4. 지방 (fat)
+  5. 음식 중량이 없거나 0일 경우, 음식 중량 (weight)
 
   예시와 같은 형식으로 응답하세요.
   ⚠️ 절대 마크다운 코드 블록(예: \`\`\`json)을 포함하지 마세요.
@@ -50,6 +51,7 @@ export const CALORIES_ANALYSIS_PROMPT = `
       "carbohydrate": 60,
       "protein": 15,
       "fat": 18
+      "weight": 350
     }
   ]
 `;
