@@ -1,6 +1,7 @@
 import HomeCalendarWeekItem from '@/components/_home/home-calendar-week-item';
 import ClientOnly from '@/components/commons/client-only';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import { CALENDAR_STAND_COUNT } from '@/constants/calendar.constant';
 import { calculateWeekDates, getWeekDates, isSameDate } from '@/lib/utils/date.util';
 import { useEffect, useLayoutEffect, useState } from 'react';
 
@@ -39,7 +40,7 @@ const HomeCalendarWeek = ({ initialDate, onSelectedDateChange, onCurrentDateChan
 
     const onSettle = (): void => {
       const currentIndex = api.selectedScrollSnap();
-      const diff = currentIndex - 2;
+      const diff = currentIndex - CALENDAR_STAND_COUNT;
 
       if (diff !== 0) {
         const newDate = new Date(currentDate);
@@ -58,7 +59,7 @@ const HomeCalendarWeek = ({ initialDate, onSelectedDateChange, onCurrentDateChan
 
   useLayoutEffect(() => {
     if (!api) return;
-    api.scrollTo(2, true);
+    api.scrollTo(CALENDAR_STAND_COUNT, true);
   }, [weeks, api]);
 
   return (
@@ -71,7 +72,7 @@ const HomeCalendarWeek = ({ initialDate, onSelectedDateChange, onCurrentDateChan
         />
       }
     >
-      <Carousel setApi={setApi} opts={{ startIndex: 2 }}>
+      <Carousel setApi={setApi} opts={{ startIndex: CALENDAR_STAND_COUNT }}>
         <CarouselContent>
           {weeks.map((week) => (
             <CarouselItem key={week.dates[0].getTime()}>
