@@ -1,5 +1,8 @@
+import CircleProgressBar from '@/components/commons/circle-progress-bar';
 import ClientOnly from '@/components/commons/client-only';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import { Typography } from '@/components/ui/typography';
+import { cn } from '@/lib/utils';
 import { useEffect, useLayoutEffect, useState } from 'react';
 
 interface WeekData {
@@ -75,22 +78,26 @@ type HomeCalendarWeekItemProps = {
   onDateClick: (date: Date) => void;
 };
 const HomeCalendarWeekItem = ({ weekDate, selectedDate, onDateClick }: HomeCalendarWeekItemProps) => {
-  const dayLabels: string[] = ['월', '화', '수', '목', '금', '토', '일'];
-
   return (
     <div className="flex w-full justify-between">
-      {weekDate.map((date, index) => {
+      {weekDate.map((date) => {
         const isSelected = isSameDate(date, selectedDate);
-        const isToday = isSameDate(date, new Date());
-
         return (
-          <div key={date.toString()} className="flex flex-col items-center" onClick={() => onDateClick(date)}>
-            <div className="mb-1 text-xs text-gray-500">{dayLabels[index]}</div>
-            <div
-              className={`flex h-10 w-10 items-center justify-center rounded-full text-sm ${isSelected ? 'bg-yellow-300 text-gray-800' : isToday ? 'border border-gray-300' : ''} cursor-pointer transition-colors`}
-            >
-              {date.getMonth() + 1}/{date.getDate()}
-            </div>
+          <div
+            key={date.toDateString()}
+            className={cn(
+              'relative flex h-10 w-10 items-center justify-center',
+              isSelected ? 'text-gray-900' : 'text-gray-600'
+            )}
+            onClick={() => onDateClick(date)}
+          >
+            <Typography variant={isSelected ? 'subTitle3' : 'body2'} className="!leading-[100%]">
+              {date.getDate()}
+            </Typography>
+            {isSelected && (
+              <div className="border-box absolute -z-10 h-[calc(2.5rem-3px)] w-[calc(2.5rem-3px)] rounded-full bg-white" />
+            )}
+            <CircleProgressBar progress={75} size={40} strokeWidth={3} className="absolute -z-10 h-10 w-10" />
           </div>
         );
       })}
