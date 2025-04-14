@@ -6,7 +6,7 @@ import { updateCaloriesAnalysisResult } from '@/lib/apis/analysis-request.api';
 
 export const POST = async (req: Request) => {
   try {
-    const { id, menuName, weight } = await req.json(); // ← id = row id
+    const { id, menuName, weight } = await req.json();
 
     const generatedTextResult = await generateCaloriesAnalysisByText(menuName, weight);
     const parsedResult = parseGeminiResponse(generatedTextResult);
