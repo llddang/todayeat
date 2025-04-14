@@ -8,6 +8,18 @@ export const POST = async (req: Request) => {
   try {
     const { id, menuName, weight } = await req.json();
 
+    if (!id || !menuName || !weight) {
+      return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.MISSING_INPUT), {
+        status: AI_ERROR_MESSAGE.MISSING_INPUT.status
+      });
+    }
+
+    if (typeof weight !== 'number' || weight <= 0) {
+      return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.INVALID_INPUT), {
+        status: AI_ERROR_MESSAGE.INVALID_INPUT.status
+      });
+    }
+
     const generatedTextResult = await generateCaloriesAnalysisByText(menuName, weight);
     const parsedResult = parseGeminiResponse(generatedTextResult);
 
