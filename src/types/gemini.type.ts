@@ -8,3 +8,4 @@ export type ImageContent = {
 };
 
 export type FoodAnalysisResult = Omit<FoodAnalysisRequestsDetailDTO, 'requestId'>;
+export type CaloriesAnalysisUpdatePayload = FoodAnalysisResult & { id: string };
