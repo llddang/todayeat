@@ -12,7 +12,7 @@ import { FoodAnalysisRequestsDetailDTO } from '@/types/DTO/food_analysis.dto';
 import { FoodAnalysisResult, ImageContent } from '@/types/gemini.type';
 import { uploadImage } from '@/lib/apis/storage.api';
 
-export async function POST(req: Request) {
+export const POST = async (req: Request) => {
   try {
     const formData = await req.formData();
     const userId = formData.get('userId')?.toString() as string;
@@ -95,4 +95,4 @@ export async function POST(req: Request) {
     console.error('분석 에러:', error);
     return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.UNKNOWN), { status: AI_ERROR_MESSAGE.UNKNOWN.status });
   }
-}
+};
