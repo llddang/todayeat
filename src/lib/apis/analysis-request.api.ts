@@ -1,6 +1,7 @@
 import { camelToSnakeObject } from '@/lib/utils/camelize.util';
 import { getServerClient } from '@/lib/utils/supabase/server.util';
 import { FoodAnalysisRequestsDetailDTO, FoodAnalysisRequestsDTO } from '@/types/DTO/food_analysis.dto';
+import { CaloriesAnalysisUpdatePayload } from '@/types/gemini.type';
 import { PostgrestError } from '@supabase/supabase-js';
 
 export const getFoodImagesById = async (
@@ -46,6 +47,32 @@ export const createFoodAnalysisRequests = async (
       image_urls: imageUrls
     })
     .eq('user_id', userId);
+
+  return { error };
+};
+
+export const updateCaloriesAnalysisResult = async ({
+  id,
+  menuName,
+  weight,
+  calories,
+  carbohydrate,
+  protein,
+  fat
+}: CaloriesAnalysisUpdatePayload): Promise<{ error: PostgrestError | null }> => {
+  const supabase = getServerClient();
+
+  const { error } = await supabase
+    .from('food_analysis_requests_detail')
+    .update({
+      menu_name: menuName,
+      weight,
+      calories,
+      carbohydrate,
+      protein,
+      fat
+    })
+    .eq('id', id);
 
   return { error };
 };
