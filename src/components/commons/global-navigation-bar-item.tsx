@@ -27,7 +27,7 @@ type GnbItemProps = {
 
 const GlobalNavigationBarItem = ({ href, icon, label, active }: GnbItemProps) => (
   <Link href={href} className={cn(gnbItemStyle({ active }), icon)}>
-    <Typography as="span" variant="subTitle5">
+    <Typography as="span" variant="subTitle5" className="!leading-none">
       {label}
     </Typography>
   </Link>
