@@ -37,7 +37,7 @@ const OptionSelectCard = ({
         {...props}
       />
       <label className={labelClasses} htmlFor={value}>
-        <Typography as="span" variant={checked || description ? 'subTitle2' : 'body1'}>
+        <Typography as="span" variant={'subTitle2'}>
           {title}
         </Typography>
         {description && (
