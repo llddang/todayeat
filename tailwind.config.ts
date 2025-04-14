@@ -153,7 +153,13 @@ const config: Config = {
         'meal-category-lunch': "url('/illustrations/meal-category-lunch.svg')",
         'meal-category-dinner': "url('/illustrations/meal-category-dinner.svg')",
         'meal-category-snack': "url('/illustrations/meal-category-snack.svg')",
-        'close-line-icon' : 'url(/icons/close_line.svg)'
+        'close-line-icon': 'url(/icons/close_line.svg)',
+        'home-fill-icon': 'url(/icons/home_fill.svg)',
+        'home-line-icon': 'url(/icons/home_line.svg)',
+        'analyze-fill-icon': 'url(/icons/analyze_fill.svg)',
+        'analyze-line-icon': 'url(/icons/analyze_line.svg)',
+        'chart-fill-icon': 'url(/icons/chart_fill.svg)',
+        'chart-line-icon': 'url(/icons/chart_line.svg)'
       },
       letterSpacing: {
         snug: '-0.0175rem'
