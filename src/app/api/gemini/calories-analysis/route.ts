@@ -4,7 +4,7 @@ import { generateCaloriesAnalysisByText } from '@/lib/apis/gemini.api';
 import { parseGeminiResponse } from '@/lib/utils/gemini.util';
 import { updateCaloriesAnalysisResult } from '@/lib/apis/analysis-request.api';
 
-export async function POST(req: Request) {
+export const POST = async (req: Request) => {
   try {
     const { id, menuName, weight } = await req.json(); // ← id = row id
 
@@ -43,4 +43,4 @@ export async function POST(req: Request) {
       status: AI_ERROR_MESSAGE.UNKNOWN.status
     });
   }
-}
+};
