@@ -1,3 +1,4 @@
+import ClientOnly from '@/components/commons/client-only';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { useEffect, useLayoutEffect, useState } from 'react';
 
@@ -45,15 +46,25 @@ const HomeCalendarWeek = () => {
   }, [weeks, api]);
 
   return (
-    <Carousel setApi={setApi} opts={{ startIndex: 2 }}>
-      <CarouselContent>
-        {weeks.map((week) => (
-          <CarouselItem key={week.dates[0].getTime()}>
-            <HomeCalendarWeekItem weekDate={week.dates} selectedDate={selectedDate} onDateClick={handleDateClick} />
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-    </Carousel>
+    <ClientOnly
+      fallback={
+        <HomeCalendarWeekItem
+          weekDate={calculateWeekDates(selectedDate)}
+          selectedDate={selectedDate}
+          onDateClick={handleDateClick}
+        />
+      }
+    >
+      <Carousel setApi={setApi} opts={{ startIndex: 2 }}>
+        <CarouselContent>
+          {weeks.map((week) => (
+            <CarouselItem key={week.dates[0].getTime()}>
+              <HomeCalendarWeekItem weekDate={week.dates} selectedDate={selectedDate} onDateClick={handleDateClick} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
+    </ClientOnly>
   );
 };
 export default HomeCalendarWeek;
