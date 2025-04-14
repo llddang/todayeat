@@ -8,16 +8,30 @@ type WeekDate = {
   id: number;
   dates: Date[];
 };
-const HomeCalendarWeek = () => {
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+type HomeCalendarWeekProps = {
+  initialDate?: Date;
+  onSelectedDateChange?: (date: Date) => void;
+  onCurrentDateChange?: (date: Date) => void;
+};
+const HomeCalendarWeek = ({ initialDate, onSelectedDateChange, onCurrentDateChange }: HomeCalendarWeekProps) => {
+  const [selectedDate, setSelectedDate] = useState<Date>(initialDate ?? new Date());
+  const [currentDate, setCurrentDate] = useState<Date>(initialDate ?? new Date());
   const [weeks, setWeeks] = useState<WeekDate[]>(getWeekDates(selectedDate));
+
+  useEffect(() => {
+    if (initialDate) {
+      setSelectedDate(new Date(initialDate));
+      setCurrentDate(new Date(initialDate));
+      setWeeks(getWeekDates(initialDate));
+    }
+  }, [initialDate]);
 
   const [api, setApi] = useState<CarouselApi>();
 
   const handleDateClick = (newSelectedDate: Date): void => {
     if (isSameDate(newSelectedDate, selectedDate)) return;
     setSelectedDate(new Date(newSelectedDate));
+    if (onSelectedDateChange) onSelectedDateChange(new Date(newSelectedDate));
   };
 
   useEffect(() => {
@@ -31,6 +45,7 @@ const HomeCalendarWeek = () => {
         const newDate = new Date(currentDate);
         newDate.setDate(currentDate.getDate() + diff * 7);
         setCurrentDate(newDate);
+        if (onCurrentDateChange) onCurrentDateChange(newDate);
         setWeeks(getWeekDates(newDate));
       }
     };
@@ -39,7 +54,7 @@ const HomeCalendarWeek = () => {
     return () => {
       api.off('settle', onSettle);
     };
-  }, [api, currentDate]);
+  }, [api, currentDate, onCurrentDateChange]);
 
   useLayoutEffect(() => {
     if (!api) return;
