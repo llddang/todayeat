@@ -48,7 +48,7 @@ export const POST = async (req: Request) => {
       });
     }
 
-    return NextResponse.json({ calories, carbohydrate, protein, fat });
+    return NextResponse.json({ id, calories, carbohydrate, protein, fat });
   } catch (error) {
     console.error('분석 에러:', error);
     return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.UNKNOWN), {
