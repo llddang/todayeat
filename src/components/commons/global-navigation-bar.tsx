@@ -20,7 +20,7 @@ const GlobalNavigationBar = () => {
   return (
     <nav className="rounded-[6.25rem] bg-gray-200/[0.64] p-2">
       <ul className="flex gap-2">
-        <li>
+        <li className="flex-1">
           <GlobalNavigationBarItem
             href={SITE_MAP.HOME}
             label="홈"
@@ -28,7 +28,7 @@ const GlobalNavigationBar = () => {
             active={currentPage === HOME}
           />
         </li>
-        <li>
+        <li className="flex-1">
           <GlobalNavigationBarItem
             href={SITE_MAP.MEAL_POST}
             label="식사 기록"
@@ -36,7 +36,7 @@ const GlobalNavigationBar = () => {
             active={currentPage === POST}
           />
         </li>
-        <li>
+        <li className="flex-1">
           <GlobalNavigationBarItem
             href={SITE_MAP.REPORT}
             label="리포트"

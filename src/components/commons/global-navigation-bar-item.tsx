@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { Typography } from '@/components/ui/typography';
 
 const gnbItemStyle = cva(
-  'flex flex-1 items-center text-center justify-center gap-2 p-2 rounded-[1.5625rem] transition-color before:content-[""] before:block before:w-[1.375rem] before:h-[1.375rem] before:bg-contain before:bg-no-repeat before:bg-center',
+  'flex items-center text-center justify-center gap-2 p-2 rounded-[1.5625rem] transition-color before:content-[""] before:block before:w-[1.375rem] before:h-[1.375rem] before:bg-contain before:bg-no-repeat before:bg-center',
   {
     variants: {
       active: {
