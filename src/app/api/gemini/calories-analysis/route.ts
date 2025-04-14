@@ -6,15 +6,18 @@ import { updateCaloriesAnalysisResult } from '@/lib/apis/analysis-request.api';
 
 export const POST = async (req: Request) => {
   try {
-    const { id, menuName, weight } = await req.json();
+    const { id, menuName, weight: weightProp } = await req.json();
+    let weight = weightProp;
 
-    if (!id || !menuName || !weight) {
+    if (!id || !menuName) {
       return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.MISSING_INPUT), {
         status: AI_ERROR_MESSAGE.MISSING_INPUT.status
       });
     }
 
-    if (typeof weight !== 'number' || weight <= 0) {
+    if (weight === undefined) weight = 0;
+
+    if (typeof weight !== 'number' || weight < 0) {
       return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.INVALID_INPUT), {
         status: AI_ERROR_MESSAGE.INVALID_INPUT.status
       });
