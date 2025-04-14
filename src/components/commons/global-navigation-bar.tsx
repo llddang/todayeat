@@ -18,7 +18,7 @@ const GlobalNavigationBar = () => {
       : HOME;
 
   return (
-    <nav className="flex justify-around rounded-[6.25rem] bg-gray-200/[0.64] p-2">
+    <nav className="flex gap-2 rounded-[6.25rem] bg-gray-200/[0.64] p-2">
       <GlobalNavigationBarItem
         href={SITE_MAP.HOME}
         label="홈"
