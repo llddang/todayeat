@@ -9,7 +9,7 @@ import HomeCalendarMonthItem from '@/components/_home/home-calendar-month-item';
 
 type MonthType = {
   id: number;
-  dates: Date[][];
+  weeks: Date[][];
 };
 const HomeCalendarMonth = () => {
   const { selectedDate, currentDate, dailyMealCalories, setSelectedDate, setCurrentDate, setDailyMealCalories } =
@@ -19,12 +19,12 @@ const HomeCalendarMonth = () => {
 
   useEffect(() => {
     const filteredMonthsWithoutInfo = months.filter((month) => {
-      const key = formatDateWithDash(month.dates[0][0]);
+      const key = formatDateWithDash(month.weeks[0][0]);
       return dailyMealCalories[key] === undefined;
     });
-    if (filteredMonthsWithoutInfo.length === 0) return;
-    const startDate = filteredMonthsWithoutInfo[0].dates[0][0];
-    const endDate = filteredMonthsWithoutInfo.at(-1)?.dates.at(-1)?.[0];
+    const flatDates = filteredMonthsWithoutInfo.flatMap((month) => month.weeks.flatMap((date) => date));
+    const startDate = flatDates[0];
+    const endDate = flatDates.at(-1);
     if (!startDate || !endDate) return;
 
     getAllMyDailyCalories(startDate, endDate).then(setDailyMealCalories);
@@ -73,8 +73,8 @@ const HomeCalendarMonth = () => {
       <Carousel setApi={setApi} opts={{ startIndex: CALENDAR_STAND_COUNT }}>
         <CarouselContent>
           {months.map((month) => (
-            <CarouselItem key={formatDateWithDash(month.dates[0][0])}>
-              <HomeCalendarMonthItem month={month.dates} onDateClick={handleDateClick} />
+            <CarouselItem key={formatDateWithDash(month.weeks[0][0])}>
+              <HomeCalendarMonthItem month={month.weeks} onDateClick={handleDateClick} />
             </CarouselItem>
           ))}
         </CarouselContent>
