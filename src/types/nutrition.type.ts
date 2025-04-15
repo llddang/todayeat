@@ -17,7 +17,7 @@ export const MacronutrientEnum = {
   FAT: 'FAT'
 } as const;
 
-export type MacronutrientEnumType = keyof typeof NutritionEnum;
+export type MacronutrientEnumType = keyof typeof MacronutrientEnum;
 
 export type PurposeValue = {
   name: string;
