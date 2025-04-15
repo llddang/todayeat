@@ -1,19 +1,28 @@
-import Link from 'next/link';
 import AuthSignInForm from '@/components/_auth/auth-sign-in-form';
 import AuthSignInWithGoogleButton from '@/components/_auth/auth-sign-in-with-google-button';
 import AuthSignInWithKakaoButton from '@/components/_auth/auth-sign-in-with-kakao-button';
-import SITE_MAP from '@/constants/site-map.constant';
+import { Typography } from '@/components/ui/typography';
+import Image from 'next/image';
+import LOGO from '@/../public/logo.svg';
 
 const SignInPage = () => {
   return (
     <section>
-      <h2>로그인</h2>
-      <AuthSignInForm />
-      <p>
-        아직 계정이 없으신가요? <Link href={SITE_MAP.SIGN_UP}>회원가입으로</Link>
-      </p>
-      <AuthSignInWithGoogleButton />
-      <AuthSignInWithKakaoButton />
+      <div className="gap flex flex-col items-center gap-2 px-4 pb-7 pt-2">
+        <h2>
+          <Image src={LOGO} alt="로고 이미지" className="h-[38px] w-[137px]" />
+        </h2>
+        <Typography variant="body2" className="text-gray-700">
+          사진 한 장으로 완성되는 식단 기록
+        </Typography>
+      </div>
+      <section className="space-y-6 px-5 pb-8 pt-7">
+        <AuthSignInForm />
+        <div className="flex flex-col gap-2">
+          <AuthSignInWithKakaoButton />
+          <AuthSignInWithGoogleButton />
+        </div>
+      </section>
     </section>
   );
 };
