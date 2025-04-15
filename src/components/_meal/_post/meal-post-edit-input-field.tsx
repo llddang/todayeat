@@ -2,37 +2,45 @@
 import { useFormContext } from 'react-hook-form';
 import { MeasurementUnitType } from '@/types/nutrition.type';
 import { MEASUREMENT_UNIT } from '@/constants/nutrition.constant';
+import { Input } from '@/components/ui/input';
+import { InputHTMLAttributes } from 'react';
 
-type MacronutrientInputFieldProps = {
+type MealPostEditInputFieldProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'maxLength'> & {
   variety: MeasurementUnitType;
   type?: string;
+  maxLength: number;
+  idx: number;
 };
 
-const INPUT_MAX_LENGTH = 4;
-
-const MealEditInputField = ({ variety, type = 'text' }: MacronutrientInputFieldProps): JSX.Element => {
+const MealEditInputField = ({
+  variety,
+  maxLength,
+  type = 'text',
+  idx,
+  ...props
+}: MealPostEditInputFieldProps): JSX.Element => {
   const { register } = useFormContext();
-
-  const name = MEASUREMENT_UNIT[variety].name;
-  const unit = MEASUREMENT_UNIT[variety].unit;
+  const { name, unit } = MEASUREMENT_UNIT[variety];
 
   const handleOnRegisterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
+    props.onChange?.(e);
   };
   return (
-    <div className="relative">
-      <input
-        type={type}
-        {...register(`${name}`, {
-          required: true,
-          onChange: handleOnRegisterChange
-        })}
-        maxLength={INPUT_MAX_LENGTH}
-        inputMode="numeric"
-        className="flex h-12 w-full items-center rounded-lg border border-gray-300 bg-white px-3 py-2 pl-4 text-[1rem] font-normal leading-[1.4rem] tracking-[-0.02rem]"
-      />
-      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm/[20px] tracking-snug">{unit}</span>
-    </div>
+    <Input
+      className={props.className}
+      type={type}
+      onInput={(e) => {
+        e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
+      }}
+      {...register(`meals.${idx}.${name}`, {
+        required: true,
+        onChange: handleOnRegisterChange,
+        valueAsNumber: true
+      })}
+      maxLength={maxLength}
+      inputMode="numeric"
+      measure={unit}
+    />
   );
 };
 
