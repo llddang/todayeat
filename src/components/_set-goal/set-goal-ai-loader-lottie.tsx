@@ -2,7 +2,7 @@ import Lottie from 'react-lottie-player';
 import AiLoaderStar from '@/../public/lottie/ai-loader-star.json';
 import AiLoaderBg from '@/../public/lottie/ai-loader-bg.json';
 
-const AiLoaderLottie = () => {
+const SetGoalAiLoaderLottie = () => {
   return (
     <div className="relative">
       <Lottie
@@ -16,4 +16,4 @@ const AiLoaderLottie = () => {
   );
 };
 
-export default AiLoaderLottie;
+export default SetGoalAiLoaderLottie;
