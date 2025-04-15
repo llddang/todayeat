@@ -97,8 +97,8 @@ const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStep
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      await updateUserPersonalInfo(userPersonalInfos);
-      nextStep('complete');
+      const data = await updateUserPersonalInfo(userPersonalInfos);
+      if (data) nextStep('complete');
     } catch (error) {
       console.error('목표 계산 및 업데이트 중 오류 발생:', error);
     }
