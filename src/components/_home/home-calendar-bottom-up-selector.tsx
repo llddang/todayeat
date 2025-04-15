@@ -24,8 +24,8 @@ const HomeCalendarBottomUpSelector = ({ open, onOpenChange }: HomeCalendarBottom
   };
 
   useEffect(() => {
-    setDate(selectedDate);
-  }, [selectedDate]);
+    if (open) setDate(selectedDate);
+  }, [open, selectedDate]);
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
