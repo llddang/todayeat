@@ -1,9 +1,8 @@
 'use client';
 import { Input } from '@/components/ui/input';
-import { InputHTMLAttributes } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-type MealEditCardTitleProps = InputHTMLAttributes<HTMLInputElement> & {
+type MealEditCardTitleProps = {
   title: string;
   idx: number;
 };
