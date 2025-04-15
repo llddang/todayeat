@@ -15,7 +15,7 @@ import { uploadImage } from '@/lib/apis/storage.api';
 export const POST = async (req: Request) => {
   try {
     const formData = await req.formData();
-    const userId = formData.get('userId')?.toString() as string;
+    const userId = formData.get('userId')?.toString() ?? '';
     const files = formData.getAll('files') as File[];
 
     if (files.length > 0) {
