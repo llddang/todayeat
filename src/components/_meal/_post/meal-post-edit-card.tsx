@@ -8,7 +8,7 @@ import IconButton from '@/components/commons/icon-button';
 import { Button } from '@/components/ui/button';
 import { MacronutrientEnum, MeasurementUnitEnum } from '@/types/nutrition.type';
 import { MealDetailDTO } from '@/types/DTO/meal.dto';
-import { updateMealDetail } from '@/lib/apis/meal.api';
+import { createFoodAnalysisRequestDetail } from '@/lib/apis/meal.api';
 
 type MealPostEditCardProps = {
   mealDetail: MealDetailDTO;
@@ -35,9 +35,18 @@ const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
     try {
       const input = getValues(`meals.${idx}`);
       //TODO: Gemini 분석요청 API + supabase 임시테이블 저장(비확실)
-      await updateMealDetail(mealDetail.id, input);
+      if (!input.menuName) {
+        alert('메뉴명은 필수항목 입니다.');
+        return;
+      }
+      if (!input.weight || !input.calories) {
+        alert('무게와 칼로리를 모르실 경우 0을 입력해주세요.');
+      }
+
+      await createFoodAnalysisRequestDetail(input);
     } catch (error) {
       console.error('식단 분석요청에 실패하였습니다.', error);
+
       alert('분석에 실패했습니다. 다시 시도해주세요.');
     } finally {
       setIsLoading(false);
@@ -45,7 +54,11 @@ const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
   };
 
   const handleDelete = async (mealId: string) => {
-    // TODO: 임시테이블 삭제요청
+    const isConfirm = window.confirm('정말 삭제하시겠습니까?');
+    if (isConfirm) {
+      console.log(mealId);
+      // TODO: 임시테이블 삭제요청
+    }
   };
 
   return (
