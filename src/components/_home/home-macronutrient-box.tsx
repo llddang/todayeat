@@ -1,9 +1,9 @@
 import { MACRONUTRIENT_OPTIONS } from '@/constants/nutrition.constant';
 import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
-import { NutritionEnumType } from '@/types/nutrition.type';
+import { MacronutrientEnumType } from '@/types/nutrition.type';
 
 type HomeMacronutrientBoxProps = {
-  variety: NutritionEnumType;
+  variety: MacronutrientEnumType;
   value: number;
   goal: number;
 };
