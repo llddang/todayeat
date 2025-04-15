@@ -1,4 +1,4 @@
-import { PersonalMacronutrientData } from '@/components/_set-goal/set-goal-caculate-step';
+import { PersonalMacronutrientData } from '@/components/_set-goal/set-goal-calculate-step';
 import { Typography } from '@/components/ui/typography';
 import { MACRO_COLOR_MAP } from '@/constants/common.constant';
 

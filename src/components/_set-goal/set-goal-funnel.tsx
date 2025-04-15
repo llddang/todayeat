@@ -3,7 +3,7 @@ import { z } from 'zod';
 import SetGoalActivityLevelStep from '@/components/_set-goal/set-goal-activity-level-step';
 import SetGoalAgeStep from '@/components/_set-goal/set-goal-age-step';
 import SetGoalAiLoadingStep from '@/components/_set-goal/set-goal-ai-loading-step';
-import SetGoalCalculateStep from '@/components/_set-goal/set-goal-caculate-step';
+import SetGoalCalculateStep from '@/components/_set-goal/set-goal-calculate-step';
 import SetGoalComplete from '@/components/_set-goal/set-goal-complete';
 import SetGoalGenderStep from '@/components/_set-goal/set-goal-gender-step';
 import SetGoalHeightStep from '@/components/_set-goal/set-goal-height-step';
@@ -28,7 +28,7 @@ type SetGoalFunnerProps = {
 };
 
 const validateStep = {
-  step1: z.object({}).safeParse,
+  step1: z.object({}),
   step2: SET_GOAL_FUNNEL_SCHEMA.pick({ purpose: true }),
   step3: SET_GOAL_FUNNEL_SCHEMA.pick({ purpose: true, gender: true }),
   step4: SET_GOAL_FUNNEL_SCHEMA.pick({ purpose: true, gender: true, age: true }),
