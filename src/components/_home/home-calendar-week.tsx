@@ -63,21 +63,19 @@ const HomeCalendarWeek = () => {
     api.scrollTo(CALENDAR_STAND_COUNT, true);
   }, [weeks, api]);
 
+  /** // TODO: UI에 보이는 날짜만 tab으로 이동가능하도록
+   * 현재 날짜마다 버튼이 들어가서 tag으로 이동이 가능한데 요소가 너무 많음.
+   * DOM의 모든 요소보다 UI에 보이는 날짜만 tab으로 이동가능하고, 이후 UI 상에는 보이지 않는 앞(이전 주), 뒤(다음 주)로 이동할 수 있는 버튼 만들기
+   */
   return (
     <ClientOnly
-      fallback={
-        <HomeCalendarWeekItem
-          weeks={calculateWeekDates(selectedDate)}
-          selectedDate={selectedDate}
-          onDateClick={handleDateClick}
-        />
-      }
+      fallback={<HomeCalendarWeekItem weeks={calculateWeekDates(selectedDate)} onDateClick={handleDateClick} />}
     >
       <Carousel setApi={setApi} opts={{ startIndex: CALENDAR_STAND_COUNT }}>
         <CarouselContent>
           {weeks.map((week) => (
             <CarouselItem key={week.dates[0].getTime()}>
-              <HomeCalendarWeekItem weeks={week.dates} selectedDate={selectedDate} onDateClick={handleDateClick} />
+              <HomeCalendarWeekItem weeks={week.dates} onDateClick={handleDateClick} />
             </CarouselItem>
           ))}
         </CarouselContent>
