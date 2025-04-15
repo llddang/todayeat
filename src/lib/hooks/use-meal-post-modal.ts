@@ -3,15 +3,15 @@ import { useRouter } from 'next/navigation';
 import { deleteMealAnalysisDetail } from '@/lib/apis/meal.api';
 import SITE_MAP from '@/constants/site-map.constant';
 
-const useMealPostModal = (initialImages: string[] = []) => {
+const useMealPostModal = (isRecord: boolean = false) => {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    if (initialImages && initialImages.length > 0) {
+    if (isRecord) {
       setShowModal(true);
     }
-  }, [initialImages]);
+  }, []);
 
   const handleApproveClick = () => {
     router.push(SITE_MAP.MEAL_POST_EDIT);
