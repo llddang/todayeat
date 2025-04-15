@@ -1,21 +1,17 @@
 import CircleProgressBar from '@/components/commons/circle-progress-bar';
 import { Typography } from '@/components/ui/typography';
+import { useCalendar } from '@/lib/contexts/calendar.context';
 import { cn } from '@/lib/utils';
 import { formatDateWithDash, isSameDate } from '@/lib/utils/date.util';
-import { DailyMealCalories } from '@/types/nutrition.type';
 
 type HomeCalendarWeekItemProps = {
   weekDate: Date[];
   selectedDate: Date;
   onDateClick: (date: Date) => void;
-  dailyMealCalories: DailyMealCalories;
 };
-const HomeCalendarWeekItem = ({
-  weekDate,
-  selectedDate,
-  dailyMealCalories,
-  onDateClick
-}: HomeCalendarWeekItemProps) => {
+const HomeCalendarWeekItem = ({ weekDate, selectedDate, onDateClick }: HomeCalendarWeekItemProps) => {
+  const { dailyMealCalories } = useCalendar();
+
   return (
     <div className="flex w-full justify-between">
       {weekDate.map((date) => {
@@ -40,7 +36,6 @@ const HomeCalendarWeekItem = ({
             {isSelected && (
               <div className="border-box absolute -z-10 h-[calc(2.5rem-3px)] w-[calc(2.5rem-3px)] rounded-full bg-white" />
             )}
-
             <CircleProgressBar
               progress={progress > 100 ? 100 : progress}
               size={40}
