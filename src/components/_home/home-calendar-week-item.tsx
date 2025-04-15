@@ -4,6 +4,7 @@ import { Typography } from '@/components/ui/typography';
 import { useCalendar } from '@/lib/contexts/calendar.context';
 import { cn } from '@/lib/utils';
 import { formatDateWithDash, isSameDate } from '@/lib/utils/date.util';
+import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
 
 type HomeCalendarWeekItemProps = {
   week: Date[];
@@ -27,7 +28,7 @@ const HomeCalendarWeekItem = ({ week, onDateClick }: HomeCalendarWeekItemProps) 
           calories: 0,
           caloriesGoal: 0
         };
-        const progress = calories && caloriesGoal ? Math.round((calories / caloriesGoal) * 100) : 0;
+        const progress = getPercentage(calories, caloriesGoal);
         return (
           <button
             key={day.toDateString()}
