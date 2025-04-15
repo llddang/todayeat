@@ -142,7 +142,7 @@ const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStep
                     <FormControl>
                       <Input
                         {...field}
-                        type="string"
+                        type="text"
                         inputMode="numeric"
                         measure="kcal"
                         value={formatNumberWithComma(Number(field.value))}
