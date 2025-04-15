@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { deleteMealAnalysisDetail } from '@/lib/apis/meal.api';
+import SITE_MAP from '@/constants/site-map.constant';
 
 const useMealPostModal = (initialImages: string[] = []) => {
   const [showModal, setShowModal] = useState(false);
@@ -13,7 +14,7 @@ const useMealPostModal = (initialImages: string[] = []) => {
   }, [initialImages]);
 
   const handleApproveClick = () => {
-    router.push('/meal/post/edit');
+    router.push(SITE_MAP.MEAL_POST_EDIT);
   };
 
   const handleCancelClick = async () => {
