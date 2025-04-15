@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import MealPostAddImageButton from '@/components/_meal/_post/meal-post-add-image-button';
 import MealPostAddImagePreviewGallery from '@/components/_meal/_post/meal-post-add-image-preview-gallery';
