@@ -50,7 +50,7 @@ export const CALORIES_ANALYSIS_PROMPT = `
       "calories": 450,
       "carbohydrate": 60,
       "protein": 15,
-      "fat": 18
+      "fat": 18,
       "weight": 350
     }
   ]
