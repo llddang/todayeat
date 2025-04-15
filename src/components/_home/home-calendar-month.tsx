@@ -12,14 +12,15 @@ import {
 import { getAllMyDailyCalories } from '@/lib/apis/meal.api';
 import { useCalendar } from '@/lib/contexts/calendar.context';
 import HomeCalendarMonthItem from '@/components/_home/home-calendar-month-item';
+import { useDashboard } from '@/lib/contexts/dashboard.context';
 
 type MonthType = {
   id: number;
   weeks: Date[][];
 };
 const HomeCalendarMonth = () => {
-  const { selectedDate, currentDate, dailyMealCalories, setSelectedDate, setCurrentDate, setDailyMealCalories } =
-    useCalendar();
+  const { selectedDate, setSelectedDate } = useDashboard();
+  const { currentDate, dailyMealCalories, setCurrentDate, setDailyMealCalories } = useCalendar();
 
   const [months, setMonths] = useState<MonthType[]>(getMonthDates(currentDate));
 
