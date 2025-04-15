@@ -7,7 +7,7 @@ const profileWrapperStyle = cva('relative overflow-hidden rounded-full', {
     size: {
       sm: 'w-9 h-9',
       md: 'w-16 h-16',
-      lg: 'w-[5.625rem] h-[5.625rem]' // tailwind엔 22.5 없으므로 custom
+      lg: 'w-[5.625rem] h-[5.625rem]'
     }
   },
   defaultVariants: {
