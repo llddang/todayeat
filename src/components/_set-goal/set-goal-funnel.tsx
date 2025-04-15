@@ -21,7 +21,10 @@ import {
 import { ActivityLevelType, GenderType, PurposeType } from '@/types/user-personal-info.type';
 import { Suspense } from 'react';
 
-const SetGoalFunnel = () => {
+type SetGoalFunnerProps = {
+  userName: string;
+};
+const SetGoalFunnel = ({ userName }: SetGoalFunnerProps) => {
   const Funnel = useFunnel<
     {
       step1: Step1Type;
@@ -46,8 +49,7 @@ const SetGoalFunnel = () => {
       step6: ({ purpose, gender, age, height, weight }) => !!purpose && !!gender && !!age && !!height && !!weight,
       step7: ({ purpose, gender, age, height, weight, activityLevel }) =>
         !!purpose && !!gender && !!age && !!height && !!weight && !!activityLevel,
-      step8: ({ purpose, gender, age, height, weight, activityLevel }) =>
-        !!purpose && !!gender && !!age && !!height && !!weight && !!activityLevel,
+      step8: () => true,
       complete: ({ purpose, gender, age, height, weight, activityLevel }) =>
         !!purpose && !!gender && !!age && !!height && !!weight && !!activityLevel
     },
@@ -58,29 +60,29 @@ const SetGoalFunnel = () => {
     <Suspense>
       <Funnel
         step1={({ setStep }) => (
-          <SetGoalPurposeStep userName={'김준현'} nextStep={(purpose: PurposeType) => setStep('step2', { purpose })} />
+          <SetGoalPurposeStep userName={userName} nextStep={(purpose: PurposeType) => setStep('step2', { purpose })} />
         )}
         step2={({ setStep }) => (
-          <SetGoalGenderStep userName={'김준현'} nextStep={(gender: GenderType) => setStep('step3', { gender })} />
+          <SetGoalGenderStep userName={userName} nextStep={(gender: GenderType) => setStep('step3', { gender })} />
         )}
         step3={({ setStep }) => (
-          <SetGoalAgeStep userName={'김준현'} nextStep={(age: number) => setStep('step4', { age })} />
+          <SetGoalAgeStep userName={userName} nextStep={(age: number) => setStep('step4', { age })} />
         )}
         step4={({ setStep }) => (
-          <SetGoalHeightStep userName={'김준현'} nextStep={(height: number) => setStep('step5', { height })} />
+          <SetGoalHeightStep userName={userName} nextStep={(height: number) => setStep('step5', { height })} />
         )}
         step5={({ setStep }) => (
-          <SetGoalWeightStep userName={'김준현'} nextStep={(weight: number) => setStep('step6', { weight })} />
+          <SetGoalWeightStep userName={userName} nextStep={(weight: number) => setStep('step6', { weight })} />
         )}
         step6={({ setStep }) => (
           <SetGoalActivityLevelStep
-            userName={'김준현'}
+            userName={userName}
             nextStep={(data: ActivityLevelType) => setStep('step7', { activityLevel: data })}
           />
         )}
         step7={({ setStep }) => <SetGoalAiLoadingStep nextStep={() => setStep('step8')} />}
-        step8={({ setStep, data }) => <SetGoalCalculateStep userName={'김준현'} data={data} nextStep={setStep} />}
-        complete={() => <SetGoalComplete userName={'김준현'} />}
+        step8={({ setStep, data }) => <SetGoalCalculateStep userName={userName} data={data} nextStep={setStep} />}
+        complete={() => <SetGoalComplete userName={userName} />}
       />
     </Suspense>
   );
