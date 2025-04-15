@@ -2,7 +2,8 @@ import HomeCalendarWeekItem from '@/components/_home/home-calendar-week-item';
 import ClientOnly from '@/components/commons/client-only';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { CALENDAR_STAND_COUNT } from '@/constants/calendar.constant';
-import { calculateWeekDates, getWeekDates, isSameDate } from '@/lib/utils/date.util';
+import { getAllMyDailyCalories } from '@/lib/apis/meal.api';
+import { calculateWeekDates, dateDashFormatter, getWeekDates, isSameDate } from '@/lib/utils/date.util';
 import { useEffect, useLayoutEffect, useState } from 'react';
 
 type WeekDate = {
@@ -18,6 +19,23 @@ const HomeCalendarWeek = ({ initialDate, onSelectedDateChange, onCurrentDateChan
   const [selectedDate, setSelectedDate] = useState<Date>(initialDate ?? new Date());
   const [currentDate, setCurrentDate] = useState<Date>(initialDate ?? new Date());
   const [weeks, setWeeks] = useState<WeekDate[]>(getWeekDates(selectedDate));
+
+  const [meal, setMeal] = useState<{ [key in string]: { calories: number; caloriesGoal: number } }>({});
+
+  useEffect(() => {
+    const filteredWeeksWithoutInfo = weeks.filter((week) => {
+      const key = dateDashFormatter(week.dates[0]);
+      return meal[key] === undefined;
+    });
+    if (filteredWeeksWithoutInfo.length === 0) return;
+    const startDate = filteredWeeksWithoutInfo[0].dates[0];
+    const endDate = filteredWeeksWithoutInfo.at(-1)?.dates.at(-1);
+    if (!startDate || !endDate) return;
+
+    getAllMyDailyCalories(startDate, endDate).then((res) => {
+      setMeal((prev) => ({ ...prev, ...res }));
+    });
+  }, [weeks]);
 
   useEffect(() => {
     if (initialDate) {
@@ -69,6 +87,7 @@ const HomeCalendarWeek = ({ initialDate, onSelectedDateChange, onCurrentDateChan
           weekDate={calculateWeekDates(selectedDate)}
           selectedDate={selectedDate}
           onDateClick={handleDateClick}
+          meal={meal}
         />
       }
     >
@@ -76,7 +95,12 @@ const HomeCalendarWeek = ({ initialDate, onSelectedDateChange, onCurrentDateChan
         <CarouselContent>
           {weeks.map((week) => (
             <CarouselItem key={week.dates[0].getTime()}>
-              <HomeCalendarWeekItem weekDate={week.dates} selectedDate={selectedDate} onDateClick={handleDateClick} />
+              <HomeCalendarWeekItem
+                weekDate={week.dates}
+                selectedDate={selectedDate}
+                onDateClick={handleDateClick}
+                meal={meal}
+              />
             </CarouselItem>
           ))}
         </CarouselContent>
