@@ -6,11 +6,11 @@ import { cn } from '@/lib/utils';
 import { formatDateWithDash, isSameDate } from '@/lib/utils/date.util';
 
 type HomeCalendarWeekItemProps = {
-  weekDate: Date[];
+  weeks: Date[];
   selectedDate: Date;
   onDateClick: (date: Date) => void;
 };
-const HomeCalendarWeekItem = ({ weekDate, selectedDate, onDateClick }: HomeCalendarWeekItemProps) => {
+const HomeCalendarWeekItem = ({ weeks, selectedDate, onDateClick }: HomeCalendarWeekItemProps) => {
   const { dailyMealCalories } = useCalendar();
 
   const handleDatePressed = (e: KeyboardEvent<HTMLButtonElement>, date: Date) => {
@@ -22,7 +22,7 @@ const HomeCalendarWeekItem = ({ weekDate, selectedDate, onDateClick }: HomeCalen
 
   return (
     <div className="flex w-full justify-between">
-      {weekDate.map((date) => {
+      {weeks.map((date) => {
         const isSelected = isSameDate(date, selectedDate);
         const { calories, caloriesGoal } = dailyMealCalories[formatDateWithDash(date)] ?? {
           calories: 0,
