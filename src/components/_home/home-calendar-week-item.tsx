@@ -1,3 +1,4 @@
+import { KeyboardEvent } from 'react';
 import CircleProgressBar from '@/components/commons/circle-progress-bar';
 import { Typography } from '@/components/ui/typography';
 import { useCalendar } from '@/lib/contexts/calendar.context';
@@ -12,6 +13,13 @@ type HomeCalendarWeekItemProps = {
 const HomeCalendarWeekItem = ({ weekDate, selectedDate, onDateClick }: HomeCalendarWeekItemProps) => {
   const { dailyMealCalories } = useCalendar();
 
+  const handleDatePressed = (e: KeyboardEvent<HTMLButtonElement>, date: Date) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+
+    e.preventDefault();
+    onDateClick(date);
+  };
+
   return (
     <div className="flex w-full justify-between">
       {weekDate.map((date) => {
@@ -22,13 +30,18 @@ const HomeCalendarWeekItem = ({ weekDate, selectedDate, onDateClick }: HomeCalen
         };
         const progress = calories && caloriesGoal ? Math.round((calories / caloriesGoal) * 100) : 0;
         return (
-          <div
+          <button
             key={date.toDateString()}
             className={cn(
               'relative flex h-10 w-10 items-center justify-center',
               isSelected ? 'text-gray-900' : 'text-gray-600'
             )}
             onClick={() => onDateClick(date)}
+            role="button"
+            tabIndex={0}
+            aria-pressed={isSelected}
+            aria-label={`${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`}
+            onKeyDown={(e) => handleDatePressed(e, date)}
           >
             <Typography variant={isSelected ? 'subTitle3' : 'body2'} className="!leading-none">
               {date.getDate()}
@@ -42,7 +55,7 @@ const HomeCalendarWeekItem = ({ weekDate, selectedDate, onDateClick }: HomeCalen
               strokeWidth={3}
               className="absolute -z-10 h-10 w-10"
             />
-          </div>
+          </button>
         );
       })}
     </div>
