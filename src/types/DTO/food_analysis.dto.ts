@@ -4,7 +4,7 @@ export type FoodAnalysisRequestsDTO = {
 };
 
 export type FoodAnalysisRequestsDetailDTO = {
-  requestId: string;
+  userId: string;
   menuName: string;
   weight: number;
   calories: number;
