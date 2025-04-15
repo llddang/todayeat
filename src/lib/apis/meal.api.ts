@@ -167,3 +167,26 @@ export const deleteMealDetail = async (mealDetailId: string) => {
   const { error } = await supabase.from('meal_details').delete().eq('id', mealDetailId);
   if (error) throw error;
 };
+
+/**
+ * 임시식사의 상세 항목을 데이터베이스에 추가합니다.
+ *
+ *
+ * @param {Partial<Pick<MealDetailDTO, 'calories' | 'menuName' | 'weight'>>} meal 삽입할 식단 상세 정보 (일부 필드만 포함 가능).
+ * @returns {Promise<MealDetailSnakeCaseDTO>}  생성된 식사 상세 정보
+ * @throws {Error} Supabase 요청 중 오류 발생 시 예러를 던집니다.
+ */
+
+export const createFoodAnalysisRequestDetail = async (
+  meal: Partial<Pick<MealDetailDTO, 'calories' | 'menuName' | 'weight'>>
+): Promise<MealDetailDTO> => {
+  const supabase = getServerClient();
+  const mealDetailRequest = camelToSnakeObject(meal);
+  const { data, error } = await supabase
+    .from('food_analysis_requests_detail')
+    .insert(mealDetailRequest)
+    .select()
+    .single();
+  if (error) throw error;
+  return snakeToCamelObject<MealDetailSnakeCaseDTO>(data);
+};
