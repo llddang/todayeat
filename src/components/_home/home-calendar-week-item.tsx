@@ -7,11 +7,10 @@ import { formatDateWithDash, isSameDate } from '@/lib/utils/date.util';
 
 type HomeCalendarWeekItemProps = {
   weeks: Date[];
-  selectedDate: Date;
   onDateClick: (date: Date) => void;
 };
-const HomeCalendarWeekItem = ({ weeks, selectedDate, onDateClick }: HomeCalendarWeekItemProps) => {
-  const { dailyMealCalories } = useCalendar();
+const HomeCalendarWeekItem = ({ weeks, onDateClick }: HomeCalendarWeekItemProps) => {
+  const { selectedDate, dailyMealCalories } = useCalendar();
 
   const handleDatePressed = (e: KeyboardEvent<HTMLButtonElement>, date: Date) => {
     if (e.key !== 'Enter' && e.key !== ' ') return;
