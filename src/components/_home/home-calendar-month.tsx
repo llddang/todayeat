@@ -28,6 +28,7 @@ const HomeCalendarMonth = () => {
     if (!startDate || !endDate) return;
 
     getAllMyDailyCalories(startDate, endDate).then(setDailyMealCalories);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [months]);
 
   const [api, setApi] = useState<CarouselApi>();
@@ -58,7 +59,7 @@ const HomeCalendarMonth = () => {
     return () => {
       api.off('settle', onSettle);
     };
-  }, [api, currentDate]);
+  }, [api, currentDate, setCurrentDate]);
 
   useLayoutEffect(() => {
     if (!api) return;

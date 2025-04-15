@@ -26,7 +26,7 @@ export const calculateMonthDates = (date: Date): Date[][] => {
   const firstDay = new Date(firstDayOfMonth);
   firstDay.setDate(firstDayDiff);
 
-  let lastDay = new Date(lastDayOfMonth);
+  const lastDay = new Date(lastDayOfMonth);
   if (lastDay.getDay() !== 0) {
     lastDay.setDate(lastDay.getDate() + (7 - lastDay.getDay()));
   }
