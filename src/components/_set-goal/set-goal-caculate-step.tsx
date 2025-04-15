@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
+import { ChangeEvent, MouseEvent, useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FormSchema from '@/constants/form-schema.constant';
