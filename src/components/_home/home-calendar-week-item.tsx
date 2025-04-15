@@ -4,6 +4,7 @@ import { Typography } from '@/components/ui/typography';
 import { useCalendar } from '@/lib/contexts/calendar.context';
 import { cn } from '@/lib/utils';
 import { formatDateWithDash, isSameDate } from '@/lib/utils/date.util';
+import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
 
 type HomeCalendarWeekItemProps = {
   week: Date[];
@@ -27,7 +28,7 @@ const HomeCalendarWeekItem = ({ week, onDateClick }: HomeCalendarWeekItemProps) 
           calories: 0,
           caloriesGoal: 0
         };
-        const progress = calories && caloriesGoal ? Math.round((calories / caloriesGoal) * 100) : 0;
+        const progress = getPercentage(calories, caloriesGoal);
         return (
           <button
             key={day.toDateString()}
@@ -48,12 +49,11 @@ const HomeCalendarWeekItem = ({ week, onDateClick }: HomeCalendarWeekItemProps) 
             {isSelected && (
               <div className="border-box absolute -z-10 h-[calc(2.5rem-3px)] w-[calc(2.5rem-3px)] rounded-full bg-white" />
             )}
-            <CircleProgressBar
-              progress={progress > 100 ? 100 : progress}
-              size={40}
-              strokeWidth={3}
-              className="absolute -z-10 h-10 w-10"
-            />
+            {progress > 100 ? (
+              <CircleProgressBar size={40} strokeWidth={3} color="#FA7B6A" className="absolute -z-10 h-10 w-10" />
+            ) : (
+              <CircleProgressBar progress={progress} size={40} strokeWidth={3} className="absolute -z-10 h-10 w-10" />
+            )}
           </button>
         );
       })}
