@@ -1,9 +1,9 @@
 import { Typography } from '@/components/ui/typography';
 import { MACRONUTRIENT_OPTIONS } from '@/constants/nutrition.constant';
-import { MacronutrientType } from '@/types/nutrition.type';
+import { NutritionEnumType } from '@/types/nutrition.type';
 
 type MealEditNutrientBoxProps = {
-  variety: MacronutrientType;
+  variety: NutritionEnumType;
   value: number;
 };
 

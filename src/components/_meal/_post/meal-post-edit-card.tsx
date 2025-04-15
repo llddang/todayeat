@@ -6,7 +6,7 @@ import MealPostEditCardTitle from './meal-post-edit-card-title';
 import MealPostEditNutrientBox from './meal-post-edit-nutrient-box';
 import IconButton from '@/components/commons/icon-button';
 import { Button } from '@/components/ui/button';
-import { MacronutrientEnum, MeasurementUnitEnum } from '@/types/nutrition.type';
+import { NutritionEnum, MeasurementUnitEnum } from '@/types/nutrition.type';
 import { MealDetailDTO } from '@/types/DTO/meal.dto';
 import { createFoodAnalysisRequestDetail } from '@/lib/apis/meal.api';
 
@@ -83,9 +83,9 @@ const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
             />
           </div>
           <div className="flex items-center gap-2 self-stretch pb-1 pl-1 pt-2">
-            <MealPostEditNutrientBox variety={MacronutrientEnum.CARBOHYDRATE} value={mealDetail.carbohydrate} />
-            <MealPostEditNutrientBox variety={MacronutrientEnum.PROTEIN} value={mealDetail.protein} />
-            <MealPostEditNutrientBox variety={MacronutrientEnum.FAT} value={mealDetail.fat} />
+            <MealPostEditNutrientBox variety={NutritionEnum.CARBOHYDRATE} value={mealDetail.carbohydrate} />
+            <MealPostEditNutrientBox variety={NutritionEnum.PROTEIN} value={mealDetail.protein} />
+            <MealPostEditNutrientBox variety={NutritionEnum.FAT} value={mealDetail.fat} />
           </div>
         </div>
       )}

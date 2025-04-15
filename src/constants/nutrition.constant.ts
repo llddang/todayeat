@@ -1,11 +1,11 @@
 import {
-  MacronutrientType,
   MacronutrientValues,
   MeasurementUnitType,
-  MeasurementUnitValues
+  MeasurementUnitValues,
+  NutritionEnumType
 } from '@/types/nutrition.type';
 
-export const MACRONUTRIENT_OPTIONS: Record<MacronutrientType, MacronutrientValues> = {
+export const MACRONUTRIENT_OPTIONS: Record<NutritionEnumType, MacronutrientValues> = {
   CALORIES: {
     label: '칼로리',
     unit: 'kcal',
