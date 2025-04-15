@@ -6,10 +6,10 @@ import { cn } from '@/lib/utils';
 import { formatDateWithDash, isSameDate } from '@/lib/utils/date.util';
 
 type HomeCalendarWeekItemProps = {
-  weeks: Date[];
+  week: Date[];
   onDateClick: (date: Date) => void;
 };
-const HomeCalendarWeekItem = ({ weeks, onDateClick }: HomeCalendarWeekItemProps) => {
+const HomeCalendarWeekItem = ({ week, onDateClick }: HomeCalendarWeekItemProps) => {
   const { selectedDate, dailyMealCalories } = useCalendar();
 
   const handleDatePressed = (e: KeyboardEvent<HTMLButtonElement>, date: Date) => {
@@ -21,29 +21,29 @@ const HomeCalendarWeekItem = ({ weeks, onDateClick }: HomeCalendarWeekItemProps)
 
   return (
     <div className="flex w-full justify-between">
-      {weeks.map((date) => {
-        const isSelected = isSameDate(date, selectedDate);
-        const { calories, caloriesGoal } = dailyMealCalories[formatDateWithDash(date)] ?? {
+      {week.map((day) => {
+        const isSelected = isSameDate(day, selectedDate);
+        const { calories, caloriesGoal } = dailyMealCalories[formatDateWithDash(day)] ?? {
           calories: 0,
           caloriesGoal: 0
         };
         const progress = calories && caloriesGoal ? Math.round((calories / caloriesGoal) * 100) : 0;
         return (
           <button
-            key={date.toDateString()}
+            key={day.toDateString()}
             className={cn(
               'relative flex h-10 w-10 items-center justify-center',
               isSelected ? 'text-gray-900' : 'text-gray-600'
             )}
-            onClick={() => onDateClick(date)}
+            onClick={() => onDateClick(day)}
             role="button"
             tabIndex={0}
             aria-pressed={isSelected}
-            aria-label={`${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`}
-            onKeyDown={(e) => handleDatePressed(e, date)}
+            aria-label={`${day.getFullYear()}년 ${day.getMonth() + 1}월 ${day.getDate()}일`}
+            onKeyDown={(e) => handleDatePressed(e, day)}
           >
             <Typography variant={isSelected ? 'subTitle3' : 'body2'} className="!leading-none">
-              {date.getDate()}
+              {day.getDate()}
             </Typography>
             {isSelected && (
               <div className="border-box absolute -z-10 h-[calc(2.5rem-3px)] w-[calc(2.5rem-3px)] rounded-full bg-white" />
