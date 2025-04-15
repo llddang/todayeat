@@ -15,7 +15,7 @@ type MealPostEditInputFieldProps = Omit<
   idx: number;
 };
 
-const MealEditInputField = ({
+const MealPostEditInputField = ({
   variety,
   maxLength,
   type = 'text',
@@ -41,4 +41,4 @@ const MealEditInputField = ({
   );
 };
 
-export default MealEditInputField;
+export default MealPostEditInputField;
