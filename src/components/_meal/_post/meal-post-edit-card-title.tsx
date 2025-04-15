@@ -1,26 +1,17 @@
 'use client';
+import { Input } from '@/components/ui/input';
+import { InputHTMLAttributes } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-type MealEditCardTitleProps = {
+type MealEditCardTitleProps = InputHTMLAttributes<HTMLInputElement> & {
   title: string;
+  idx: number;
 };
 
-const MealEditCardTitle = ({ title }: MealEditCardTitleProps): JSX.Element => {
+const MealEditCardTitle = ({ title, idx }: MealEditCardTitleProps): JSX.Element => {
   const { register } = useFormContext();
 
-  return (
-    <div className="flex shrink-0 flex-grow items-center gap-4 self-stretch pl-1">
-      <div className="flex flex-1 items-center gap-1">
-        <input
-          type="text"
-          id="menu"
-          {...register('menuName')}
-          defaultValue={title}
-          className="w-0 shrink-0 flex-grow rounded-lg"
-        />
-      </div>
-    </div>
-  );
+  return <Input type="text" id="menu" {...register(`meals.${[idx]}.menuName`)} defaultValue={title} />;
 };
 
 export default MealEditCardTitle;
