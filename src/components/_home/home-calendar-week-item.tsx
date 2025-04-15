@@ -48,12 +48,11 @@ const HomeCalendarWeekItem = ({ week, onDateClick }: HomeCalendarWeekItemProps) 
             {isSelected && (
               <div className="border-box absolute -z-10 h-[calc(2.5rem-3px)] w-[calc(2.5rem-3px)] rounded-full bg-white" />
             )}
-            <CircleProgressBar
-              progress={progress > 100 ? 100 : progress}
-              size={40}
-              strokeWidth={3}
-              className="absolute -z-10 h-10 w-10"
-            />
+            {progress > 100 ? (
+              <CircleProgressBar size={40} strokeWidth={3} color="#FA7B6A" className="absolute -z-10 h-10 w-10" />
+            ) : (
+              <CircleProgressBar progress={progress} size={40} strokeWidth={3} className="absolute -z-10 h-10 w-10" />
+            )}
           </button>
         );
       })}

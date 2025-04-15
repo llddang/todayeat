@@ -1,20 +1,20 @@
 import React from 'react';
 
 type CircleProgressBarProps = {
-  progress: number;
+  progress?: number;
   size?: number;
   strokeWidth?: number;
   bgColor?: string;
-  progressColor?: string;
+  color?: string;
   className?: string;
 };
 
 const CircleProgressBar = ({
-  progress,
+  progress = 100,
   size = 100,
   strokeWidth = 10,
   bgColor = '#f3f3f3',
-  progressColor = '#FFE37E',
+  color = '#FFE37E',
   className = ''
 }: CircleProgressBarProps) => {
   const viewBoxSize = size;
@@ -31,7 +31,7 @@ const CircleProgressBar = ({
           cx={CENTER}
           cy={CENTER}
           r={RADIUS}
-          stroke={progressColor}
+          stroke={color}
           strokeWidth={strokeWidth}
           fill="none"
           strokeDasharray={CIRCUMFERENCE}
