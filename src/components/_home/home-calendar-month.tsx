@@ -6,6 +6,7 @@ import { calculateMonthDates, formatDateWithDash, getFirstDayInMonth, getMonthDa
 import { getAllMyDailyCalories } from '@/lib/apis/meal.api';
 import { useCalendar } from '@/lib/contexts/calendar.context';
 import HomeCalendarMonthItem from '@/components/_home/home-calendar-month-item';
+import HomeCalendarDayLabel from '@/components/_home/home-calendar-day-label';
 
 type MonthType = {
   id: number;
@@ -70,20 +71,23 @@ const HomeCalendarMonth = () => {
   }, [months, api]);
 
   return (
-    <ClientOnly fallback={<HomeCalendarMonthItem weeksInMonth={calculateMonthDates(currentDate)} />}>
-      <Carousel setApi={setApi} opts={{ startIndex: CALENDAR_STAND_COUNT }}>
-        <CarouselContent>
-          {months.map((month) => {
-            const firstDay = getFirstDayInMonth(month.weeks);
-            return (
-              <CarouselItem key={formatDateWithDash(firstDay)}>
-                <HomeCalendarMonthItem weeksInMonth={month.weeks} />
-              </CarouselItem>
-            );
-          })}
-        </CarouselContent>
-      </Carousel>
-    </ClientOnly>
+    <div className="space-y-3">
+      <HomeCalendarDayLabel />
+      <ClientOnly fallback={<HomeCalendarMonthItem weeksInMonth={calculateMonthDates(currentDate)} />}>
+        <Carousel setApi={setApi} opts={{ startIndex: CALENDAR_STAND_COUNT }}>
+          <CarouselContent>
+            {months.map((month) => {
+              const firstDay = getFirstDayInMonth(month.weeks);
+              return (
+                <CarouselItem key={formatDateWithDash(firstDay)}>
+                  <HomeCalendarMonthItem weeksInMonth={month.weeks} />
+                </CarouselItem>
+              );
+            })}
+          </CarouselContent>
+        </Carousel>
+      </ClientOnly>
+    </div>
   );
 };
 export default HomeCalendarMonth;

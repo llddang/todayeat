@@ -6,6 +6,7 @@ import { CALENDAR_STAND_COUNT } from '@/constants/calendar.constant';
 import { calculateWeekDates, formatDateWithDash, getWeekDates } from '@/lib/utils/date.util';
 import { getAllMyDailyCalories } from '@/lib/apis/meal.api';
 import { useCalendar } from '@/lib/contexts/calendar.context';
+import HomeCalendarDayLabel from '@/components/_home/home-calendar-day-label';
 
 type WeekType = {
   id: number;
@@ -68,17 +69,20 @@ const HomeCalendarWeek = () => {
    * DOM의 모든 요소보다 UI에 보이는 날짜만 tab으로 이동가능하고, 이후 UI 상에는 보이지 않는 앞(이전 주), 뒤(다음 주)로 이동할 수 있는 버튼 만들기
    */
   return (
-    <ClientOnly fallback={<HomeCalendarWeekItem week={calculateWeekDates(currentDate)} />}>
-      <Carousel setApi={setApi} opts={{ startIndex: CALENDAR_STAND_COUNT }}>
-        <CarouselContent>
-          {weeks.map((week) => (
-            <CarouselItem key={week.dates[0].getTime()}>
-              <HomeCalendarWeekItem week={week.dates} />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
-    </ClientOnly>
+    <div className="space-y-3">
+      <HomeCalendarDayLabel />
+      <ClientOnly fallback={<HomeCalendarWeekItem week={calculateWeekDates(currentDate)} />}>
+        <Carousel setApi={setApi} opts={{ startIndex: CALENDAR_STAND_COUNT }}>
+          <CarouselContent>
+            {weeks.map((week) => (
+              <CarouselItem key={week.dates[0].getTime()}>
+                <HomeCalendarWeekItem week={week.dates} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      </ClientOnly>
+    </div>
   );
 };
 export default HomeCalendarWeek;
