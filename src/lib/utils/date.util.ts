@@ -23,3 +23,15 @@ export const calculateWeekDates = (date: Date): Date[] => {
 
   return Array.from({ length: 7 }, (_, dayOffset) => new Date(standTime + dayOffset * DAY));
 };
+
+export const dateDashFormatter = (date: Date): string => {
+  const formattedDate = new Intl.DateTimeFormat('en-CA', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  })
+    .format(date)
+    .replace(/\//g, '-');
+
+  return formattedDate;
+};
