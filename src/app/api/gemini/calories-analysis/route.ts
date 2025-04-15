@@ -6,7 +6,7 @@ import { updateCaloriesAnalysisResult } from '@/lib/apis/analysis-request.api';
 
 export const POST = async (req: Request) => {
   try {
-    const { id, menuName, weight } = await req.json();
+    const { id, userId, menuName, weight } = await req.json();
 
     if (!id || !menuName) {
       return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.MISSING_INPUT), {
@@ -14,7 +14,7 @@ export const POST = async (req: Request) => {
       });
     }
 
-    if (typeof weight !== 'number' || weight <= 0) {
+    if (weight !== undefined && (typeof weight !== 'number' || weight <= 0)) {
       return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.INVALID_INPUT), {
         status: AI_ERROR_MESSAGE.INVALID_INPUT.status
       });
@@ -30,12 +30,15 @@ export const POST = async (req: Request) => {
       });
     }
 
-    const { calories, carbohydrate, protein, fat } = parsedResult[0];
+    const parsed = parsedResult[0];
+    const weightToUpdate = parsed.weight ?? weight;
+    const { calories, carbohydrate, protein, fat } = parsed;
 
     const { error } = await updateCaloriesAnalysisResult({
       id,
+      userId,
       menuName,
-      weight,
+      weight: weightToUpdate,
       calories,
       carbohydrate,
       protein,
@@ -48,7 +51,7 @@ export const POST = async (req: Request) => {
       });
     }
 
-    return NextResponse.json({ id, calories, carbohydrate, protein, fat });
+    return NextResponse.json({ id, weight: weightToUpdate, calories, carbohydrate, protein, fat });
   } catch (error) {
     console.error('분석 에러:', error);
     return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.UNKNOWN), {
