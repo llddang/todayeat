@@ -145,12 +145,22 @@ const config: Config = {
         'right-line-gray-400-icon': "url('/icons/right-line-gray-400.svg')",
         'right-line-gray-600-icon': "url('/icons/right-line-gray-600.svg')",
         'right-line-gray-800-icon': "url('/icons/right-line-gray-800.svg')",
-        'sparkle-illustration': "url('/illustration/cta-banner-sparkle.svg')",
+        'sparkle-illustration': "url('/illustrations/cta-banner-sparkle.svg')",
         'image-upload-illustration': "url('/illustrations/image-upload.svg')",
         'ai-sparkle-1': "url('/illustrations/ai-sparkle-1.svg')",
         'ai-sparkle-2': "url('/illustrations/ai-sparkle-2.svg')",
+        'delete-2-line-icon': 'url(/icons/delete_2_line.svg)',
+        'meal-category-breakfast': "url('/illustrations/meal-category-breakfast.svg')",
+        'meal-category-lunch': "url('/illustrations/meal-category-lunch.svg')",
+        'meal-category-dinner': "url('/illustrations/meal-category-dinner.svg')",
+        'meal-category-snack': "url('/illustrations/meal-category-snack.svg')",
         'close-line-icon': 'url(/icons/close_line.svg)',
-        'delete-2-line-icon': 'url(/icons/delete_2_line.svg)'
+        'home-fill-icon': 'url(/icons/home_fill.svg)',
+        'home-line-icon': 'url(/icons/home_line.svg)',
+        'analyze-fill-icon': 'url(/icons/analyze_fill.svg)',
+        'analyze-line-icon': 'url(/icons/analyze_line.svg)',
+        'chart-fill-icon': 'url(/icons/chart_fill.svg)',
+        'chart-line-icon': 'url(/icons/chart_line.svg)'
       },
       letterSpacing: {
         snug: '-0.0175rem'
