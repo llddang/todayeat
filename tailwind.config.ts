@@ -159,7 +159,8 @@ const config: Config = {
         'analyze-fill-icon': 'url(/icons/analyze_fill.svg)',
         'analyze-line-icon': 'url(/icons/analyze_line.svg)',
         'chart-fill-icon': 'url(/icons/chart_fill.svg)',
-        'chart-line-icon': 'url(/icons/chart_line.svg)'
+        'chart-line-icon': 'url(/icons/chart_line.svg)',
+        'complete-confetti': 'url(/illustrations/complete-confetti.svg)'
       },
       letterSpacing: {
         snug: '-0.0175rem'
