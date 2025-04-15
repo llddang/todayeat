@@ -10,7 +10,7 @@ import SetGoalHeightStep from '@/components/_set-goal/set-goal-height-step';
 import SetGoalWeightStep from '@/components/_set-goal/set-goal-weight-step';
 import SetGoalActivityLevelStep from '@/components/_set-goal/set-goal-activity-level-step';
 import SetGoalAiLoadingStep from '@/components/_set-goal/set-goal-ai-loading-step';
-import SetGoalCaculateStep from '@/components/_set-goal/set-goal-caculate-step';
+import SetGoalCalculateStep from '@/components/_set-goal/set-goal-caculate-step';
 import SetGoalComplete from '@/components/_set-goal/set-goal-complete';
 import { Typography } from '@/components/ui/typography';
 import { useSearchParams } from 'next/navigation';
@@ -94,7 +94,7 @@ const SetGoalPage = () => {
           />
         )}
         step7={({ setStep }) => <SetGoalAiLoadingStep nextStep={() => setStep('step8')} />}
-        step8={({ setStep, data }) => <SetGoalCaculateStep userName={'김준현'} data={data} nextStep={setStep} />}
+        step8={({ setStep, data }) => <SetGoalCalculateStep userName={'김준현'} data={data} nextStep={setStep} />}
         complete={() => <SetGoalComplete userName={'김준현'} />}
       />
     </Suspense>
