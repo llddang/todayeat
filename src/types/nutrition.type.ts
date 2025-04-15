@@ -52,3 +52,8 @@ export type MeasurementUnitValues = {
 };
 
 export type MeasurementUnitType = keyof typeof MeasurementUnitEnum;
+
+export type DailyMealCalories = {
+  [key in string]: { calories: number; caloriesGoal: number };
+};
+elop
