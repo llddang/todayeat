@@ -161,7 +161,8 @@ const config: Config = {
         'chart-fill-icon': 'url(/icons/chart_fill.svg)',
         'chart-line-icon': 'url(/icons/chart_line.svg)',
         'default-profile': 'url(/illustrations/default_profile.svg)',
-        'todayeat-logo': 'url(/illustrations/logo.svg)'
+        'todayeat-logo': 'url(/illustrations/logo.svg)',
+        'back-line-icon': 'url(/icons/back_line.svg)'
       },
       letterSpacing: {
         snug: '-0.0175rem'
