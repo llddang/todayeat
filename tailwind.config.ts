@@ -67,11 +67,11 @@ const config: Config = {
         },
         red: {
           50: '#FFEDEF',
-          75: '#FFE5E8',
+          75: '#FFE0E4',
           100: '#FFD2D6',
-          200: '#F1A2A0',
-          300: '#E87F7C',
-          400: '#F3635B',
+          200: '#FCA49C',
+          300: '#FA7B6A',
+          400: '#F66355',
           500: '#F95943',
           600: '#EA4F41',
           700: '#D7453B',
@@ -153,7 +153,7 @@ const config: Config = {
         'meal-category-lunch': "url('/illustrations/meal-category-lunch.svg')",
         'meal-category-dinner': "url('/illustrations/meal-category-dinner.svg')",
         'meal-category-snack': "url('/illustrations/meal-category-snack.svg')",
-        'close-line-icon' : 'url(/icons/close_line.svg)'
+        'close-line-icon': 'url(/icons/close_line.svg)'
       },
       letterSpacing: {
         snug: '-0.0175rem'
