@@ -7,10 +7,10 @@ import HomeCalendarMonth from '@/components/_home/home-calendar-month';
 import HomeCalendarWeek from '@/components/_home/home-calendar-week';
 import { Typography } from '@/components/ui/typography';
 import { useCalendar } from '@/lib/contexts/calendar.context';
+import { formatDateCaption } from '@/lib/utils/date.util';
 
 const HomeCalendar = () => {
   const { currentDate } = useCalendar();
-  console.log(currentDate);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -23,7 +23,7 @@ const HomeCalendar = () => {
             className="after:bg-down-line-gray-600-icon hover:after:bg-down-line-gray-800-icon disabled:after:bg-down-line-gray-400-icon"
             onClick={() => setIsOpen(true)}
           >
-            <Typography>{`${currentDate.getFullYear()}년 ${currentDate.getMonth() + 1}월`}</Typography>
+            <Typography>{formatDateCaption(currentDate)}</Typography>
           </Button>
           <TabsList className="">
             <TabsTrigger value="week">주간</TabsTrigger>

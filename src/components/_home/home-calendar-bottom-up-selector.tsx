@@ -2,9 +2,10 @@ import Calendar from '@/components/ui/calendar';
 import { ko } from 'date-fns/locale';
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDashboard } from '@/lib/contexts/dashboard.context';
 import { useCalendar } from '@/lib/contexts/calendar.context';
+import { formatDateCaption } from '@/lib/utils/date.util';
 
 type HomeCalendarBottomUpSelectorProps = {
   open: boolean;
@@ -22,6 +23,10 @@ const HomeCalendarBottomUpSelector = ({ open, onOpenChange }: HomeCalendarBottom
     onOpenChange(false);
   };
 
+  useEffect(() => {
+    setDate(selectedDate);
+  }, [selectedDate]);
+
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent>
@@ -36,7 +41,7 @@ const HomeCalendarBottomUpSelector = ({ open, onOpenChange }: HomeCalendarBottom
           weekStartsOn={1}
           fixedWeeks
           defaultMonth={date}
-          formatters={{ formatCaption }}
+          formatters={{ formatCaption: formatDateCaption }}
         />
         <div className="mt-2 w-full pb-4 pt-2">
           <Button onClick={handleSelectDate} className="w-full">
@@ -48,7 +53,3 @@ const HomeCalendarBottomUpSelector = ({ open, onOpenChange }: HomeCalendarBottom
   );
 };
 export default HomeCalendarBottomUpSelector;
-
-const formatCaption = (date: Date) => {
-  return `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
-};
