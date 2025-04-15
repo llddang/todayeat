@@ -67,7 +67,7 @@ const HomeCalendarWeek = () => {
     <ClientOnly
       fallback={
         <HomeCalendarWeekItem
-          weekDate={calculateWeekDates(selectedDate)}
+          weeks={calculateWeekDates(selectedDate)}
           selectedDate={selectedDate}
           onDateClick={handleDateClick}
         />
@@ -77,7 +77,7 @@ const HomeCalendarWeek = () => {
         <CarouselContent>
           {weeks.map((week) => (
             <CarouselItem key={week.dates[0].getTime()}>
-              <HomeCalendarWeekItem weekDate={week.dates} selectedDate={selectedDate} onDateClick={handleDateClick} />
+              <HomeCalendarWeekItem weeks={week.dates} selectedDate={selectedDate} onDateClick={handleDateClick} />
             </CarouselItem>
           ))}
         </CarouselContent>
