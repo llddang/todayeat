@@ -7,8 +7,10 @@ import { FunnelStep } from '@/types/set-goal.type';
 import { LAST_STEP_FOR_USER_INPUT, STEP_UI_CONFIG } from '@/constants/set-goal.constant';
 import SetGoalProgressSection from '@/components/_set-goal/set-goal-progress-section';
 import SetGoalFunnel from '@/components/_set-goal/set-goal-funnel';
+import { useUserStore } from '@/lib/hooks/use-user-store';
 
 const SetGoalPage = () => {
+  const { user } = useUserStore();
   const params = useSearchParams();
   const currentStep = (params.get('step') || 'step1') as FunnelStep;
 
@@ -26,7 +28,7 @@ const SetGoalPage = () => {
   const content = (
     <>
       {renderProgressBar()}
-      <SetGoalFunnel userName={'지우다'} />
+      <SetGoalFunnel userName={user.nickname} />
     </>
   );
 
