@@ -54,7 +54,7 @@ const SetGoalHeightStep = ({ userName, nextStep }: SetGoalHeightStepProps) => {
                     <FormItem>
                       <FormLabel className="sr-only">키</FormLabel>
                       <FormControl>
-                        <Input {...field} type="number" inputMode="numeric" measure="cm" />
+                        <Input {...field} type="number" inputMode="numeric" measure="cm" min="50" max="250" />
                       </FormControl>
                       {!hasError && <FormDescription>최대 소수점 1자리수까지 입력할 수 있어요</FormDescription>}
                       <FormMessage />
