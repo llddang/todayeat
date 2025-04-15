@@ -61,7 +61,6 @@ export const POST = async (req: Request) => {
       });
     }
 
-    const requestId: string = data.id;
     const imageUrls: string[] = data.image_urls;
 
     const base64Images: ImageContent[] = await Promise.all(imageUrls.map(convertImageUrlToBase64));
@@ -79,7 +78,7 @@ export const POST = async (req: Request) => {
 
     const insertPayload: FoodAnalysisRequestsDetailDTO[] = parsedResult.map((item: FoodAnalysisResult) => ({
       ...item,
-      requestId: requestId
+      userId
     }));
 
     const { error: insertError } = await createFoodAnalysisRequestDetails(insertPayload);

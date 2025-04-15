@@ -53,6 +53,7 @@ export const createFoodAnalysisRequests = async (
 
 export const updateCaloriesAnalysisResult = async ({
   id,
+  userId,
   menuName,
   weight,
   calories,
@@ -65,6 +66,7 @@ export const updateCaloriesAnalysisResult = async ({
   const { error } = await supabase
     .from('food_analysis_requests_detail')
     .update({
+      user_id: userId,
       menu_name: menuName,
       weight,
       calories,
