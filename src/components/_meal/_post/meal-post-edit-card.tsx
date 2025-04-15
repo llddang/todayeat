@@ -1,14 +1,14 @@
 'use client';
 import { useFormContext } from 'react-hook-form';
 import { useMemo, useState } from 'react';
-import MealEditInputField from './meal-post-edit-input-field';
-import MealEditCardTitle from './meal-post-edit-card-title';
-import MealEditNutrientBox from './meal-post-edit-nutrient-box';
+import MealPostEditInputField from './meal-post-edit-input-field';
+import MealPostEditCardTitle from './meal-post-edit-card-title';
+import MealPostEditNutrientBox from './meal-post-edit-nutrient-box';
 import IconButton from '@/components/commons/icon-button';
 import { Button } from '@/components/ui/button';
 import { MacronutrientEnum, MeasurementUnitEnum } from '@/types/nutrition.type';
 import { MealDetailDTO } from '@/types/DTO/meal.dto';
-import { deleteMealDetail, updateMealDetail } from '@/lib/apis/meal.api';
+import { updateMealDetail } from '@/lib/apis/meal.api';
 
 type MealPostEditCardProps = {
   mealDetail: MealDetailDTO;
@@ -34,20 +34,18 @@ const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
     setIsLoading(true);
     try {
       const input = getValues(`meals.${idx}`);
+      //TODO: Gemini 분석요청 API + supabase 임시테이블 저장(비확실)
       await updateMealDetail(mealDetail.id, input);
+    } catch (error) {
+      console.error('식단 분석요청에 실패하였습니다.', error);
+      alert('분석에 실패했습니다. 다시 시도해주세요.');
     } finally {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
+      setIsLoading(false);
     }
   };
 
   const handleDelete = async (mealId: string) => {
-    await deleteMealDetail(mealId);
-  };
-
-  const handleOnChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('핸들 온체인지 콘솔 실행', e.target.value);
+    // TODO: 임시테이블 삭제요청
   };
 
   return (
@@ -56,28 +54,27 @@ const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
         <div>분석중 </div>
       ) : (
         <div className="flex flex-col items-start gap-2 self-stretch rounded-xl bg-white p-3">
-          <MealEditCardTitle title={mealDetail.menuName} idx={idx} />
+          <MealPostEditCardTitle title={mealDetail.menuName} idx={idx} />
           <div className="flex items-start gap-2 self-stretch">
-            <MealEditInputField
+            <MealPostEditInputField
               variety={MeasurementUnitEnum.GRAM}
               idx={idx}
-              type="text"
+              type="number"
               maxLength={4}
               className="flex-1"
             />
-            <MealEditInputField
-              onChange={handleOnChange}
+            <MealPostEditInputField
               variety={MeasurementUnitEnum.KCAL}
               idx={idx}
-              type="text"
+              type="number"
               maxLength={4}
               className="flex-1"
             />
           </div>
           <div className="flex items-center gap-2 self-stretch pb-1 pl-1 pt-2">
-            <MealEditNutrientBox variety={MacronutrientEnum.CARBOHYDRATE} value={mealDetail.carbohydrate} />
-            <MealEditNutrientBox variety={MacronutrientEnum.PROTEIN} value={mealDetail.protein} />
-            <MealEditNutrientBox variety={MacronutrientEnum.FAT} value={mealDetail.fat} />
+            <MealPostEditNutrientBox variety={MacronutrientEnum.CARBOHYDRATE} value={mealDetail.carbohydrate} />
+            <MealPostEditNutrientBox variety={MacronutrientEnum.PROTEIN} value={mealDetail.protein} />
+            <MealPostEditNutrientBox variety={MacronutrientEnum.FAT} value={mealDetail.fat} />
           </div>
         </div>
       )}
