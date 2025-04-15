@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Header from '@/components/layouts/header';
 
 const Layout = ({
@@ -8,7 +9,7 @@ const Layout = ({
   return (
     <>
       <Header />
-      {children}
+      <Suspense>{children}</Suspense>
     </>
   );
 };
