@@ -76,25 +76,22 @@ const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStep
     }
   });
 
-  const calculateMacrosData = () => {
-    const totalMacros =
-      userPersonalInfos.dailyCarbohydrateGoal + userPersonalInfos.dailyProteinGoal + userPersonalInfos.dailyFatGoal;
+  const totalMacros =
+    userPersonalInfos.dailyCarbohydrateGoal + userPersonalInfos.dailyProteinGoal + userPersonalInfos.dailyFatGoal;
 
-    const macronutrientData = {
-      carbohydrate: {
-        grams: userPersonalInfos.dailyCarbohydrateGoal,
-        percentage: getPercentage(userPersonalInfos.dailyCarbohydrateGoal, totalMacros)
-      },
-      protein: {
-        grams: userPersonalInfos.dailyProteinGoal,
-        percentage: getPercentage(userPersonalInfos.dailyProteinGoal, totalMacros)
-      },
-      fat: {
-        grams: userPersonalInfos.dailyFatGoal,
-        percentage: getPercentage(userPersonalInfos.dailyFatGoal, totalMacros)
-      }
-    };
-    return macronutrientData;
+  const macronutrientData = {
+    carbohydrate: {
+      grams: userPersonalInfos.dailyCarbohydrateGoal,
+      percentage: getPercentage(userPersonalInfos.dailyCarbohydrateGoal, totalMacros)
+    },
+    protein: {
+      grams: userPersonalInfos.dailyProteinGoal,
+      percentage: getPercentage(userPersonalInfos.dailyProteinGoal, totalMacros)
+    },
+    fat: {
+      grams: userPersonalInfos.dailyFatGoal,
+      percentage: getPercentage(userPersonalInfos.dailyFatGoal, totalMacros)
+    }
   };
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
@@ -125,10 +122,10 @@ const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStep
   return (
     <>
       <div>
-        <Typography as="h3" variant={'title2'} className="mb-2">
+        <Typography as="h3" variant="title2" className="mb-2">
           {userName}님의 <br /> 목표에 맞춰 계산했어요!
         </Typography>
-        <Typography as="span" variant={'body2'} className="text-gray-600">
+        <Typography as="span" variant="body2" className="text-gray-600">
           필요하면 칼로리를 수정할 수 있어요
         </Typography>
       </div>
@@ -164,13 +161,13 @@ const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStep
           목표 칼로리 기준 영양소 권장량
         </Typography>
         <div className="grid grid-cols-2 gap-2">
-          <SetGoalMacronutrientBox label="탄수화물" data={calculateMacrosData().carbohydrate} />
-          <SetGoalMacronutrientBox label="단백질" data={calculateMacrosData().protein} />
-          <SetGoalMacronutrientBox label="지방" data={calculateMacrosData().fat} />
+          <SetGoalMacronutrientBox label="탄수화물" data={macronutrientData.carbohydrate} />
+          <SetGoalMacronutrientBox label="단백질" data={macronutrientData.protein} />
+          <SetGoalMacronutrientBox label="지방" data={macronutrientData.fat} />
         </div>
       </div>
       <div className="fixed bottom-4 left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2">
-        <Button onClick={(e) => handleSubmit(e)} className="w-full">
+        <Button onClick={handleSubmit} className="w-full">
           목표 설정하기
         </Button>
         <Button onClick={() => nextStep('step1')} className="mt-2 w-full bg-transparent text-gray-600">
