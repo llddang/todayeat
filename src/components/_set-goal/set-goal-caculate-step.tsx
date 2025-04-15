@@ -18,9 +18,9 @@ import { Input } from '@/components/ui/input';
 import SetGoalMacronutrientBox from '@/components/_set-goal/set-goal-macronutrient-box';
 import { Button } from '@/components/ui/button';
 import { isClient } from '@/lib/utils/predicate.util';
-import { UserPhysicalProfileDTO } from '@/types/DTO/user.dto';
 import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
 import { CompleteType } from '@/types/set-goal.type';
+import USER_PHYSICAL_PROFILE_SCHEMA from '@/constants/user-schema.constant';
 
 type SetGoalCalculateStepProps = {
   userName: string;
@@ -37,19 +37,6 @@ const formSchema = z.object({
   calories: FormSchema.ONLY_NUMBER_SCHEMA
 });
 
-const isValidUserData = (data: CompleteType): data is UserPhysicalProfileDTO => {
-  return (
-    data &&
-    typeof data === 'object' &&
-    'gender' in data &&
-    'height' in data &&
-    'weight' in data &&
-    'age' in data &&
-    'activityLevel' in data &&
-    'purpose' in data
-  );
-};
-
 type FormValues = z.infer<typeof formSchema>;
 
 const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStepProps) => {
@@ -60,8 +47,11 @@ const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStep
     dailyFatGoal: 0
   };
 
-  if (isClient() && isValidUserData(data)) {
-    userPersonalGoal = calculateDailyNutritionGoal({ ...data });
+  if (isClient()) {
+    const parseResult = USER_PHYSICAL_PROFILE_SCHEMA.safeParse(data);
+    if (parseResult.success) {
+      userPersonalGoal = calculateDailyNutritionGoal(parseResult.data);
+    }
   }
 
   const [userPersonalInfos, setUserPersonalInfos] = useState({

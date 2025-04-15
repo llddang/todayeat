@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+import { z } from 'zod';
 import SetGoalActivityLevelStep from '@/components/_set-goal/set-goal-activity-level-step';
 import SetGoalAgeStep from '@/components/_set-goal/set-goal-age-step';
 import SetGoalAiLoadingStep from '@/components/_set-goal/set-goal-ai-loading-step';
@@ -19,11 +21,31 @@ import {
   Step6Type
 } from '@/types/set-goal.type';
 import { ActivityLevelType, GenderType, PurposeType } from '@/types/user-personal-info.type';
-import { Suspense } from 'react';
+import { SET_GOAL_FUNNEL_SCHEMA } from '@/constants/funnel-schema.constant';
 
 type SetGoalFunnerProps = {
   userName: string;
 };
+
+const validateStep = {
+  step1: z.object({}).safeParse,
+  step2: SET_GOAL_FUNNEL_SCHEMA.pick({ purpose: true }),
+  step3: SET_GOAL_FUNNEL_SCHEMA.pick({ purpose: true, gender: true }),
+  step4: SET_GOAL_FUNNEL_SCHEMA.pick({ purpose: true, gender: true, age: true }),
+  step5: SET_GOAL_FUNNEL_SCHEMA.pick({ purpose: true, gender: true, age: true, height: true }),
+  step6: SET_GOAL_FUNNEL_SCHEMA.pick({ purpose: true, gender: true, age: true, height: true, weight: true }),
+  step7: SET_GOAL_FUNNEL_SCHEMA.pick({
+    purpose: true,
+    gender: true,
+    age: true,
+    height: true,
+    weight: true,
+    activityLevel: true
+  }),
+  step8: z.object({}),
+  complete: SET_GOAL_FUNNEL_SCHEMA
+};
+
 const SetGoalFunnel = ({ userName }: SetGoalFunnerProps) => {
   const Funnel = useFunnel<
     {
@@ -42,16 +64,14 @@ const SetGoalFunnel = ({ userName }: SetGoalFunnerProps) => {
     'step1',
     {
       step1: () => true,
-      step2: ({ purpose }) => !!purpose,
-      step3: ({ purpose, gender }) => !!purpose && !!gender,
-      step4: ({ purpose, gender, age }) => !!purpose && !!gender && !!age,
-      step5: ({ purpose, gender, age, height }) => !!purpose && !!gender && !!age && !!height,
-      step6: ({ purpose, gender, age, height, weight }) => !!purpose && !!gender && !!age && !!height && !!weight,
-      step7: ({ purpose, gender, age, height, weight, activityLevel }) =>
-        !!purpose && !!gender && !!age && !!height && !!weight && !!activityLevel,
+      step2: (data) => validateStep.step2.safeParse(data).success,
+      step3: (data) => validateStep.step3.safeParse(data).success,
+      step4: (data) => validateStep.step4.safeParse(data).success,
+      step5: (data) => validateStep.step5.safeParse(data).success,
+      step6: (data) => validateStep.step6.safeParse(data).success,
+      step7: (data) => validateStep.step7.safeParse(data).success,
       step8: () => true,
-      complete: ({ purpose, gender, age, height, weight, activityLevel }) =>
-        !!purpose && !!gender && !!age && !!height && !!weight && !!activityLevel
+      complete: (data) => validateStep.complete.safeParse(data).success
     },
     'session-key'
   );
