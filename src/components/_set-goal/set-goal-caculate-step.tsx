@@ -69,30 +69,33 @@ const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStep
     ...userPersonalGoal
   });
 
-  const totalMacros =
-    userPersonalInfos.dailyCarbohydrateGoal + userPersonalInfos.dailyProteinGoal + userPersonalInfos.dailyFatGoal;
-
-  const macronutrientData = {
-    carbohydrate: {
-      grams: userPersonalInfos.dailyCarbohydrateGoal,
-      percentage: getPercentage(userPersonalInfos.dailyCarbohydrateGoal, totalMacros)
-    },
-    protein: {
-      grams: userPersonalInfos.dailyProteinGoal,
-      percentage: getPercentage(userPersonalInfos.dailyProteinGoal, totalMacros)
-    },
-    fat: {
-      grams: userPersonalInfos.dailyFatGoal,
-      percentage: getPercentage(userPersonalInfos.dailyFatGoal, totalMacros)
-    }
-  };
-
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       calories: String(userPersonalInfos.dailyCaloriesGoal) || ''
     }
   });
+
+  const calculateMacrosData = () => {
+    const totalMacros =
+      userPersonalInfos.dailyCarbohydrateGoal + userPersonalInfos.dailyProteinGoal + userPersonalInfos.dailyFatGoal;
+
+    const macronutrientData = {
+      carbohydrate: {
+        grams: userPersonalInfos.dailyCarbohydrateGoal,
+        percentage: getPercentage(userPersonalInfos.dailyCarbohydrateGoal, totalMacros)
+      },
+      protein: {
+        grams: userPersonalInfos.dailyProteinGoal,
+        percentage: getPercentage(userPersonalInfos.dailyProteinGoal, totalMacros)
+      },
+      fat: {
+        grams: userPersonalInfos.dailyFatGoal,
+        percentage: getPercentage(userPersonalInfos.dailyFatGoal, totalMacros)
+      }
+    };
+    return macronutrientData;
+  };
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -161,9 +164,9 @@ const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStep
           목표 칼로리 기준 영양소 권장량
         </Typography>
         <div className="grid grid-cols-2 gap-2">
-          <SetGoalMacronutrientBox label="탄수화물" data={macronutrientData.carbohydrate} />
-          <SetGoalMacronutrientBox label="단백질" data={macronutrientData.protein} />
-          <SetGoalMacronutrientBox label="지방" data={macronutrientData.fat} />
+          <SetGoalMacronutrientBox label="탄수화물" data={calculateMacrosData().carbohydrate} />
+          <SetGoalMacronutrientBox label="단백질" data={calculateMacrosData().protein} />
+          <SetGoalMacronutrientBox label="지방" data={calculateMacrosData().fat} />
         </div>
       </div>
       <div className="fixed bottom-4 left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2">
