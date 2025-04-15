@@ -22,11 +22,11 @@ const HomeCalendarWeek = () => {
       const key = formatDateWithDash(week.dates[0]);
       return dailyMealCalories[key] === undefined;
     });
-    if (filteredWeeksWithoutInfo.length === 0) return;
-    const startDate = filteredWeeksWithoutInfo[0].dates[0];
-    const endDate = filteredWeeksWithoutInfo.at(-1)?.dates.at(-1);
+    const flatDates = filteredWeeksWithoutInfo.flatMap((week) => week.dates);
+    const startDate = flatDates[0];
+    const endDate = flatDates.at(-1);
     if (!startDate || !endDate) return;
-
+    console.log(startDate, endDate);
     getAllMyDailyCalories(startDate, endDate).then(setDailyMealCalories);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weeks]);
