@@ -4,6 +4,8 @@ export const AI_ERROR_KEYS = {
   GEMINI_GENERATION_FAILED: 'GEMINI_GENERATION_FAILED',
   SUPABASE_INSERT_FAILED: 'SUPABASE_INSERT_FAILED',
   NO_VALID_FOOD_FOUND: 'NO_VALID_FOOD_FOUND',
+  MISSING_INPUT: 'MISSING_INPUT',
+  INVALID_INPUT: 'INVALID_INPUT',
   UNKNOWN: 'UNKNOWN'
 } as const;
 
@@ -32,6 +34,16 @@ export const AI_ERROR_MESSAGE = {
     status: 400,
     message: '유효한 음식 이미지를 찾을 수 없습니다.',
     action: '음식이 잘 보이도록 이미지를 다시 업로드해주세요.'
+  },
+  MISSING_INPUT: {
+    status: 400,
+    message: '필수 입력값이 누락되었습니다.',
+    action: '음식 이름과 무게를 모두 입력해주세요.'
+  },
+  INVALID_INPUT: {
+    status: 400,
+    message: '입력 값이 유효하지 않습니다.',
+    action: '음식 이름과 무게를 확인해주세요.'
   },
   UNKNOWN: {
     status: 500,
