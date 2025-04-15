@@ -19,11 +19,11 @@ const SetGoalActivityLevelStep = ({ userName, nextStep }: SetGoalActivityLevelSt
     <>
       <div>
         <Typography as="h3" variant={'title2'} className="mb-2">
-          {userName}님은 <br />
-          어떤 목표를 가지고 계신가요?
+          {userName}님의 <br />
+          평소 활동량은 어떤 편인가요?
         </Typography>
         <Typography as="span" variant={'body2'} className="text-gray-600">
-          목표에 따라 칼로리와 영양소 비율이 달라져요
+          생활 패턴에 가장 가까운 걸 선택해 주세요
         </Typography>
       </div>
       <div className="space-y-2 pt-2">
