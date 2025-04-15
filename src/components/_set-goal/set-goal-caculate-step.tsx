@@ -22,7 +22,7 @@ import { UserPhysicalProfileDTO } from '@/types/DTO/user.dto';
 import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
 import { CompleteType } from '@/types/set-goal.type';
 
-type SetGoalCaculateStepProps = {
+type SetGoalCalculateStepProps = {
   userName: string;
   nextStep: (data: string) => void;
   data: CompleteType;
@@ -52,7 +52,7 @@ const isValidUserData = (data: CompleteType): data is UserPhysicalProfileDTO => 
 
 type FormValues = z.infer<typeof formSchema>;
 
-const SetGoalCaculateStep = ({ nextStep, userName, data }: SetGoalCaculateStepProps) => {
+const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStepProps) => {
   let userPersonalGoal = {
     dailyCaloriesGoal: 0,
     dailyCarbohydrateGoal: 0,
@@ -178,4 +178,4 @@ const SetGoalCaculateStep = ({ nextStep, userName, data }: SetGoalCaculateStepPr
   );
 };
 
-export default SetGoalCaculateStep;
+export default SetGoalCalculateStep;
