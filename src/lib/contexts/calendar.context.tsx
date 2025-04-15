@@ -1,3 +1,4 @@
+'use client';
 import { DailyMealCalories } from '@/types/nutrition.type';
 import { createContext, useState, ReactNode, useContext } from 'react';
 
