@@ -7,15 +7,21 @@ import { calculateWeekDates, formatDateWithDash, getWeekDates } from '@/lib/util
 import { getAllMyDailyCalories } from '@/lib/apis/meal.api';
 import { useCalendar } from '@/lib/contexts/calendar.context';
 import HomeCalendarDayLabel from '@/components/_home/home-calendar-day-label';
+import { useDashboard } from '@/lib/contexts/dashboard.context';
 
 type WeekType = {
   id: number;
   dates: Date[];
 };
 const HomeCalendarWeek = () => {
+  const { selectedDate } = useDashboard();
   const { currentDate, dailyMealCalories, setCurrentDate, setDailyMealCalories } = useCalendar();
 
   const [weeks, setWeeks] = useState<WeekType[]>(getWeekDates(currentDate));
+
+  useEffect(() => {
+    setWeeks(getWeekDates(selectedDate));
+  }, [selectedDate]);
 
   useEffect(() => {
     const filteredWeeksWithoutInfo = weeks.filter((week) => {

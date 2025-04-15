@@ -7,15 +7,21 @@ import { getAllMyDailyCalories } from '@/lib/apis/meal.api';
 import { useCalendar } from '@/lib/contexts/calendar.context';
 import HomeCalendarMonthItem from '@/components/_home/home-calendar-month-item';
 import HomeCalendarDayLabel from '@/components/_home/home-calendar-day-label';
+import { useDashboard } from '@/lib/contexts/dashboard.context';
 
 type MonthType = {
   id: number;
   weeks: Date[][];
 };
 const HomeCalendarMonth = () => {
+  const { selectedDate } = useDashboard();
   const { currentDate, dailyMealCalories, setCurrentDate, setDailyMealCalories } = useCalendar();
 
   const [months, setMonths] = useState<MonthType[]>(getMonthDates(currentDate));
+
+  useEffect(() => {
+    setMonths(getMonthDates(selectedDate));
+  }, [selectedDate]);
 
   useEffect(() => {
     const filteredMonthsWithoutInfo = months.filter((month) => {
