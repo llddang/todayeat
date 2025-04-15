@@ -63,7 +63,11 @@ const SetGoalHeightStep = ({ userName, nextStep }: SetGoalHeightStepProps) => {
                 }}
               />
             </div>
-            <Button type="submit" className="fixed bottom-6 left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2">
+            <Button
+              type="submit"
+              className="fixed bottom-6 left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2"
+              disabled={!form.watch('height')}
+            >
               다음
             </Button>
           </form>
