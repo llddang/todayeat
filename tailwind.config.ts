@@ -149,12 +149,11 @@ const config: Config = {
         'image-upload-illustration': "url('/illustrations/image-upload.svg')",
         'ai-sparkle-1': "url('/illustrations/ai-sparkle-1.svg')",
         'ai-sparkle-2': "url('/illustrations/ai-sparkle-2.svg')",
-        'close-line-icon': 'url(/icons/close_line.svg)'
+        'close-line-icon': 'url(/icons/close_line.svg)',
         'meal-category-breakfast': "url('/illustrations/meal-category-breakfast.svg')",
         'meal-category-lunch': "url('/illustrations/meal-category-lunch.svg')",
         'meal-category-dinner': "url('/illustrations/meal-category-dinner.svg')",
         'meal-category-snack': "url('/illustrations/meal-category-snack.svg')",
-        'close-line-icon': 'url(/icons/close_line.svg)',
         'home-fill-icon': 'url(/icons/home_fill.svg)',
         'home-line-icon': 'url(/icons/home_line.svg)',
         'analyze-fill-icon': 'url(/icons/analyze_fill.svg)',
