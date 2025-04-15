@@ -52,14 +52,12 @@ const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
       setIsLoading(false);
     }
   };
-
-  const handleDelete = async (mealId: string) => {
-    const isConfirm = window.confirm('정말 삭제하시겠습니까?');
-    if (isConfirm) {
-      console.log(mealId);
-      // TODO: 임시테이블 삭제요청
-    }
-  };
+  // TODO: 임시테이블 삭제요청
+  // const handleDelete = async (mealId: string) => {
+  //   const isConfirm = window.confirm('정말 삭제하시겠습니까?');
+  //   if (isConfirm) {
+  //   }
+  // };
 
   return (
     <div className="flex flex-col items-start gap-2 self-stretch rounded-2xl bg-white/50 p-2 backdrop-blur-[50px]">
@@ -95,9 +93,9 @@ const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
         <IconButton
           icon="before:bg-delete-2-line-icon"
           alt="삭제 버튼"
-          onClick={() => {
-            handleDelete(mealDetail.id);
-          }}
+          // onClick={() => {
+          //   handleDelete(mealDetail.id);
+          // }}
         />
         <Button
           variant="primary"
