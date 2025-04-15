@@ -3,9 +3,12 @@ import { useFormContext } from 'react-hook-form';
 import { MeasurementUnitType } from '@/types/nutrition.type';
 import { MEASUREMENT_UNIT } from '@/constants/nutrition.constant';
 import { Input } from '@/components/ui/input';
-import { InputHTMLAttributes } from 'react';
+import { FormEvent, InputHTMLAttributes } from 'react';
 
-type MealPostEditInputFieldProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'maxLength'> & {
+type MealPostEditInputFieldProps = Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'type' | 'maxLength' | 'name' | 'onBlur' | 'onChange'
+> & {
   variety: MeasurementUnitType;
   type?: string;
   maxLength: number;
@@ -20,24 +23,19 @@ const MealEditInputField = ({
   ...props
 }: MealPostEditInputFieldProps): JSX.Element => {
   const { register } = useFormContext();
-  const { name, unit } = MEASUREMENT_UNIT[variety];
-
-  const handleOnRegisterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    props.onChange?.(e);
+  const { name: fieldName, unit } = MEASUREMENT_UNIT[variety];
+  const handleNumericInput = (e: FormEvent<HTMLInputElement>) => {
+    e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '').slice(0, maxLength);
   };
   return (
     <Input
       className={props.className}
       type={type}
-      onInput={(e) => {
-        e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
-      }}
-      {...register(`meals.${idx}.${name}`, {
+      onInput={handleNumericInput}
+      {...register(`meals.${idx}.${fieldName}`, {
         required: true,
-        onChange: handleOnRegisterChange,
         valueAsNumber: true
       })}
-      maxLength={maxLength}
       inputMode="numeric"
       measure={unit}
     />
