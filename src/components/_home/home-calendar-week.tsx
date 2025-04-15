@@ -28,6 +28,7 @@ const HomeCalendarWeek = () => {
     if (!startDate || !endDate) return;
 
     getAllMyDailyCalories(startDate, endDate).then(setDailyMealCalories);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weeks]);
 
   const [api, setApi] = useState<CarouselApi>();
@@ -56,7 +57,7 @@ const HomeCalendarWeek = () => {
     return () => {
       api.off('settle', onSettle);
     };
-  }, [api, currentDate]);
+  }, [api, currentDate, setCurrentDate]);
 
   useLayoutEffect(() => {
     if (!api) return;
