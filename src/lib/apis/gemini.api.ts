@@ -11,15 +11,11 @@ export const generateFoodAnalysisByImage = async (imageParts: ImageContent[]): P
   return result.response.text();
 };
 
-export const generateCaloriesAnalysisByText = async (foodName: string, weight?: number): Promise<string> => {
-  const preInformation = weight
-    ? `  
-      음식 이름: ${foodName}
-      음식 중량: ${weight}g
-    `
-    : `
-      음식 이름: ${foodName}
-    `;
+export const generateCaloriesAnalysisByText = async (foodName: string, weight: number): Promise<string> => {
+  const preInformation = `  
+    음식 이름: ${foodName}
+    음식 중량: ${weight}g
+  `;
 
   const response = await getGenAI().models.generateContent({
     model: 'gemini-2.0-flash',

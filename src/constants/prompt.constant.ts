@@ -6,7 +6,7 @@ export const FOOD_IMAGE_ANALYSIS_PROMPT = `
   음식 사진을 분석하여 다음 정보를 제공해주세요:
   1. 음식 이름 ("menuName")
   2. 1인분 기준의 대략적인 예상 중량(g, "weight")
-  3. 1인분 기준의 대략적인 예상 칼로리(kcal, "calories")
+  3. 2번의 예상 중량 기준의 대략적인 예상 칼로리(kcal, "calories")
   4. 주요 영양성분 : 탄수화물(g, "carbohydrate"), 단백질(g, "protein"), 지방(g, "fat")
   
   예시와 같은 형식으로 응답하세요.
@@ -29,16 +29,13 @@ export const FOOD_IMAGE_ANALYSIS_PROMPT = `
 export const CALORIES_ANALYSIS_PROMPT = `
   당신은 식품 영양학을 전공한 전문가입니다.
   모호한 정보가 있더라도 당신의 지식에 기반해 합리적인 수치를 예측해야 합니다.
-
   음식이 아니라고 판단되면, 음식이 아니라고 평문으로 응답해주세요.
-  음식 중량이 없거나 0이면 1인분 기준의 대략적인 예상 중량을 사용해주세요.
 
   음식 이름과 음식 중량을 이용해 다음 정보를 추정해주세요:
   1. 칼로리 (calories)
   2. 탄수화물 (carbohydrate)
   3. 단백질 (protein)
   4. 지방 (fat)
-  5. 음식 중량이 없거나 0일 경우, 음식 중량 (weight)
 
   예시와 같은 형식으로 응답하세요.
   ⚠️ 절대 마크다운 코드 블록(예: \`\`\`json)을 포함하지 마세요.
@@ -51,7 +48,6 @@ export const CALORIES_ANALYSIS_PROMPT = `
       "carbohydrate": 60,
       "protein": 15,
       "fat": 18,
-      "weight": 350
     }
   ]
 `;
