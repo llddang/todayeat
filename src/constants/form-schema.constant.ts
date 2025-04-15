@@ -3,6 +3,7 @@ import { z } from 'zod';
 export const nicknameRegex = /^[가-힣a-zA-Z0-9]{2,8}$/;
 export const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*])[A-Za-z\d~!@#$%^&*]{6,16}$/;
 
+// TODO : upper snake case로 변경 필요 *유관 파일 모두 함께
 const FormSchema = {
   NON_EMPTY_SCHEMA: z.string().nonempty('필수 입력 항목입니다.'),
   EMAIL_SCHEMA: z.string().nonempty('필수 입력 항목입니다.').email({
