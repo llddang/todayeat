@@ -33,7 +33,6 @@ const MealEditInputField = ({
       type={type}
       onInput={handleNumericInput}
       {...register(`meals.${idx}.${fieldName}`, {
-        required: true,
         valueAsNumber: true
       })}
       inputMode="numeric"
