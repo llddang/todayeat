@@ -15,7 +15,7 @@ const HomeCalendarWeek = () => {
   const { selectedDate, currentDate, dailyMealCalories, setSelectedDate, setCurrentDate, setDailyMealCalories } =
     useCalendar();
 
-  const [weeks, setWeeks] = useState<WeekType[]>(getWeekDates(selectedDate));
+  const [weeks, setWeeks] = useState<WeekType[]>(getWeekDates(currentDate));
 
   useEffect(() => {
     const filteredWeeksWithoutInfo = weeks.filter((week) => {
@@ -26,7 +26,6 @@ const HomeCalendarWeek = () => {
     const startDate = flatDates[0];
     const endDate = flatDates.at(-1);
     if (!startDate || !endDate) return;
-    console.log(startDate, endDate);
     getAllMyDailyCalories(startDate, endDate).then(setDailyMealCalories);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weeks]);
@@ -36,26 +35,33 @@ const HomeCalendarWeek = () => {
   const handleDateClick = (newSelectedDate: Date): void => {
     if (isSameDate(newSelectedDate, selectedDate)) return;
     setSelectedDate(new Date(newSelectedDate));
+    setCurrentDate(new Date(newSelectedDate));
   };
 
   useEffect(() => {
     if (!api) return;
 
     const onSettle = (): void => {
+      const newDate = new Date(currentDate);
+      newDate.setDate(currentDate.getDate());
+      setWeeks(getWeekDates(newDate));
+    };
+    const onSelect = (): void => {
       const currentIndex = api.selectedScrollSnap();
       const diff = currentIndex - CALENDAR_STAND_COUNT;
+      if (diff === 0) return;
 
-      if (diff !== 0) {
-        const newDate = new Date(currentDate);
-        newDate.setDate(currentDate.getDate() + diff * 7);
-        setCurrentDate(newDate);
-        setWeeks(getWeekDates(newDate));
-      }
+      const newDate = new Date(currentDate);
+      const offset = diff > 0 ? 1 : -1;
+      newDate.setDate(currentDate.getDate() + offset * 7);
+      setCurrentDate(newDate);
     };
 
     api.on('settle', onSettle);
+    api.on('select', onSelect);
     return () => {
       api.off('settle', onSettle);
+      api.off('select', onSelect);
     };
   }, [api, currentDate, setCurrentDate]);
 
