@@ -33,12 +33,13 @@ export const POST = async (req: Request) => {
       });
     }
 
-    const { calories, carbohydrate, protein, fat } = parsedResult[0];
+    const { calories, carbohydrate, protein, fat, weight: weightFromCaloriesAnalysis } = parsedResult[0];
+    const finalWeight = weightProp === 0 && weightFromCaloriesAnalysis ? weightFromCaloriesAnalysis : weightProp;
 
     const { error } = await updateCaloriesAnalysisResult({
       id,
       menuName,
-      weight,
+      weight: finalWeight,
       calories,
       carbohydrate,
       protein,
