@@ -1,7 +1,7 @@
 'use server';
 
 import { camelToSnakeObject, snakeToCamelObject } from '@/lib/utils/camelize.util';
-import { dateDashFormatter } from '@/lib/utils/date.util';
+import { formatDateWithDash } from '@/lib/utils/date.util';
 import { getServerClient } from '@/lib/utils/supabase/server.util';
 import {
   CreateMealDetailDTO,
@@ -187,7 +187,7 @@ export const getAllMyDailyCalories = async (
   const currentDate = new Date(startDate);
   const lastDate = new Date(endDate);
   while (currentDate <= lastDate) {
-    res[dateDashFormatter(currentDate)] = { calories: 0, caloriesGoal: 0 };
+    res[formatDateWithDash(currentDate)] = { calories: 0, caloriesGoal: 0 };
     currentDate.setDate(currentDate.getDate() + 1);
   }
 
@@ -199,8 +199,8 @@ export const getAllMyDailyCalories = async (
   if (userError && userError.code === 'PGRST116') return res;
   if (userError) throw userError;
 
-  const startDateTime = `${dateDashFormatter(startDate)}T00:00:00Z`;
-  const endDateTime = `${dateDashFormatter(endDate)}T23:59:59.999Z`;
+  const startDateTime = `${formatDateWithDash(startDate)}T00:00:00Z`;
+  const endDateTime = `${formatDateWithDash(endDate)}T23:59:59.999Z`;
 
   const { data: mealData, error: mealError }: { data: MealSnakeCaseDTO[]; error: null } | { data: null; error: Error } =
     await supabase
@@ -214,7 +214,7 @@ export const getAllMyDailyCalories = async (
 
   const mealCalories = mealData.reduce<Record<string, { calories: number; caloriesGoal: number }>>((acc, meal) => {
     const caloriesSum = meal.meal_details.reduce((sum, mealDetail) => sum + mealDetail.calories, 0);
-    const ateAt = dateDashFormatter(new Date(meal.ate_at));
+    const ateAt = formatDateWithDash(new Date(meal.ate_at));
     acc[ateAt] = { calories: caloriesSum, caloriesGoal: userData.daily_calories_goal };
     return acc;
   }, res);

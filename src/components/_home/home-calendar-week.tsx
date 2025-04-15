@@ -1,12 +1,13 @@
+import { useEffect, useLayoutEffect, useState } from 'react';
+import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import HomeCalendarWeekItem from '@/components/_home/home-calendar-week-item';
 import ClientOnly from '@/components/commons/client-only';
-import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { CALENDAR_STAND_COUNT } from '@/constants/calendar.constant';
+import { calculateWeekDates, formatDateWithDash, getWeekDates, isSameDate } from '@/lib/utils/date.util';
 import { getAllMyDailyCalories } from '@/lib/apis/meal.api';
-import { calculateWeekDates, dateDashFormatter, getWeekDates, isSameDate } from '@/lib/utils/date.util';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { DailyMealCalories } from '@/types/nutrition.type';
 
-type WeekDate = {
+type WeekType = {
   id: number;
   dates: Date[];
 };
@@ -18,14 +19,14 @@ type HomeCalendarWeekProps = {
 const HomeCalendarWeek = ({ initialDate, onSelectedDateChange, onCurrentDateChange }: HomeCalendarWeekProps) => {
   const [selectedDate, setSelectedDate] = useState<Date>(initialDate ?? new Date());
   const [currentDate, setCurrentDate] = useState<Date>(initialDate ?? new Date());
-  const [weeks, setWeeks] = useState<WeekDate[]>(getWeekDates(selectedDate));
+  const [weeks, setWeeks] = useState<WeekType[]>(getWeekDates(selectedDate));
 
-  const [meal, setMeal] = useState<{ [key in string]: { calories: number; caloriesGoal: number } }>({});
+  const [dailyMealCalories, setDailyMealCalories] = useState<DailyMealCalories>({});
 
   useEffect(() => {
     const filteredWeeksWithoutInfo = weeks.filter((week) => {
-      const key = dateDashFormatter(week.dates[0]);
-      return meal[key] === undefined;
+      const key = formatDateWithDash(week.dates[0]);
+      return dailyMealCalories[key] === undefined;
     });
     if (filteredWeeksWithoutInfo.length === 0) return;
     const startDate = filteredWeeksWithoutInfo[0].dates[0];
@@ -33,7 +34,7 @@ const HomeCalendarWeek = ({ initialDate, onSelectedDateChange, onCurrentDateChan
     if (!startDate || !endDate) return;
 
     getAllMyDailyCalories(startDate, endDate).then((res) => {
-      setMeal((prev) => ({ ...prev, ...res }));
+      setDailyMealCalories((prev) => ({ ...prev, ...res }));
     });
   }, [weeks]);
 
@@ -87,7 +88,7 @@ const HomeCalendarWeek = ({ initialDate, onSelectedDateChange, onCurrentDateChan
           weekDate={calculateWeekDates(selectedDate)}
           selectedDate={selectedDate}
           onDateClick={handleDateClick}
-          meal={meal}
+          dailyMealCalories={dailyMealCalories}
         />
       }
     >
@@ -99,7 +100,7 @@ const HomeCalendarWeek = ({ initialDate, onSelectedDateChange, onCurrentDateChan
                 weekDate={week.dates}
                 selectedDate={selectedDate}
                 onDateClick={handleDateClick}
-                meal={meal}
+                dailyMealCalories={dailyMealCalories}
               />
             </CarouselItem>
           ))}

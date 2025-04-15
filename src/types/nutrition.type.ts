@@ -22,3 +22,7 @@ export type PurposeValue = {
   factor: number;
   ratio: Macronutrient;
 };
+
+export type DailyMealCalories = {
+  [key in string]: { calories: number; caloriesGoal: number };
+};

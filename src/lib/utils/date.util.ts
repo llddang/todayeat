@@ -1,6 +1,6 @@
 import { CALENDAR_RANGE_OFFSET, DAY, WEEK } from '@/constants/calendar.constant';
 
-export const isSameDate = (d1: Date, d2: Date): boolean => d1.toDateString() === d2.toDateString();
+export const isSameDate = (d1: Date, d2: Date): boolean => formatDateWithDash(d1) === formatDateWithDash(d2);
 
 export const getWeekDates = (date: Date): { id: number; dates: Date[] }[] => {
   const standTime = date.getTime();
@@ -24,7 +24,7 @@ export const calculateWeekDates = (date: Date): Date[] => {
   return Array.from({ length: 7 }, (_, dayOffset) => new Date(standTime + dayOffset * DAY));
 };
 
-export const dateDashFormatter = (date: Date): string => {
+export const formatDateWithDash = (date: Date): string => {
   const formattedDate = new Intl.DateTimeFormat('en-CA', {
     year: 'numeric',
     month: '2-digit',
