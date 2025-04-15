@@ -1,6 +1,7 @@
 'use server';
 
 import { camelToSnakeObject, snakeToCamelObject } from '@/lib/utils/camelize.util';
+import { formatDateWithDash } from '@/lib/utils/date.util';
 import { getServerClient } from '@/lib/utils/supabase/server.util';
 import {
   CreateMealDetailDTO,
@@ -166,6 +167,59 @@ export const deleteMealDetail = async (mealDetailId: string) => {
   const supabase = getServerClient();
   const { error } = await supabase.from('meal_details').delete().eq('id', mealDetailId);
   if (error) throw error;
+};
+
+/**
+ * 특정 기간 내의 사용자의 하루 섭취 칼로리 양 및 목표 칼로리 양을 조회합니다.
+ *
+ * @param {Date} startDate - 조회 시작 날짜 ex) 2023-10-15
+ * @param {Date} endDate - 조회 종료 날짜 ex) 2023-10-15
+ * @returns {Promise<Record<string, { calories: number; caloriesGoal: number }>>} 사용자의 식사 칼로리 양
+ * @throws Supabase 쿼리 실행 중 오류가 발생한 경우 Error
+ */
+export const getAllMyDailyCalories = async (
+  startDate: Date,
+  endDate: Date
+): Promise<Record<string, { calories: number; caloriesGoal: number }>> => {
+  const supabase = getServerClient();
+
+  const res: Record<string, { calories: number; caloriesGoal: number }> = {};
+  const currentDate = new Date(startDate);
+  const lastDate = new Date(endDate);
+  while (currentDate <= lastDate) {
+    res[formatDateWithDash(currentDate)] = { calories: 0, caloriesGoal: 0 };
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  const { data: userData, error: userError } = await supabase
+    .from('user_personal_infos')
+    .select('daily_calories_goal')
+    .single();
+
+  if (userError && userError.code === 'PGRST116') return res;
+  if (userError) throw userError;
+
+  const startDateTime = `${formatDateWithDash(startDate)}T00:00:00Z`;
+  const endDateTime = `${formatDateWithDash(endDate)}T23:59:59.999Z`;
+
+  const { data: mealData, error: mealError }: { data: MealSnakeCaseDTO[]; error: null } | { data: null; error: Error } =
+    await supabase
+      .from('meals')
+      .select(` *, meal_details (*) `)
+      .gte('ate_at', startDateTime)
+      .lte('ate_at', endDateTime)
+      .order('ate_at', { ascending: false });
+
+  if (mealError) throw mealError;
+
+  const mealCalories = mealData.reduce<Record<string, { calories: number; caloriesGoal: number }>>((acc, meal) => {
+    const caloriesSum = meal.meal_details.reduce((sum, mealDetail) => sum + mealDetail.calories, 0);
+    const ateAt = formatDateWithDash(new Date(meal.ate_at));
+    acc[ateAt] = { calories: caloriesSum, caloriesGoal: userData.daily_calories_goal };
+    return acc;
+  }, res);
+
+  return mealCalories;
 };
 
 /**

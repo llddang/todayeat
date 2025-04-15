@@ -25,6 +25,10 @@ export type PurposeValue = {
   ratio: Macronutrient;
 };
 
+export type DailyMealCalories = {
+  [key in string]: { calories: number; caloriesGoal: number };
+};
+
 export const NutritionEnum = {
   CALORIES: 'CALORIES',
   CARBOHYDRATE: 'CARBOHYDRATE',
