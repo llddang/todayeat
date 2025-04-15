@@ -23,21 +23,18 @@ const SetGoalPage = () => {
     return <SetGoalProgressSection percent={progressPercent} />;
   };
 
+  const content = (
+    <>
+      {renderProgressBar()}
+      <SetGoalFunnel userName={'지우다'} />
+    </>
+  );
+
   if (currentUIConfig.hasGlassBackground) {
-    return (
-      <GlassBackground className="relative space-y-8">
-        {renderProgressBar()}
-        <SetGoalFunnel />
-      </GlassBackground>
-    );
+    return <GlassBackground className="relative space-y-8">{content}</GlassBackground>;
   }
 
-  return (
-    <div className="relative min-h-[calc(100vh-60px)] space-y-8">
-      {renderProgressBar()}
-      <SetGoalFunnel />
-    </div>
-  );
+  return <div className="relative min-h-[calc(100vh-60px)] space-y-8">{content}</div>;
 };
 
 export default SetGoalPage;
