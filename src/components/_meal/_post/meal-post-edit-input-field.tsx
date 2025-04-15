@@ -9,16 +9,16 @@ type MealPostEditInputFieldProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
   'type' | 'maxLength' | 'name' | 'onBlur' | 'onChange'
 > & {
-  variety: MeasurementUnitType;
   type?: string;
+  variety: MeasurementUnitType;
   maxLength: number;
   idx: number;
 };
 
 const MealPostEditInputField = ({
+  type = 'text',
   variety,
   maxLength,
-  type = 'text',
   idx,
   ...props
 }: MealPostEditInputFieldProps): JSX.Element => {
