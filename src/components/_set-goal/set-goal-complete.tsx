@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
+import SITE_MAP from '@/constants/site-map.constant';
 import Link from 'next/link';
 
 type SetGoalCompleteProps = {
@@ -19,7 +20,7 @@ const SetGoalComplete = ({ userName }: SetGoalCompleteProps) => {
       </Typography>
 
       <Button className="mt-9">
-        <Link href="/">맞춤 피드백 보러가기</Link>
+        <Link href={SITE_MAP.HOME}>맞춤 피드백 보러가기</Link>
       </Button>
     </div>
   );
