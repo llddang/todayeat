@@ -4,6 +4,7 @@ const require = createRequire(import.meta.url);
 
 /** @type {import('next').NextConfig} */
 let nextConfig = {
+  reactStrictMode: false,
   images: {
     remotePatterns: [
       {
