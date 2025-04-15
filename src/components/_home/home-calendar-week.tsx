@@ -3,17 +3,15 @@ import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/componen
 import HomeCalendarWeekItem from '@/components/_home/home-calendar-week-item';
 import ClientOnly from '@/components/commons/client-only';
 import { CALENDAR_STAND_COUNT } from '@/constants/calendar.constant';
-import { calculateWeekDates, formatDateWithDash, getWeekDates, isSameDate } from '@/lib/utils/date.util';
+import { calculateWeekDates, formatDateWithDash, getWeekDates } from '@/lib/utils/date.util';
 import { getAllMyDailyCalories } from '@/lib/apis/meal.api';
 import { useCalendar } from '@/lib/contexts/calendar.context';
-import { useDashboard } from '@/lib/contexts/dashboard.context';
 
 type WeekType = {
   id: number;
   dates: Date[];
 };
 const HomeCalendarWeek = () => {
-  const { selectedDate, setSelectedDate } = useDashboard();
   const { currentDate, dailyMealCalories, setCurrentDate, setDailyMealCalories } = useCalendar();
 
   const [weeks, setWeeks] = useState<WeekType[]>(getWeekDates(currentDate));
@@ -32,12 +30,6 @@ const HomeCalendarWeek = () => {
   }, [weeks]);
 
   const [api, setApi] = useState<CarouselApi>();
-
-  const handleDateClick = (newSelectedDate: Date): void => {
-    if (isSameDate(newSelectedDate, selectedDate)) return;
-    setSelectedDate(new Date(newSelectedDate));
-    setCurrentDate(new Date(newSelectedDate));
-  };
 
   useEffect(() => {
     if (!api) return;
@@ -76,14 +68,12 @@ const HomeCalendarWeek = () => {
    * DOM의 모든 요소보다 UI에 보이는 날짜만 tab으로 이동가능하고, 이후 UI 상에는 보이지 않는 앞(이전 주), 뒤(다음 주)로 이동할 수 있는 버튼 만들기
    */
   return (
-    <ClientOnly
-      fallback={<HomeCalendarWeekItem week={calculateWeekDates(selectedDate)} onDateClick={handleDateClick} />}
-    >
+    <ClientOnly fallback={<HomeCalendarWeekItem week={calculateWeekDates(currentDate)} />}>
       <Carousel setApi={setApi} opts={{ startIndex: CALENDAR_STAND_COUNT }}>
         <CarouselContent>
           {weeks.map((week) => (
             <CarouselItem key={week.dates[0].getTime()}>
-              <HomeCalendarWeekItem week={week.dates} onDateClick={handleDateClick} />
+              <HomeCalendarWeekItem week={week.dates} />
             </CarouselItem>
           ))}
         </CarouselContent>

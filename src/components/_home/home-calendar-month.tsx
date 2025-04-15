@@ -2,24 +2,16 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import ClientOnly from '@/components/commons/client-only';
 import { CALENDAR_STAND_COUNT } from '@/constants/calendar.constant';
-import {
-  calculateMonthDates,
-  formatDateWithDash,
-  getFirstDayInMonth,
-  getMonthDates,
-  isSameDate
-} from '@/lib/utils/date.util';
+import { calculateMonthDates, formatDateWithDash, getFirstDayInMonth, getMonthDates } from '@/lib/utils/date.util';
 import { getAllMyDailyCalories } from '@/lib/apis/meal.api';
 import { useCalendar } from '@/lib/contexts/calendar.context';
 import HomeCalendarMonthItem from '@/components/_home/home-calendar-month-item';
-import { useDashboard } from '@/lib/contexts/dashboard.context';
 
 type MonthType = {
   id: number;
   weeks: Date[][];
 };
 const HomeCalendarMonth = () => {
-  const { selectedDate, setSelectedDate } = useDashboard();
   const { currentDate, dailyMealCalories, setCurrentDate, setDailyMealCalories } = useCalendar();
 
   const [months, setMonths] = useState<MonthType[]>(getMonthDates(currentDate));
@@ -40,12 +32,6 @@ const HomeCalendarMonth = () => {
   }, [months]);
 
   const [api, setApi] = useState<CarouselApi>();
-
-  const handleDateClick = (newSelectedDate: Date): void => {
-    if (isSameDate(newSelectedDate, selectedDate)) return;
-    setSelectedDate(new Date(newSelectedDate));
-    setCurrentDate(new Date(newSelectedDate));
-  };
 
   useEffect(() => {
     if (!api) return;
@@ -84,18 +70,14 @@ const HomeCalendarMonth = () => {
   }, [months, api]);
 
   return (
-    <ClientOnly
-      fallback={
-        <HomeCalendarMonthItem weeksInMonth={calculateMonthDates(selectedDate)} onDateClick={handleDateClick} />
-      }
-    >
+    <ClientOnly fallback={<HomeCalendarMonthItem weeksInMonth={calculateMonthDates(currentDate)} />}>
       <Carousel setApi={setApi} opts={{ startIndex: CALENDAR_STAND_COUNT }}>
         <CarouselContent>
           {months.map((month) => {
             const firstDay = getFirstDayInMonth(month.weeks);
             return (
               <CarouselItem key={formatDateWithDash(firstDay)}>
-                <HomeCalendarMonthItem weeksInMonth={month.weeks} onDateClick={handleDateClick} />
+                <HomeCalendarMonthItem weeksInMonth={month.weeks} />
               </CarouselItem>
             );
           })}

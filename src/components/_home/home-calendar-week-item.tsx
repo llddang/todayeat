@@ -5,19 +5,26 @@ import { useCalendar } from '@/lib/contexts/calendar.context';
 import { cn } from '@/lib/utils';
 import { formatDateWithDash, isSameDate } from '@/lib/utils/date.util';
 import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
+import { useDashboard } from '@/lib/contexts/dashboard.context';
 
 type HomeCalendarWeekItemProps = {
   week: Date[];
-  onDateClick: (date: Date) => void;
 };
-const HomeCalendarWeekItem = ({ week, onDateClick }: HomeCalendarWeekItemProps) => {
-  const { selectedDate, dailyMealCalories } = useCalendar();
+const HomeCalendarWeekItem = ({ week }: HomeCalendarWeekItemProps) => {
+  const { selectedDate, setSelectedDate } = useDashboard();
+  const { dailyMealCalories, setCurrentDate } = useCalendar();
+
+  const handleDateClick = (newSelectedDate: Date): void => {
+    if (isSameDate(newSelectedDate, selectedDate)) return;
+    setSelectedDate(new Date(newSelectedDate));
+    setCurrentDate(new Date(newSelectedDate));
+  };
 
   const handleDatePressed = (e: KeyboardEvent<HTMLButtonElement>, date: Date) => {
     if (e.key !== 'Enter' && e.key !== ' ') return;
 
     e.preventDefault();
-    onDateClick(date);
+    handleDateClick(date);
   };
 
   return (
@@ -36,7 +43,7 @@ const HomeCalendarWeekItem = ({ week, onDateClick }: HomeCalendarWeekItemProps) 
               'relative flex h-10 w-10 items-center justify-center',
               isSelected ? 'text-gray-900' : 'text-gray-600'
             )}
-            onClick={() => onDateClick(day)}
+            onClick={() => handleDateClick(day)}
             role="button"
             tabIndex={0}
             aria-pressed={isSelected}
