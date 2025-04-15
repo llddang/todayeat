@@ -36,7 +36,7 @@ export const MEASUREMENT_UNIT: Record<MeasurementUnitType, MeasurementUnitValues
   },
   GRAM: {
     label: '그램',
-    name: 'gram',
+    name: 'weight',
     unit: 'g'
   }
 } as const;
