@@ -68,13 +68,15 @@ const HomeCalendarMonth = () => {
 
   return (
     <ClientOnly
-      fallback={<HomeCalendarMonthItem month={calculateMonthDates(selectedDate)} onDateClick={handleDateClick} />}
+      fallback={
+        <HomeCalendarMonthItem weeksInMonth={calculateMonthDates(selectedDate)} onDateClick={handleDateClick} />
+      }
     >
       <Carousel setApi={setApi} opts={{ startIndex: CALENDAR_STAND_COUNT }}>
         <CarouselContent>
           {months.map((month) => (
             <CarouselItem key={formatDateWithDash(month.weeks[0][0])}>
-              <HomeCalendarMonthItem month={month.weeks} onDateClick={handleDateClick} />
+              <HomeCalendarMonthItem weeksInMonth={month.weeks} onDateClick={handleDateClick} />
             </CarouselItem>
           ))}
         </CarouselContent>
