@@ -127,7 +127,7 @@ const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStep
               name="calories"
               render={({ field }) => {
                 return (
-                  <FormItem>
+                  <FormItem className="space-y-2">
                     <FormLabel>1일 목표 칼로리</FormLabel>
                     <FormControl>
                       <Input
