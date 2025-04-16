@@ -14,7 +14,7 @@ const AuthSignUpStepComplete = () => {
           <br />
           칼로리, 영양소까지 AI가 자동으로 분석해줘요.
           <br />
-          <br />첫 번재 기록, 지금 해볼까요?
+          <br />첫 번째 기록, 지금 해볼까요?
         </Typography>
       </div>
 
