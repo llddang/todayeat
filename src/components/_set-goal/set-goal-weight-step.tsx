@@ -33,10 +33,10 @@ const SetGoalWeightStep = ({ userName, nextStep }: SetGoalWeightStepProps) => {
   return (
     <>
       <div>
-        <Typography as="h3" variant={'title2'} className="mb-2">
+        <Typography as="h3" variant="title2" className="mb-2">
           {userName}님의 <br /> 몸무게를 알려주세요
         </Typography>
-        <Typography as="span" variant={'body2'} className="text-gray-600">
+        <Typography as="span" variant="body2" className="text-gray-600">
           몸무게를 기준으로 맞춤 칼로리를 계산해요
         </Typography>
       </div>

@@ -33,10 +33,10 @@ const SetGoalAgeStep = ({ userName, nextStep }: SetGoalAgeStepProps) => {
   return (
     <>
       <div>
-        <Typography as="h3" variant={'title2'} className="mb-2">
+        <Typography as="h3" variant="title2" className="mb-2">
           {userName}님의 <br /> 나이를 알려주세요
         </Typography>
-        <Typography as="span" variant={'body2'} className="text-gray-600">
+        <Typography as="span" variant="body2" className="text-gray-600">
           더 정확하고 맞춤화된 피드백을 위해 필요해요
         </Typography>
       </div>

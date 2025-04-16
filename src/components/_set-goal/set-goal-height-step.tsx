@@ -33,10 +33,10 @@ const SetGoalHeightStep = ({ userName, nextStep }: SetGoalHeightStepProps) => {
   return (
     <>
       <div>
-        <Typography as="h3" variant={'title2'} className="mb-2">
+        <Typography as="h3" variant="title2" className="mb-2">
           {userName}님의 <br /> 키를 알려주세요
         </Typography>
-        <Typography as="span" variant={'body2'} className="text-gray-600">
+        <Typography as="span" variant="body2" className="text-gray-600">
           기초대사량과 권장섭취량 계산에 필요해요
         </Typography>
       </div>

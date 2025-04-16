@@ -25,10 +25,10 @@ const SetGoalGenderStep = ({ userName, nextStep }: SetGoalGenderStepProps) => {
     <form onSubmit={handleSubmit}>
       <fieldset>
         <legend>
-          <Typography as="h3" variant={'title2'} className="mb-2">
+          <Typography as="h3" variant="title2" className="mb-2">
             {userName}님의 <br /> 성별을 알려주세요
           </Typography>
-          <Typography as="span" variant={'body2'} className="text-gray-600">
+          <Typography as="span" variant="body2" className="text-gray-600">
             성별에 따라 기초대사량 계산이 달라져요
           </Typography>
         </legend>
