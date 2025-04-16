@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import Header from '@/components/layouts/header';
+import Footer from '@/components/commons/footer';
 
 const Layout = ({
   children
@@ -7,10 +8,13 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <>
+    <div className="temp-layout">
       <Header />
-      <Suspense>{children}</Suspense>
-    </>
+      <div className="pt-layout">
+        <Suspense>{children}</Suspense>
+        <Footer />
+      </div>
+    </div>
   );
 };
 

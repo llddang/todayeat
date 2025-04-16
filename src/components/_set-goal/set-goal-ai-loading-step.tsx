@@ -1,6 +1,10 @@
-import SetGoalAiLoaderLottie from '@/components/_set-goal/set-goal-ai-loader-lottie';
+import dynamic from 'next/dynamic';
 import { Typography } from '@/components/ui/typography';
 import { useEffect } from 'react';
+
+const SetGoalAiLoaderLottie = dynamic(() => import('@/components/_set-goal/set-goal-ai-loader-lottie'), {
+  ssr: false
+});
 
 type SetGoalAiLoadingStepProps = {
   nextStep: () => void;
