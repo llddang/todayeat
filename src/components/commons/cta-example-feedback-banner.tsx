@@ -1,3 +1,4 @@
+import SITE_MAP from '@/constants/site-map.constant';
 import Link from 'next/link';
 
 type CtaExampleFeedbackBannerProps = {
@@ -15,7 +16,7 @@ const CtaExampleFeedbackBanner = ({ title, description }: CtaExampleFeedbackBann
         <p className="mb-4 text-sm tracking-snug">{description}</p>
       </div>
       <Link
-        href="목표 설정하기"
+        href={SITE_MAP.SET_GOAL}
         className="tracking-t inline-block rounded-[3.125rem] bg-white px-6 py-3 text-sm font-semibold leading-none tracking-snug"
       >
         목표 설정하기
