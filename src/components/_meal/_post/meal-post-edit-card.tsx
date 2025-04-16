@@ -1,5 +1,5 @@
 'use client';
-import { useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useMemo, useState } from 'react';
 import MealPostEditInputField from './meal-post-edit-input-field';
 import MealPostEditCardTitle from './meal-post-edit-card-title';
@@ -7,18 +7,22 @@ import MacronutrientBox from '@/components/commons/macronutrient-box';
 import IconButton from '@/components/commons/icon-button';
 import { Button } from '@/components/ui/button';
 import { NutritionEnum, MeasurementUnitEnum } from '@/types/nutrition.type';
-import { MealDetailDTO } from '@/types/DTO/meal.dto';
+import {} from '@/types/DTO/meal.dto';
 import { createFoodAnalysisRequestDetail } from '@/lib/apis/meal.api';
+import { FoodAnalysisRequestsDetailDTO } from '@/types/DTO/food_analysis.dto';
+import SetGoalAiLoaderLottie from '@/components/_set-goal/set-goal-ai-loader-lottie';
 
 type MealPostEditCardProps = {
-  mealDetail: MealDetailDTO;
+  mealDetail: FoodAnalysisRequestsDetailDTO;
   idx: number;
 };
 
 const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
-  const { getValues, watch } = useFormContext();
+  const { control, getValues, watch } = useFormContext();
   const [isLoading, setIsLoading] = useState(false);
 
+  const { remove: mealListRemove } = useFieldArray({ control, name: 'mealList' });
+  const { remove: mealsRemove } = useFieldArray({ control, name: 'meals' });
   const menuName = watch(`meals.${idx}.menuName`);
   const weight = watch(`meals.${idx}.weight`);
 
@@ -52,17 +56,18 @@ const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
       setIsLoading(false);
     }
   };
-  // TODO: 임시테이블 삭제요청
-  // const handleDelete = async (mealId: string) => {
-  //   const isConfirm = window.confirm('정말 삭제하시겠습니까?');
-  //   if (isConfirm) {
-  //   }
-  // };
+  const handleDelete = async () => {
+    const isConfirm = window.confirm('정말 삭제하시겠습니까?');
+    if (isConfirm) {
+      mealListRemove(idx);
+      mealsRemove(idx);
+    }
+  };
 
   return (
-    <div className="flex flex-col items-start gap-2 self-stretch rounded-2xl bg-white/50 p-2 backdrop-blur-[50px]">
+    <div className="flex w-full flex-col items-center justify-center gap-2 self-stretch rounded-2xl bg-white/50 p-2 backdrop-blur-[50px]">
       {isLoading ? (
-        <div>분석중 </div>
+        <SetGoalAiLoaderLottie />
       ) : (
         <div className="flex flex-col items-start gap-2 self-stretch rounded-xl bg-white p-3">
           <MealPostEditCardTitle title={mealDetail.menuName} idx={idx} />
@@ -90,13 +95,7 @@ const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
         </div>
       )}
       <div className="flex items-start justify-center gap-2 self-stretch">
-        <IconButton
-          icon="before:bg-delete-2-line-icon"
-          alt="삭제 버튼"
-          // onClick={() => {
-          //   handleDelete(mealDetail.id);
-          // }}
-        />
+        <IconButton icon="before:bg-delete-2-line-icon" alt="삭제 버튼" onClick={handleDelete} />
         <Button
           variant="primary"
           type="button"
