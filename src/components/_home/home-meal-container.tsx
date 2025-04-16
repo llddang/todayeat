@@ -21,13 +21,13 @@ const HomeMealContainer = () => {
 
   return (
     <section>
-      <Typography as="h3" variant="subTitle2" className="pt-3 text-gray-900">
+      <Typography as="h3" variant="subTitle2" className="mb-4 pt-3 text-gray-900">
         식단 기록
       </Typography>
       {meals.length === 0 ? (
         <HomeMealEmptyCard />
       ) : (
-        <ul className="mt-4 flex flex-col gap-4">
+        <ul className="flex flex-col gap-4">
           {meals.map((meal) => (
             <HomeMealCard key={meal.id} meal={meal} />
           ))}
