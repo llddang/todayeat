@@ -1,6 +1,11 @@
-import { camelToSnakeObject } from '@/lib/utils/camelize.util';
+'use server';
+import { camelToSnakeObject, snakeToCamelObject } from '@/lib/utils/camelize.util';
 import { getServerClient } from '@/lib/utils/supabase/server.util';
-import { FoodAnalysisRequestsDetailDTO, FoodAnalysisRequestsDTO } from '@/types/DTO/food_analysis.dto';
+import {
+  FoodAnalysisRequestsDetailDTO,
+  FoodAnalysisRequestsDetailSnakeCaseDTO,
+  FoodAnalysisRequestsDTO
+} from '@/types/DTO/food_analysis.dto';
 import { CaloriesAnalysisUpdatePayload } from '@/types/gemini.type';
 import { PostgrestError } from '@supabase/supabase-js';
 import { getUser } from './user.api';
@@ -19,14 +24,12 @@ export const getFoodImagesById = async (
   return { data, error };
 };
 
-export const getFoodAnalysisDetail = async (): Promise<{
-  data: FoodAnalysisRequestsDetailDTO[] | null;
-  error: PostgrestError | null;
-}> => {
+export const getFoodAnalysisDetail = async (): Promise<FoodAnalysisRequestsDetailDTO[]> => {
   const supabase = getServerClient();
   const { id } = await getUser();
   const { data, error } = await supabase.from('food_analysis_requests_detail').select('*').eq('user_id', id);
-  return { data, error };
+  if (error) throw error;
+  return snakeToCamelObject<FoodAnalysisRequestsDetailSnakeCaseDTO[]>(data);
 };
 
 export const createFoodAnalysisRequestDetails = async (
