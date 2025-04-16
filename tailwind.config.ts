@@ -55,82 +55,82 @@ const config: Config = {
         },
         kakao: '#FEE500',
         amber: {
-          50: '#FFF9E0',
-          100: '#FFEEB1',
-          200: '#FFE37E',
-          300: '#FFD946',
-          400: '#FFCF0E',
-          500: '#FFC600',
-          600: '#FFB800',
-          700: '#FFA400',
-          800: '#FF9200',
-          900: '#FF7000'
+          '50': '#FFF9E0',
+          '100': '#FFEEB1',
+          '200': '#FFE37E',
+          '300': '#FFD946',
+          '400': '#FFCF0E',
+          '500': '#FFC600',
+          '600': '#FFB800',
+          '700': '#FFA400',
+          '800': '#FF9200',
+          '900': '#FF7000'
         },
         red: {
-          50: '#FFEDEF',
-          75: '#FFE0E4',
-          100: '#FFD2D6',
-          200: '#FCA49C',
-          300: '#FA7B6A',
-          400: '#F66355',
-          500: '#F95943',
-          600: '#EA4F41',
-          700: '#D7453B',
-          800: '#CA3F34',
-          900: '#BA3729'
+          '50': '#FFEDEF',
+          '75': '#FFE0E4',
+          '100': '#FFD2D6',
+          '200': '#FCA49C',
+          '300': '#FA7B6A',
+          '400': '#F66355',
+          '500': '#F95943',
+          '600': '#EA4F41',
+          '700': '#D7453B',
+          '800': '#CA3F34',
+          '900': '#BA3729'
         },
         purple: {
-          10: '#FBF6FE',
-          50: '#F4E6FD',
-          100: '#E3C0FA',
-          200: '#D195F8',
-          300: '#BE69F6',
-          400: '#AE44F3',
-          500: '#9D23E9',
-          600: '#8B23E3',
-          700: '#7022DB',
-          800: '#5721D3',
-          900: '#0620C5'
+          '10': '#FBF6FE',
+          '50': '#F4E6FD',
+          '100': '#E3C0FA',
+          '200': '#D195F8',
+          '300': '#BE69F6',
+          '400': '#AE44F3',
+          '500': '#9D23E9',
+          '600': '#8B23E3',
+          '700': '#7022DB',
+          '800': '#5721D3',
+          '900': '#0620C5'
         },
         blue: {
-          50: '#DEF4FF',
-          75: '#C2EBFF',
-          100: '#ABE3FF',
-          200: '#6ED1FF',
-          300: '#00BFFF',
-          400: '#00B2FF',
-          500: '#00A3FE',
-          600: '#0095EF',
-          700: '#0082DA',
-          800: '#0071C6',
-          900: '#0051A3'
+          '50': '#DEF4FF',
+          '75': '#C2EBFF',
+          '100': '#ABE3FF',
+          '200': '#6ED1FF',
+          '300': '#00BFFF',
+          '400': '#00B2FF',
+          '500': '#00A3FE',
+          '600': '#0095EF',
+          '700': '#0082DA',
+          '800': '#0071C6',
+          '900': '#0051A3'
         },
         teal: {
-          50: '#D7F6EF',
-          100: '#9BE7D6',
-          200: '#44D8BA',
-          300: '#00C59F',
-          400: '#00B58B',
-          500: '#00A578',
-          600: '#00986B',
-          700: '#00875B',
-          800: '#00774D',
-          900: '#005931'
+          '50': '#D7F6EF',
+          '100': '#9BE7D6',
+          '200': '#44D8BA',
+          '300': '#00C59F',
+          '400': '#00B58B',
+          '500': '#00A578',
+          '600': '#00986B',
+          '700': '#00875B',
+          '800': '#00774D',
+          '900': '#005931'
         },
         gray: {
-          50: '#FDFDFD',
-          75: '#FAFAFA',
-          100: '#F8F8F8',
-          200: '#F3F3F3',
-          300: '#EEEEEE',
-          350: '#E0E0E0',
-          400: '#CECECE',
-          500: '#B1B1B1',
-          550: '#9C9C9C',
-          600: '#868686',
-          700: '#717171',
-          800: '#515151',
-          900: '#2F2F2F'
+          '50': '#FDFDFD',
+          '75': '#FAFAFA',
+          '100': '#F8F8F8',
+          '200': '#F3F3F3',
+          '300': '#EEEEEE',
+          '350': '#E0E0E0',
+          '400': '#CECECE',
+          '500': '#B1B1B1',
+          '550': '#9C9C9C',
+          '600': '#868686',
+          '700': '#717171',
+          '800': '#515151',
+          '900': '#2F2F2F'
         }
       },
       borderRadius: {
@@ -165,12 +165,37 @@ const config: Config = {
         'analyze-line-icon': 'url(/icons/analyze_line.svg)',
         'chart-fill-icon': 'url(/icons/chart_fill.svg)',
         'chart-line-icon': 'url(/icons/chart_line.svg)',
+        'edit-info-icon': "url('/icons/edit-line.svg')",
+        'add-info-icon': "url('/icons/add-line-white.svg')",
+        'close-line-gray-550-icon': "url('/icons/close-line-gray-550.svg')",
         'kakao-logo': 'url(/kakao-logo.svg)',
         'google-logo': 'url(/google-logo.svg)',
         'complete-confetti': 'url(/illustrations/complete-confetti.svg)'
       },
       letterSpacing: {
         snug: '-0.0175rem'
+      },
+      keyframes: {
+        'accordion-down': {
+          from: {
+            height: '0'
+          },
+          to: {
+            height: 'var(--radix-accordion-content-height)'
+          }
+        },
+        'accordion-up': {
+          from: {
+            height: 'var(--radix-accordion-content-height)'
+          },
+          to: {
+            height: '0'
+          }
+        }
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out'
       }
     }
   },
