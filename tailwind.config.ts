@@ -53,6 +53,7 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))'
         },
+        kakao: '#FEE500',
         amber: {
           50: '#FFF9E0',
           100: '#FFEEB1',
@@ -148,21 +149,28 @@ const config: Config = {
         'right-line-gray-400-icon': "url('/icons/right-line-gray-400.svg')",
         'right-line-gray-600-icon': "url('/icons/right-line-gray-600.svg')",
         'right-line-gray-800-icon': "url('/icons/right-line-gray-800.svg')",
+        'down-line-gray-400-icon': "url('/icons/down-line-gray-400.svg')",
+        'down-line-gray-600-icon': "url('/icons/down-line-gray-600.svg')",
+        'down-line-gray-800-icon': "url('/icons/down-line-gray-800.svg')",
         'sparkle-illustration': "url('/illustrations/cta-banner-sparkle.svg')",
         'image-upload-illustration': "url('/illustrations/image-upload.svg')",
         'ai-sparkle-1': "url('/illustrations/ai-sparkle-1.svg')",
         'ai-sparkle-2': "url('/illustrations/ai-sparkle-2.svg')",
+        'delete-2-line-icon': 'url(/icons/delete_2_line.svg)',
+        'close-line-icon': 'url(/icons/close_line.svg)',
         'meal-category-breakfast': "url('/illustrations/meal-category-breakfast.svg')",
         'meal-category-lunch': "url('/illustrations/meal-category-lunch.svg')",
         'meal-category-dinner': "url('/illustrations/meal-category-dinner.svg')",
         'meal-category-snack': "url('/illustrations/meal-category-snack.svg')",
-        'close-line-icon': 'url(/icons/close_line.svg)',
         'home-fill-icon': 'url(/icons/home_fill.svg)',
         'home-line-icon': 'url(/icons/home_line.svg)',
         'analyze-fill-icon': 'url(/icons/analyze_fill.svg)',
         'analyze-line-icon': 'url(/icons/analyze_line.svg)',
         'chart-fill-icon': 'url(/icons/chart_fill.svg)',
         'chart-line-icon': 'url(/icons/chart_line.svg)',
+        'kakao-logo': 'url(/kakao-logo.svg)',
+        'google-logo': 'url(/google-logo.svg)',
+        'complete-confetti': 'url(/illustrations/complete-confetti.svg)',
         'default-profile': 'url(/illustrations/default_profile.svg)',
         'back-line-icon': 'url(/icons/back_line.svg)'
       },
@@ -189,6 +197,9 @@ const config: Config = {
         },
         '.bg-button-gradient': {
           background: `linear-gradient(149deg, rgba(255, 210, 214, 0.32) 4.14%, rgba(209, 149, 248, 0.32) 109.45%), #FFF`
+        },
+        '.bg-gradient-linear-progress': {
+          background: `linear-gradient(90deg, #FFF5CC 0%, #FFE5E8 35.58%, #F4E6FD 100%)`
         },
         '.typography-title1': {
           fontSize: '2.25rem',

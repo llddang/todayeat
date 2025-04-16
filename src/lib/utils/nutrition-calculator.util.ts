@@ -47,7 +47,7 @@ const calculateBMR = (weight: number, height: number, age: number, gender: Gende
  * - 단백질: 4kcal/g
  * - 지방: 9kcal/g
  */
-const calculateDailyNutrition = (dailyCalories: number, ratio: Macronutrient) => {
+export const calculateDailyNutrition = (dailyCalories: number, ratio: Macronutrient) => {
   return {
     dailyCarbohydrateGoal: Math.round((dailyCalories * ratio.carbohydrate) / CALORIES_PER_GRAM.CARBOHYDRATE),
     dailyProteinGoal: Math.round((dailyCalories * ratio.protein) / CALORIES_PER_GRAM.PROTEIN),
