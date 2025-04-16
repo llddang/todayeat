@@ -153,6 +153,7 @@ const config: Config = {
         'image-upload-illustration': "url('/illustrations/image-upload.svg')",
         'ai-sparkle-1': "url('/illustrations/ai-sparkle-1.svg')",
         'ai-sparkle-2': "url('/illustrations/ai-sparkle-2.svg')",
+        'delete-2-line-icon': 'url(/icons/delete_2_line.svg)',
         'meal-category-breakfast': "url('/illustrations/meal-category-breakfast.svg')",
         'meal-category-lunch': "url('/illustrations/meal-category-lunch.svg')",
         'meal-category-dinner': "url('/illustrations/meal-category-dinner.svg')",
