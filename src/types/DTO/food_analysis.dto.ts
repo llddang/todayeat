@@ -1,3 +1,5 @@
+import { SnakeCaseObject } from '../common.type';
+
 export type FoodAnalysisRequestsDTO = {
   id: string;
   image_urls: string[];
@@ -13,6 +15,7 @@ export type FoodAnalysisRequestsDetailDTO = {
   fat: number;
 };
 
+export type FoodAnalysisRequestsDetailSnakeCaseDTO = SnakeCaseObject<FoodAnalysisRequestsDetailDTO>;
 export type FoodAnalysisRequestDetailDTO = {
   id: string;
   userId: string;

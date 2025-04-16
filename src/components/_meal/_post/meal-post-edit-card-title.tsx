@@ -10,7 +10,7 @@ type MealEditCardTitleProps = {
 const MealEditCardTitle = ({ title, idx }: MealEditCardTitleProps): JSX.Element => {
   const { register } = useFormContext();
 
-  return <Input type="text" {...register(`meals.${[idx]}.menuName`, { required: true })} defaultValue={title} />;
+  return <Input type="text" {...register(`meals.${idx}.menuName`, { required: true })} defaultValue={title} />;
 };
 
 export default MealEditCardTitle;

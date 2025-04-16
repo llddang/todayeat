@@ -97,3 +97,29 @@ export const getFileId = (file: File): string => {
 
   return `${hash.toString(16)}-${file.size}-${file.name.replace(/\s+/g, '_')}`;
 };
+
+const mimeTypeToExtension = (mimeType: string): string => {
+  switch (mimeType) {
+    case 'image/jpeg':
+      return 'jpg';
+    case 'image/png':
+      return 'png';
+    case 'image/webp':
+      return 'webp';
+    case 'image/gif':
+      return 'gif';
+    case 'image/svg+xml':
+      return 'svg';
+    default:
+      return 'bin'; // fallback
+  }
+};
+
+export const urlToFile = async (url: string, idx: number): Promise<File> => {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  const contentType = response.headers.get('Content-Type') || 'application/octet-stream';
+  const ext = mimeTypeToExtension(contentType);
+  const filename = `image_${Date.now()}.${idx}.${ext}`;
+  return new File([blob], filename, { type: contentType });
+};

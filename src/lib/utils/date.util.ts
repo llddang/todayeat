@@ -101,3 +101,24 @@ export const formatDateWithDash = (date: Date): string => {
 
   return formattedDate;
 };
+
+export const convertToTimestamp = (
+  baseDate: Date,
+  time: { meridiem: '오전' | '오후'; hours: string; minutes: string }
+): string => {
+  let hour = parseInt(time.hours, 10);
+  const minutes = time.minutes.padStart(2, '0');
+
+  if (time.meridiem === '오전' && hour === 12) {
+    hour = 0;
+  } else if (time.meridiem === '오후' && hour !== 12) {
+    hour += 12;
+  }
+
+  const yyyy = baseDate.getFullYear();
+  const mm = String(baseDate.getMonth() + 1).padStart(2, '0');
+  const dd = String(baseDate.getDate()).padStart(2, '0');
+  const hh = String(hour).padStart(2, '0');
+
+  return `${yyyy}-${mm}-${dd} ${hh}:${minutes}:00`;
+};
