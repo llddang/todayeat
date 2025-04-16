@@ -95,7 +95,7 @@ const MealPostAddMealDrawer = () => {
             </Typography>
           </DrawerTitle>
           <DrawerClose className="" asChild>
-            <IconButton icon="before:bg-close-line-icon" alt="삭제 버튼" />
+            <IconButton icon="before:bg-close-line-icon" alt="닫기 버튼" />
           </DrawerClose>
         </div>
 
