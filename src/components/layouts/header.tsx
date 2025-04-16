@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { useDetectIsScrolled } from '@/lib/hooks/use-detect-is-scrolled';
 import LOGO from '@/../public/logo.svg';
+import Link from 'next/link';
+import SITE_MAP from '@/constants/site-map.constant';
 
 const Header = () => {
   const isScrolled = useDetectIsScrolled();
@@ -16,7 +18,9 @@ const Header = () => {
         'temp-layout left-1/2 -translate-x-1/2'
       )}
     >
-      <Image src={LOGO} alt="투데잇 로고" />
+      <Link href={SITE_MAP.HOME}>
+        <Image src={LOGO} alt="투데잇 로고" />
+      </Link>
     </header>
   );
 };
