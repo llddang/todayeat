@@ -1,3 +1,4 @@
+import Footer from '@/components/commons/footer';
 import GlobalNavigationBar from '@/components/layouts/global-navigation-bar';
 import HeaderWithProfile from '@/components/layouts/header-with-profile';
 
@@ -9,7 +10,10 @@ const Layout = ({
   return (
     <>
       <HeaderWithProfile />
-      <main className="my-16">{children}</main>
+      <div className="py-layout">
+        <main>{children}</main>
+        <Footer />
+      </div>
       <GlobalNavigationBar />
     </>
   );
