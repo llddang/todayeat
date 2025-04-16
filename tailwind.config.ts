@@ -141,7 +141,7 @@ const config: Config = {
         background: '-10'
       },
       padding: {
-        header: '4rem'
+        layout: '4rem'
       },
       backgroundImage: {
         'info-icon': "url('/icons/information_line.svg')",
