@@ -25,7 +25,6 @@ export type PurposeValue = {
   ratio: Macronutrient;
 };
 
-
 export const NutritionEnum = {
   CALORIES: 'CALORIES',
   CARBOHYDRATE: 'CARBOHYDRATE',
