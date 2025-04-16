@@ -1,4 +1,3 @@
-import { MealEditFormDataType } from '@/app/(client)/meal/post/edit/page';
 import { CALENDAR_RANGE_OFFSET, DAY, WEEK } from '@/constants/calendar.constant';
 
 export const isSameDate = (d1: Date, d2: Date): boolean => formatDateWithDash(d1) === formatDateWithDash(d2);
@@ -104,7 +103,7 @@ export const formatDateWithDash = (date: Date): string => {
 };
 
 export const convertToTimestamp = (
-  baseDate: Date, 
+  baseDate: Date,
   time: { meridiem: '오전' | '오후'; hours: string; minutes: string }
 ): string => {
   let hour = parseInt(time.hours, 10);
