@@ -1,15 +1,11 @@
 import dynamic from 'next/dynamic';
 import { Typography } from '@/components/ui/typography';
-import { useEffect } from 'react';
 
 const SetGoalAiLoaderLottie = dynamic(() => import('@/components/_set-goal/set-goal-ai-loader-lottie'), {
   ssr: false
 });
 
 const MealPostAddMealAiLoading = () => {
-  useEffect(() => {
-    setTimeout(() => {}, 2000);
-  }, []);
   return (
     <div className="flex flex-col items-center">
       <SetGoalAiLoaderLottie />
