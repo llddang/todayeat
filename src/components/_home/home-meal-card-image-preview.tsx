@@ -8,7 +8,7 @@ const HomeMealCardImagePreview = ({ images }: { images: MealDTO['foodImages'] })
       {images?.map((image) => (
         <img
           key={image}
-          className="h-10 w-10 rounded-[0.5rem] border border-white"
+          className="h-10 w-10 rounded-lg border border-white"
           src={image}
           alt="식사 사진"
           loading="lazy"
