@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { MealDTO } from '@/types/DTO/meal.dto';
 
 const HomeMealCardImagePreview = ({ images }: { images: MealDTO['foodImages'] }) => {
