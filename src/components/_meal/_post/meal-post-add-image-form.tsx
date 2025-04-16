@@ -7,11 +7,11 @@ import { getUser } from '@/lib/apis/user.api';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 
-type MealPostAddImageSectionProps = {
+type MealPostAddImageFormProps = {
   onLoadingChange: (isLoading: boolean) => void;
 };
 
-const MealPostAddImageSection = ({ onLoadingChange }: MealPostAddImageSectionProps): JSX.Element => {
+const MealPostAddImageForm = ({ onLoadingChange }: MealPostAddImageFormProps): JSX.Element => {
   const [images, setImages] = useState<File[]>([]);
   const router = useRouter();
   const handleAnalyzeSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -57,4 +57,4 @@ const MealPostAddImageSection = ({ onLoadingChange }: MealPostAddImageSectionPro
   );
 };
 
-export default MealPostAddImageSection;
+export default MealPostAddImageForm;

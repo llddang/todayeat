@@ -1,7 +1,7 @@
 'use client';
 import { Typography } from '@/components/ui/typography';
 import React, { useState } from 'react';
-import MealPostAddImageSection from './meal-post-add-image-section';
+import MealPostAddImageForm from './meal-post-add-image-form';
 import MealPostModal from './meal-post-modal';
 import useMealPostModal from '@/lib/hooks/use-meal-post-modal';
 
@@ -22,7 +22,7 @@ const MealPostContents = ({ isRecord }: MealPostContentsProps): JSX.Element => {
         <Typography variant="title2" as="p">
           오늘의 식사를 간편하게 남겨보세요!
         </Typography>
-        <Typography variant="body2" as="p" className="whitespace-pre-line text-center">
+        <Typography className="whitespace-pre-line text-center">
           음식 사진을 올리면 AI가 <br /> 음식 종류와 영양소를 분석해 드려요
         </Typography>
       </div>
@@ -32,7 +32,7 @@ const MealPostContents = ({ isRecord }: MealPostContentsProps): JSX.Element => {
         onApproveClickHandler={handleApproveClick}
         onCancelClickHandler={handleCancelClick}
       />
-      <MealPostAddImageSection onLoadingChange={setIsLoading} />
+      <MealPostAddImageForm onLoadingChange={setIsLoading} />
     </div>
   );
 };
