@@ -1,4 +1,5 @@
 import HomeCalendarWeekItem from '@/components/_home/home-calendar-week-item';
+import { MAX_WEEK } from '@/constants/calendar.constant';
 import { formatDateWithDash } from '@/lib/utils/date.util';
 
 type HomeCalendarWeekItemProps = {
@@ -10,7 +11,7 @@ const HomeCalendarMonthItem = ({ weeksInMonth }: HomeCalendarWeekItemProps) => {
       {weeksInMonth.map((week) => (
         <HomeCalendarWeekItem key={formatDateWithDash(week[0])} week={week} />
       ))}
-      {Array.from({ length: 6 - weeksInMonth.length }, (_, i) => i).map((id) => (
+      {Array.from({ length: MAX_WEEK - weeksInMonth.length }, (_, i) => i).map((id) => (
         <div key={id} className="h-10" />
       ))}
     </div>

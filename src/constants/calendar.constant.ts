@@ -9,3 +9,6 @@ export const MIN = 60 * SEC;
 export const HOUR = 60 * MIN;
 export const DAY = 24 * HOUR;
 export const WEEK = 7 * DAY;
+
+export const DAY_LABELS = ['월', '화', '수', '목', '금', '토', '일'];
+export const MAX_WEEK = 6;
