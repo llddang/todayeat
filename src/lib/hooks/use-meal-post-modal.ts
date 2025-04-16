@@ -3,12 +3,12 @@ import { useRouter } from 'next/navigation';
 import { deleteMealAnalysisDetail } from '@/lib/apis/meal.api';
 import SITE_MAP from '@/constants/site-map.constant';
 
-const useMealPostModal = (isRecord: boolean = false) => {
+const useMealPostModal = (isRecorded: boolean = false) => {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    if (isRecord) {
+    if (isRecorded) {
       setShowModal(true);
     }
   }, []);
