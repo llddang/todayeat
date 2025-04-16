@@ -24,6 +24,7 @@ export type IconButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>
     icon: string;
   };
 
+// TODO - alt를 title로 변경
 const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   ({ size, icon, alt, className, ...props }, ref) => {
     return (
