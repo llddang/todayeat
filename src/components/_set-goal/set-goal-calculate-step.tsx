@@ -21,6 +21,8 @@ import { isClient } from '@/lib/utils/predicate.util';
 import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
 import { CompleteType } from '@/types/set-goal.type';
 import USER_PHYSICAL_PROFILE_SCHEMA from '@/constants/user-schema.constant';
+import { useUserStore } from '@/lib/hooks/use-user-store';
+import { revalidateFunction } from '@/lib/utils/revalidate.util';
 
 type SetGoalCalculateStepProps = {
   userName: string;
@@ -40,6 +42,8 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStepProps) => {
+  const { refresh } = useUserStore();
+
   let userPersonalGoal = {
     dailyCaloriesGoal: 0,
     dailyCarbohydrateGoal: 0,
@@ -86,9 +90,13 @@ const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStep
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
     try {
       await updateUserPersonalInfo(userPersonalInfos);
+      refresh();
       nextStep('complete');
+      // TODO 더 좋은 방법을 찾걿아
+      revalidateFunction();
     } catch (error) {
       console.error('목표 계산 및 업데이트 중 오류 발생:', error);
     }
