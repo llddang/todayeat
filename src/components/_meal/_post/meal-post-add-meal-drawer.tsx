@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import IconButton from '@/components/commons/icon-button';
 import { Typography } from '@/components/ui/typography';
-import MealPostEditAiLoading from '@/components/_meal/_post/meal-post-add-meal-ai-loading';
+import MealPostAddMealAiLoading from '@/components/_meal/_post/meal-post-add-meal-ai-loading';
 import MealPostAddMealCard from '@/components/_meal/_post/meal-post-add-meal-card';
 import { useUserStore } from '@/lib/hooks/use-user-store';
 
@@ -101,7 +101,7 @@ const MealPostAddMealDrawer = () => {
         </div>
 
         {isAnalyzing ? (
-          <MealPostEditAiLoading />
+          <MealPostAddMealAiLoading />
         ) : (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
