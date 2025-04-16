@@ -68,17 +68,15 @@ type FormItemContextValue = {
 
 const FormItemContext = React.createContext<FormItemContextValue>({} as FormItemContextValue);
 
-const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => {
-    const id = React.useId();
+const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>((props, ref) => {
+  const id = React.useId();
 
-    return (
-      <FormItemContext.Provider value={{ id }}>
-        <div ref={ref} className={cn('space-y-2', className)} {...props} />
-      </FormItemContext.Provider>
-    );
-  }
-);
+  return (
+    <FormItemContext.Provider value={{ id }}>
+      <div ref={ref} {...props} />
+    </FormItemContext.Provider>
+  );
+});
 FormItem.displayName = 'FormItem';
 
 type FormLabelProps = React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> & { disabled?: boolean };
@@ -129,7 +127,7 @@ const FormDescription = React.forwardRef<HTMLParagraphElement, FormDescriptionPr
     <p
       ref={ref}
       id={formDescriptionId}
-      className={cn('typography-body3 ml-1 text-gray-600', isDisabled && 'text-gray-500', className)}
+      className={cn('ml-1 text-gray-600 typography-body3', isDisabled && 'text-gray-500', className)}
       {...props}
     />
   );

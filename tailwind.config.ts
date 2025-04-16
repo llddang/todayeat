@@ -53,6 +53,7 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))'
         },
+        kakao: '#FEE500',
         amber: {
           50: '#FFF9E0',
           100: '#FFEEB1',
@@ -162,7 +163,9 @@ const config: Config = {
         'analyze-fill-icon': 'url(/icons/analyze_fill.svg)',
         'analyze-line-icon': 'url(/icons/analyze_line.svg)',
         'chart-fill-icon': 'url(/icons/chart_fill.svg)',
-        'chart-line-icon': 'url(/icons/chart_line.svg)'
+        'chart-line-icon': 'url(/icons/chart_line.svg)',
+        'kakao-logo': 'url(/kakao-logo.svg)',
+        'google-logo': 'url(/google-logo.svg)'
       },
       letterSpacing: {
         snug: '-0.0175rem'
