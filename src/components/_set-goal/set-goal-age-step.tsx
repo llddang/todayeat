@@ -53,7 +53,7 @@ const SetGoalAgeStep = ({ userName, nextStep }: SetGoalAgeStepProps) => {
                     <FormItem>
                       <FormLabel className="sr-only">나이</FormLabel>
                       <FormControl>
-                        <Input {...field} type="text" inputMode="numeric" />
+                        <Input {...field} type="text" inputMode="numeric" className="mb-2" />
                       </FormControl>
                       {!hasError && <FormDescription>숫자만 입력해 주세요</FormDescription>}
                       <FormMessage />

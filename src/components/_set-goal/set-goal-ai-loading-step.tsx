@@ -1,6 +1,11 @@
-import SetGoalAiLoaderLottie from '@/components/_set-goal/set-goal-ai-loader-lottie';
+import dynamic from 'next/dynamic';
 import { Typography } from '@/components/ui/typography';
 import { useEffect } from 'react';
+
+const SetGoalAiLoaderLottie = dynamic(() => import('@/components/_set-goal/set-goal-ai-loader-lottie'), {
+  ssr: false,
+  loading: () => <div className="flex h-40 w-full items-center justify-center">로딩 중...</div>
+});
 
 type SetGoalAiLoadingStepProps = {
   nextStep: () => void;

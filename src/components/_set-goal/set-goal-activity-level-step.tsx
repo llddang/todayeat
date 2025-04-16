@@ -33,7 +33,7 @@ const SetGoalActivityLevelStep = ({ userName, nextStep }: SetGoalActivityLevelSt
             생활 패턴에 가장 가까운 걸 선택해 주세요
           </Typography>
         </legend>
-        <div className="space-y-2 pt-2">
+        <div className="space-y-2 pt-8">
           {GOAL_OPTIONS.ACTIVITY_LEVEL_OPTIONS.map((option) => (
             <OptionSelectCard
               key={option.value}
