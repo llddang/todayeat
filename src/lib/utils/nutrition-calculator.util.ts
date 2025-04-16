@@ -1,5 +1,4 @@
 import { ACTIVITY_LEVEL_OPTIONS, NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
-import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
 import { MealDTO } from '@/types/DTO/meal.dto';
 import { UserPhysicalProfileDTO } from '@/types/DTO/user.dto';
 import { MealNutrition, NutritionGoal, Macronutrient, PurposeValue } from '@/types/nutrition.type';
