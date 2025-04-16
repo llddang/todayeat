@@ -3,15 +3,3 @@ export const FUNNEL_QUERY_PARAM = 'step';
 
 export const KB = 1024;
 export const MB = 1024 * KB;
-
-const MACRO_NAME_MAP: Record<string, string> = {
-  CARBOHYDRATE: '탄수화물',
-  PROTEIN: '단백질',
-  FAT: '지방'
-} as const;
-
-export const MACRO_COLOR_MAP: Record<string, string> = {
-  [MACRO_NAME_MAP.CARBOHYDRATE]: 'bg-purple-100',
-  [MACRO_NAME_MAP.PROTEIN]: 'bg-teal-100',
-  [MACRO_NAME_MAP.FAT]: 'bg-blue-75'
-} as const;
