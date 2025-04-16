@@ -175,6 +175,7 @@ const config: Config = {
         'kakao-logo': 'url(/kakao-logo.svg)',
         'google-logo': 'url(/google-logo.svg)',
         'complete-confetti': 'url(/illustrations/complete-confetti.svg)',
+        'edit-4-icon': 'url(/icons/edit-4-line.svg)',
         'default-profile': 'url(/illustrations/default_profile.svg)',
         'back-line-icon': 'url(/icons/back_line.svg)'
       },

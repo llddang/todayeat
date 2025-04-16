@@ -9,22 +9,26 @@ export const MACRONUTRIENT_OPTIONS: Record<NutritionEnumType, MacronutrientValue
   CALORIES: {
     label: '칼로리',
     unit: 'kcal',
-    color: ''
+    color: '',
+    beforeBgColor: ''
   },
   CARBOHYDRATE: {
     label: '탄수화물',
     unit: 'g',
-    color: 'bg-purple-100'
+    color: 'bg-purple-100',
+    beforeBgColor: 'before:bg-purple-100'
   },
   PROTEIN: {
     label: '단백질',
     unit: 'g',
-    color: 'bg-teal-100'
+    color: 'bg-teal-100',
+    beforeBgColor: 'before:bg-teal-100'
   },
   FAT: {
     label: '지방',
     unit: 'g',
-    color: 'bg-blue-75'
+    color: 'bg-blue-75',
+    beforeBgColor: 'before:bg-blue-75'
   }
 } as const;
 
