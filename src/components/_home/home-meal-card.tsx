@@ -18,7 +18,7 @@ const HomeMealCard = ({ meal }: HomeMealCardProps) => {
     <li className="flex gap-3">
       <HomeMealCardTimeIndicator mealIcon={mealIcon} ateAt={meal.ateAt} />
       {/* TODO : Link 태그로 변경 & 식사 상세 페이지로 이동하게끔!! */}
-      <div className="flex flex-1 flex-col gap-4 rounded-2xl bg-white p-4">
+      <div className="flex w-full flex-1 flex-col gap-4 overflow-hidden rounded-2xl bg-white p-4">
         <HomeMealCardTitle mealLabel={mealLabel} calories={calories} images={meal.foodImages} />
         <HomeMealCardMacronutrient {...macronutrients} />
         {meal.memo && <HomeMealCardMemo memo={meal.memo} />}

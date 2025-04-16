@@ -9,7 +9,7 @@ const HomeMealCardMemo = ({ memo }: { memo: string }) => {
         'before:bg-edit-4-icon before:h-[1.125rem] before:w-[1.125rem] before:bg-contain before:bg-center before:bg-no-repeat'
       )}
     >
-      <Typography variant="body3" className="text-gray-700">
+      <Typography variant="body3" className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-gray-700">
         {memo}
       </Typography>
     </div>

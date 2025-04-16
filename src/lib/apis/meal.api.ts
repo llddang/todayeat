@@ -221,7 +221,8 @@ export const getAllMyDailyCalories = async (
   const mealCalories = mealData.reduce<Record<string, { calories: number; caloriesGoal: number }>>((acc, meal) => {
     const caloriesSum = meal.meal_details.reduce((sum, mealDetail) => sum + mealDetail.calories, 0);
     const ateAt = formatDateWithDash(new Date(meal.ate_at));
-    acc[ateAt] = { calories: caloriesSum, caloriesGoal: userData.daily_calories_goal };
+    acc[ateAt].calories += caloriesSum;
+    acc[ateAt].caloriesGoal = userData.daily_calories_goal;
     return acc;
   }, res);
 
