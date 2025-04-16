@@ -1,10 +1,11 @@
 import { ACTIVITY_LEVEL_OPTIONS, NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
+import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
 import { MealDTO } from '@/types/DTO/meal.dto';
 import { UserPhysicalProfileDTO } from '@/types/DTO/user.dto';
 import { MealNutrition, NutritionGoal, Macronutrient, PurposeValue } from '@/types/nutrition.type';
 import { Gender, GenderType } from '@/types/user-personal-info.type';
 
-const CALORIES_PER_GRAM = {
+export const CALORIES_PER_GRAM = {
   CARBOHYDRATE: 4,
   PROTEIN: 4,
   FAT: 9
@@ -194,5 +195,25 @@ export const calculateNutritionRatio = (meals: MealDTO[], goal: NutritionGoal): 
     carbohydrate: getPercentage(nutritionValues.carbohydrate, goal.dailyCarbohydrateGoal),
     protein: getPercentage(nutritionValues.protein, goal.dailyProteinGoal),
     fat: getPercentage(nutritionValues.fat, goal.dailyFatGoal)
+  };
+};
+
+/**
+ * 영양소의 그램수를 기반으로 칼로리를 계산하는 함수
+ *
+ * @param gram - 영양소의 그램 수 (문자열 또는 숫자)
+ * @param caloriesPerGram - 영양소별 1g당 칼로리 계수 (탄수화물: 4, 단백질: 4, 지방: 9)
+ * @returns 그램 수와 칼로리 값을 포함하는 객체
+ */
+export const calculateMacroCaloriesbyGrams = (
+  gram: string | number,
+  caloriesPerGram: number
+): { grams: number; calories: number } => {
+  const gramValue = Number(gram) || 0;
+  const calories = gramValue * caloriesPerGram;
+
+  return {
+    grams: gramValue,
+    calories: calories
   };
 };
