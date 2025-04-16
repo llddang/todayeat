@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
@@ -14,6 +14,9 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import FormSchema from '@/constants/form-schema.constant';
 import { UserDTO } from '@/types/DTO/user.dto';
 import { cleanupBlobUrl } from '@/lib/utils/cleanup-blob-url.util';
+import IconButton from '@/components/commons/icon-button';
+import { Typography } from '@/components/ui/typography';
+import DefaultProfile from '@/../public/illustrations/default-profile.svg';
 
 const formSchema = z.object({
   nickname: FormSchema.NICKNAME_SCHEMA,
@@ -22,7 +25,13 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-const MyPageEditProfile = ({ userInfo }: { userInfo: UserDTO }): JSX.Element => {
+type MyPageEditProfileProps = {
+  userInfo: UserDTO;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  refresh: () => Promise<void>;
+};
+
+const MyPageEditProfile = ({ userInfo, setOpen, refresh }: MyPageEditProfileProps): JSX.Element => {
   const [profileState, setProfileState] = useState({
     isUploading: false,
     profilePreviewUrl: userInfo?.profileImage || null
@@ -107,7 +116,7 @@ const MyPageEditProfile = ({ userInfo }: { userInfo: UserDTO }): JSX.Element => 
     return result.data;
   };
 
-  const handleProfileUpdateSuccess = (nickname: string, newImageUrl: string | null) => {
+  const handleProfileUpdateSuccess = async (nickname: string, newImageUrl: string | null) => {
     form.reset({ nickname, newProfileImage: null });
     alert('프로필 수정이 완료되었습니다.');
 
@@ -115,6 +124,8 @@ const MyPageEditProfile = ({ userInfo }: { userInfo: UserDTO }): JSX.Element => 
       ...prev,
       profilePreviewUrl: newImageUrl
     }));
+    setOpen(false);
+    await refresh();
   };
 
   return (
@@ -125,17 +136,26 @@ const MyPageEditProfile = ({ userInfo }: { userInfo: UserDTO }): JSX.Element => 
             <FormItem>
               <FormLabel className="sr-only">프로필 사진</FormLabel>
               <FormControl>
-                <div className="flex flex-col items-center">
-                  <div
-                    className="relative aspect-square w-[6.25rem] cursor-pointer overflow-hidden rounded-full"
-                    onClick={() => fileInputRef.current?.click()}
-                  >
-                    <Image
-                      src={profileState.profilePreviewUrl || '/test.png'}
-                      alt={form.watch('nickname') || '프로필 이미지'}
-                      fill
-                      priority
-                      sizes="30vw"
+                <div className="relative flex flex-col items-center">
+                  <div className="relative">
+                    <div
+                      className="relative aspect-square w-[5.625rem] cursor-pointer overflow-hidden rounded-full"
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      <Image
+                        src={profileState.profilePreviewUrl || DefaultProfile}
+                        alt={form.watch('nickname') || '프로필 이미지'}
+                        fill
+                        priority
+                        sizes="30vw"
+                      />
+                    </div>
+                    <IconButton
+                      alt="프로필 사진 수정하기"
+                      size="sm"
+                      icon="before:bg-add-info-icon"
+                      className="absolute bottom-0 right-0 h-6 w-6 bg-gray-500 hover:bg-gray-500"
+                      onClick={() => fileInputRef.current?.click()}
                     />
                   </div>
                   <Input
@@ -153,24 +173,22 @@ const MyPageEditProfile = ({ userInfo }: { userInfo: UserDTO }): JSX.Element => 
               control={form.control}
               name="nickname"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="space-y-2">
                   <FormLabel>닉네임</FormLabel>
                   <FormControl>
-                    <Input {...field} className="h-auto rounded-[0.5rem] p-[1rem] shadow-none" />
+                    <Input {...field} />
                   </FormControl>
-                  <FormDescription>닉네임은 특수문자 없이 2~8자 사이로 입력해 주세요.</FormDescription>
+                  <FormDescription>한글, 영어, 숫자만 사용해 2~8자로 입력해 주세요</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
 
-          <Button
-            type="submit"
-            disabled={profileState.isUploading}
-            className="fixed bottom-[1.25rem] left-[1.25rem] right-[1.25rem] h-auto bg-[#D9D9D9] px-3 py-4 text-black shadow-none hover:bg-[#D9D9D9]"
-          >
-            {profileState.isUploading ? '변경중' : '수정하기'}
+          <Button type="submit" disabled={profileState.isUploading} className="mt-8 w-full">
+            <Typography as="span" variant="subTitle4">
+              {profileState.isUploading ? '변경중' : '수정하기'}
+            </Typography>
           </Button>
         </form>
       </Form>
