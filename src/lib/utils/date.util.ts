@@ -17,7 +17,9 @@ export const formatAmPmKorean = (dateString: string) => {
 
 export const formatTime = (dateString: string) => {
   const date = new Date(dateString);
-  return `${date.getHours()}:${date.getMinutes()}`;
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${hours}:${minutes}`;
 };
 
 export const getMonthDates = (date: Date): { id: number; weeks: Date[][] }[] => {
