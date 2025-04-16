@@ -18,8 +18,12 @@ const useMealPostModal = (isRecord: boolean = false) => {
   };
 
   const handleCancelClick = async () => {
-    await deleteMealAnalysisDetail();
-    setShowModal(false);
+    try {
+      await deleteMealAnalysisDetail();
+      setShowModal(false);
+    } catch (error) {
+      console.error('임시 데이터 삭제 중 오류 발생:', error);
+    }
   };
 
   return {
