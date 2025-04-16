@@ -245,7 +245,6 @@ const MealPostEditPage = () => {
             </Typography>
             <GlassBackground className="min-h-auto flex w-full flex-col gap-3 rounded-2xl border-none">
               <div className="flex items-start justify-between gap-[0.38rem] before:mt-[0.13rem] before:block before:aspect-square before:w-[1.125rem] before:bg-edit-4-icon before:bg-contain before:content-['']">
-                {/* <img src="/icons/edit_4_line.svg" className="h-[1.125rem] w-[1.125rem]" alt="메모" /> */}
                 <Typography as="span" variant="subTitle3" className="flex-1 !font-medium text-gray-600">
                   음식을 먹을 때 어떤 기분이었는지 간단하게 적어주세요. 식습관을 돌아보는데 큰 도움이 돼요!
                 </Typography>
