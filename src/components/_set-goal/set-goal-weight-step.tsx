@@ -54,7 +54,7 @@ const SetGoalWeightStep = ({ userName, nextStep }: SetGoalWeightStepProps) => {
                     <FormItem>
                       <FormLabel className="sr-only">몸무게</FormLabel>
                       <FormControl>
-                        <Input {...field} type="number" inputMode="numeric" measure="kg" />
+                        <Input {...field} type="number" inputMode="numeric" measure="kg" className="mb-2" />
                       </FormControl>
                       {!hasError && <FormDescription>최대 소수점 1자리수까지 입력할 수 있어요</FormDescription>}
                       <FormMessage />
