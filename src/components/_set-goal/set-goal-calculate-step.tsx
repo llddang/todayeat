@@ -22,7 +22,6 @@ import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
 import { CompleteType } from '@/types/set-goal.type';
 import USER_PHYSICAL_PROFILE_SCHEMA from '@/constants/user-schema.constant';
 import { useUserStore } from '@/lib/hooks/use-user-store';
-import { useRouter } from 'next/navigation';
 import { revalidateFunction } from '@/lib/utils/revalidate.util';
 
 type SetGoalCalculateStepProps = {
@@ -44,7 +43,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStepProps) => {
   const { refresh } = useUserStore();
-  const router = useRouter();
+
   let userPersonalGoal = {
     dailyCaloriesGoal: 0,
     dailyCarbohydrateGoal: 0,
