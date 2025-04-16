@@ -10,8 +10,10 @@ const Layout = ({
   return (
     <>
       <Header />
-      <Suspense>{children}</Suspense>
-      <Footer />
+      <div className="pt-layout">
+        <Suspense>{children}</Suspense>
+        <Footer />
+      </div>
     </>
   );
 };
