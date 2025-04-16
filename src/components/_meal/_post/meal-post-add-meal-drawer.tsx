@@ -41,9 +41,8 @@ const MealPostAddMealDrawer = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          userId: user.id,
           menuName: data.menuName,
-          weight: data.weight ? Number(data.weight) : undefined
+          weight: data.weight ? Number(data.weight) : 0
         })
       });
 
@@ -126,7 +125,18 @@ const MealPostAddMealDrawer = () => {
                     <FormItem className="space-y-2">
                       <FormLabel>먹은 양 (선택)</FormLabel>
                       <FormControl>
-                        <Input {...field} inputMode="numeric" measure="g" placeholder="숫자를 입력할 수 있어요" />
+                        <Input
+                          {...field}
+                          inputMode="numeric"
+                          measure="g"
+                          placeholder="숫자를 입력할 수 있어요"
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (/^\d*$/.test(value)) {
+                              field.onChange(value);
+                            }
+                          }}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
