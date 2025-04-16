@@ -8,14 +8,14 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <>
+    <div className="temp-layout">
       <HeaderWithProfile />
       <div className="py-layout">
         <main>{children}</main>
         <Footer />
       </div>
       <GlobalNavigationBar />
-    </>
+    </div>
   );
 };
 
