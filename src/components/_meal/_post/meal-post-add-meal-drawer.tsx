@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Drawer, DrawerTrigger, DrawerContent, DrawerTitle, DrawerFooter, DrawerClose } from '@/components/ui/drawer';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
@@ -10,6 +10,7 @@ import IconButton from '@/components/commons/icon-button';
 import { Typography } from '@/components/ui/typography';
 import MealPostEditAiLoading from '@/components/_meal/_post/meal-post-add-meal-ai-loading';
 import MealPostAddMealCard from '@/components/_meal/_post/meal-post-add-meal-card';
+import { useUserStore } from '@/lib/hooks/use-user-store';
 
 type FoodFormValues = {
   menuName: string;
@@ -17,7 +18,9 @@ type FoodFormValues = {
 };
 
 const MealPostAddMealDrawer = () => {
-  const [isAnalyzing, setIsAnalyzing] = React.useState(false);
+  const { user } = useUserStore();
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm<FoodFormValues>({
     defaultValues: {
@@ -29,14 +32,58 @@ const MealPostAddMealDrawer = () => {
   const canSubmit = form.watch('menuName')?.trim().length > 0;
 
   const onSubmit = async (data: FoodFormValues) => {
-    setIsAnalyzing(true);
-    console.log('AI 분석 요청', data);
+    try {
+      setIsAnalyzing(true);
 
-    await new Promise((res) => setTimeout(res, 2000));
+      const requestRes = await fetch('/api/meal-post', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userId: user.id,
+          menuName: data.menuName,
+          weight: data.weight ? Number(data.weight) : undefined
+        })
+      });
+
+      if (!requestRes.ok) {
+        const errorData = await requestRes.json();
+        throw new Error(errorData.message || '요청 생성 실패');
+      }
+
+      const requestDetail = await requestRes.json();
+
+      const geminiRes = await fetch('/api/gemini/calories-analysis', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id: requestDetail.id,
+          userId: user.id,
+          menuName: requestDetail.menu_name,
+          weight: requestDetail.weight
+        })
+      });
+
+      if (!geminiRes.ok) {
+        const errorData = await geminiRes.json();
+        throw new Error(errorData.message || 'AI 분석 실패');
+      }
+
+      form.reset();
+      setIsAnalyzing(false);
+      setIsOpen(false);
+    } catch (err) {
+      console.error('에러 발생:', err);
+      setIsAnalyzing(false);
+      alert('AI 분석 중 문제가 발생했어요. 다시 시도해 주세요.');
+    }
   };
 
   return (
-    <Drawer>
+    <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
         <MealPostAddMealCard />
       </DrawerTrigger>
