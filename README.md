@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="프로젝트 소개 이미지" src="" />
+  <img alt="투데잇" src="https://github.com/user-attachments/assets/e6e42c1e-b10e-43fe-bdfd-9ba4535c10e0" />
 </div>
 
 
