@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
-import { useDetectScroll } from '@/lib/hooks/use-detect-scroll';
+import { useDetectIsScrolled } from '@/lib/hooks/use-detect-is-scrolled';
 import ProfileImage from '@/components/commons/profile-image';
 import SITE_MAP from '@/constants/site-map.constant';
 import LOGO from '@/../public/logo.svg';
@@ -11,7 +11,7 @@ import { useUserStore } from '@/lib/hooks/use-user-store';
 
 const HeaderWithProfile = () => {
   const { user } = useUserStore();
-  const isScrolled = useDetectScroll();
+  const isScrolled = useDetectIsScrolled();
 
   return (
     <header

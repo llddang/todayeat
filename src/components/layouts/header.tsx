@@ -2,11 +2,11 @@
 
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
-import { useDetectScroll } from '@/lib/hooks/use-detect-scroll';
+import { useDetectIsScrolled } from '@/lib/hooks/use-detect-is-scrolled';
 import LOGO from '@/../public/logo.svg';
 
 const Header = () => {
-  const isScrolled = useDetectScroll();
+  const isScrolled = useDetectIsScrolled();
 
   return (
     <header

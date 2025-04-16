@@ -1,11 +1,11 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { useDetectScroll } from '@/lib/hooks/use-detect-scroll';
+import { useDetectIsScrolled } from '@/lib/hooks/use-detect-is-scrolled';
 import { useRouter } from 'next/navigation';
 
 const HeaderBackButton = () => {
-  const isScrolled = useDetectScroll();
+  const isScrolled = useDetectIsScrolled();
   const router = useRouter();
 
   return (
