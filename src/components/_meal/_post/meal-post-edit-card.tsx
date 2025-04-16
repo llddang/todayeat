@@ -11,6 +11,7 @@ import {} from '@/types/DTO/meal.dto';
 import { createFoodAnalysisRequestDetail } from '@/lib/apis/meal.api';
 import { FoodAnalysisRequestsDetailDTO } from '@/types/DTO/food_analysis.dto';
 import SetGoalAiLoaderLottie from '@/components/_set-goal/set-goal-ai-loader-lottie';
+import { generateCaloriesAnalysisByText } from '@/lib/apis/gemini.api';
 
 type MealPostEditCardProps = {
   mealDetail: FoodAnalysisRequestsDetailDTO;
@@ -38,7 +39,6 @@ const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
     setIsLoading(true);
     try {
       const input = getValues(`meals.${idx}`);
-      //TODO: Gemini 분석요청 API + supabase 임시테이블 저장(비확실)
       if (!input.menuName) {
         alert('메뉴명은 필수항목 입니다.');
         return;
@@ -46,8 +46,9 @@ const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
       if (!input.weight || !input.calories) {
         alert('무게와 칼로리를 모르실 경우 0을 입력해주세요.');
       }
+      const { menuName, weight } = input;
 
-      await createFoodAnalysisRequestDetail(input);
+      const data = await generateCaloriesAnalysisByText(menuName, weight);
     } catch (error) {
       console.error('식단 분석요청에 실패하였습니다.', error);
 
@@ -99,11 +100,11 @@ const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
         <Button
           variant="primary"
           type="button"
-          disabled={!isChanged || isLoading}
+          disabled
           onClick={handleAnalyze}
           className="flex flex-1 items-center justify-center"
         >
-          다시 분석하기
+          재분석 기능은 추후 개발 예정입니다.
         </Button>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { camelToSnakeObject, snakeToCamelObject } from '@/lib/utils/camelize.uti
 import { getServerClient } from '@/lib/utils/supabase/server.util';
 import {
   CreateFoodAnalysisRequestDetailDTO,
+  FoodAnalysisRequestDetailDTO,
   FoodAnalysisRequestsDetailDTO,
   FoodAnalysisRequestsDetailSnakeCaseDTO,
   FoodAnalysisRequestsDTO

@@ -29,21 +29,27 @@ import { uploadImage } from '@/lib/apis/storage.api';
 import { formatToDateTimeString } from '@/lib/utils/date.util';
 import { createMealWithDetails } from '@/lib/apis/meal.api';
 import { MealDTO } from '@/types/DTO/meal.dto';
+import MealEditCalendar from '@/components/_meal/_edit/meal-edit-calendar';
 
 const MealPostEditPage = () => {
-  const mealFormMethods = useForm<MealFormData>({
+  const mealFormMethods = useForm<MealEditFormDataType>({
     resolver: zodResolver(mealEditFormSchema),
     defaultValues: {
       meals: [],
       mealList: [],
       mealCategory: MealCategory.BREAKFAST,
+      memo: '',
       date: {
         meridiem: '오전',
         hours: '09',
         minutes: '00'
-      }
+      },
+      day: new Date()
     }
   });
+
+  const day = mealFormMethods.getValues('day');
+  const handleDayChange = (day: Date) => mealFormMethods.setValue('day', date);
 
   useEffect(() => {
     const fetchFoodAnalysisRequests = async () => {
@@ -70,16 +76,17 @@ const MealPostEditPage = () => {
   }, []);
 
   const [foodImages, setFoodImages] = useState<string[]>([]);
-  const [tempTime, setTempTime] = useState<MealFormData['date']>({
+  const [tempTime, setTempTime] = useState<MealEditFormDataType['date']>({
     meridiem: '오전',
     hours: '12',
     minutes: '00'
   });
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const date = mealFormMethods.watch('date');
   const mealList = mealFormMethods.watch('mealList');
 
-  const onSubmit = async (data: MealFormData) => {
+  const onSubmit = async (data: MealEditFormDataType) => {
     const files = await Promise.all(foodImages.map((url, idx) => urlToFile(url, idx)));
     const imagesFormData = new FormData();
 
@@ -114,7 +121,7 @@ const MealPostEditPage = () => {
     );
   };
   return (
-    <div className="w-[450px]">
+    <div className="px-4 pb-4 pt-2">
       <FormProvider {...mealFormMethods}>
         <form
           onSubmit={mealFormMethods.handleSubmit(onSubmit)}
@@ -126,7 +133,8 @@ const MealPostEditPage = () => {
               <MealPostEditCard key={idx} idx={idx} mealDetail={meal} />
             ))}
           </div>
-          <section className="my-10 flex w-full flex-col items-start justify-center gap-3 p-4">
+
+          <section className="my-10 flex w-full flex-col items-start justify-center gap-3">
             <Typography as="h3" variant="body1">
               식사 시간
             </Typography>
@@ -149,60 +157,68 @@ const MealPostEditPage = () => {
                   );
                 })}
               </div>
-
-              <Drawer
-                onOpenChange={(open) => {
-                  if (open) {
-                    const currenTime = mealFormMethods.getValues('date');
-                    setTempTime(currenTime);
+              <div className="flex w-full justify-between">
+                <MealEditCalendar date={day} onDateChange={handleDayChange} />
+                <Drawer
+                  onOpenChange={(open) => {
+                    if (open) {
+                      const currenTime = mealFormMethods.getValues('date');
+                      setTempTime(currenTime);
+                    }
                   }
-                }}
-              >
-                <DrawerTrigger>{`${date.meridiem} ${date.hours}:${date.minutes}`}</DrawerTrigger>
-                <DrawerContent>
-                  <DrawerTitle className="flex items-center gap-4 self-stretch pl-1">
-                    <Typography as="span" className="flex-1" variant="subTitle2">
-                      식사 시간 설정
-                    </Typography>
-                    <DrawerDescription className="sr-only">식사시간을 설정 할 수 있습니다.</DrawerDescription>
-                    <DrawerClose asChild>
-                      <IconButton icon="before:bg-close-line-icon" alt="닫기" />
-                    </DrawerClose>
-                  </DrawerTitle>
+                >
+                  <DrawerTrigger className="flex min-w-40 items-center justify-between gap-2 rounded-lg border-[1px] border-gray-300 bg-white py-[0.81rem] pl-4 pr-3 after:block after:aspect-square after:w-[1.375rem] after:bg-down-line-gray-600-icon after:bg-center after:content-['']">
+                    <Typography
+                      as="span"
+                      variant="body1"
+                    >{`${date.meridiem} ${date.hours}:${date.minutes}`}</Typography>
+                  </DrawerTrigger>
 
-                  <Picker
-                    data-test="test"
-                    itemHeight={48}
-                    value={tempTime}
-                    onChange={(changedTime) => setTempTime(changedTime)}
-                    wheelMode="natural"
-                    className="w-full"
-                  >
-                    {(Object.keys(selections) as (keyof typeof selections)[]).map((name) => (
-                      <Picker.Column key={name} name={name}>
-                        {selections[name].map((option) => (
-                          <Picker.Item key={option} value={option}>
-                            {option}
-                          </Picker.Item>
-                        ))}
-                      </Picker.Column>
-                    ))}
-                  </Picker>
+                  <DrawerContent>
+                    <DrawerTitle className="flex items-center gap-4 self-stretch pl-1">
+                      <Typography as="span" className="flex-1" variant="subTitle2">
+                        식사 시간 설정
+                      </Typography>
+                      <DrawerDescription className="sr-only">식사시간을 설정 할 수 있습니다.</DrawerDescription>
+                      <DrawerClose asChild>
+                        <IconButton icon="before:bg-close-line-icon" alt="닫기" />
+                      </DrawerClose>
+                    </DrawerTitle>
 
-                  <DrawerFooter>
-                    <DrawerClose asChild>
-                      <Button
-                        type="button"
-                        onClick={() => {
-                          mealFormMethods.setValue('date', tempTime);
-                        }}
-                      >
-                        설정
-                      </Button>
-                    </DrawerClose>
-                  </DrawerFooter>
-                </DrawerContent>
-              </Drawer>
+                    <Picker
+                      data-test="test"
+                      itemHeight={48}
+                      value={tempTime}
+                      onChange={(changedTime) => setTempTime(changedTime)}
+                      wheelMode="natural"
+                      className="w-full"
+                    >
+                      {(Object.keys(selections) as (keyof typeof selections)[]).map((name) => (
+                        <Picker.Column key={name} name={name}>
+                          {selections[name].map((option) => (
+                            <Picker.Item key={option} value={option}>
+                              {option}
+                            </Picker.Item>
+                          ))}
+                        </Picker.Column>
+                      ))}
+                    </Picker>
+
+                    <DrawerFooter>
+                      <DrawerClose asChild>
+                        <Button
+                          type="button"
+                          onClick={() => {
+                            mealFormMethods.setValue('date', tempTime);
+                          }}
+                        >
+                          설정
+                        </Button>
+                      </DrawerClose>
+                    </DrawerFooter>
+                  </DrawerContent>
+                </Drawer>
+              </div>
             </div>
           </section>
 
@@ -212,8 +228,8 @@ const MealPostEditPage = () => {
             </Typography>
             <div className="flex w-full flex-col gap-3 rounded-2xl bg-white/50 p-4 backdrop-blur-[50px]">
               <div className="flex items-start gap-1">
-                <img src="/icons/edit_4_line.svg" className="h-[1.125rem] w-[1.125rem]" alt="메모" />
-                <Typography as="span" variant="subTitle3" className="text-gray-600">
+                <img src="/icons/edit_4_line.svg" className="h-[1.125rem] w-[1.125rem] align-baseline" alt="메모" />
+                <Typography as="span" variant="subTitle3" className="!font-medium text-gray-600">
                   음식을 먹을 때 어떤 기분이었는지 간단하게 적어주세요. 식습관을 돌아보는데 큰 도움이 돼요!
                 </Typography>
               </div>
@@ -234,13 +250,13 @@ const MealPostEditPage = () => {
 
 export default MealPostEditPage;
 
-export const mealInputSchema = z.object({
+const mealInputSchema = z.object({
   menuName: z.string(),
   weight: z.coerce.number(),
   calories: z.coerce.number()
 });
 
-export const mealListSchema = z.object({
+const mealListSchema = z.object({
   userId: z.string(),
   menuName: z.string(),
   weight: z.coerce.number(),
@@ -250,7 +266,7 @@ export const mealListSchema = z.object({
   fat: z.number()
 });
 
-export const mealEditFormSchema = z.object({
+const mealEditFormSchema = z.object({
   meals: z.array(mealInputSchema),
   mealList: z.array(mealListSchema),
   mealCategory: z.nativeEnum(MealCategory),
@@ -259,12 +275,11 @@ export const mealEditFormSchema = z.object({
     hours: z.string(),
     minutes: z.string()
   }),
+  day: z.date(),
   memo: z.string().max(200, '').optional()
 });
 
-export type MealFormData = z.infer<typeof mealEditFormSchema>;
-export type mealInputSchema = z.infer<typeof mealInputSchema>;
-export type mealListSchema = z.infer<typeof mealListSchema>;
+export type MealEditFormDataType = z.infer<typeof mealEditFormSchema>;
 const MEAL_CATEGORY = [
   {
     value: MealCategory.BREAKFAST,

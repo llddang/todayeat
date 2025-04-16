@@ -1,4 +1,4 @@
-import { MealFormData } from '@/app/(client)/meal/post/edit/page';
+import { MealEditFormDataType } from '@/app/(client)/meal/post/edit/page';
 import { CALENDAR_RANGE_OFFSET, DAY, WEEK } from '@/constants/calendar.constant';
 
 export const isSameDate = (d1: Date, d2: Date): boolean => formatDateWithDash(d1) === formatDateWithDash(d2);
@@ -103,7 +103,7 @@ export const formatDateWithDash = (date: Date): string => {
   return formattedDate;
 };
 
-export const formatToDateTimeString = (dateObj: MealFormData['date'], baseDate: Date = new Date()): string => {
+export const formatToDateTimeString = (dateObj: MealEditFormDataType['date'], baseDate: Date = new Date()): string => {
   const { meridiem, hours, minutes } = dateObj;
 
   let hour = parseInt(hours, 10);
