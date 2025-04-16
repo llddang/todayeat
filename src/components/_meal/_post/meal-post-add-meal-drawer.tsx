@@ -17,10 +17,6 @@ type FoodFormValues = {
   weight: string;
 };
 
-type MealPostAddMealDrawerProps = {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-};
 
 const MealPostAddMealDrawer = () => {
   const { user } = useUserStore();
