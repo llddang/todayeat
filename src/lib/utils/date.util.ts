@@ -2,6 +2,14 @@ import { CALENDAR_RANGE_OFFSET, DAY, WEEK } from '@/constants/calendar.constant'
 
 export const isSameDate = (d1: Date, d2: Date): boolean => formatDateWithDash(d1) === formatDateWithDash(d2);
 
+export const getFirstDayInMonth = (date: Date[][]) => {
+  return date[0][0];
+};
+
+export const formatDateCaption = (date: Date) => {
+  return `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
+};
+
 export const getMonthDates = (date: Date): { id: number; weeks: Date[][] }[] => {
   const baseYear = date.getFullYear();
   const baseMonth = date.getMonth();
