@@ -165,8 +165,7 @@ const config: Config = {
         'chart-fill-icon': 'url(/icons/chart_fill.svg)',
         'chart-line-icon': 'url(/icons/chart_line.svg)',
         'kakao-logo': 'url(/kakao-logo.svg)',
-        'google-logo': 'url(/google-logo.svg)'
-        'chart-line-icon': 'url(/icons/chart_line.svg)',
+        'google-logo': 'url(/google-logo.svg)',
         'complete-confetti': 'url(/illustrations/complete-confetti.svg)'
       },
       letterSpacing: {
