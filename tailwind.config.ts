@@ -177,7 +177,8 @@ const config: Config = {
         'complete-confetti': 'url(/illustrations/complete-confetti.svg)',
         'edit-4-icon': 'url(/icons/edit-4-line.svg)',
         'default-profile': 'url(/illustrations/default_profile.svg)',
-        'back-line-icon': 'url(/icons/back_line.svg)'
+        'back-line-icon': 'url(/icons/back_line.svg)',
+        'add-line-icon': 'url(/icons/add_line.svg)'
       },
       letterSpacing: {
         snug: '-0.0175rem'
