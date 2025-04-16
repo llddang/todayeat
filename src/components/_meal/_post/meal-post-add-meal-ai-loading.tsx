@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import { Typography } from '@/components/ui/typography';
 
+// TODO - 공통 컴포넌트로 분리하기
 const SetGoalAiLoaderLottie = dynamic(() => import('@/components/_set-goal/set-goal-ai-loader-lottie'), {
   ssr: false
 });
