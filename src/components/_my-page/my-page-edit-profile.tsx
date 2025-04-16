@@ -168,7 +168,7 @@ const MyPageEditProfile = ({ userInfo }: { userInfo: UserDTO }): JSX.Element => 
           <Button
             type="submit"
             disabled={profileState.isUploading}
-            className="fixed bottom-[1.25rem] left-[1.25rem] right-[1.25rem] h-auto bg-[#D9D9D9] px-[0.75rem] py-[1rem] text-black shadow-none hover:bg-[#D9D9D9]"
+            className="fixed bottom-[1.25rem] left-[1.25rem] right-[1.25rem] h-auto bg-[#D9D9D9] px-3 py-4 text-black shadow-none hover:bg-[#D9D9D9]"
           >
             {profileState.isUploading ? '변경중' : '수정하기'}
           </Button>
