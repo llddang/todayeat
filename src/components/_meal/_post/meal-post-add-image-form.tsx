@@ -17,6 +17,7 @@ const MealPostAddImageForm = ({ onLoadingChange }: MealPostAddImageFormProps): J
   const handleAnalyzeSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     if (images.length === 0) {
+      alert('이미지를 최소 1개 이상 선택해 주세요.');
       return;
     }
 
@@ -36,14 +37,15 @@ const MealPostAddImageForm = ({ onLoadingChange }: MealPostAddImageFormProps): J
       });
 
       if (!res.ok) {
-        return alert('분석에 실패하였습니다. 잠시후 다시 시도해주세요');
+        throw new Error('분석에 실패하였습니다. 잠시후 다시 시도해주세요');
       }
+
+      router.replace(SITE_MAP.MEAL_POST_EDIT);
     } catch (err) {
       console.error(err);
       return alert('분석중 오류가 발생했습니다. ');
     } finally {
       onLoadingChange(false);
-      router.replace(SITE_MAP.MEAL_POST_EDIT);
     }
   };
 

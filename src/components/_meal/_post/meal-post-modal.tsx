@@ -27,11 +27,11 @@ const MealPostModal = ({ open, onOpenChange, onApproveClickHandler, onCancelClic
           <AlertDialogDescription>등록하던 정보가 있습니다. 사용하시겠습니까?</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
+          <Button variant="primary" onClick={onApproveClickHandler}>
+            예
+          </Button>
           <Button variant="secondary" onClick={onCancelClickHandler}>
             아니요
-          </Button>
-          <Button variant="secondary" onClick={onApproveClickHandler}>
-            예
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
