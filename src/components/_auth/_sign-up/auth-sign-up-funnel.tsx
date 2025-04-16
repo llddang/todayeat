@@ -21,12 +21,14 @@ const AuthSignUpFunnel = () => {
 
   return (
     <Funnel
-      step1={({ setStep }) => <AuthSignUpStepEmail nextStep={(email: string) => setStep('step2', { email })} />}
+      step1={({ data, setStep }) => (
+        <AuthSignUpStepEmail data={data} nextStep={(email: string) => setStep('step2', { email })} />
+      )}
       step2={({ setStep }) => (
         <AuthSignUpStepPassword nextStep={(password: string) => setStep('step3', { password })} />
       )}
-      step3={({ data, setStep }) => (
-        <AuthSignUpStepNickname data={data} nextStep={(nickname: string) => setStep('complete', { nickname })} />
+      step3={({ data, setStep, clearFunnelData }) => (
+        <AuthSignUpStepNickname data={data} nextStep={() => setStep('complete')} clear={clearFunnelData} />
       )}
       complete={() => <AuthSignUpStepComplete />}
     />
@@ -38,7 +40,7 @@ const signUpValidateStep = {
   step1: z.object({}),
   step2: SIGN_UP_FUNNEL_SCHEMA.pick({ email: true }),
   step3: SIGN_UP_FUNNEL_SCHEMA.pick({ email: true, password: true }),
-  complete: SIGN_UP_FUNNEL_SCHEMA
+  complete: z.object({})
 };
 
 const signUpValidateFn = {

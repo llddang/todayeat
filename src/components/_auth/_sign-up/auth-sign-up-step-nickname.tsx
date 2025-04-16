@@ -20,17 +20,18 @@ const signUpEmailDefault: SignUpNicknameSchemaType = {
 
 type AuthSignUpStepNicknameProps = {
   data: SignUpStep3Type;
-  nextStep: (nickname: string) => void;
+  nextStep: () => void;
+  clear: () => void;
 };
 
-const AuthSignUpStepNickname = ({ data: { email, password }, nextStep }: AuthSignUpStepNicknameProps) => {
+const AuthSignUpStepNickname = ({ data, nextStep, clear }: AuthSignUpStepNicknameProps) => {
   const [isPending, setIsPending] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<SignUpNicknameSchemaType>({
     mode: 'onBlur',
     resolver: zodResolver(signUpNicknameSchema),
-    defaultValues: signUpEmailDefault
+    defaultValues: { nickname: data.nickname ?? '' }
   });
 
   const nickname = form.watch('nickname');
@@ -44,10 +45,11 @@ const AuthSignUpStepNickname = ({ data: { email, password }, nextStep }: AuthSig
 
   const onSubmit = async ({ nickname }: SignUpNicknameSchemaType) => {
     setIsPending(true);
-    const { error } = await signUp(email, password, nickname);
+    const { error } = await signUp(data.email, data.password, nickname);
     setIsPending(false);
     if (error) return alert(`${error.action} ${error.message}`);
-    nextStep(nickname);
+    nextStep();
+    clear();
   };
 
   return (

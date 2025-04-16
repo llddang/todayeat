@@ -26,7 +26,7 @@ export type SignUpStep3Type = {
 };
 
 export type SignUpCompleteType = {
-  email: string;
-  password: string;
-  nickname: string;
+  email?: string;
+  password?: string;
+  nickname?: string;
 };

@@ -8,27 +8,25 @@ import { z } from 'zod';
 import FormSchema from '@/constants/form-schema.constant';
 import { useForm } from 'react-hook-form';
 import { checkEmailExists } from '@/lib/apis/auth-server.api';
+import { SignUpStep1Type } from '@/types/sign-up-funnel-type';
 
 const signUpEmailSchema = z.object({
   email: FormSchema.EMAIL_SCHEMA
 });
 type SignUpEmailSchemaType = z.infer<typeof signUpEmailSchema>;
-const signUpEmailDefault: SignUpEmailSchemaType = {
-  email: ''
-};
-
 type AuthSignUpStepEmailProps = {
+  data: SignUpStep1Type;
   nextStep: (email: string) => void;
 };
 
-const AuthSignUpStepEmail = ({ nextStep }: AuthSignUpStepEmailProps) => {
+const AuthSignUpStepEmail = ({ data, nextStep }: AuthSignUpStepEmailProps) => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [isCheckingEmail, setIsCheckingEmail] = useState(false);
 
   const form = useForm<SignUpEmailSchemaType>({
     mode: 'onBlur',
     resolver: zodResolver(signUpEmailSchema),
-    defaultValues: signUpEmailDefault
+    defaultValues: { email: data.email ?? '' }
   });
 
   const emailState = form.getFieldState('email');
