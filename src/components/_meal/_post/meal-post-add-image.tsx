@@ -1,13 +1,13 @@
+'use client';
 import { useState } from 'react';
 import MealPostAddImageButton from '@/components/_meal/_post/meal-post-add-image-button';
 import MealPostAddImagePreviewGallery from '@/components/_meal/_post/meal-post-add-image-preview-gallery';
 
 type MealPostAddImageProps = {
-  initialImages?: File[];
   onImagesChange?: (files: File[]) => void;
 };
-const MealPostAddImage = ({ initialImages = [], onImagesChange }: MealPostAddImageProps) => {
-  const [imageFiles, setImageFiles] = useState<File[]>(initialImages);
+const MealPostAddImage = ({ onImagesChange }: MealPostAddImageProps) => {
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
 
   const handleImageFilesChange = (newFiles: File[]) => {
     setImageFiles(newFiles);

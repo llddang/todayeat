@@ -5,9 +5,10 @@ const SITE_MAP = {
   FIND_PASSWORD: '/find-password',
   UPDATE_PASSWORD: '/update-password',
   CHANGE_PASSWORD: '/change-password',
-  MEAL_POST: '/post',
+  MEAL_POST: '/meal/post',
   MY_PAGE: '/my-page',
   REPORT: '/report',
+  MEAL_POST_EDIT: '/meal/post/edit',
   SET_GOAL: '/my-page/set-goal'
 } as const;
 export default SITE_MAP;
