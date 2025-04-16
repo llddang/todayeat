@@ -28,7 +28,7 @@ const HomeContent = () => {
   return (
     <GlassBackground className="flex min-h-0 flex-col gap-4 rounded-[2rem] pb-8 pt-6">
       <HomeAiFeedbackText nutritionData={nutrient} nutritionGoal={user.personalInfo} />
-      {(!user.personalInfo || meals.length === 0) && (
+      {!user.personalInfo && (
         <CtaExampleFeedbackBanner
           title="현재는 예시 피드백이에요"
           description={
