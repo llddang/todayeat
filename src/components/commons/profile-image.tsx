@@ -2,7 +2,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import DEFAULT_PROFILE from '@/../public/illustrations/default_profile.svg';
 import Image from 'next/image';
 
-const profileWrapperStyle = cva('relative overflow-hidden rounded-full', {
+const profileImageVariants = cva('relative overflow-hidden rounded-full', {
   variants: {
     size: {
       sm: 'w-9 h-9',
@@ -15,7 +15,7 @@ const profileWrapperStyle = cva('relative overflow-hidden rounded-full', {
   }
 });
 
-type ProfileImageProps = VariantProps<typeof profileWrapperStyle> & {
+type ProfileImageProps = VariantProps<typeof profileImageVariants> & {
   src?: string;
 };
 
@@ -23,7 +23,7 @@ const ProfileImage = ({ src, size }: ProfileImageProps) => {
   const imageUrl = src || DEFAULT_PROFILE;
 
   return (
-    <div className={profileWrapperStyle({ size })}>
+    <div className={profileImageVariants({ size })}>
       <Image src={imageUrl} alt="프로필" fill className="object-cover" />
     </div>
   );
