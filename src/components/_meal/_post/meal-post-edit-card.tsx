@@ -1,6 +1,6 @@
 'use client';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import MealPostEditInputField from './meal-post-edit-input-field';
 import MealPostEditCardTitle from './meal-post-edit-card-title';
 import MacronutrientBox from '@/components/commons/macronutrient-box';
@@ -8,10 +8,8 @@ import IconButton from '@/components/commons/icon-button';
 import { Button } from '@/components/ui/button';
 import { NutritionEnum, MeasurementUnitEnum } from '@/types/nutrition.type';
 import {} from '@/types/DTO/meal.dto';
-import { createFoodAnalysisRequestDetail } from '@/lib/apis/meal.api';
 import { FoodAnalysisRequestsDetailDTO } from '@/types/DTO/food_analysis.dto';
 import SetGoalAiLoaderLottie from '@/components/_set-goal/set-goal-ai-loader-lottie';
-import { generateCaloriesAnalysisByText } from '@/lib/apis/gemini.api';
 
 type MealPostEditCardProps = {
   mealDetail: FoodAnalysisRequestsDetailDTO;
@@ -19,21 +17,23 @@ type MealPostEditCardProps = {
 };
 
 const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
-  const { control, getValues, watch } = useFormContext();
+  const { control, getValues } = useFormContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const { remove: mealListRemove } = useFieldArray({ control, name: 'mealList' });
   const { remove: mealsRemove } = useFieldArray({ control, name: 'meals' });
-  const menuName = watch(`meals.${idx}.menuName`);
-  const weight = watch(`meals.${idx}.weight`);
 
-  const isChanged = useMemo(() => {
-    const isMenuChanged = menuName !== mealDetail.menuName;
-    const isWeightChanged = weight !== mealDetail.weight;
+  // TODO: 카드에서API 분석요청
+  // const menuName = watch(`meals.${idx}.menuName`);
+  // const weight = watch(`meals.${idx}.weight`);
 
-    const isAnalyzed = isMenuChanged || isWeightChanged;
-    return isAnalyzed;
-  }, [weight, menuName, mealDetail]);
+  // const isChanged = useMemo(() => {
+  //   const isMenuChanged = menuName !== mealDetail.menuName;
+  //   const isWeightChanged = weight !== mealDetail.weight;
+
+  //   const isAnalyzed = isMenuChanged || isWeightChanged;
+  //   return isAnalyzed;
+  // }, [weight, menuName, mealDetail]);
 
   const handleAnalyze = async () => {
     setIsLoading(true);
@@ -46,9 +46,6 @@ const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
       if (!input.weight || !input.calories) {
         alert('무게와 칼로리를 모르실 경우 0을 입력해주세요.');
       }
-      const { menuName, weight } = input;
-
-      const data = await generateCaloriesAnalysisByText(menuName, weight);
     } catch (error) {
       console.error('식단 분석요청에 실패하였습니다.', error);
 
