@@ -1,12 +1,17 @@
 import { ChangeEvent, useRef } from 'react';
 import { getFileId } from '@/lib/utils/file.util';
 import { MAX_FILE_SIZE, MAX_MEAL_IMAGE_COUNT } from '@/constants/meal.constant';
+import { useUserStore } from '@/lib/hooks/use-user-store';
+import { useRouter } from 'next/navigation';
+import SITE_MAP from '@/constants/site-map.constant';
 
 type MealPostAddImageButtonProps = {
   imageFiles: File[];
   handleImageFilesChange: (files: File[]) => void;
 };
 const MealPostAddImageButton = ({ imageFiles, handleImageFilesChange }: MealPostAddImageButtonProps) => {
+  const { user } = useUserStore();
+  const router = useRouter();
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const handleInputFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +50,12 @@ const MealPostAddImageButton = ({ imageFiles, handleImageFilesChange }: MealPost
       <button
         onClick={(e) => {
           e.preventDefault();
+          // TODO: 수정 필요!!!
+          if (!user.id) {
+            alert('로그인이 필요한 서비스입니다.');
+            router.push(SITE_MAP.SIGN_IN);
+            return;
+          }
           inputFileRef.current?.click();
         }}
         className="relative flex w-full flex-col items-center gap-4 rounded-2xl bg-white px-4 py-7 before:h-10 before:w-10 before:bg-image-upload-illustration before:bg-contain before:bg-no-repeat before:content-['']"
