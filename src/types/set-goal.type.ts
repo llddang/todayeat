@@ -1,6 +1,6 @@
 import { ActivityLevelType, GenderType, PurposeType } from '@/types/user-personal-info.type';
 
-export type Step1Type = {
+export type SetGoalStep1Type = {
   purpose?: PurposeType;
   gender?: GenderType;
   age?: number;
@@ -8,7 +8,7 @@ export type Step1Type = {
   weight?: number;
   activityLevel?: ActivityLevelType;
 };
-export type Step2Type = {
+export type SetGoalStep2Type = {
   purpose: PurposeType;
   gender?: GenderType;
   age?: number;
@@ -16,7 +16,7 @@ export type Step2Type = {
   weight?: number;
   activityLevel?: ActivityLevelType;
 };
-export type Step3Type = {
+export type SetGoalStep3Type = {
   purpose: PurposeType;
   gender: GenderType;
   age?: number;
@@ -24,7 +24,7 @@ export type Step3Type = {
   weight?: number;
   activityLevel?: ActivityLevelType;
 };
-export type Step4Type = {
+export type SetGoalStep4Type = {
   purpose: PurposeType;
   gender: GenderType;
   age: number;
@@ -32,7 +32,7 @@ export type Step4Type = {
   weight?: number;
   activityLevel?: ActivityLevelType;
 };
-export type Step5Type = {
+export type SetGoalStep5Type = {
   purpose: PurposeType;
   gender: GenderType;
   age: number;
@@ -40,7 +40,7 @@ export type Step5Type = {
   weight?: number;
   activityLevel?: ActivityLevelType;
 };
-export type Step6Type = {
+export type SetGoalStep6Type = {
   purpose: PurposeType;
   gender: GenderType;
   age: number;

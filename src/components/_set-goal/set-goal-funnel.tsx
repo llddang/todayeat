@@ -13,12 +13,12 @@ import useFunnel from '@/lib/hooks/use-funnel';
 import {
   CompleteType,
   FunnelStep,
-  Step1Type,
-  Step2Type,
-  Step3Type,
-  Step4Type,
-  Step5Type,
-  Step6Type
+  SetGoalStep1Type,
+  SetGoalStep2Type,
+  SetGoalStep3Type,
+  SetGoalStep4Type,
+  SetGoalStep5Type,
+  SetGoalStep6Type
 } from '@/types/set-goal.type';
 import { ActivityLevelType, GenderType, PurposeType } from '@/types/user-personal-info.type';
 import { SET_GOAL_FUNNEL_SCHEMA } from '@/constants/funnel-schema.constant';
@@ -34,14 +34,7 @@ const validateStep = {
   step4: SET_GOAL_FUNNEL_SCHEMA.pick({ purpose: true, gender: true, age: true }),
   step5: SET_GOAL_FUNNEL_SCHEMA.pick({ purpose: true, gender: true, age: true, height: true }),
   step6: SET_GOAL_FUNNEL_SCHEMA.pick({ purpose: true, gender: true, age: true, height: true, weight: true }),
-  step7: SET_GOAL_FUNNEL_SCHEMA.pick({
-    purpose: true,
-    gender: true,
-    age: true,
-    height: true,
-    weight: true,
-    activityLevel: true
-  }),
+  step7: SET_GOAL_FUNNEL_SCHEMA,
   step8: z.object({}),
   complete: SET_GOAL_FUNNEL_SCHEMA
 };
@@ -49,12 +42,12 @@ const validateStep = {
 const SetGoalFunnel = ({ userName }: SetGoalFunnerProps) => {
   const Funnel = useFunnel<
     {
-      step1: Step1Type;
-      step2: Step2Type;
-      step3: Step3Type;
-      step4: Step4Type;
-      step5: Step5Type;
-      step6: Step6Type;
+      step1: SetGoalStep1Type;
+      step2: SetGoalStep2Type;
+      step3: SetGoalStep3Type;
+      step4: SetGoalStep4Type;
+      step5: SetGoalStep5Type;
+      step6: SetGoalStep6Type;
       step7: CompleteType;
       step8: CompleteType;
       complete: CompleteType;
