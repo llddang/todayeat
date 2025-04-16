@@ -14,7 +14,7 @@ export const POST = async (req: Request) => {
       });
     }
 
-    if (weight !== undefined && (typeof weight !== 'number' || weight <= 0)) {
+    if (weight !== undefined && (typeof weight !== 'number' || weight < 0)) {
       return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.INVALID_INPUT), {
         status: AI_ERROR_MESSAGE.INVALID_INPUT.status
       });

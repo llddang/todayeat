@@ -1,5 +1,6 @@
-import Header from '@/components/layouts/header';
 import GlobalNavigationBar from '@/components/layouts/global-navigation-bar';
+import HeaderWithProfile from '@/components/layouts/header-with-profile';
+import Footer from '@/components/commons/footer';
 
 const Layout = ({
   children
@@ -7,11 +8,14 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <>
-      <Header />
-      {children}
+    <div className="temp-layout">
+      <HeaderWithProfile />
+      <div className="p-layout">
+        <main>{children}</main>
+        <Footer />
+      </div>
       <GlobalNavigationBar />
-    </>
+    </div>
   );
 };
 

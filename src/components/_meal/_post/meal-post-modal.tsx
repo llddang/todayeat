@@ -16,7 +16,7 @@ type MealPostModalProps = {
   onApproveClickHandler: () => void;
   onCancelClickHandler: () => void;
 };
-
+// TODO: 임시 디자인
 const MealPostModal = ({ open, onOpenChange, onApproveClickHandler, onCancelClickHandler }: MealPostModalProps) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
