@@ -4,13 +4,17 @@ import AuthSignInWithKakaoButton from '@/components/_auth/_sign-in/auth-sign-in-
 import { Typography } from '@/components/ui/typography';
 import Image from 'next/image';
 import LOGO from '@/../public/logo.svg';
+import Link from 'next/link';
+import SITE_MAP from '@/constants/site-map.constant';
 
 const SignInPage = () => {
   return (
     <section>
       <div className="gap flex flex-col items-center gap-2 px-4 pb-7 pt-2">
         <h2>
-          <Image src={LOGO} alt="투데잇 로고" className="h-[38px] w-[137px]" />
+          <Link href={SITE_MAP.HOME}>
+            <Image src={LOGO} alt="투데잇 로고" className="h-[38px] w-[137px]" />
+          </Link>
         </h2>
         <Typography variant="body2" className="text-gray-700">
           사진 한 장으로 완성되는 식단 기록
