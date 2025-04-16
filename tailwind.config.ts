@@ -140,6 +140,9 @@ const config: Config = {
       zIndex: {
         background: '-10'
       },
+      padding: {
+        header: '4rem'
+      },
       backgroundImage: {
         'info-icon': "url('/icons/information_line.svg')",
         'right-line-gray-400-icon': "url('/icons/right-line-gray-400.svg')",
@@ -161,7 +164,6 @@ const config: Config = {
         'chart-fill-icon': 'url(/icons/chart_fill.svg)',
         'chart-line-icon': 'url(/icons/chart_line.svg)',
         'default-profile': 'url(/illustrations/default_profile.svg)',
-        'todayeat-logo': 'url(/illustrations/logo.svg)',
         'back-line-icon': 'url(/icons/back_line.svg)'
       },
       letterSpacing: {
