@@ -1,6 +1,6 @@
-import AuthSignInForm from '@/components/_auth/auth-sign-in-form';
-import AuthSignInWithGoogleButton from '@/components/_auth/auth-sign-in-with-google-button';
-import AuthSignInWithKakaoButton from '@/components/_auth/auth-sign-in-with-kakao-button';
+import AuthSignInForm from '@/components/_auth/_sign-in/auth-sign-in-form';
+import AuthSignInWithGoogleButton from '@/components/_auth/_sign-in/auth-sign-in-with-google-button';
+import AuthSignInWithKakaoButton from '@/components/_auth/_sign-in/auth-sign-in-with-kakao-button';
 import { Typography } from '@/components/ui/typography';
 import Image from 'next/image';
 import LOGO from '@/../public/logo.svg';
