@@ -1,9 +1,10 @@
 import SITE_MAP from '@/constants/site-map.constant';
 import Link from 'next/link';
+import { ReactNode } from 'react';
 
 type CtaExampleFeedbackBannerProps = {
   title: string;
-  description: string;
+  description: ReactNode;
 };
 
 const CtaExampleFeedbackBanner = ({ title, description }: CtaExampleFeedbackBannerProps) => {
