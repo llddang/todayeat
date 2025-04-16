@@ -110,7 +110,7 @@ const MealPostAddMealDrawer = () => {
                   control={form.control}
                   name="menuName"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="space-y-2">
                       <FormLabel>먹은 음식</FormLabel>
                       <FormControl>
                         <Input placeholder="예시) 김치찌개, 닭가슴살, 크림파스타" {...field} />
@@ -123,7 +123,7 @@ const MealPostAddMealDrawer = () => {
                   control={form.control}
                   name="weight"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="space-y-2">
                       <FormLabel>먹은 양 (선택)</FormLabel>
                       <FormControl>
                         <Input {...field} inputMode="numeric" measure="g" placeholder="숫자를 입력할 수 있어요" />
