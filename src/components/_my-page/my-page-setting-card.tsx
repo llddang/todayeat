@@ -11,9 +11,9 @@ const MyPageSettingCard = () => {
   const { signOut } = userStore();
 
   const handleLogout = async () => {
+    alert('로그아웃 되었습니다.');
     await signOut();
     router.push(SITE_MAP.HOME);
-    alert('로그아웃 되었습니다.');
   };
 
   return (
