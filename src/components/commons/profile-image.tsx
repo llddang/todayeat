@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from 'class-variance-authority';
-import DEFAULT_PROFILE from '@/../public/illustrations/default_profile.svg';
+import ILLUST_PROFILE from '@/../public/illustrations/illust_profile.svg';
 import Image from 'next/image';
 
 const profileImageVariants = cva('relative overflow-hidden rounded-full', {
@@ -20,7 +20,7 @@ type ProfileImageProps = VariantProps<typeof profileImageVariants> & {
 };
 
 const ProfileImage = ({ src, size }: ProfileImageProps) => {
-  const imageUrl = src || DEFAULT_PROFILE;
+  const imageUrl = src || ILLUST_PROFILE;
 
   return (
     <div className={profileImageVariants({ size })}>
