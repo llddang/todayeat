@@ -17,7 +17,7 @@ const MyPageUserPhysicalInfoCard = ({ userInfo }: MyPageUserPhysicalInfoCardProp
 
   return (
     <Accordion type="single" collapsible className="rounded-2xl bg-white px-4 py-4">
-      <AccordionItem value="item-1 border-none">
+      <AccordionItem value="item-1">
         <AccordionTrigger className="px-1 py-[0.56rem]">
           <Typography as="h3" variant="subTitle2">
             신체 정보
