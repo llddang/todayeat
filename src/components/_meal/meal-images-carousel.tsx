@@ -62,7 +62,7 @@ const Pagination = ({
   onClick: (index: number) => void;
 }) => {
   return (
-    <nav className="carousel-bottom-area absolute bottom-[0.6rem] left-1/2 flex -translate-x-1/2 gap-2 rounded-[3.125rem] bg-[#BFBFBF44] px-[0.75rem] py-[0.5rem] backdrop-blur-xl">
+    <nav className="carousel-bottom-area absolute bottom-[0.6rem] left-1/2 flex -translate-x-1/2 gap-2 rounded-[3.125rem] bg-[#BFBFBF44] px-3 py-2 backdrop-blur-xl">
       {Array.from({ length: count }, (_, index) => (
         <button
           key={index}
