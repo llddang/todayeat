@@ -5,7 +5,6 @@ import GlassBackground from '@/components/commons/glass-background';
 import CalendarProvider from '@/lib/contexts/calendar.context';
 import DashboardProvider from '@/lib/contexts/dashboard.context';
 
-// TODO: selectedDate를 context가 아닌 queryParam으로 관리해보기.
 const HomePage = async () => {
   return (
     <div>

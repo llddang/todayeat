@@ -19,15 +19,20 @@ const HomeMealContainer = () => {
     getMyMealByDate(formattedDate).then(setMeals);
   }, [selectedDate]);
 
-  if (meals.length === 0) return <HomeMealEmptyCard />;
   return (
-    <section className="flex flex-col gap-4">
+    <section>
       <Typography as="h3" variant="subTitle2" className="pt-3 text-gray-900">
         식단 기록
       </Typography>
-      {meals.map((meal) => (
-        <HomeMealCard key={meal.id} meal={meal} />
-      ))}
+      {meals.length === 0 ? (
+        <HomeMealEmptyCard />
+      ) : (
+        <ul className="mt-4 flex flex-col gap-4">
+          {meals.map((meal) => (
+            <HomeMealCard key={meal.id} meal={meal} />
+          ))}
+        </ul>
+      )}
     </section>
   );
 };
