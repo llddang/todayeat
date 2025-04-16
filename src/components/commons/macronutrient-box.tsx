@@ -1,19 +1,20 @@
 import { Typography } from '@/components/ui/typography';
 import { MACRONUTRIENT_OPTIONS } from '@/constants/nutrition.constant';
+import { cn } from '@/lib/utils';
 import { NutritionEnumType } from '@/types/nutrition.type';
 
-type MealEditNutrientBoxProps = {
-  variety: NutritionEnumType;
-  value: number;
-};
+const MacronutrientBox = ({ variety, value }: { variety: NutritionEnumType; value: number }) => {
+  const { label, unit, beforeBgColor } = MACRONUTRIENT_OPTIONS[variety];
 
-const MealEditNutrientBox = ({ variety, value }: MealEditNutrientBoxProps) => {
-  const { label, unit, color } = MACRONUTRIENT_OPTIONS[variety];
   return (
-    <div className="flex flex-1 items-start gap-1.5">
-      <div className="flex h-5 items-center justify-center">
-        <div className={`h-2 w-2 rounded-full ${color}`} />
-      </div>
+    <div className="flex flex-1 gap-1.5">
+      <div
+        className={cn(
+          'flex h-5 items-center justify-center',
+          'before:h-2 before:w-2 before:rounded-full',
+          beforeBgColor
+        )}
+      />
       <div className="flex flex-1 flex-col items-start gap-1.5">
         <Typography as="span" variant="body3" className="text-gray-700">
           {label}
@@ -26,5 +27,4 @@ const MealEditNutrientBox = ({ variety, value }: MealEditNutrientBoxProps) => {
     </div>
   );
 };
-
-export default MealEditNutrientBox;
+export default MacronutrientBox;

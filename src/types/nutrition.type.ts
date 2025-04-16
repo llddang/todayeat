@@ -1,11 +1,11 @@
 import { MealDetailDTO } from '@/types/DTO/meal.dto';
+import { UserPersonalInfoDTO } from '@/types/DTO/user.dto';
 
-export type NutritionGoal = {
-  dailyCaloriesGoal: number;
-  dailyCarbohydrateGoal: number;
-  dailyProteinGoal: number;
-  dailyFatGoal: number;
-};
+export type NutritionGoal = Pick<
+  UserPersonalInfoDTO,
+  'dailyCaloriesGoal' | 'dailyCarbohydrateGoal' | 'dailyProteinGoal' | 'dailyFatGoal'
+>;
+export type MacronutrientGoal = Omit<NutritionGoal, 'dailyCaloriesGoal'>;
 
 export type MealNutrition = Pick<MealDetailDTO, 'calories' | 'carbohydrate' | 'protein' | 'fat'>;
 export type MealNutritionType = keyof MealNutrition;
@@ -38,6 +38,7 @@ export type MacronutrientValues = {
   label: string;
   unit: string;
   color: string;
+  beforeBgColor: string;
 };
 
 export const MeasurementUnitEnum = {

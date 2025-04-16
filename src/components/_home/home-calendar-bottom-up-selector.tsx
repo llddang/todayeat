@@ -43,7 +43,8 @@ const HomeCalendarBottomUpSelector = ({ open, onOpenChange }: HomeCalendarBottom
           defaultMonth={date}
           formatters={{ formatCaption: formatDateCaption }}
         />
-        <div className="mt-2 w-full pb-4 pt-2">
+        {/* TODO: temp-layout 풀기 */}
+        <div className="temp-layout !mt-2 w-full pb-4 pt-2">
           <Button onClick={handleSelectDate} className="w-full">
             날짜 선택 완료
           </Button>

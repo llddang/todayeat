@@ -2,10 +2,12 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { UserDTO } from '@/types/DTO/user.dto';
 import { getUser } from '@/lib/apis/user.api';
+import { getAuth, signOut } from '@/lib/apis/auth-server.api';
 
 type UserStore = {
   user: UserDTO;
   setAuthenticatedUser: () => Promise<void>;
+  signOut: () => Promise<void>;
 };
 
 const initialUser: UserDTO = {
@@ -14,20 +16,7 @@ const initialUser: UserDTO = {
   email: '',
   nickname: '',
   profileImage: '',
-  personalInfo: {
-    id: '',
-    userId: '',
-    gender: 'WOMAN',
-    dailyCaloriesGoal: 0,
-    dailyCarbohydrateGoal: 0,
-    dailyProteinGoal: 0,
-    dailyFatGoal: 0,
-    height: 0,
-    weight: 0,
-    age: 0,
-    activityLevel: 'MODERATE',
-    purpose: 'WEIGHT_MAINTENANCE'
-  }
+  personalInfo: null
 };
 
 export const userStore = create<UserStore>()(
@@ -36,10 +25,21 @@ export const userStore = create<UserStore>()(
       user: initialUser,
       setAuthenticatedUser: async () => {
         try {
+          const { isAuthenticated } = await getAuth();
+          if (!isAuthenticated) return;
+
           const user = await getUser();
           set({ user });
         } catch (error) {
           console.error('유저 정보 가져오기 실패:', error);
+        }
+      },
+      signOut: async () => {
+        try {
+          await signOut();
+          set({ user: initialUser });
+        } catch (error) {
+          console.error('로그아웃 실패:', error);
         }
       }
     }),

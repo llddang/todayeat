@@ -16,14 +16,13 @@ const SignInPage = () => {
           사진 한 장으로 완성되는 식단 기록
         </Typography>
       </div>
-      <section className="space-y-6 px-5 pb-8 pt-7">
-        <h3 className="sr-only">로그인 폼</h3>
+      <div className="space-y-6 px-5 pb-8 pt-7">
         <AuthSignInForm />
         <div className="flex flex-col gap-2">
           <AuthSignInWithKakaoButton />
           <AuthSignInWithGoogleButton />
         </div>
-      </section>
+      </div>
     </section>
   );
 };

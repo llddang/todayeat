@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import { useMemo, useState } from 'react';
 import MealPostEditInputField from './meal-post-edit-input-field';
 import MealPostEditCardTitle from './meal-post-edit-card-title';
-import MealPostEditNutrientBox from './meal-post-edit-nutrient-box';
+import MacronutrientBox from '@/components/commons/macronutrient-box';
 import IconButton from '@/components/commons/icon-button';
 import { Button } from '@/components/ui/button';
 import { NutritionEnum, MeasurementUnitEnum } from '@/types/nutrition.type';
@@ -83,9 +83,9 @@ const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
             />
           </div>
           <div className="flex items-center gap-2 self-stretch pb-1 pl-1 pt-2">
-            <MealPostEditNutrientBox variety={NutritionEnum.CARBOHYDRATE} value={mealDetail.carbohydrate} />
-            <MealPostEditNutrientBox variety={NutritionEnum.PROTEIN} value={mealDetail.protein} />
-            <MealPostEditNutrientBox variety={NutritionEnum.FAT} value={mealDetail.fat} />
+            <MacronutrientBox variety={NutritionEnum.CARBOHYDRATE} value={mealDetail.carbohydrate} />
+            <MacronutrientBox variety={NutritionEnum.PROTEIN} value={mealDetail.protein} />
+            <MacronutrientBox variety={NutritionEnum.FAT} value={mealDetail.fat} />
           </div>
         </div>
       )}

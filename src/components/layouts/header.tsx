@@ -1,17 +1,22 @@
-import Link from 'next/link';
-import BackButton from './header-back-button';
-import SITE_MAP from '@/constants/site-map.constant';
-import { Suspense } from 'react';
+'use client';
 
-const Header = async () => {
+import Image from 'next/image';
+import { cn } from '@/lib/utils';
+import { useDetectIsScrolled } from '@/lib/hooks/use-detect-is-scrolled';
+import LOGO from '@/../public/logo.svg';
+
+const Header = () => {
+  const isScrolled = useDetectIsScrolled();
+
   return (
-    <header className="relative flex justify-center bg-yellow-100 p-4">
-      <Suspense>
-        <BackButton />
-      </Suspense>
-      <Link href={SITE_MAP.HOME} className="text-lg font-bold">
-        투데잇
-      </Link>
+    <header
+      className={cn(
+        'fixed left-0 top-0 z-layout flex h-16 w-full items-center px-4 py-3',
+        isScrolled ? 'bg-purple-10/94 backdrop-blur-[20px]' : 'bg-transparent',
+        'temp-layout left-1/2 -translate-x-1/2'
+      )}
+    >
+      <Image src={LOGO} alt="투데잇 로고" />
     </header>
   );
 };

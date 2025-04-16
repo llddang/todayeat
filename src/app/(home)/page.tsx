@@ -1,19 +1,17 @@
 import HomeCalendar from '@/components/_home/home-calendar';
-import Footer from '@/components/commons/footer';
+import HomeContent from '@/components/_home/home-content';
 import CalendarProvider from '@/lib/contexts/calendar.context';
 import DashboardProvider from '@/lib/contexts/dashboard.context';
 
-const HomePage = () => {
+const HomePage = async () => {
   return (
     <div>
       <DashboardProvider>
         <CalendarProvider>
           <HomeCalendar />
         </CalendarProvider>
-
-        {/* TODO: recode summary container 들어가기 */}
+        <HomeContent />
       </DashboardProvider>
-      <Footer />
     </div>
   );
 };

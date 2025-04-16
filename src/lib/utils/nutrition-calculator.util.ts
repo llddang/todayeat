@@ -4,7 +4,7 @@ import { UserPhysicalProfileDTO } from '@/types/DTO/user.dto';
 import { MealNutrition, NutritionGoal, Macronutrient, PurposeValue } from '@/types/nutrition.type';
 import { Gender, GenderType } from '@/types/user-personal-info.type';
 
-const CALORIES_PER_GRAM = {
+export const CALORIES_PER_GRAM = {
   CARBOHYDRATE: 4,
   PROTEIN: 4,
   FAT: 9
@@ -47,7 +47,7 @@ const calculateBMR = (weight: number, height: number, age: number, gender: Gende
  * - 단백질: 4kcal/g
  * - 지방: 9kcal/g
  */
-const calculateDailyNutrition = (dailyCalories: number, ratio: Macronutrient) => {
+export const calculateDailyNutrition = (dailyCalories: number, ratio: Macronutrient) => {
   return {
     dailyCarbohydrateGoal: Math.round((dailyCalories * ratio.carbohydrate) / CALORIES_PER_GRAM.CARBOHYDRATE),
     dailyProteinGoal: Math.round((dailyCalories * ratio.protein) / CALORIES_PER_GRAM.PROTEIN),
@@ -194,5 +194,25 @@ export const calculateNutritionRatio = (meals: MealDTO[], goal: NutritionGoal): 
     carbohydrate: getPercentage(nutritionValues.carbohydrate, goal.dailyCarbohydrateGoal),
     protein: getPercentage(nutritionValues.protein, goal.dailyProteinGoal),
     fat: getPercentage(nutritionValues.fat, goal.dailyFatGoal)
+  };
+};
+
+/**
+ * 영양소의 그램수를 기반으로 칼로리를 계산하는 함수
+ *
+ * @param gram - 영양소의 그램 수 (문자열 또는 숫자)
+ * @param caloriesPerGram - 영양소별 1g당 칼로리 계수 (탄수화물: 4, 단백질: 4, 지방: 9)
+ * @returns 그램 수와 칼로리 값을 포함하는 객체
+ */
+export const calculateMacroCaloriesbyGrams = (
+  gram: string | number,
+  caloriesPerGram: number
+): { grams: number; calories: number } => {
+  const gramValue = Number(gram) || 0;
+  const calories = gramValue * caloriesPerGram;
+
+  return {
+    grams: gramValue,
+    calories: calories
   };
 };
