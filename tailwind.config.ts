@@ -139,7 +139,8 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)'
       },
       zIndex: {
-        background: '-10'
+        background: '-10',
+        layout: '10'
       },
       padding: {
         layout: '4rem'
