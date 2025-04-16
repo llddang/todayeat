@@ -3,22 +3,9 @@
 import HomeMealCard from '@/components/_home/home-meal-card';
 import HomeMealEmptyCard from '@/components/_home/home-meal-empty-card';
 import { Typography } from '@/components/ui/typography';
-import { getMyMealByDate } from '@/lib/apis/meal.api';
-import { useDashboard } from '@/lib/contexts/dashboard.context';
-import { formatDateWithDash } from '@/lib/utils/date.util';
 import { MealDTO } from '@/types/DTO/meal.dto';
-import { useEffect, useState } from 'react';
 
-const HomeMealContainer = () => {
-  const { selectedDate } = useDashboard();
-
-  const [meals, setMeals] = useState<MealDTO[]>([]);
-
-  useEffect(() => {
-    const formattedDate = formatDateWithDash(selectedDate);
-    getMyMealByDate(formattedDate).then(setMeals);
-  }, [selectedDate]);
-
+const HomeMealContainer = ({ meals }: { meals: MealDTO[] }) => {
   return (
     <section>
       <Typography as="h3" variant="subTitle2" className="mb-4 pt-3 text-gray-900">

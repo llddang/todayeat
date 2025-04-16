@@ -1,7 +1,5 @@
 import HomeCalendar from '@/components/_home/home-calendar';
-import HomeMealContainer from '@/components/_home/home-meal-container';
-import Footer from '@/components/commons/footer';
-import GlassBackground from '@/components/commons/glass-background';
+import HomeContent from '@/components/_home/home-content';
 import CalendarProvider from '@/lib/contexts/calendar.context';
 import DashboardProvider from '@/lib/contexts/dashboard.context';
 
@@ -12,13 +10,8 @@ const HomePage = async () => {
         <CalendarProvider>
           <HomeCalendar />
         </CalendarProvider>
-
-        {/* TODO: recode summary container 들어가기 */}
-        <GlassBackground className="flex flex-col gap-4 pb-8 pt-6">
-          <HomeMealContainer />
-        </GlassBackground>
+        <HomeContent />
       </DashboardProvider>
-      <Footer />
     </div>
   );
 };
