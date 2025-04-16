@@ -7,11 +7,12 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <>
-      {/* TODO: Header 변경하기 */}
+    <div className="temp-layout">
       <Header />
-      <Suspense>{children}</Suspense>
-    </>
+      <main className="py-layout">
+        <Suspense>{children}</Suspense>
+      </main>
+    </div>
   );
 };
 
