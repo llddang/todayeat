@@ -10,6 +10,16 @@ export const formatDateCaption = (date: Date) => {
   return `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
 };
 
+export const formatAmPmKorean = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.getHours() < 12 ? '오전' : '오후';
+};
+
+export const formatTime = (dateString: string) => {
+  const date = new Date(dateString);
+  return `${date.getHours()}:${date.getMinutes()}`;
+};
+
 export const getMonthDates = (date: Date): { id: number; weeks: Date[][] }[] => {
   const baseYear = date.getFullYear();
   const baseMonth = date.getMonth();
