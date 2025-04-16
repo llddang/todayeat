@@ -21,13 +21,13 @@ const HeaderWithProfile = () => {
       )}
     >
       <Image src={LOGO} alt="투데잇 로고" />
-      {user && user.profileImage ? (
+      {user ? (
         <Link href={SITE_MAP.MY_PAGE}>
           <ProfileImage src={user.profileImage} size="sm" />
         </Link>
       ) : (
         <Link href={SITE_MAP.SIGN_IN}>
-          <ProfileImage size="sm" />
+          <ProfileImage src={null} size="sm" />
         </Link>
       )}
     </header>

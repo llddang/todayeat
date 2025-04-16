@@ -16,7 +16,7 @@ const profileImageVariants = cva('relative overflow-hidden rounded-full', {
 });
 
 type ProfileImageProps = VariantProps<typeof profileImageVariants> & {
-  src?: string;
+  src: string | null;
 };
 
 const ProfileImage = ({ src, size }: ProfileImageProps) => {
