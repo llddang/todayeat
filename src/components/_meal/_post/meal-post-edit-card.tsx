@@ -9,7 +9,11 @@ import { Button } from '@/components/ui/button';
 import { NutritionEnum, MeasurementUnitEnum } from '@/types/nutrition.type';
 import {} from '@/types/DTO/meal.dto';
 import { FoodAnalysisRequestsDetailDTO } from '@/types/DTO/food_analysis.dto';
-import SetGoalAiLoaderLottie from '@/components/_set-goal/set-goal-ai-loader-lottie';
+import dynamic from 'next/dynamic';
+
+const SetGoalAiLoaderLottie = dynamic(() => import('@/components/_set-goal/set-goal-ai-loader-lottie'), {
+  ssr: false
+});
 
 type MealPostEditCardProps = {
   mealDetail: FoodAnalysisRequestsDetailDTO;
