@@ -8,7 +8,7 @@ import {
 } from '@/types/DTO/food_analysis.dto';
 import { CaloriesAnalysisUpdatePayload } from '@/types/gemini.type';
 import { PostgrestError } from '@supabase/supabase-js';
-import { getUser } from './user.api';
+import { getAuth } from '@/lib/apis/auth-server.api';
 
 export const getFoodImagesById = async (
   userId: string
@@ -29,7 +29,8 @@ export const getFoodAnalysisDetail = async (): Promise<{
   error: PostgrestError | null;
 }> => {
   const supabase = getServerClient();
-  const { id } = await getUser();
+  const { id } = await getAuth();
+  if (!id) return { data: null, error: null };
   const { data, error } = await supabase.from('food_analysis_requests_detail').select('*').eq('user_id', id);
   return { data, error };
 };
