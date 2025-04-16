@@ -103,21 +103,23 @@ export const formatDateWithDash = (date: Date): string => {
   return formattedDate;
 };
 
-export const formatToDateTimeString = (dateObj: MealEditFormDataType['date'], baseDate: Date = new Date()): string => {
-  const { meridiem, hours, minutes } = dateObj;
+export const convertToTimestamp = (
+  baseDate: Date, 
+  time: { meridiem: '오전' | '오후'; hours: string; minutes: string }
+): string => {
+  let hour = parseInt(time.hours, 10);
+  const minutes = time.minutes.padStart(2, '0');
 
-  let hour = parseInt(hours, 10);
-  if (meridiem === '오후' && hour < 12) {
+  if (time.meridiem === '오전' && hour === 12) {
+    hour = 0;
+  } else if (time.meridiem === '오후' && hour !== 12) {
     hour += 12;
   }
-  if (meridiem === '오전' && hour === 12) {
-    hour = 0;
-  }
 
-  const year = baseDate.getFullYear();
-  const month = String(baseDate.getMonth() + 1).padStart(2, '0');
-  const day = String(baseDate.getDate()).padStart(2, '0');
+  const yyyy = baseDate.getFullYear();
+  const mm = String(baseDate.getMonth() + 1).padStart(2, '0');
+  const dd = String(baseDate.getDate()).padStart(2, '0');
   const hh = String(hour).padStart(2, '0');
 
-  return `${year}-${month}-${day} ${hh}:${minutes}:00`;
+  return `${yyyy}-${mm}-${dd} ${hh}:${minutes}:00`;
 };
