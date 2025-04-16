@@ -1,3 +1,4 @@
+import { MealFormData } from '@/app/(client)/meal/post/edit/page';
 import { CALENDAR_RANGE_OFFSET, DAY, WEEK } from '@/constants/calendar.constant';
 
 export const isSameDate = (d1: Date, d2: Date): boolean => formatDateWithDash(d1) === formatDateWithDash(d2);
@@ -100,4 +101,23 @@ export const formatDateWithDash = (date: Date): string => {
     .replace(/\//g, '-');
 
   return formattedDate;
+};
+
+export const formatToDateTimeString = (dateObj: MealFormData['date'], baseDate: Date = new Date()): string => {
+  const { meridiem, hours, minutes } = dateObj;
+
+  let hour = parseInt(hours, 10);
+  if (meridiem === '오후' && hour < 12) {
+    hour += 12;
+  }
+  if (meridiem === '오전' && hour === 12) {
+    hour = 0;
+  }
+
+  const year = baseDate.getFullYear();
+  const month = String(baseDate.getMonth() + 1).padStart(2, '0');
+  const day = String(baseDate.getDate()).padStart(2, '0');
+  const hh = String(hour).padStart(2, '0');
+
+  return `${year}-${month}-${day} ${hh}:${minutes}:00`;
 };
