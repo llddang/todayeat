@@ -21,7 +21,9 @@ const HeaderWithProfile = () => {
         'temp-layout left-1/2 -translate-x-1/2'
       )}
     >
-      <Image src={LOGO} alt="투데잇 로고" />
+      <Link href={SITE_MAP.HOME}>
+        <Image src={LOGO} alt="투데잇 로고" />
+      </Link>
       {user.id ? (
         <Link href={SITE_MAP.MY_PAGE}>
           <ProfileImage src={user.profileImage} size="sm" />
