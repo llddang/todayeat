@@ -30,6 +30,7 @@ import { formatToDateTimeString } from '@/lib/utils/date.util';
 import { createMealWithDetails } from '@/lib/apis/meal.api';
 import { MealDTO } from '@/types/DTO/meal.dto';
 import MealEditCalendar from '@/components/_meal/_edit/meal-edit-calendar';
+import GlassBackground from '@/components/commons/glass-background';
 
 const MealPostEditPage = () => {
   const mealFormMethods = useForm<MealEditFormDataType>({
@@ -49,7 +50,7 @@ const MealPostEditPage = () => {
   });
 
   const day = mealFormMethods.getValues('day');
-  const handleDayChange = (day: Date) => mealFormMethods.setValue('day', date);
+  const handleDayChange = (day: Date) => mealFormMethods.setValue('day', day);
 
   useEffect(() => {
     const fetchFoodAnalysisRequests = async () => {
@@ -81,7 +82,6 @@ const MealPostEditPage = () => {
     hours: '12',
     minutes: '00'
   });
-  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const date = mealFormMethods.watch('date');
   const mealList = mealFormMethods.watch('mealList');
@@ -125,21 +125,28 @@ const MealPostEditPage = () => {
       <FormProvider {...mealFormMethods}>
         <form
           onSubmit={mealFormMethods.handleSubmit(onSubmit)}
-          className="flex flex-col items-center justify-center rounded-xl px-4 pb-4 pt-2"
+          className="flex flex-col items-center justify-center rounded-xl"
         >
           <MealImageCarousel imageList={foodImages} pagination={true} />
-          <div className="flex flex-col items-center gap-4">
+
+          <div className="mt-10 flex flex-col gap-3">
+            <Typography className="pl-1">
+              음식 정보
+              <Typography variant="subTitle2" as="span" className="ml-2">
+                {mealList.length}
+              </Typography>
+            </Typography>
             {mealList.map((meal, idx) => (
               <MealPostEditCard key={idx} idx={idx} mealDetail={meal} />
             ))}
           </div>
 
           <section className="my-10 flex w-full flex-col items-start justify-center gap-3">
-            <Typography as="h3" variant="body1">
+            <Typography as="h3" variant="body1" className="pl-1">
               식사 시간
             </Typography>
-            <div className="flex w-full flex-col items-start gap-3 p-4">
-              <div className="flex items-start gap-2">
+            <GlassBackground className="min-h-auto flex w-full flex-col items-start gap-3 rounded-2xl border-none p-4">
+              <div className="flex w-full flex-wrap items-start justify-between gap-2">
                 {MEAL_CATEGORY.map((option) => {
                   const field = mealFormMethods.register('mealCategory');
                   const selected = mealFormMethods.watch('mealCategory');
@@ -157,7 +164,7 @@ const MealPostEditPage = () => {
                   );
                 })}
               </div>
-              <div className="flex w-full justify-between">
+              <div className="flex w-full gap-2">
                 <MealEditCalendar date={day} onDateChange={handleDayChange} />
                 <Drawer
                   onOpenChange={(open) => {
@@ -165,9 +172,9 @@ const MealPostEditPage = () => {
                       const currenTime = mealFormMethods.getValues('date');
                       setTempTime(currenTime);
                     }
-                  }
+                  }}
                 >
-                  <DrawerTrigger className="flex min-w-40 items-center justify-between gap-2 rounded-lg border-[1px] border-gray-300 bg-white py-[0.81rem] pl-4 pr-3 after:block after:aspect-square after:w-[1.375rem] after:bg-down-line-gray-600-icon after:bg-center after:content-['']">
+                  <DrawerTrigger className="flex flex-1 items-center justify-between gap-2 rounded-lg border-[1px] border-gray-300 bg-white py-[0.81rem] pl-4 pr-3 after:block after:aspect-square after:w-[1.375rem] after:bg-down-line-gray-600-icon after:bg-center after:content-['']">
                     <Typography
                       as="span"
                       variant="body1"
@@ -219,29 +226,31 @@ const MealPostEditPage = () => {
                   </DrawerContent>
                 </Drawer>
               </div>
-            </div>
+            </GlassBackground>
           </section>
 
-          <section className="flex flex-col items-center gap-3">
-            <Typography as="h3" variant="body1">
+          <section className="space-y-3">
+            <Typography as="h3" variant="body1" className="pl-1">
               식사 일기
             </Typography>
-            <div className="flex w-full flex-col gap-3 rounded-2xl bg-white/50 p-4 backdrop-blur-[50px]">
-              <div className="flex items-start gap-1">
-                <img src="/icons/edit_4_line.svg" className="h-[1.125rem] w-[1.125rem] align-baseline" alt="메모" />
-                <Typography as="span" variant="subTitle3" className="!font-medium text-gray-600">
+            <GlassBackground className="min-h-auto flex w-full flex-col gap-3 rounded-2xl border-none">
+              <div className="flex items-start justify-between gap-[0.38rem] before:mt-[0.13rem] before:block before:aspect-square before:w-[1.125rem] before:bg-edit-4-icon before:bg-contain before:content-['']">
+                {/* <img src="/icons/edit_4_line.svg" className="h-[1.125rem] w-[1.125rem]" alt="메모" /> */}
+                <Typography as="span" variant="subTitle3" className="flex-1 !font-medium text-gray-600">
                   음식을 먹을 때 어떤 기분이었는지 간단하게 적어주세요. 식습관을 돌아보는데 큰 도움이 돼요!
                 </Typography>
               </div>
               <Textarea
                 {...mealFormMethods.register('memo')}
-                className="text-gray-500"
+                className="min-h-60 text-gray-500"
                 maxLength={200}
-                placeholder="예시) 스트레스로 폭식했다. 기분 좋게 잘먹었다, 이 음식 먹고 속이 안좋았다."
+                placeholder="예시) 스트레스로 폭식했다, 기분 좋게 잘먹었다, 이 음식 먹고 속이 안 좋았다."
               />
-            </div>
+            </GlassBackground>
           </section>
-          <button type="submit">제출하기</button>
+          <Button type="submit" className="mt-3 w-full">
+            제출하기
+          </Button>
         </form>
       </FormProvider>
     </div>
