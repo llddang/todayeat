@@ -1,20 +1,26 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { cn } from '@/lib/utils';
+import { useDetectIsScrolled } from '@/lib/hooks/use-detect-is-scrolled';
+import { useRouter } from 'next/navigation';
 
 const HeaderBackButton = () => {
+  const isScrolled = useDetectIsScrolled();
   const router = useRouter();
-  const params = useSearchParams();
-
-  const step = params.get('step') ?? '';
-  const canGoBack = step.includes('step');
-
-  if (!canGoBack) return null;
 
   return (
-    <button onClick={() => router.back()} className="absolute left-4 mr-2">
-      ← Back
-    </button>
+    <header
+      className={cn(
+        'z-layout fixed left-0 top-0 flex h-16 w-full items-center px-4 py-3',
+        isScrolled ? 'bg-purple-10/94 backdrop-blur-[20px]' : 'bg-transparent'
+      )}
+    >
+      <button
+        onClick={() => router.back()}
+        aria-label="뒤로가기"
+        className="h-10 w-10 bg-back-line-icon bg-contain bg-center bg-no-repeat"
+      />
+    </header>
   );
 };
 

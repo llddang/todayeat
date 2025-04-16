@@ -139,7 +139,11 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)'
       },
       zIndex: {
-        background: '-10'
+        background: '-10',
+        layout: '10'
+      },
+      padding: {
+        layout: '4rem'
       },
       backgroundImage: {
         'info-icon': "url('/icons/information_line.svg')",
@@ -167,7 +171,9 @@ const config: Config = {
         'chart-line-icon': 'url(/icons/chart_line.svg)',
         'kakao-logo': 'url(/kakao-logo.svg)',
         'google-logo': 'url(/google-logo.svg)',
-        'complete-confetti': 'url(/illustrations/complete-confetti.svg)'
+        'complete-confetti': 'url(/illustrations/complete-confetti.svg)',
+        'default-profile': 'url(/illustrations/default_profile.svg)',
+        'back-line-icon': 'url(/icons/back_line.svg)'
       },
       letterSpacing: {
         snug: '-0.0175rem'
