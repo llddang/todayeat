@@ -12,7 +12,7 @@ const signUpPasswordSchema = z.object({
   password: FormSchema.PASSWORD_SCHEMA
 });
 type SignUpPasswordSchemaType = z.infer<typeof signUpPasswordSchema>;
-const signUpEmailDefault: SignUpPasswordSchemaType = {
+const signUpPasswordDefault: SignUpPasswordSchemaType = {
   password: ''
 };
 
@@ -26,7 +26,7 @@ const AuthSignUpStepPassword = ({ nextStep }: AuthSignUpStepPasswordProps) => {
   const form = useForm<SignUpPasswordSchemaType>({
     mode: 'onBlur',
     resolver: zodResolver(signUpPasswordSchema),
-    defaultValues: signUpEmailDefault
+    defaultValues: signUpPasswordDefault
   });
 
   const password = form.watch('password');

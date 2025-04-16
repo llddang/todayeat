@@ -14,9 +14,6 @@ const signUpNicknameSchema = z.object({
   nickname: FormSchema.NICKNAME_SCHEMA
 });
 type SignUpNicknameSchemaType = z.infer<typeof signUpNicknameSchema>;
-const signUpEmailDefault: SignUpNicknameSchemaType = {
-  nickname: ''
-};
 
 type AuthSignUpStepNicknameProps = {
   data: SignUpStep3Type;
