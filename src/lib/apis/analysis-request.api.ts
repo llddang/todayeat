@@ -29,7 +29,7 @@ export const getFoodImagesById = async (
 export const getFoodAnalysisDetail = async (): Promise<FoodAnalysisRequestsDetailDTO[]> => {
   const supabase = getServerClient();
   const { id } = await getAuth();
-  if (!id) return { data: null, error: null };
+  if (!id) return [];
   const { data, error } = await supabase.from('food_analysis_requests_detail').select('*').eq('user_id', id);
   if (error) throw error;
   return snakeToCamelObject<FoodAnalysisRequestsDetailSnakeCaseDTO[]>(data);
