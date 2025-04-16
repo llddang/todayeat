@@ -1,6 +1,11 @@
 import { camelToSnakeObject } from '@/lib/utils/camelize.util';
 import { getServerClient } from '@/lib/utils/supabase/server.util';
-import { FoodAnalysisRequestsDetailDTO, FoodAnalysisRequestsDTO } from '@/types/DTO/food_analysis.dto';
+import {
+  CreateFoodAnalysisRequestDetailDTO,
+  FoodAnalysisRequestDetailDTO,
+  FoodAnalysisRequestsDetailDTO,
+  FoodAnalysisRequestsDTO
+} from '@/types/DTO/food_analysis.dto';
 import { CaloriesAnalysisUpdatePayload } from '@/types/gemini.type';
 import { PostgrestError } from '@supabase/supabase-js';
 import { getUser } from './user.api';
@@ -41,6 +46,20 @@ export const createFoodAnalysisRequestDetails = async (
     .insert(camelToSnakeObject<FoodAnalysisRequestsDetailDTO[]>(insertPayload));
 
   return { error };
+};
+
+export const createFoodAnalysisRequestDetail = async (
+  food: CreateFoodAnalysisRequestDetailDTO
+): Promise<FoodAnalysisRequestDetailDTO> => {
+  const supabase = getServerClient();
+
+  const foodSnakeCase = camelToSnakeObject(food);
+
+  const { data, error } = await supabase.from('food_analysis_requests_detail').insert(foodSnakeCase).select().single();
+
+  if (error) throw error;
+
+  return data;
 };
 
 export const createFoodAnalysisRequests = async (

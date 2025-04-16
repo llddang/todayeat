@@ -12,3 +12,16 @@ export type FoodAnalysisRequestsDetailDTO = {
   protein: number;
   fat: number;
 };
+
+export type FoodAnalysisRequestDetailDTO = {
+  id: string;
+  userId: string;
+  menuName: string;
+  weight: number;
+  calories: number;
+  carbohydrate: number;
+  protein: number;
+  fat: number;
+};
+
+export type CreateFoodAnalysisRequestDetailDTO = Pick<FoodAnalysisRequestDetailDTO, 'menuName' | 'weight'>;
