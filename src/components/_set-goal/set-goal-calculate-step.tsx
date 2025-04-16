@@ -151,9 +151,9 @@ const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStep
           목표 칼로리 기준 영양소 권장량
         </Typography>
         <div className="grid grid-cols-2 gap-2">
-          <SetGoalMacronutrientBox label="탄수화물" data={macronutrientData.carbohydrate} />
-          <SetGoalMacronutrientBox label="단백질" data={macronutrientData.protein} />
-          <SetGoalMacronutrientBox label="지방" data={macronutrientData.fat} />
+          <SetGoalMacronutrientBox label="CARBOHYDRATE" data={macronutrientData.carbohydrate} />
+          <SetGoalMacronutrientBox label="PROTEIN" data={macronutrientData.protein} />
+          <SetGoalMacronutrientBox label="FAT" data={macronutrientData.fat} />
         </div>
       </div>
       <div className="fixed bottom-4 left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2">
