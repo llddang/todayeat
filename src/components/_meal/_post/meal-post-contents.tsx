@@ -13,6 +13,7 @@ const MealPostContents = ({ isRecord }: MealPostContentsProps): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showModal, setShowModal, handleApproveClick, handleCancelClick } = useMealPostModal(isRecord);
 
+  // TODO: 로딩 UI merge되면 수정하기
   if (isLoading) return <div>loading</div>;
 
   return (
