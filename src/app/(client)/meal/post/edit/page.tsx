@@ -7,11 +7,10 @@ import Textarea from '@/components/commons/textarea';
 import { Typography } from '@/components/ui/typography';
 import { getFoodAnalysisDetail, getFoodImagesById } from '@/lib/apis/analysis-request.api';
 import { getUser } from '@/lib/apis/user.api';
-import { FoodAnalysisRequestsDetailDTO } from '@/types/DTO/food_analysis.dto';
 import { MealCategory } from '@/types/meal-category.type';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
-import { FormProvider, SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import Picker from 'react-mobile-picker';
 import {
@@ -108,11 +107,11 @@ const MealPostEditPage = () => {
       protein: meal.protein,
       fat: meal.fat
     }));
-    const { mealDetails } = await createMealWithDetails(
+
+    await createMealWithDetails(
       newMeals as Pick<MealDTO, 'ateAt' | 'foodImages' | 'memo' | 'mealCategory'>,
       newMealDetails
     );
-    console.log('mealDetails', mealDetails);
   };
   return (
     <div className="w-[450px]">
