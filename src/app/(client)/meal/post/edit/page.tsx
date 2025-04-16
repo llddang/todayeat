@@ -26,11 +26,13 @@ import { Button } from '@/components/ui/button';
 import IconButton from '@/components/commons/icon-button';
 import { urlToFile } from '@/lib/utils/file.util';
 import { uploadImage } from '@/lib/apis/storage.api';
-import { formatToDateTimeString } from '@/lib/utils/date.util';
-import { createMealWithDetails } from '@/lib/apis/meal.api';
+import { convertToTimestamp } from '@/lib/utils/date.util';
+import { createMealWithDetails, deleteMealAnalysisDetail } from '@/lib/apis/meal.api';
 import { MealDTO } from '@/types/DTO/meal.dto';
 import MealEditCalendar from '@/components/_meal/_edit/meal-edit-calendar';
 import GlassBackground from '@/components/commons/glass-background';
+import { useRouter } from 'next/navigation';
+import SITE_MAP from '@/constants/site-map.constant';
 
 const MealPostEditPage = () => {
   const mealFormMethods = useForm<MealEditFormDataType>({
@@ -82,7 +84,7 @@ const MealPostEditPage = () => {
     hours: '12',
     minutes: '00'
   });
-
+  const router = useRouter();
   const date = mealFormMethods.watch('date');
   const mealList = mealFormMethods.watch('mealList');
 
@@ -90,35 +92,46 @@ const MealPostEditPage = () => {
     const files = await Promise.all(foodImages.map((url, idx) => urlToFile(url, idx)));
     const imagesFormData = new FormData();
 
-    if (!data) {
-      return alert(' 데이터 형식이 올바르지 않습니다.');
-    }
+    try {
+      if (!data) {
+        return alert(' 데이터 형식이 올바르지 않습니다.');
+      }
 
-    const ateAt = formatToDateTimeString(data.date);
-    const { memo, mealCategory } = data;
-    for (const file of files) {
-      imagesFormData.append('file', file);
-      await uploadImage('meal', imagesFormData);
-    }
-    const newMeals = {
-      foodImages,
-      ateAt,
-      mealCategory,
-      memo
-    };
-    const newMealDetails = mealList.map((meal) => ({
-      menuName: meal.menuName,
-      weight: meal.weight,
-      calories: meal.calories,
-      carbohydrate: meal.carbohydrate,
-      protein: meal.protein,
-      fat: meal.fat
-    }));
+      const { date, day } = data;
 
-    await createMealWithDetails(
-      newMeals as Pick<MealDTO, 'ateAt' | 'foodImages' | 'memo' | 'mealCategory'>,
-      newMealDetails
-    );
+      const ateAt = convertToTimestamp(day, date);
+      const { memo, mealCategory } = data;
+      for (const file of files) {
+        imagesFormData.append('file', file);
+        await uploadImage('meal', imagesFormData);
+      }
+      const newMeals = {
+        foodImages,
+        ateAt,
+        mealCategory,
+        memo
+      };
+      const newMealDetails = mealList.map((meal) => ({
+        menuName: meal.menuName,
+        weight: meal.weight,
+        calories: meal.calories,
+        carbohydrate: meal.carbohydrate,
+        protein: meal.protein,
+        fat: meal.fat
+      }));
+
+      const { mealDetails } = await createMealWithDetails(
+        newMeals as Pick<MealDTO, 'ateAt' | 'foodImages' | 'memo' | 'mealCategory'>,
+        newMealDetails
+      );
+      if (mealDetails) {
+        router.push(SITE_MAP.HOME);
+        await deleteMealAnalysisDetail();
+      }
+    } catch (err) {
+      alert('식사 정보 등록에 실패하였습니다. 잠시후 다시 시도해주세요');
+      console.error('등록에 실패 했습니다. ', err);
+    }
   };
   return (
     <div className="px-4 pb-4 pt-2">
