@@ -1,4 +1,3 @@
-import { StaticImageData } from 'next/image';
 import { MealCategoryType } from '@/types/meal-category.type';
 import { MB } from '@/constants/common.constant';
 
