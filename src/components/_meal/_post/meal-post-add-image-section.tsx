@@ -50,7 +50,7 @@ const MealPostAddImageSection = ({ onLoadingChange }: MealPostAddImageSectionPro
   return (
     <form onSubmit={handleAnalyzeSubmit} className="flex flex-col items-center justify-center gap-7">
       <MealPostAddImage onImagesChange={setImages} />
-      <Button variant="primary" disabled={!images.length}>
+      <Button type="submit" variant="primary" disabled={!images.length}>
         사진 올리고 분석하기
       </Button>
     </form>
