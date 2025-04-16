@@ -1,4 +1,5 @@
 import Header from '@/components/layouts/header';
+import { Suspense } from 'react';
 
 const Layout = ({
   children
@@ -7,8 +8,9 @@ const Layout = ({
 }>) => {
   return (
     <>
+      {/* TODO: Header 변경하기 */}
       <Header />
-      {children}
+      <Suspense>{children}</Suspense>
     </>
   );
 };

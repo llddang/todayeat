@@ -82,7 +82,7 @@ type UseFunnelReturnType<K extends Record<string, unknown>, T extends Extract<ke
  */
 const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K, string>>(
   initialStep: T,
-  validateStep: Record<T, (data: K[T]) => boolean>,
+  validateStep: { [Step in T]: (data: K[Step]) => boolean },
   sessionId: string = DEFAULT_SESSION_ID
 ): UseFunnelReturnType<K, T> => {
   const searchParams = useSearchParams();
