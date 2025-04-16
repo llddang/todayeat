@@ -167,7 +167,8 @@ const config: Config = {
         'chart-line-icon': 'url(/icons/chart_line.svg)',
         'kakao-logo': 'url(/kakao-logo.svg)',
         'google-logo': 'url(/google-logo.svg)',
-        'complete-confetti': 'url(/illustrations/complete-confetti.svg)'
+        'complete-confetti': 'url(/illustrations/complete-confetti.svg)',
+        'edit-4-icon': 'url(/icons/edit-4-line.svg)'
       },
       letterSpacing: {
         snug: '-0.0175rem'
