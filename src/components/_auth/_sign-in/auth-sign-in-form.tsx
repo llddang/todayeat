@@ -51,7 +51,7 @@ const AuthSignInForm = () => {
             <FormItem>
               <FormLabel className="sr-only">이메일</FormLabel>
               <FormControl>
-                <Input placeholder="이메일 형식의 아이디를 입력해주세요" {...field} />
+                <Input placeholder="이메일 형식의 아이디를 입력해 주세요" {...field} />
               </FormControl>
             </FormItem>
           )}
