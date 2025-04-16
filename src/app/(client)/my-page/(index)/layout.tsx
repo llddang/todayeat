@@ -8,13 +8,13 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <>
+    <div className="temp-layout">
       <Header />
       <div className="pt-layout">
         <Suspense>{children}</Suspense>
         <Footer />
       </div>
-    </>
+    </div>
   );
 };
 
