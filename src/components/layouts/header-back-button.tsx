@@ -11,8 +11,9 @@ const HeaderBackButton = () => {
   return (
     <header
       className={cn(
-        'z-layout fixed left-0 top-0 flex h-16 w-full items-center px-4 py-3',
-        isScrolled ? 'bg-purple-10/94 backdrop-blur-[20px]' : 'bg-transparent'
+        'fixed left-0 top-0 z-layout flex h-16 w-full items-center py-3 pl-2 pr-4',
+        isScrolled ? 'bg-purple-10/94 backdrop-blur-[20px]' : 'bg-transparent',
+        'temp-layout left-1/2 -translate-x-1/2'
       )}
     >
       <button

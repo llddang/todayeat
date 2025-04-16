@@ -1,5 +1,5 @@
 import Footer from '@/components/commons/footer';
-import Header from '@/components/layouts/header';
+import HeaderBackButton from '@/components/layouts/header-back-button';
 
 const Layout = ({
   children
@@ -7,12 +7,11 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <>
-      {/* TODO: Header 변경하기 */}
-      <Header />
-      {children}
+    <div className="temp-layout">
+      <HeaderBackButton />
+      <main className="py-layout">{children}</main>
       <Footer />
-    </>
+    </div>
   );
 };
 
