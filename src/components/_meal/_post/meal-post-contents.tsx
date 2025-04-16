@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import MealPostAddImageForm from './meal-post-add-image-form';
 import MealPostModal from './meal-post-modal';
 import useMealPostModal from '@/lib/hooks/use-meal-post-modal';
+import MealPostAddMealAiLoading from './meal-post-add-meal-ai-loading';
 
 type MealPostContentsProps = {
   isRecorded: boolean;
@@ -14,7 +15,13 @@ const MealPostContents = ({ isRecorded }: MealPostContentsProps): JSX.Element =>
   const { showModal, setShowModal, handleApproveClick, handleCancelClick } = useMealPostModal(isRecorded);
 
   // TODO: 로딩 UI merge되면 수정하기
-  if (isLoading) return <div>loading</div>;
+  if (isLoading) {
+    return (
+      <div className="flex min-h-[calc(100vh-60px)] items-center justify-center">
+        <MealPostAddMealAiLoading />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center gap-7 px-4 py-8">
