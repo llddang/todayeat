@@ -1,22 +1,23 @@
-import { redirect } from 'next/navigation';
-import AuthUpdatePasswordForm from '@/components/_auth/auth-update-password-form';
-import SITE_MAP from '@/constants/site-map.constant';
-import PUBLIC_ERROR_MESSAGE from '@/constants/public-error-message.constant';
+'use client';
+import { Typography } from '@/components/ui/typography';
+import dynamic from 'next/dynamic';
 
-type UpdatePasswordPageProps = {
-  searchParams: {
-    code?: string;
-  };
-};
-const UpdatePasswordPage = async ({ searchParams }: UpdatePasswordPageProps) => {
-  if (!searchParams.code)
-    return redirect(`${SITE_MAP.HOME}?error_code=${PUBLIC_ERROR_MESSAGE.EXPIRED_EMAIL_TOKEN.code}`);
+const SetGoalAiLoaderLottie = dynamic(() => import('@/components/_set-goal/set-goal-ai-loader-lottie'), {
+  ssr: false
+});
 
+const Report = () => {
   return (
-    <section>
-      <h2>비밀번호 변경</h2>
-      <AuthUpdatePasswordForm accessToken={searchParams.code} />
-    </section>
+    <div className="relative flex h-[calc(100vh-14rem)] w-full items-center">
+      <div className="flex w-full flex-col items-center gap-2 text-center">
+        <SetGoalAiLoaderLottie />
+        <Typography>
+          비밀번호 변경 페이지는 <br />
+          추후 개발될 예정이에요!
+        </Typography>
+      </div>
+    </div>
   );
 };
-export default UpdatePasswordPage;
+
+export default Report;
