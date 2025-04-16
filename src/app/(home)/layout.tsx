@@ -1,5 +1,5 @@
-import Header from '@/components/layouts/header';
 import GlobalNavigationBar from '@/components/layouts/global-navigation-bar';
+import HeaderWithProfile from '@/components/layouts/header-with-profile';
 
 const Layout = ({
   children
@@ -8,8 +8,8 @@ const Layout = ({
 }>) => {
   return (
     <>
-      <Header />
-      {children}
+      <HeaderWithProfile />
+      <main className="my-16">{children}</main>
       <GlobalNavigationBar />
     </>
   );
