@@ -13,8 +13,6 @@ const HeaderWithProfile = () => {
   const { user } = useUserStore();
   const isScrolled = useDetectScroll();
 
-  const profileImage = user.profileImage;
-
   return (
     <header
       className={cn(
@@ -23,9 +21,15 @@ const HeaderWithProfile = () => {
       )}
     >
       <Image src={LOGO} alt="투데잇 로고" />
-      <Link href={SITE_MAP.MY_PAGE}>
-        {profileImage ? <ProfileImage src={profileImage} size="sm" /> : <ProfileImage size="sm" />}
-      </Link>
+      {user && user.profileImage ? (
+        <Link href={SITE_MAP.MY_PAGE}>
+          <ProfileImage src={user.profileImage} size="sm" />
+        </Link>
+      ) : (
+        <Link href={SITE_MAP.SIGN_IN}>
+          <ProfileImage size="sm" />
+        </Link>
+      )}
     </header>
   );
 };
