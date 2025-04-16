@@ -136,10 +136,7 @@ const MealPostEditPage = () => {
   return (
     <div className="px-4 pb-4 pt-2">
       <FormProvider {...mealFormMethods}>
-        <form
-          onSubmit={mealFormMethods.handleSubmit(onSubmit)}
-          className="flex flex-col items-center justify-center rounded-xl"
-        >
+        <form onSubmit={mealFormMethods.handleSubmit(onSubmit)} className="flex flex-col justify-center rounded-xl">
           <MealImageCarousel imageList={foodImages} pagination={true} />
 
           <div className="mt-10 flex flex-col gap-3">
