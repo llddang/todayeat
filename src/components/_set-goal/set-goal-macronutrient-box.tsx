@@ -27,7 +27,7 @@ const SetGoalMacronutrientBox = ({ label, data }: SetGoalMacronutrientBoxProps) 
       </div>
 
       <div className="my-1.5 h-2.5 w-full overflow-hidden rounded-md bg-gray-200">
-        <div className={`h-full rounded-md ${barColor}`} style={{ width: `${data.percentage}%` }}></div>
+        <div className={`h-full rounded-md ${barColor}`} style={{ width: `${data.percentage}%` }} />
       </div>
     </div>
   );
