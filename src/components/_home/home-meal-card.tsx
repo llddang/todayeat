@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import HomeMealCardMacronutrient from '@/components/_home/home-meal-card-macronutrient';
 import HomeMealCardMemo from '@/components/_home/home-meal-card-memo';
 import { MEAL_CATEGORY_OPTIONS } from '@/constants/meal.constant';
@@ -6,7 +7,6 @@ import { MealDTO } from '@/types/DTO/meal.dto';
 import { Typography } from '@/components/ui/typography';
 import { formatAmPmKorean, formatTime } from '@/lib/utils/date.util';
 import { cn } from '@/lib/utils';
-import HomeMealCardImagePreview from '@/components/_home/home-meal-card-image-preview';
 
 type HomeMealCardProps = {
   meal: MealDTO;
@@ -48,7 +48,17 @@ const HomeMealCard = ({ meal }: HomeMealCardProps) => {
               </Typography>
             </div>
           </div>
-          <HomeMealCardImagePreview images={meal.foodImages} />
+          <div className="flex [&>*:not(:last-child)]:-mr-3">
+            {meal.foodImages?.map((image) => (
+              <img
+                key={image}
+                className="h-10 w-10 rounded-lg border border-white"
+                src={image}
+                alt="식사 사진"
+                loading="lazy"
+              />
+            ))}
+          </div>
         </div>
         <HomeMealCardMacronutrient {...macronutrients} />
         {meal.memo && <HomeMealCardMemo memo={meal.memo} />}
