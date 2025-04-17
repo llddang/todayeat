@@ -59,6 +59,7 @@ const SetGoalHeightStep = ({ userName, nextStep }: SetGoalHeightStepProps) => {
                           type="number"
                           inputMode="numeric"
                           measure="cm"
+                          step="0.1"
                           min="50"
                           max="250"
                           className="mb-2"
