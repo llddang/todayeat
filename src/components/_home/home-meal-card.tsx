@@ -1,6 +1,4 @@
 import HomeMealCardMacronutrient from '@/components/_home/home-meal-card-macronutrient';
-import HomeMealCardTimeIndicator from '@/components/_home/home-meal-card-time-indicator';
-import HomeMealCardTitle from '@/components/_home/home-meal-card-title';
 import HomeMealCardMemo from '@/components/_home/home-meal-card-memo';
 import { MEAL_CATEGORY_OPTIONS } from '@/constants/meal.constant';
 import { calculateTotalNutrition } from '@/lib/utils/nutrition-calculator.util';
@@ -8,6 +6,7 @@ import { MealDTO } from '@/types/DTO/meal.dto';
 import { Typography } from '@/components/ui/typography';
 import { formatAmPmKorean, formatTime } from '@/lib/utils/date.util';
 import { cn } from '@/lib/utils';
+import HomeMealCardImagePreview from '@/components/_home/home-meal-card-image-preview';
 
 type HomeMealCardProps = {
   meal: MealDTO;
@@ -35,7 +34,22 @@ const HomeMealCard = ({ meal }: HomeMealCardProps) => {
       </div>
       {/* TODO : Link 태그로 변경 & 식사 상세 페이지로 이동하게끔!! */}
       <div className="flex w-full flex-1 flex-col gap-4 overflow-hidden rounded-2xl bg-white p-4">
-        <HomeMealCardTitle mealLabel={mealLabel} calories={calories} images={meal.foodImages} />
+        <div className="flex items-center justify-between">
+          <div>
+            <Typography variant="body3" className="text-gray-700">
+              {mealLabel}
+            </Typography>
+            <div className="flex items-end gap-0.5">
+              <Typography variant="subTitle2" className="text-gray-900">
+                {calories}
+              </Typography>
+              <Typography variant="body3" className="text-gray-800">
+                kcal
+              </Typography>
+            </div>
+          </div>
+          <HomeMealCardImagePreview images={meal.foodImages} />
+        </div>
         <HomeMealCardMacronutrient {...macronutrients} />
         {meal.memo && <HomeMealCardMemo memo={meal.memo} />}
       </div>
