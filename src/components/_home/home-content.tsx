@@ -2,9 +2,11 @@
 import HomeAiFeedbackText from '@/components/_home/home-ai-feedback-text';
 import HomeCaloriesSummaryCard from '@/components/_home/home-calories-summary-card';
 import HomeMacroNutrientGroup from '@/components/_home/home-macronutrient-group';
-import HomeMealContainer from '@/components/_home/home-meal-container';
+import HomeMealCard from '@/components/_home/home-meal-card';
+import HomeMealEmptyCard from '@/components/_home/home-meal-empty-card';
 import CtaExampleFeedbackBanner from '@/components/commons/cta-example-feedback-banner';
 import GlassBackground from '@/components/commons/glass-background';
+import { Typography } from '@/components/ui/typography';
 import { getMyMealByDate } from '@/lib/apis/meal.api';
 import { useDashboard } from '@/lib/contexts/dashboard.context';
 import { formatDateWithDash } from '@/lib/utils/date.util';
@@ -42,7 +44,20 @@ const HomeContent = () => {
       )}
       <HomeCaloriesSummaryCard total={nutrient.calories} goal={user.personalInfo?.dailyCaloriesGoal || 0} />
       <HomeMacroNutrientGroup total={nutrient} goal={user.personalInfo} />
-      <HomeMealContainer meals={meals} />
+      <section>
+        <Typography as="h3" variant="subTitle2" className="mb-4 pt-3 text-gray-900">
+          식단 기록
+        </Typography>
+        {meals.length === 0 ? (
+          <HomeMealEmptyCard />
+        ) : (
+          <ul className="flex flex-col gap-4">
+            {meals.map((meal) => (
+              <HomeMealCard key={meal.id} meal={meal} />
+            ))}
+          </ul>
+        )}
+      </section>
     </GlassBackground>
   );
 };
