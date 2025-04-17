@@ -10,16 +10,15 @@ import IconButton from '@/components/commons/icon-button';
 import { Typography } from '@/components/ui/typography';
 import MealPostAddMealAiLoading from '@/components/_meal/_post/meal-post-add-meal-ai-loading';
 import MealPostAddMealCard from '@/components/_meal/_post/meal-post-add-meal-card';
-import { useUserStore } from '@/lib/hooks/use-user-store';
+import { useUserStore } from '@/store/user-store';
 
 type FoodFormValues = {
   menuName: string;
   weight: string;
 };
 
-
 const MealPostAddMealDrawer = () => {
-  const { user } = useUserStore();
+  const user = useUserStore((state) => state.user);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 

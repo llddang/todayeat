@@ -7,15 +7,15 @@ import CtaExampleFeedbackBanner from '@/components/commons/cta-example-feedback-
 import GlassBackground from '@/components/commons/glass-background';
 import { getMyMealByDate } from '@/lib/apis/meal.api';
 import { useDashboard } from '@/lib/contexts/dashboard.context';
-import { useUserStore } from '@/lib/hooks/use-user-store';
 import { formatDateWithDash } from '@/lib/utils/date.util';
 import { calculateTotalNutrition } from '@/lib/utils/nutrition-calculator.util';
+import { useUserStore } from '@/store/user-store';
 import { MealDTO } from '@/types/DTO/meal.dto';
 import { useEffect, useState } from 'react';
 
 const HomeContent = () => {
   const { selectedDate } = useDashboard();
-  const { user } = useUserStore();
+  const user = useUserStore((state) => state.user);
 
   const [meals, setMeals] = useState<MealDTO[]>([]);
   const nutrient = calculateTotalNutrition(meals);

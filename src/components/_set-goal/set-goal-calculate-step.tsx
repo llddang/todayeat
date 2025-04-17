@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FormSchema from '@/constants/form-schema.constant';
 import { NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
-import { updateUserPersonalInfo } from '@/lib/apis/user.api';
+import { getUser, updateUserPersonalInfo } from '@/lib/apis/user.api';
 import {
   calculateDailyNutrition,
   calculateDailyNutritionGoal,
@@ -21,8 +21,8 @@ import { isClient } from '@/lib/utils/predicate.util';
 import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
 import { CompleteType } from '@/types/set-goal.type';
 import USER_PHYSICAL_PROFILE_SCHEMA from '@/constants/user-schema.constant';
-import { useUserStore } from '@/lib/hooks/use-user-store';
 import { revalidateFunction } from '@/lib/utils/revalidate.util';
+import { useUserStore } from '@/store/user-store';
 
 type SetGoalCalculateStepProps = {
   userName: string;
@@ -42,7 +42,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStepProps) => {
-  const { refresh } = useUserStore();
+  const setUser = useUserStore((state) => state.setUser);
 
   let userPersonalGoal = {
     dailyCaloriesGoal: 0,
@@ -93,7 +93,8 @@ const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStep
 
     try {
       await updateUserPersonalInfo(userPersonalInfos);
-      refresh();
+      const user = await getUser();
+      setUser(user);
       nextStep('complete');
       // TODO 더 좋은 방법을 찾걿아
       revalidateFunction();
