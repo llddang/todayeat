@@ -1,16 +1,17 @@
 import { ChangeEvent, useRef } from 'react';
 import { getFileId } from '@/lib/utils/file.util';
 import { MAX_FILE_SIZE, MAX_MEAL_IMAGE_COUNT } from '@/constants/meal.constant';
-import { useUserStore } from '@/lib/hooks/use-user-store';
+
 import { useRouter } from 'next/navigation';
 import SITE_MAP from '@/constants/site-map.constant';
+import { useUserStore } from '@/store/user-store';
 
 type MealPostAddImageButtonProps = {
   imageFiles: File[];
   handleImageFilesChange: (files: File[]) => void;
 };
 const MealPostAddImageButton = ({ imageFiles, handleImageFilesChange }: MealPostAddImageButtonProps) => {
-  const { user } = useUserStore();
+  const user = useUserStore((state) => state.user);
   const router = useRouter();
   const inputFileRef = useRef<HTMLInputElement>(null);
 

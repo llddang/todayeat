@@ -4,11 +4,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
-import { userStore } from '@/store/user-store';
+import { signOut } from '@/lib/apis/auth-server.api';
 
 const MyPageSettingCard = () => {
   const router = useRouter();
-  const { signOut } = userStore();
 
   const handleLogout = async () => {
     alert('로그아웃 되었습니다.');

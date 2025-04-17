@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SupabaseBucket } from '@/types/supabase-bucket.type';
-import { updateUser } from '@/lib/apis/user.api';
+import { getUser, updateUser } from '@/lib/apis/user.api';
 import { uploadImage } from '@/lib/apis/storage.api';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -17,6 +17,7 @@ import { cleanupBlobUrl } from '@/lib/utils/cleanup-blob-url.util';
 import IconButton from '@/components/commons/icon-button';
 import { Typography } from '@/components/ui/typography';
 import DefaultProfile from '@/../public/illustrations/default-profile.svg';
+import { useUserStore } from '@/store/user-store';
 
 const formSchema = z.object({
   nickname: FormSchema.NICKNAME_SCHEMA,
@@ -28,10 +29,11 @@ type FormValues = z.infer<typeof formSchema>;
 type MyPageEditProfileProps = {
   userInfo: UserDTO;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  refresh: () => Promise<void>;
 };
 
-const MyPageEditProfile = ({ userInfo, setOpen, refresh }: MyPageEditProfileProps): JSX.Element => {
+const MyPageEditProfile = ({ userInfo, setOpen }: MyPageEditProfileProps): JSX.Element => {
+  const setUser = useUserStore((state) => state.setUser);
+
   const [profileState, setProfileState] = useState({
     isUploading: false,
     profilePreviewUrl: userInfo?.profileImage || null
@@ -125,7 +127,8 @@ const MyPageEditProfile = ({ userInfo, setOpen, refresh }: MyPageEditProfileProp
       profilePreviewUrl: newImageUrl
     }));
     setOpen(false);
-    await refresh();
+    const user = await getUser();
+    setUser(user);
   };
 
   return (

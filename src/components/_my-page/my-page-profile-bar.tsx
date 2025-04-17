@@ -16,11 +16,11 @@ import {
 } from '@/components/ui/drawer';
 import { useEffect, useState } from 'react';
 import MyPageEditProfile from '@/components/_my-page/my-page-edit-profile';
-import { useUserStore } from '@/lib/hooks/use-user-store';
 import { HorizontalSkeleton } from '@/components/commons/horizontal-skeleton';
+import { useUserStore } from '@/store/user-store';
 
 const MyPageProfileBar = () => {
-  const { user, refresh } = useUserStore();
+  const user = useUserStore((state) => state.user);
   const [open, setOpen] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
@@ -77,12 +77,12 @@ const MyPageProfileBar = () => {
                       여기에서 프로필을 수정하세요. 완료되면 저장 버튼을 클릭하세요.
                     </DrawerDescription>
                   </DrawerHeader>
-                  <MyPageEditProfile userInfo={user} setOpen={setOpen} refresh={refresh} />
+                  <MyPageEditProfile userInfo={user} setOpen={setOpen} />
                   <DrawerFooter>
                     <DrawerClose className="absolute right-0 top-0">
                       <button
                         type="button"
-                        className="before:bg-close-line-gray-550-icon before:block before:h-10 before:w-10 before:content-['']"
+                        className="before:block before:h-10 before:w-10 before:bg-close-line-gray-550-icon before:content-['']"
                       >
                         <span className="sr-only">닫기</span>
                       </button>

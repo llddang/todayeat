@@ -4,6 +4,7 @@ import localFont from 'next/font/local';
 import ErrorHandler from '@/components/commons/error-handler';
 import './globals.css';
 import MainBackground from '@/components/layouts/main-background';
+import UserInitialize from '@/components/commons/user-initializer';
 
 const wantedSans = localFont({
   src: '../../public/fonts/WantedSansVariable.woff2',
@@ -27,6 +28,7 @@ const RootLayout = ({
           <ErrorHandler />
         </Suspense>
         <MainBackground>{children}</MainBackground>
+        <UserInitialize />
       </body>
     </html>
   );
