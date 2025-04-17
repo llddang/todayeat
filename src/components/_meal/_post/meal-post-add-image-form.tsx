@@ -50,7 +50,7 @@ const MealPostAddImageForm = ({ onLoadingChange }: MealPostAddImageFormProps): J
   };
 
   return (
-    <form onSubmit={handleAnalyzeSubmit} className="flex flex-col items-center justify-center gap-7">
+    <form onSubmit={handleAnalyzeSubmit} className="flex w-full flex-col items-center justify-center gap-7">
       <MealPostAddImage onImagesChange={setImages} />
       <Button type="submit" variant="primary" disabled={!images.length}>
         사진 올리고 분석하기

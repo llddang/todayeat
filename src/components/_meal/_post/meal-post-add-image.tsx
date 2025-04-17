@@ -1,11 +1,14 @@
 'use client';
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import MealPostAddImagePreviewGallery from '@/components/_meal/_post/meal-post-add-image-preview-gallery';
 import { useUserStore } from '@/store/user-store';
 import { getFileId } from '@/lib/utils/file.util';
+import { cleanupBlobUrl } from '@/lib/utils/cleanup-blob-url.util';
 import { MAX_FILE_SIZE, MAX_MEAL_IMAGE_COUNT } from '@/constants/meal.constant';
 import SITE_MAP from '@/constants/site-map.constant';
+import PIC_LINE from '@/../public/icons/pic_line.svg';
+import CLOSE_LINE from '@/../public/icons/close_line.svg';
 
 type MealPostAddImageProps = {
   onImagesChange?: (files: File[]) => void;
@@ -17,9 +20,17 @@ const MealPostAddImage = ({ onImagesChange }: MealPostAddImageProps) => {
 
   const [imageFiles, setImageFiles] = useState<File[]>([]);
 
+  const previewImages = imageFiles.map((file) => ({ imageUrl: URL.createObjectURL(file), fileId: getFileId(file) }));
+  const emptyImageCount = MAX_MEAL_IMAGE_COUNT - imageFiles.length;
+  const emptyImages = Array(emptyImageCount).fill(1);
+
   const handleImageFilesChange = (newFiles: File[]) => {
     setImageFiles(newFiles);
     if (onImagesChange) onImagesChange(newFiles);
+  };
+
+  const handleRemoveImage = (fileId: string) => {
+    handleImageFilesChange(imageFiles.filter((file) => getFileId(file) !== fileId));
   };
 
   const handleInputFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -40,6 +51,12 @@ const MealPostAddImage = ({ onImagesChange }: MealPostAddImageProps) => {
 
     handleImageFilesChange([...imageFiles, ...fileArray]);
   };
+
+  useEffect(() => {
+    return () => {
+      previewImages.forEach(({ imageUrl }) => cleanupBlobUrl(imageUrl));
+    };
+  }, [previewImages]);
 
   return (
     <div className="w-full rounded-3xl bg-white/50 p-4 backdrop-blur-[50px] [&>*:not(:last-child)]:mb-3">
@@ -71,7 +88,33 @@ const MealPostAddImage = ({ onImagesChange }: MealPostAddImageProps) => {
         <span className="text-sm leading-[140%] tracking-snug text-gray-600">사진은 최대 3개까지 등록 가능합니다</span>
       </button>
       {imageFiles.length !== 0 && (
-        <MealPostAddImagePreviewGallery imageFiles={imageFiles} handleImageFilesChange={handleImageFilesChange} />
+        <ul className="flex w-full gap-3">
+          {previewImages.map(({ imageUrl, fileId }, index) => (
+            <li
+              key={fileId}
+              className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl"
+            >
+              <Image
+                src={imageUrl}
+                alt={`음식 ${index} 이미지`}
+                width="100"
+                height="100"
+                className="h-full w-full object-cover"
+              />
+              <button
+                onClick={() => handleRemoveImage(fileId)}
+                className="absolute right-[0.37rem] top-[0.37rem] rounded-full bg-white/80 p-1.5 backdrop-blur-[10px]"
+              >
+                <Image src={CLOSE_LINE} alt="닫기 이모지" className="h-3 w-3" />
+              </button>
+            </li>
+          ))}
+          {emptyImages.map((_, index) => (
+            <li key={index} className="flex aspect-square w-full items-center justify-center rounded-2xl bg-white/50">
+              <Image src={PIC_LINE} alt="비어있는 이미지 슬롯" />
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
