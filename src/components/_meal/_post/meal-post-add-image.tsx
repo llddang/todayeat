@@ -57,6 +57,7 @@ const MealPostAddImage = ({ onImagesChange }: MealPostAddImageProps) => {
   const handleUploadButtonClick = (e: React.MouseEvent) => {
     e.preventDefault();
 
+    // TODO: 비로그인 유저도 식사 기록할 수 있도록 삭제
     if (!user.id) {
       alert(ALERT_MESSAGES.LOGIN_REQUIRED);
       router.push(SITE_MAP.SIGN_IN);
