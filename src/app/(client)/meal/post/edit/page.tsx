@@ -33,6 +33,10 @@ import MealEditCalendar from '@/components/_meal/_edit/meal-edit-calendar';
 import GlassBackground from '@/components/commons/glass-background';
 import { useRouter } from 'next/navigation';
 import SITE_MAP from '@/constants/site-map.constant';
+import dynamic from 'next/dynamic';
+const SetGoalAiLoaderLottie = dynamic(() => import('@/components/_set-goal/set-goal-ai-loader-lottie'), {
+  ssr: false
+});
 
 const MealPostEditPage = () => {
   const mealFormMethods = useForm<MealEditFormDataType>({
@@ -84,6 +88,7 @@ const MealPostEditPage = () => {
     hours: '12',
     minutes: '00'
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const date = mealFormMethods.watch('date');
   const mealList = mealFormMethods.watch('mealList');
@@ -91,26 +96,27 @@ const MealPostEditPage = () => {
   const onSubmit = async (data: MealEditFormDataType) => {
     const files = await Promise.all(foodImages.map((url, idx) => urlToFile(url, idx)));
     const imagesFormData = new FormData();
-
+    setIsLoading(true);
     try {
       if (!data) {
         return alert(' 데이터 형식이 올바르지 않습니다.');
       }
 
-      const { date, day } = data;
-
+      const { date, day, memo, mealCategory } = data;
       const ateAt = convertToTimestamp(day, date);
-      const { memo, mealCategory } = data;
+
       for (const file of files) {
         imagesFormData.append('file', file);
         await uploadImage('meal', imagesFormData);
       }
+
       const newMeals = {
         foodImages,
         ateAt,
         mealCategory,
         memo
       };
+
       const newMealDetails = mealList.map((meal) => ({
         menuName: meal.menuName,
         weight: meal.weight,
@@ -125,14 +131,23 @@ const MealPostEditPage = () => {
         newMealDetails
       );
       if (mealDetails) {
-        router.push(SITE_MAP.HOME);
         await deleteMealAnalysisDetail();
+        setIsLoading(false);
+        router.push(SITE_MAP.HOME);
       }
     } catch (err) {
       alert('식사 정보 등록에 실패하였습니다. 잠시후 다시 시도해주세요');
       console.error('등록에 실패 했습니다. ', err);
     }
   };
+
+  if (isLoading)
+    return (
+      <div className="flex min-h-[calc(100vh-60px)] items-center justify-center">
+        <SetGoalAiLoaderLottie />
+      </div>
+    );
+
   return (
     <div className="px-4 pb-4 pt-2">
       <FormProvider {...mealFormMethods}>
