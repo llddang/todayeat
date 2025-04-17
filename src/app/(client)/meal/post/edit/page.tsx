@@ -96,12 +96,12 @@ const MealPostEditPage = () => {
   const onSubmit = async (data: MealEditFormDataType) => {
     const files = await Promise.all(foodImages.map((url, idx) => urlToFile(url, idx)));
     const imagesFormData = new FormData();
-
+    setIsLoading(true);
     try {
       if (!data) {
         return alert(' 데이터 형식이 올바르지 않습니다.');
       }
-      setIsLoading(true);
+
       const { date, day, memo, mealCategory } = data;
       const ateAt = convertToTimestamp(day, date);
 
@@ -141,7 +141,7 @@ const MealPostEditPage = () => {
     }
   };
 
-  if (isLoading)
+  if (!isLoading)
     return (
       <div className="flex min-h-[calc(100vh-60px)] items-center justify-center">
         <SetGoalAiLoaderLottie />
