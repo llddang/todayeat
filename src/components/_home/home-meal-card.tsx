@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import HomeMealCardMacronutrient from '@/components/_home/home-meal-card-macronutrient';
-import HomeMealCardMemo from '@/components/_home/home-meal-card-memo';
 import { MEAL_CATEGORY_OPTIONS } from '@/constants/meal.constant';
 import { calculateTotalNutrition } from '@/lib/utils/nutrition-calculator.util';
 import { MealDTO } from '@/types/DTO/meal.dto';
@@ -61,7 +60,21 @@ const HomeMealCard = ({ meal }: HomeMealCardProps) => {
           </div>
         </div>
         <HomeMealCardMacronutrient {...macronutrients} />
-        {meal.memo && <HomeMealCardMemo memo={meal.memo} />}
+        {meal.memo && (
+          <div
+            className={cn(
+              'flex items-center gap-1 border-t border-gray-200 pt-[calc(1rem-1px)]',
+              'before:h-[1.125rem] before:w-[1.125rem] before:bg-edit-4-icon before:bg-contain before:bg-center before:bg-no-repeat'
+            )}
+          >
+            <Typography
+              variant="body3"
+              className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-gray-700"
+            >
+              {meal.memo}
+            </Typography>
+          </div>
+        )}
       </div>
     </li>
   );
