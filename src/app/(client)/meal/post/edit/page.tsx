@@ -141,7 +141,7 @@ const MealPostEditPage = () => {
     }
   };
 
-  if (!isLoading)
+  if (isLoading)
     return (
       <div className="flex min-h-[calc(100vh-60px)] items-center justify-center">
         <SetGoalAiLoaderLottie />
