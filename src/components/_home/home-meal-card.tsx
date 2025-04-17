@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import HomeMealCardMacronutrient from '@/components/_home/home-meal-card-macronutrient';
 import { MEAL_CATEGORY_OPTIONS } from '@/constants/meal.constant';
 import { calculateTotalNutrition } from '@/lib/utils/nutrition-calculator.util';
 import { MealDTO } from '@/types/DTO/meal.dto';
 import { Typography } from '@/components/ui/typography';
 import { formatAmPmKorean, formatTime } from '@/lib/utils/date.util';
 import { cn } from '@/lib/utils';
+import MacronutrientGroup from '@/components/commons/macronutrient-group';
 
 type HomeMealCardProps = {
   meal: MealDTO;
@@ -59,7 +59,7 @@ const HomeMealCard = ({ meal }: HomeMealCardProps) => {
             ))}
           </div>
         </div>
-        <HomeMealCardMacronutrient {...macronutrients} />
+        <MacronutrientGroup {...macronutrients} />
         {meal.memo && (
           <div
             className={cn(

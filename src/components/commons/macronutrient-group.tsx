@@ -1,18 +1,20 @@
+import { HTMLAttributes } from 'react';
 import MacronutrientBox from '@/components/commons/macronutrient-box';
+import { cn } from '@/lib/utils';
 import { NutritionEnum } from '@/types/nutrition.type';
 
-type HomeMealCardMacronutrientGroupProps = {
+type MacronutrientGroupProps = HTMLAttributes<HTMLDivElement> & {
   carbohydrate: number;
   protein: number;
   fat: number;
 };
-const HomeMealCardMacronutrient = ({ carbohydrate, protein, fat }: HomeMealCardMacronutrientGroupProps) => {
+const MacronutrientGroup = ({ carbohydrate, protein, fat, className, ...props }: MacronutrientGroupProps) => {
   return (
-    <div className="flex gap-4">
+    <div className={cn('flex gap-4', className)} {...props}>
       <MacronutrientBox variety={NutritionEnum.CARBOHYDRATE} value={carbohydrate} />
       <MacronutrientBox variety={NutritionEnum.PROTEIN} value={protein} />
       <MacronutrientBox variety={NutritionEnum.FAT} value={fat} />
     </div>
   );
 };
-export default HomeMealCardMacronutrient;
+export default MacronutrientGroup;
