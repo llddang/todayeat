@@ -55,7 +55,7 @@ export const getMyMealByDate = async (date: string): Promise<MealDTO[]> => {
     .select(` *, meal_details (*) `)
     .gte('ate_at', `${date}T00:00:00Z`)
     .lt('ate_at', `${date}T24:00:00Z`)
-    .order('ate_at', { ascending: false });
+    .order('ate_at', { ascending: true });
   if (error) throw error;
 
   return snakeToCamelObject<MealSnakeCaseDTO[]>(data);
