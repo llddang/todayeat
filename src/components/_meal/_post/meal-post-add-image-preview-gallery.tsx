@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
-import MealPostAddImageEmptyBox from '@/components/_meal/_post/meal-post-add-image-empty-box';
+import Image from 'next/image';
 import MealPostAddImagePreviewBox from '@/components/_meal/_post/meal-post-add-image-preview-box';
 import { MAX_MEAL_IMAGE_COUNT } from '@/constants/meal.constant';
 import { cleanupBlobUrl } from '@/lib/utils/cleanup-blob-url.util';
 import { getFileId } from '@/lib/utils/file.util';
+import PIC_LINE from '@/../public/icons/pic_line.svg';
 
 type MealPostAddImagePreviewGalleryProps = {
   imageFiles: File[];
@@ -40,7 +41,9 @@ const MealPostAddImagePreviewGallery = ({
         />
       ))}
       {emptyImages.map((_, index) => (
-        <MealPostAddImageEmptyBox key={index} />
+        <li key={index} className="flex aspect-square w-full items-center justify-center rounded-2xl bg-white/50">
+          <Image src={PIC_LINE} alt="비어있는 이미지 슬롯" />
+        </li>
       ))}
     </ul>
   );
