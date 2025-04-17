@@ -35,7 +35,7 @@ export const useUserStore = create<UserStore>()(
 
 export const initializeAuthListener = () => {
   browserClient.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+    if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'INITIAL_SESSION') {
       if (session) {
         try {
           const user = await getUser();
