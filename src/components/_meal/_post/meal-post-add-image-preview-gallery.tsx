@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import Image from 'next/image';
-import MealPostAddImagePreviewBox from '@/components/_meal/_post/meal-post-add-image-preview-box';
 import { MAX_MEAL_IMAGE_COUNT } from '@/constants/meal.constant';
 import { cleanupBlobUrl } from '@/lib/utils/cleanup-blob-url.util';
 import { getFileId } from '@/lib/utils/file.util';
 import PIC_LINE from '@/../public/icons/pic_line.svg';
+import CLOSE_LINE from '@/../public/icons/close_line.svg';
 
 type MealPostAddImagePreviewGalleryProps = {
   imageFiles: File[];
@@ -32,13 +32,25 @@ const MealPostAddImagePreviewGallery = ({
 
   return (
     <ul className="flex w-full gap-3">
-      {previewImages.map((preview, index) => (
-        <MealPostAddImagePreviewBox
-          key={preview.fileId}
-          name={`음식 ${index}`}
-          {...preview}
-          onRemove={handleRemoveImage}
-        />
+      {previewImages.map(({ imageUrl, fileId }, index) => (
+        <div
+          key={fileId}
+          className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl"
+        >
+          <Image
+            src={imageUrl}
+            alt={`음식 ${index} 이미지`}
+            width="100"
+            height="100"
+            className="h-full w-full object-cover"
+          />
+          <button
+            onClick={() => handleRemoveImage(fileId)}
+            className="absolute right-[0.37rem] top-[0.37rem] rounded-full bg-white/80 p-1.5 backdrop-blur-[10px]"
+          >
+            <Image src={CLOSE_LINE} alt="닫기 이모지" className="h-3 w-3" />
+          </button>
+        </div>
       ))}
       {emptyImages.map((_, index) => (
         <li key={index} className="flex aspect-square w-full items-center justify-center rounded-2xl bg-white/50">
