@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { UserDTO } from '@/types/DTO/user.dto';
+import { browserClient } from '@/lib/utils/supabase/client.util';
 import { getUser } from '@/lib/apis/user.api';
-import { getAuth, signOut } from '@/lib/apis/auth-server.api';
 
 type UserStore = {
   user: UserDTO;
-  setAuthenticatedUser: () => Promise<void>;
-  signOut: () => Promise<void>;
+  setUser: (user: UserDTO) => void;
+  resetUser: () => void;
 };
 
 const initialUser: UserDTO = {
@@ -19,29 +19,12 @@ const initialUser: UserDTO = {
   personalInfo: null
 };
 
-export const userStore = create<UserStore>()(
+export const useUserStore = create<UserStore>()(
   persist(
     (set) => ({
       user: initialUser,
-      setAuthenticatedUser: async () => {
-        try {
-          const { isAuthenticated } = await getAuth();
-          if (!isAuthenticated) return;
-
-          const user = await getUser();
-          set({ user });
-        } catch (error) {
-          console.error('유저 정보 가져오기 실패:', error);
-        }
-      },
-      signOut: async () => {
-        try {
-          await signOut();
-          set({ user: initialUser });
-        } catch (error) {
-          console.error('로그아웃 실패:', error);
-        }
-      }
+      setUser: (user: UserDTO) => set({ user }),
+      resetUser: () => set({ user: initialUser })
     }),
     {
       name: 'user-storage',
@@ -49,3 +32,22 @@ export const userStore = create<UserStore>()(
     }
   )
 );
+
+export const initializeAuthListener = () => {
+  browserClient.auth.onAuthStateChange(async (event, session) => {
+    if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+      if (session) {
+        try {
+          const user = await getUser();
+          if (user) {
+            useUserStore.getState().setUser(user);
+          }
+        } catch (error) {
+          console.error('Failed to fetch user data:', error);
+        }
+      }
+    } else if (event === 'SIGNED_OUT') {
+      useUserStore.getState().resetUser();
+    }
+  });
+};
