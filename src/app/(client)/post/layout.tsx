@@ -1,5 +1,5 @@
-import Header from '@/components/layouts/header';
-import GlobalNavigationBar from '@/components/layouts/global-navigation-bar';
+import Header from '@/components/layouts/header/header';
+import GlobalNavigationBar from '@/components/layouts/global-navigation-bar/global-navigation-bar';
 
 const Layout = ({
   children

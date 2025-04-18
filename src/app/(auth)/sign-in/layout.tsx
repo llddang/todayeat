@@ -1,5 +1,5 @@
 import Footer from '@/components/commons/footer';
-import HeaderBackButton from '@/components/layouts/header-back-button';
+import HeaderBackButton from '@/components/layouts/header/header-back-button';
 
 const Layout = ({
   children

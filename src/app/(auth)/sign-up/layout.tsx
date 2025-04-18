@@ -1,4 +1,4 @@
-import Header from '@/components/layouts/header';
+import Header from '@/components/layouts/header/header';
 import { Suspense } from 'react';
 
 const Layout = ({
