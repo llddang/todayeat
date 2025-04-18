@@ -10,14 +10,14 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 
-type MealPostModalProps = {
+type ModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onApproveClickHandler: () => void;
   onCancelClickHandler: () => void;
 };
 // TODO: 임시 디자인
-const MealPostModal = ({ open, onOpenChange, onApproveClickHandler, onCancelClickHandler }: MealPostModalProps) => {
+const Modal = ({ open, onOpenChange, onApproveClickHandler, onCancelClickHandler }: ModalProps) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
@@ -39,4 +39,4 @@ const MealPostModal = ({ open, onOpenChange, onApproveClickHandler, onCancelClic
   );
 };
 
-export default MealPostModal;
+export default Modal;
