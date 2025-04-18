@@ -1,10 +1,10 @@
 'use client';
 
-import AuthSignUpFunnel from '@/components/_auth/_sign-up/auth-sign-up-funnel';
-import AuthSignUpProgressBar from '@/components/_auth/_sign-up/auth-sign-up-progress-bar';
+import AuthSignUpFunnel from '@/app/(auth)/sign-up/components/auth-sign-up-funnel';
+import AuthSignUpProgressBar from '@/app/(auth)/sign-up/components/auth-sign-up-progress-bar';
 import GlassBackground from '@/components/commons/glass-background';
-import { STEP_UI_CONFIG } from '@/constants/set-goal.constant';
-import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
+import { STEP_UI_CONFIG } from '@/app/(auth)/sign-up/constants/set-goal.constant';
+import { getPercentage } from '@/utils/nutrition-calculator.util';
 import { SignUpFunnelStep } from '@/types/sign-up-funnel-type';
 import { useSearchParams } from 'next/navigation';
 

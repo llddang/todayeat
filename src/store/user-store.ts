@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { UserDTO } from '@/types/DTO/user.dto';
-import { browserClient } from '@/lib/utils/supabase/client.util';
-import { getUser } from '@/lib/apis/user.api';
+import { browserClient } from '@/lib/supabase/client';
+import { getUser } from '@/apis/user.api';
 
 type UserStore = {
   user: UserDTO;

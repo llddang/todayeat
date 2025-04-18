@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 import { Typography } from '@/components/ui/typography';
 import { useEffect } from 'react';
 
-const AiLoaderLottie = dynamic(() => import('./ai-loader-lottie'), {
+const AiLoaderLottie = dynamic(() => import('@/components/commons/ai-loader-lottie'), {
   ssr: false
 });
 
@@ -12,9 +12,12 @@ type StepAiLoadingProps = {
 
 const StepAiLoading = ({ nextStep }: StepAiLoadingProps) => {
   useEffect(() => {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       nextStep();
     }, 3000);
+    return () => {
+      clearTimeout(timeout);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

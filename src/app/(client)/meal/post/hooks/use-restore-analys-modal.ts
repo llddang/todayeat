@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { deleteMealAnalysisDetail } from '@/lib/apis/meal.api';
+import { deleteMealAnalysisDetail } from '@/apis/meal.api';
 import SITE_MAP from '@/constants/site-map.constant';
 
 const useRestoreAnalysisModal = (isRecorded: boolean = false) => {

@@ -36,7 +36,6 @@ export type NutritionEnumType = keyof typeof NutritionEnum;
 
 export type MacronutrientValues = {
   label: string;
-  unit: string;
   color: string;
   beforeBgColor: string;
 };

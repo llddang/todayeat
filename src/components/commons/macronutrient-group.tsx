@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react';
 import MacronutrientBox from '@/components/commons/macronutrient-box';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/shadcn';
 import { NutritionEnum } from '@/types/nutrition.type';
 
 type MacronutrientGroupProps = HTMLAttributes<HTMLDivElement> & {

@@ -1,11 +1,11 @@
 'use client';
 
-import MealImageCarousel from '@/components/_meal/meal-images-carousel';
+import MealImageCarousel from '@/app/(client)/meal/components/meal-images-carousel';
 import TagSelectItem from '@/components/commons/tag-select-item';
 import Textarea from '@/components/commons/textarea';
 import { Typography } from '@/components/ui/typography';
-import { getFoodAnalysisDetail, getFoodImagesById } from '@/lib/apis/analysis-request.api';
-import { getUser } from '@/lib/apis/user.api';
+import { getAiResponses, getFoodImagesById } from '@/apis/analysis-request.api';
+import { getUser } from '@/apis/user.api';
 import { MealCategory } from '@/types/meal-category.type';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
@@ -23,18 +23,18 @@ import {
 } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import IconButton from '@/components/commons/icon-button';
-import { urlToFile } from '@/lib/utils/file.util';
-import { uploadImage } from '@/lib/apis/storage.api';
-import { convertToTimestamp } from '@/lib/utils/date.util';
-import { createMealWithDetails, deleteMealAnalysisDetail } from '@/lib/apis/meal.api';
+import { uploadImage } from '@/apis/storage.api';
+import { formatTimestamp } from '@/utils/format.util';
+import { createMealWithDetails, deleteMealAnalysisDetail } from '@/apis/meal.api';
 import { MealDTO } from '@/types/DTO/meal.dto';
-import MealEditCalendar from '@/components/_meal/_edit/meal-edit-calendar';
+import MealEditCalendar from '@/app/(client)/meal/post/edit/components/meal-edit-calendar';
 import GlassBackground from '@/components/commons/glass-background';
 import { useRouter } from 'next/navigation';
 import SITE_MAP from '@/constants/site-map.constant';
 import dynamic from 'next/dynamic';
 import EditCard from './components/edit-card';
-const SetGoalAiLoaderLottie = dynamic(() => import('@/components/_set-goal/set-goal-ai-loader-lottie'), {
+import { urlToFile } from '../../utils/file.util';
+const AiLoaderLottie = dynamic(() => import('@/components/commons/ai-loader-lottie'), {
   ssr: false
 });
 
@@ -62,10 +62,10 @@ const MealPostEditPage = () => {
     const fetchFoodAnalysisRequests = async () => {
       const { id: userId } = await getUser();
       const { data: initialImages } = await getFoodImagesById(userId);
-      const mealList = await getFoodAnalysisDetail();
+      const mealList = await getAiResponses();
 
       if (initialImages) {
-        setFoodImages(initialImages?.image_urls);
+        setFoodImages(initialImages?.imageUrls);
       }
       if (mealList) {
         mealFormMethods.setValue('mealList', mealList);
@@ -103,7 +103,7 @@ const MealPostEditPage = () => {
       }
 
       const { date, day, memo, mealCategory } = data;
-      const ateAt = convertToTimestamp(day, date);
+      const ateAt = formatTimestamp(day, date);
 
       for (const file of files) {
         imagesFormData.append('file', file);
@@ -126,6 +126,8 @@ const MealPostEditPage = () => {
         fat: meal.fat
       }));
 
+      console.log(newMealDetails);
+
       const { mealDetails } = await createMealWithDetails(
         newMeals as Pick<MealDTO, 'ateAt' | 'foodImages' | 'memo' | 'mealCategory'>,
         newMealDetails
@@ -144,7 +146,7 @@ const MealPostEditPage = () => {
   if (isLoading)
     return (
       <div className="flex min-h-[calc(100vh-60px)] items-center justify-center">
-        <SetGoalAiLoaderLottie />
+        <AiLoaderLottie />
       </div>
     );
 

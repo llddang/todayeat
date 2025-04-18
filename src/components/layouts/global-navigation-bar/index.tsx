@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import GlobalNavigationBarItem from './item';
 import SITE_MAP from '@/constants/site-map.constant';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/shadcn';
 
 const HOME = 'home';
 const REPORT = 'report';

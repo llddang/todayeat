@@ -1,16 +1,11 @@
 import { NextResponse } from 'next/server';
 import { AI_ERROR_KEYS, AI_ERROR_MESSAGE, isAIErrorResponse } from '@/constants/ai-error-message.constant';
-import {
-  createFoodAnalysisRequestDetails,
-  createFoodAnalysisRequests,
-  getFoodImagesById
-} from '@/lib/apis/analysis-request.api';
-import { generateFoodAnalysisByImage } from '@/lib/apis/gemini.api';
-import { convertImageUrlToBase64 } from '@/lib/utils/convert-image-to-base64.util';
-import { parseGeminiResponse } from '@/lib/utils/gemini.util';
-import { FoodAnalysisRequestsDetailDTO } from '@/types/DTO/food_analysis.dto';
-import { FoodAnalysisResult, ImageContent } from '@/types/gemini.type';
-import { uploadImage } from '@/lib/apis/storage.api';
+import { createFoodAnalysisRequestDetails, createAiRequest, getFoodImagesById } from '@/apis/analysis-request.api';
+import { generateFoodAnalysisByImage } from '@/apis/gemini.api';
+import { parseGeminiResponse } from '@/lib/gemini';
+import { ImageContent } from '@/types/gemini.type';
+import { uploadImage } from '@/apis/storage.api';
+import { CreateAiFullResponseDTO } from '@/types/DTO/ai_analysis.dto';
 
 export const POST = async (req: Request) => {
   try {
@@ -42,7 +37,7 @@ export const POST = async (req: Request) => {
         uploadedUrls.push(publicUrl);
       }
 
-      const { error: insertTempError } = await createFoodAnalysisRequests(userId, uploadedUrls);
+      const { error: insertTempError } = await createAiRequest(userId, uploadedUrls);
 
       if (insertTempError) {
         console.error('임시 테이블 저장 실패:', insertTempError);
@@ -54,14 +49,14 @@ export const POST = async (req: Request) => {
 
     const { data, error } = await getFoodImagesById(userId);
 
-    if (error || !data?.image_urls) {
+    if (error || !data?.imageUrls) {
       console.error('Supabase 에러:', error);
       return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.IMAGE_NOT_FOUND), {
         status: AI_ERROR_MESSAGE.IMAGE_NOT_FOUND.status
       });
     }
 
-    const imageUrls: string[] = data.image_urls;
+    const imageUrls: string[] = data.imageUrls;
 
     const base64Images: ImageContent[] = await Promise.all(imageUrls.map(convertImageUrlToBase64));
 
@@ -76,7 +71,7 @@ export const POST = async (req: Request) => {
       });
     }
 
-    const insertPayload: FoodAnalysisRequestsDetailDTO[] = parsedResult.map((item: FoodAnalysisResult) => ({
+    const insertPayload: CreateAiFullResponseDTO[] = parsedResult.map((item) => ({
       ...item,
       userId
     }));
@@ -93,5 +88,27 @@ export const POST = async (req: Request) => {
   } catch (error) {
     console.error('분석 에러:', error);
     return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.UNKNOWN), { status: AI_ERROR_MESSAGE.UNKNOWN.status });
+  }
+};
+
+const convertImageUrlToBase64 = async (url: string): Promise<ImageContent> => {
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`이미지 불러오기 실패: ${response.status} ${response.statusText}`);
+    }
+
+    const buffer: ArrayBuffer = await response.arrayBuffer();
+    const mimeType = response.headers.get('content-type') || 'image/jpeg';
+    return {
+      inlineData: {
+        data: Buffer.from(buffer).toString('base64'),
+        mimeType
+      }
+    };
+  } catch (error) {
+    console.error('이미지 인코딩 실패 :', error);
+    throw new Error('이미지 인코딩에 실패하였습니다.');
   }
 };

@@ -3,25 +3,21 @@
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import FormSchema from '@/constants/form-schema.constant';
+import formSchema from '@/app/schemas/form-schema.schema';
 import { NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
-import { getUser, updateUserPersonalInfo } from '@/lib/apis/user.api';
-import {
-  calculateDailyNutrition,
-  calculateDailyNutritionGoal,
-  getPercentage
-} from '@/lib/utils/nutrition-calculator.util';
+import { getUser, updateUserPersonalInfo } from '@/apis/user.api';
+import { calculateDailyNutrition, calculateDailyNutritionGoal, getPercentage } from '@/utils/nutrition-calculator.util';
 import { Typography } from '@/components/ui/typography';
 import { ControllerRenderProps, useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { isClient } from '@/lib/utils/predicate.util';
-import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
-import USER_PHYSICAL_PROFILE_SCHEMA from '@/constants/user-schema.constant';
+import { isClient } from '@/utils/predicate.util';
 import { useUserStore } from '@/store/user-store';
 import MacronutrientBox from './macronutrient-box';
 import { StepCompleteType } from '../types/funnel.type';
+import { formatNumberWithComma } from '@/utils/format.util';
+import { userPhysicalProfileSchema } from '../schemas/user-physical-profile.schema';
 
 type StepCalculateProps = {
   userName: string;
@@ -34,11 +30,11 @@ export type PersonalMacronutrientData = {
   percentage: number;
 };
 
-const formSchema = z.object({
-  calories: FormSchema.ONLY_NUMBER_SCHEMA
+const caloriesFormSchema = z.object({
+  calories: formSchema.ONLY_NUMBER_SCHEMA
 });
 
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof caloriesFormSchema>;
 
 const StepCalculate = ({ nextStep, userName, data }: StepCalculateProps) => {
   const setUser = useUserStore((state) => state.setUser);
@@ -51,7 +47,7 @@ const StepCalculate = ({ nextStep, userName, data }: StepCalculateProps) => {
   };
 
   if (isClient()) {
-    const parseResult = USER_PHYSICAL_PROFILE_SCHEMA.safeParse(data);
+    const parseResult = userPhysicalProfileSchema.safeParse(data);
     if (parseResult.success) {
       userPersonalGoal = calculateDailyNutritionGoal(parseResult.data);
     }
@@ -63,7 +59,7 @@ const StepCalculate = ({ nextStep, userName, data }: StepCalculateProps) => {
   });
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(caloriesFormSchema),
     defaultValues: {
       calories: String(userPersonalInfos.dailyCaloriesGoal) || ''
     }

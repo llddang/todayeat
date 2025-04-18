@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Typography } from '@/components/ui/typography';
-import FormSchema from '@/constants/form-schema.constant';
+import formSchema from '@/app/schemas/form-schema.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -12,15 +12,15 @@ type StepAgeProps = {
   nextStep: (data: number) => void;
 };
 
-const formSchema = z.object({
-  age: FormSchema.ONLY_NUMBER_SCHEMA
+const ageFormSchema = z.object({
+  age: formSchema.ONLY_NUMBER_SCHEMA
 });
 
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof ageFormSchema>;
 
 const StepAge = ({ userName, nextStep }: StepAgeProps) => {
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(ageFormSchema),
     defaultValues: {
       age: ''
     }

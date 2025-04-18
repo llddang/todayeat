@@ -2,8 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import SITE_MAP from '@/constants/site-map.constant';
 import LOGO from '@/../public/logo.svg';
-import { getAuth } from '@/lib/apis/auth-server.api';
-import { getUser } from '@/lib/apis/user.api';
+import { getAuth } from '@/apis/auth-server.api';
+import { getUser } from '@/apis/user.api';
 import ProfileImage from '@/components/commons/profile-image';
 import HeaderLayer from '@/components/layouts/header/header-wrapper';
 
