@@ -36,23 +36,9 @@ export type NutritionEnumType = keyof typeof NutritionEnum;
 
 export type MacronutrientValues = {
   label: string;
-  unit: string;
   color: string;
   beforeBgColor: string;
 };
-
-export const MeasurementUnitEnum = {
-  KCAL: 'KCAL',
-  GRAM: 'GRAM'
-} as const;
-
-export type MeasurementUnitValues = {
-  label: string;
-  name: string;
-  unit: string;
-};
-
-export type MeasurementUnitType = keyof typeof MeasurementUnitEnum;
 
 export type DailyMealCalories = {
   [key in string]: { calories: number; caloriesGoal: number };

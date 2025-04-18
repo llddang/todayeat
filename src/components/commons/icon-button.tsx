@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { cva, VariantProps } from 'class-variance-authority';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/shadcn';
 const iconButtonVariants = cva(
   'flex items-center object-contain cursor-pointer  rounded-full justify-center flex-shrink-0 backdrop-blur-[10px] bg-no-repeat bg-center before:content-[""] before:bg-contain before:bg-no-repeat before:block ',
   {

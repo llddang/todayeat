@@ -1,7 +1,7 @@
 'use client';
 
 import { Typography } from '@/components/ui/typography';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/shadcn';
 import { FormEvent, forwardRef, useImperativeHandle, useMemo, useRef, useState } from 'react';
 
 type TextareaProps = Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'maxLength'> & {
@@ -41,7 +41,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(({ className, ma
       )}
     >
       <textarea
-        className="flex-1 resize-none caret-purple-300 typography-body1 focus:border-none focus:outline-none focus:ring-0 focus-visible:ring-0"
+        className="flex-1 resize-none caret-purple-300 typography-body1 focus:border-none focus:text-gray-900 focus:outline-none focus:ring-0 focus-visible:ring-0"
         maxLength={maxLength}
         ref={textareaRef}
         onInput={handleInput}

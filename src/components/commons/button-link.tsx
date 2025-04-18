@@ -3,7 +3,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import Link from 'next/link';
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/shadcn';
 
 const buttonLinkVariants = cva(
   'py-[0.625rem] inline-flex items-center justify-center gap-1 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none',

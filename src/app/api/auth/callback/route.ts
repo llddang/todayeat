@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getServerClient } from '@/lib/utils/supabase/server.util';
+import { getServerClient } from '@/lib/supabase/server';
 import SITE_MAP from '@/constants/site-map.constant';
 // The client you created from the Server-Side Auth instructions
 

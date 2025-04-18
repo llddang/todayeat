@@ -1,6 +1,6 @@
 import Footer from '@/components/commons/footer';
 import GlobalNavigationBar from '@/components/layouts/global-navigation-bar';
-import HeaderWithProfile from '@/components/layouts/header-with-profile';
+import HeaderWithProfile from '@/components/layouts/header/variants/header-with-profile';
 
 const Layout = ({
   children

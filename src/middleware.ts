@@ -1,4 +1,4 @@
-import { getAuth } from '@/lib/apis/auth-server.api';
+import { getAuth } from '@/apis/auth-server.api';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
