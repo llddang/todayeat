@@ -1,10 +1,10 @@
 'use client';
 import { Typography } from '@/components/ui/typography';
 import React, { useState } from 'react';
-import MealPostAddImageForm from '../../../../../components/_meal/_post/meal-post-add-image-form';
-import useMealPostModal from '@/lib/hooks/use-meal-post-modal';
-import MealPostAddMealAiLoading from '../../../../../components/_meal/_post/meal-post-add-meal-ai-loading';
 import Modal from './modal';
+import MealPostAddMealAiLoading from '@/components/_meal/_post/meal-post-add-meal-ai-loading';
+import MealPostAddImageForm from '@/components/_meal/_post/meal-post-add-image-form';
+import useModal from '../hooks/use-modal';
 
 type ContentsProps = {
   isRecorded: boolean;
@@ -12,7 +12,7 @@ type ContentsProps = {
 
 const Contents = ({ isRecorded }: ContentsProps): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { showModal, setShowModal, handleApproveClick, handleCancelClick } = useMealPostModal(isRecorded);
+  const { showModal, setShowModal, handleApproveClick, handleCancelClick } = useModal(isRecorded);
 
   if (isLoading) {
     return (
