@@ -1,4 +1,4 @@
-import { CALENDAR_RANGE_OFFSET, DAY, WEEK } from '@/constants/calendar.constant';
+import { CALENDAR_RANGE_OFFSET, DAY, WEEK } from '@/app/(home)/constants/calendar.constant';
 import { formatDateWithDash } from '@/lib/utils/date.util';
 
 export const isSameDate = (d1: Date, d2: Date): boolean => formatDateWithDash(d1) === formatDateWithDash(d2);

@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { MEAL_CATEGORY_OPTIONS } from '@/constants/meal.constant';
+import { MealCategoryType } from '@/types/meal-category.type';
 import { calculateTotalNutrition } from '@/lib/utils/nutrition-calculator.util';
 import { MealDTO } from '@/types/DTO/meal.dto';
 import { Typography } from '@/components/ui/typography';
@@ -81,3 +81,10 @@ const HomeMealCard = ({ meal }: HomeMealCardProps) => {
 };
 
 export default HomeMealCard;
+
+const MEAL_CATEGORY_OPTIONS: { [key in MealCategoryType]: { name: string; icon: string } } = {
+  BREAKFAST: { name: '아침', icon: 'before:bg-meal-category-breakfast' },
+  LUNCH: { name: '점심', icon: 'before:bg-meal-category-lunch' },
+  DINNER: { name: '저녁', icon: 'before:bg-meal-category-dinner' },
+  SNACK: { name: '간식', icon: 'before:bg-meal-category-snack' }
+} as const;

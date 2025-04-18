@@ -1,4 +1,4 @@
-import { MacronutrientDiffItem } from '@/types/home.type';
+import { MacronutrientDiffItem } from '@/app/(home)/types/diff.type';
 import { MealNutrition, NutritionGoal } from '@/types/nutrition.type';
 
 /**

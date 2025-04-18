@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import ClientOnly from '@/components/commons/client-only';
-import { CALENDAR_STAND_COUNT } from '@/constants/calendar.constant';
+import { CALENDAR_STAND_COUNT } from '@/app/(home)/constants/calendar.constant';
 import { formatDateWithDash } from '@/lib/utils/date.util';
 import { getAllMyDailyCalories } from '@/lib/apis/meal.api';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
