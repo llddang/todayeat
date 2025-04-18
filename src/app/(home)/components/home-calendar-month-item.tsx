@@ -1,6 +1,6 @@
-import HomeCalendarWeekItem from '@/components/_home/home-calendar-week-item';
 import { MAX_WEEK } from '@/constants/calendar.constant';
 import { formatDateWithDash } from '@/lib/utils/date.util';
+import HomeCalendarWeekItem from './home-calendar-week-item';
 
 type HomeCalendarWeekItemProps = {
   weeksInMonth: Date[][];

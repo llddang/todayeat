@@ -1,7 +1,7 @@
-import HomeCalendar from '@/components/_home/home-calendar';
-import HomeContent from '@/components/_home/home-content';
 import CalendarProvider from '@/app/(home)/contexts/calendar.context';
 import DashboardProvider from '@/app/(home)/contexts/dashboard.context';
+import HomeCalendar from './components/home-calendar';
+import HomeContent from './components/home-content';
 
 const HomePage = async () => {
   return (

@@ -2,12 +2,12 @@
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import HomeCalendarBottomUpSelector from '@/components/_home/home-calendar-bottom-up-selector';
-import HomeCalendarMonth from '@/components/_home/home-calendar-month';
-import HomeCalendarWeek from '@/components/_home/home-calendar-week';
 import { Typography } from '@/components/ui/typography';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import { formatDateCaption } from '@/lib/utils/date.util';
+import HomeCalendarWeek from './home-calendar-week';
+import HomeCalendarMonth from './home-calendar-month';
+import HomeCalendarBottomUpSelector from './home-calendar-bottom-up-selector';
 
 const HomeCalendar = () => {
   const { currentDate } = useCalendar();

@@ -1,13 +1,14 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import HomeCalendarWeekItem from '@/components/_home/home-calendar-week-item';
 import ClientOnly from '@/components/commons/client-only';
 import { CALENDAR_STAND_COUNT } from '@/constants/calendar.constant';
-import { calculateWeekDates, formatDateWithDash, getWeekDates } from '@/lib/utils/date.util';
+import { formatDateWithDash } from '@/lib/utils/date.util';
 import { getAllMyDailyCalories } from '@/lib/apis/meal.api';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
-import HomeCalendarDayLabel from '@/components/_home/home-calendar-day-label';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
+import { calculateWeekDates, getWeekDates } from '../utils/calendar.util';
+import HomeCalendarDayLabel from './home-calendar-day-label';
+import HomeCalendarWeekItem from './home-calendar-week-item';
 
 type WeekType = {
   id: number;

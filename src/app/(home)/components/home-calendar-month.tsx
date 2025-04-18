@@ -2,12 +2,13 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import ClientOnly from '@/components/commons/client-only';
 import { CALENDAR_STAND_COUNT } from '@/constants/calendar.constant';
-import { calculateMonthDates, formatDateWithDash, getFirstDayInMonth, getMonthDates } from '@/lib/utils/date.util';
+import { formatDateWithDash } from '@/lib/utils/date.util';
 import { getAllMyDailyCalories } from '@/lib/apis/meal.api';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
-import HomeCalendarMonthItem from '@/components/_home/home-calendar-month-item';
-import HomeCalendarDayLabel from '@/components/_home/home-calendar-day-label';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
+import { calculateMonthDates, getFirstDayInMonth, getMonthDates } from '../utils/calendar.util';
+import HomeCalendarDayLabel from './home-calendar-day-label';
+import HomeCalendarMonthItem from './home-calendar-month-item';
 
 type MonthType = {
   id: number;

@@ -1,9 +1,4 @@
 'use client';
-import HomeAiFeedbackText from '@/components/_home/home-ai-feedback-text';
-import HomeCaloriesSummaryCard from '@/components/_home/home-calories-summary-card';
-import HomeMacroNutrientGroup from '@/components/_home/home-macronutrient-group';
-import HomeMealCard from '@/components/_home/home-meal-card';
-import HomeMealEmptyCard from '@/components/_home/home-meal-empty-card';
 import CtaExampleFeedbackBanner from '@/components/commons/cta-example-feedback-banner';
 import GlassBackground from '@/components/commons/glass-background';
 import { Typography } from '@/components/ui/typography';
@@ -14,6 +9,11 @@ import { calculateTotalNutrition } from '@/lib/utils/nutrition-calculator.util';
 import { useUserStore } from '@/store/user-store';
 import { MealDTO } from '@/types/DTO/meal.dto';
 import { useEffect, useState } from 'react';
+import HomeAiFeedbackText from './home-ai-feedback-text';
+import HomeCaloriesSummaryCard from './home-calories-summary-card';
+import HomeMacroNutrientGroup from './home-macronutrient-group';
+import HomeMealEmptyCard from './home-meal-empty-card';
+import HomeMealCard from './home-meal-card';
 
 const HomeContent = () => {
   const { selectedDate } = useDashboard();

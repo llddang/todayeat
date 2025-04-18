@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { NUTRITION_FEEDBACKS } from '@/constants/home.constant';
 import { MealNutrition, NutritionGoal } from '@/types/nutrition.type';
-import { calculateNutritionDifferences, getMostSignificantDiff } from '@/lib/utils/home.util';
+import { calculateNutritionDifferences, getMostSignificantDiff } from '@/app/(home)/utils/nutrition-diff.util';
 import { cn } from '@/lib/utils';
 import { Typography } from '@/components/ui/typography';
 
