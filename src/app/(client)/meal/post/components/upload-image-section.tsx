@@ -1,20 +1,19 @@
 'use client';
 import { Typography } from '@/components/ui/typography';
 import React, { useState } from 'react';
-import MealPostAddImageForm from './meal-post-add-image-form';
-import MealPostModal from './meal-post-modal';
-import useMealPostModal from '@/lib/hooks/use-meal-post-modal';
-import MealPostAddMealAiLoading from './meal-post-add-meal-ai-loading';
+import MealPostAddMealAiLoading from '@/components/_meal/_post/meal-post-add-meal-ai-loading';
+import MealPostAddImageForm from '@/components/_meal/_post/meal-post-add-image-form';
+import useRestoreAnalysisModal from '../hooks/use-restore-analys-modal';
+import RestoreAnalysisModal from './restore-analysis-modal';
 
-type MealPostContentsProps = {
+type UploadImageSectionProps = {
   isRecorded: boolean;
 };
 
-const MealPostContents = ({ isRecorded }: MealPostContentsProps): JSX.Element => {
+const UploadImageSection = ({ isRecorded }: UploadImageSectionProps): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { showModal, setShowModal, handleApproveClick, handleCancelClick } = useMealPostModal(isRecorded);
+  const { showModal, setShowModal, handleApproveClick, handleCancelClick } = useRestoreAnalysisModal(isRecorded);
 
-  // TODO: 로딩 UI merge되면 수정하기
   if (isLoading) {
     return (
       <div className="flex min-h-[calc(100vh-60px)] items-center justify-center">
@@ -33,7 +32,7 @@ const MealPostContents = ({ isRecorded }: MealPostContentsProps): JSX.Element =>
           음식 사진을 올리면 AI가 <br /> 음식 종류와 영양소를 분석해 드려요
         </Typography>
       </div>
-      <MealPostModal
+      <RestoreAnalysisModal
         open={showModal}
         onOpenChange={setShowModal}
         onApproveClickHandler={handleApproveClick}
@@ -44,4 +43,4 @@ const MealPostContents = ({ isRecorded }: MealPostContentsProps): JSX.Element =>
   );
 };
 
-export default MealPostContents;
+export default UploadImageSection;
