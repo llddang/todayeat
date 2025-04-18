@@ -2,12 +2,12 @@ import { Typography } from '@/components/ui/typography';
 import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
 import { calculateMacroCaloriesbyGrams, CALORIES_PER_GRAM } from '@/lib/utils/nutrition-calculator.util';
 
-type MacroNutrientCardProps = {
+type MacronutrientCardProps = {
   dailyCarbohydrateGoal: string | number;
   dailyProteinGoal: string | number;
   dailyFatGoal: string | number;
 };
-const MacroNutrientCard = ({ dailyCarbohydrateGoal, dailyProteinGoal, dailyFatGoal }: MacroNutrientCardProps) => {
+const MacronutrientCard = ({ dailyCarbohydrateGoal, dailyProteinGoal, dailyFatGoal }: MacronutrientCardProps) => {
   const carbInfo = calculateMacroCaloriesbyGrams(dailyCarbohydrateGoal, CALORIES_PER_GRAM.CARBOHYDRATE);
   const proteinInfo = calculateMacroCaloriesbyGrams(dailyProteinGoal, CALORIES_PER_GRAM.PROTEIN);
   const fatInfo = calculateMacroCaloriesbyGrams(dailyFatGoal, CALORIES_PER_GRAM.FAT);
@@ -42,4 +42,4 @@ const MacroNutrientCard = ({ dailyCarbohydrateGoal, dailyProteinGoal, dailyFatGo
   );
 };
 
-export default MacroNutrientCard;
+export default MacronutrientCard;
