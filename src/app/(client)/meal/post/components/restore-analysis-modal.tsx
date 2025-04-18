@@ -10,14 +10,13 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 
-type ModalProps = {
+type RestoreAnalysisModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onApproveClickHandler: () => void;
   onCancelClickHandler: () => void;
 };
-// TODO: 임시 디자인
-const Modal = ({ open, onOpenChange, onApproveClickHandler, onCancelClickHandler }: ModalProps) => {
+const RestoreAnalysisModal = ({ open, onOpenChange, onApproveClickHandler, onCancelClickHandler }: RestoreAnalysisModalProps) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
@@ -39,4 +38,4 @@ const Modal = ({ open, onOpenChange, onApproveClickHandler, onCancelClickHandler
   );
 };
 
-export default Modal;
+export default RestoreAnalysisModal;
