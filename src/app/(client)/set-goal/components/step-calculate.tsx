@@ -3,7 +3,7 @@
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import FormSchema from '@/constants/form-schema.constant';
+import formSchema from '@/app/schemas/form-schema.schema';
 import { NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
 import { getUser, updateUserPersonalInfo } from '@/lib/apis/user.api';
 import {
@@ -34,11 +34,11 @@ export type PersonalMacronutrientData = {
   percentage: number;
 };
 
-const formSchema = z.object({
-  calories: FormSchema.ONLY_NUMBER_SCHEMA
+const caloriesFormSchema = z.object({
+  calories: formSchema.ONLY_NUMBER_SCHEMA
 });
 
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof caloriesFormSchema>;
 
 const StepCalculate = ({ nextStep, userName, data }: StepCalculateProps) => {
   const setUser = useUserStore((state) => state.setUser);
@@ -63,7 +63,7 @@ const StepCalculate = ({ nextStep, userName, data }: StepCalculateProps) => {
   });
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(caloriesFormSchema),
     defaultValues: {
       calories: String(userPersonalInfos.dailyCaloriesGoal) || ''
     }

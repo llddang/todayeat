@@ -1,10 +1,10 @@
 'use client';
 
-import AuthSignUpStepComplete from '@/components/_auth/_sign-up/auth-sign-up-step-complete';
-import AuthSignUpStepEmail from '@/components/_auth/_sign-up/auth-sign-up-step-email';
-import AuthSignUpStepNickname from '@/components/_auth/_sign-up/auth-sign-up-step-nickname';
-import AuthSignUpStepPassword from '@/components/_auth/_sign-up/auth-sign-up-step-password';
-import { SIGN_UP_FUNNEL_SCHEMA } from '@/constants/funnel-schema.constant';
+import AuthSignUpStepComplete from '@/app/(auth)/sign-up/components/auth-sign-up-step-complete';
+import AuthSignUpStepEmail from '@/app/(auth)/sign-up/components/auth-sign-up-step-email';
+import AuthSignUpStepNickname from '@/app/(auth)/sign-up/components/auth-sign-up-step-nickname';
+import AuthSignUpStepPassword from '@/app/(auth)/sign-up/components/auth-sign-up-step-password';
+import formSchema from '@/app/schemas/form-schema.schema';
 import useFunnel from '@/lib/hooks/use-funnel';
 import {
   SignUpCompleteType,
@@ -36,10 +36,16 @@ const AuthSignUpFunnel = () => {
 };
 export default AuthSignUpFunnel;
 
+const signUpFunnelSchema = z.object({
+  email: formSchema.EMAIL_SCHEMA,
+  password: formSchema.PASSWORD_SCHEMA,
+  nickname: formSchema.NICKNAME_SCHEMA
+});
+
 const signUpValidateStep = {
   step1: z.object({}),
-  step2: SIGN_UP_FUNNEL_SCHEMA.pick({ email: true }),
-  step3: SIGN_UP_FUNNEL_SCHEMA.pick({ email: true, password: true }),
+  step2: signUpFunnelSchema.pick({ email: true }),
+  step3: signUpFunnelSchema.pick({ email: true, password: true }),
   complete: z.object({})
 };
 

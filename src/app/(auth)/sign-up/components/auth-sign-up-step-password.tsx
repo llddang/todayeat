@@ -4,12 +4,12 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import FormSchema from '@/constants/form-schema.constant';
+import formSchema from '@/app/schemas/form-schema.schema';
 import { useForm } from 'react-hook-form';
 import { useEffect, useRef } from 'react';
 
 const signUpPasswordSchema = z.object({
-  password: FormSchema.PASSWORD_SCHEMA
+  password: formSchema.PASSWORD_SCHEMA
 });
 type SignUpPasswordSchemaType = z.infer<typeof signUpPasswordSchema>;
 const signUpPasswordDefault: SignUpPasswordSchemaType = {

@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import FormSchema from '@/constants/form-schema.constant';
+import formSchema from '@/app/schemas/form-schema.schema';
 import { checkEmailExists, resetPasswordByEmail } from '@/lib/apis/auth-server.api';
 
 const AuthEmailFormForFindPassword = () => {
@@ -57,5 +57,5 @@ const AuthEmailFormForFindPassword = () => {
 };
 export default AuthEmailFormForFindPassword;
 
-const emailSchema = z.object({ email: FormSchema.NON_EMPTY_SCHEMA });
+const emailSchema = z.object({ email: formSchema.NON_EMPTY_SCHEMA });
 type EmailFormType = z.infer<typeof emailSchema>;

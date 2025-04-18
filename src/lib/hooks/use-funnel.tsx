@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { FUNNEL_QUERY_PARAM } from '@/constants/common.constant';
+
 import { isServer } from '@/lib/utils/predicate.util';
 import {
   getSessionStorageItem,
@@ -11,7 +11,7 @@ import {
   setSessionStorageItem
 } from '@/lib/utils/session-storage.util';
 
-// 세션 스토리지 기본 키값
+const FUNNEL_QUERY_PARAM = 'step';
 const DEFAULT_SESSION_ID = 'todayeat-funnel-data';
 
 /**

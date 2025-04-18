@@ -7,7 +7,6 @@ import { cleanupBlobUrl } from '@/lib/utils/cleanup-blob-url.util';
 import SITE_MAP from '@/constants/site-map.constant';
 import PIC_LINE from '@/../public/icons/pic_line.svg';
 import CLOSE_LINE from '@/../public/icons/close_line.svg';
-import { MB } from '@/constants/common.constant';
 import { getFileId } from '../../utils/file.util';
 
 type AddImageProps = {
@@ -141,6 +140,8 @@ type ImagePreview = {
   fileId: string;
 };
 
+const KB = 1024;
+const MB = 1024 * KB;
 const MAX_FILE_SIZE = 10 * MB;
 const MAX_MEAL_IMAGE_COUNT = 3;
 

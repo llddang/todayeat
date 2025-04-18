@@ -11,7 +11,7 @@ import { uploadImage } from '@/lib/apis/storage.api';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import FormSchema from '@/constants/form-schema.constant';
+import formSchema from '@/app/schemas/form-schema.schema';
 import { UserDTO } from '@/types/DTO/user.dto';
 import { cleanupBlobUrl } from '@/lib/utils/cleanup-blob-url.util';
 import IconButton from '@/components/commons/icon-button';
@@ -19,12 +19,12 @@ import { Typography } from '@/components/ui/typography';
 import DefaultProfile from '@/../public/illustrations/default-profile.svg';
 import { useUserStore } from '@/store/user-store';
 
-const formSchema = z.object({
-  nickname: FormSchema.NICKNAME_SCHEMA,
-  newProfileImage: FormSchema.IMAGE_FILE_SCHEMA.nullable()
+const editProfileFormSchema = z.object({
+  nickname: formSchema.NICKNAME_SCHEMA,
+  newProfileImage: formSchema.IMAGE_FILE_SCHEMA.nullable()
 });
 
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof editProfileFormSchema>;
 
 type EditProfileProps = {
   userInfo: UserDTO;
@@ -41,7 +41,7 @@ const EditProfile = ({ userInfo, setOpen }: EditProfileProps): JSX.Element => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(editProfileFormSchema),
     defaultValues: {
       nickname: userInfo.nickname || '',
       newProfileImage: null

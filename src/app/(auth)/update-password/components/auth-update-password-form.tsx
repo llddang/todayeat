@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { browserClient } from '@/lib/utils/supabase/client.util';
 import { changePassword } from '@/lib/apis/auth-server.api';
-import FormSchema from '@/constants/form-schema.constant';
+import formSchema from '@/app/schemas/form-schema.schema';
 import SITE_MAP from '@/constants/site-map.constant';
 
 const updatePasswordDefaultValue: UpdatePasswordForm = {
@@ -81,8 +81,8 @@ export default AuthUpdatePasswordForm;
 
 const updatePasswordSchema = z
   .object({
-    newPassword: FormSchema.PASSWORD_SCHEMA,
-    confirmPassword: FormSchema.PASSWORD_SCHEMA
+    newPassword: formSchema.PASSWORD_SCHEMA,
+    confirmPassword: formSchema.PASSWORD_SCHEMA
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
     message: '새 비밀번호와 확인 비밀번호가 일치하지 않습니다',

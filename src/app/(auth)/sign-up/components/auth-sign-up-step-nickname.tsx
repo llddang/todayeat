@@ -4,14 +4,14 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import FormSchema from '@/constants/form-schema.constant';
+import formSchema from '@/app/schemas/form-schema.schema';
 import { useForm } from 'react-hook-form';
 import { useEffect, useRef, useState } from 'react';
 import { SignUpStep3Type } from '@/types/sign-up-funnel-type';
 import { signUp } from '@/lib/apis/auth-server.api';
 
 const signUpNicknameSchema = z.object({
-  nickname: FormSchema.NICKNAME_SCHEMA
+  nickname: formSchema.NICKNAME_SCHEMA
 });
 type SignUpNicknameSchemaType = z.infer<typeof signUpNicknameSchema>;
 
