@@ -1,8 +1,8 @@
 'use client';
 import { Typography } from '@/components/ui/typography';
 import React, { useState } from 'react';
-import MealPostAddMealAiLoading from '@/components/_meal/_post/meal-post-add-meal-ai-loading';
-import MealPostAddImageForm from '@/components/_meal/_post/meal-post-add-image-form';
+import MealPostAddMealAiLoading from '@/app/(client)/meal/post/components/meal-post-add-meal-ai-loading';
+import MealPostAddImageForm from '@/app/(client)/meal/post/components/meal-post-add-image-form';
 import useRestoreAnalysisModal from '../hooks/use-restore-analys-modal';
 import RestoreAnalysisModal from './restore-analysis-modal';
 

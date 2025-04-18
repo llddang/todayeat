@@ -77,10 +77,12 @@ const AuthSignInForm = () => {
               href={SITE_MAP.SIGN_UP}
               className="relative after:absolute after:right-0 after:top-1/2 after:h-3 after:w-[1px] after:-translate-y-1/2 after:rounded-full after:bg-gray-400 after:content-['']"
             >
-              <Typography className="flex h-11 items-center justify-center px-6 text-gray-600">회원가입</Typography>
+              <Typography variant="subTitle4" className="flex h-11 items-center justify-center px-6 text-gray-600">
+                회원가입
+              </Typography>
             </Link>
             <Link href={SITE_MAP.FIND_PASSWORD}>
-              <Typography className="flex h-11 items-center justify-center px-6 text-gray-600">
+              <Typography variant="subTitle4" className="flex h-11 items-center justify-center px-6 text-gray-600">
                 비밀번호 찾기
               </Typography>
             </Link>

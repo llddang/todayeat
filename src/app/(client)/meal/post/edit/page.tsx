@@ -1,6 +1,6 @@
 'use client';
 
-import MealImageCarousel from '@/components/_meal/meal-images-carousel';
+import MealImageCarousel from '@/app/(client)/meal/components/meal-images-carousel';
 import TagSelectItem from '@/components/commons/tag-select-item';
 import Textarea from '@/components/commons/textarea';
 import { Typography } from '@/components/ui/typography';
@@ -23,17 +23,17 @@ import {
 } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import IconButton from '@/components/commons/icon-button';
-import { urlToFile } from '@/lib/utils/file.util';
 import { uploadImage } from '@/lib/apis/storage.api';
 import { formatTimestamp } from '@/lib/utils/format.util';
 import { createMealWithDetails, deleteMealAnalysisDetail } from '@/lib/apis/meal.api';
 import { MealDTO } from '@/types/DTO/meal.dto';
-import MealEditCalendar from '@/components/_meal/_edit/meal-edit-calendar';
+import MealEditCalendar from '@/app/(client)/meal/post/edit/components/meal-edit-calendar';
 import GlassBackground from '@/components/commons/glass-background';
 import { useRouter } from 'next/navigation';
 import SITE_MAP from '@/constants/site-map.constant';
 import dynamic from 'next/dynamic';
 import EditCard from './components/edit-card';
+import { urlToFile } from '../../utils/file.util';
 const AiLoaderLottie = dynamic(() => import('@/components/commons/ai-loader-lottie'), {
   ssr: false
 });

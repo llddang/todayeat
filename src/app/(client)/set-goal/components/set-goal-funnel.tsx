@@ -2,7 +2,6 @@ import { Suspense } from 'react';
 import { z } from 'zod';
 import useFunnel from '@/lib/hooks/use-funnel';
 import { ActivityLevelType, GenderType, PurposeType } from '@/types/user-personal-info.type';
-import { SET_GOAL_FUNNEL_SCHEMA } from '@/constants/funnel-schema.constant';
 import PurposeStep from './step-purpose';
 import GenderStep from './step-gender';
 import AgeStep from './step-age';
@@ -22,6 +21,7 @@ import {
   StepPurposeType,
   StepWeightType
 } from '../types/funnel.type';
+import { userPhysicalProfileSchema } from '../schemas/user-physical-profile.schema';
 
 type SetGoalFunnelProps = {
   userName: string;
@@ -29,14 +29,14 @@ type SetGoalFunnelProps = {
 
 const validateStep = {
   step1: z.object({}),
-  step2: SET_GOAL_FUNNEL_SCHEMA.pick({ purpose: true }),
-  step3: SET_GOAL_FUNNEL_SCHEMA.pick({ purpose: true, gender: true }),
-  step4: SET_GOAL_FUNNEL_SCHEMA.pick({ purpose: true, gender: true, age: true }),
-  step5: SET_GOAL_FUNNEL_SCHEMA.pick({ purpose: true, gender: true, age: true, height: true }),
-  step6: SET_GOAL_FUNNEL_SCHEMA.pick({ purpose: true, gender: true, age: true, height: true, weight: true }),
-  step7: SET_GOAL_FUNNEL_SCHEMA,
+  step2: userPhysicalProfileSchema.pick({ purpose: true }),
+  step3: userPhysicalProfileSchema.pick({ purpose: true, gender: true }),
+  step4: userPhysicalProfileSchema.pick({ purpose: true, gender: true, age: true }),
+  step5: userPhysicalProfileSchema.pick({ purpose: true, gender: true, age: true, height: true }),
+  step6: userPhysicalProfileSchema.pick({ purpose: true, gender: true, age: true, height: true, weight: true }),
+  step7: userPhysicalProfileSchema,
   step8: z.object({}),
-  complete: SET_GOAL_FUNNEL_SCHEMA
+  complete: userPhysicalProfileSchema
 };
 
 const SetGoalFunnel = ({ userName }: SetGoalFunnelProps) => {

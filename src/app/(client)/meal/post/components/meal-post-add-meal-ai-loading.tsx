@@ -1,7 +1,6 @@
 import dynamic from 'next/dynamic';
 import { Typography } from '@/components/ui/typography';
 
-// TODO - 공통 컴포넌트로 분리하기
 const AiLoaderLottie = dynamic(() => import('@/components/commons/ai-loader-lottie'), {
   ssr: false
 });

@@ -17,11 +17,11 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { isClient } from '@/lib/utils/predicate.util';
-import USER_PHYSICAL_PROFILE_SCHEMA from '@/constants/user-schema.constant';
 import { useUserStore } from '@/store/user-store';
 import MacronutrientBox from './macronutrient-box';
 import { StepCompleteType } from '../types/funnel.type';
 import { formatNumberWithComma } from '@/lib/utils/format.util';
+import { userPhysicalProfileSchema } from '../schemas/user-physical-profile.schema';
 
 type StepCalculateProps = {
   userName: string;
@@ -51,7 +51,7 @@ const StepCalculate = ({ nextStep, userName, data }: StepCalculateProps) => {
   };
 
   if (isClient()) {
-    const parseResult = USER_PHYSICAL_PROFILE_SCHEMA.safeParse(data);
+    const parseResult = userPhysicalProfileSchema.safeParse(data);
     if (parseResult.success) {
       userPersonalGoal = calculateDailyNutritionGoal(parseResult.data);
     }

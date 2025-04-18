@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import IconButton from '@/components/commons/icon-button';
 import { Typography } from '@/components/ui/typography';
-import MealPostAddMealAiLoading from '@/components/_meal/_post/meal-post-add-meal-ai-loading';
+import MealPostAddMealAiLoading from '@/app/(client)/meal/post/components/meal-post-add-meal-ai-loading';
 import { useUserStore } from '@/store/user-store';
 
 type FoodFormValues = {
