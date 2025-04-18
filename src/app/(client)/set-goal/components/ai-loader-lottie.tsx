@@ -2,9 +2,7 @@ import Lottie from 'react-lottie-player';
 import AiLoaderStar from '@/../public/lottie/ai-loader-star.json';
 import AiLoaderBg from '@/../public/lottie/ai-loader-bg.json';
 
-// TODO 공통 컴포넌트로 전환
-// 사용중인 페이지 : change-password , find-password , update-password , meal/post/edit
-const SetGoalAiLoaderLottie = () => {
+const AiLoaderLottie = () => {
   return (
     <div className="relative">
       <Lottie
@@ -18,4 +16,4 @@ const SetGoalAiLoaderLottie = () => {
   );
 };
 
-export default SetGoalAiLoaderLottie;
+export default AiLoaderLottie;

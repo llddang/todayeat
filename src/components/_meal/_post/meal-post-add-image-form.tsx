@@ -1,11 +1,11 @@
 'use client';
 
 import SITE_MAP from '@/constants/site-map.constant';
-import MealPostAddImage from './meal-post-add-image';
 import { Button } from '@/components/ui/button';
 import { getUser } from '@/lib/apis/user.api';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
+import AddImage from '@/app/(client)/meal/post/components/add-image';
 
 type MealPostAddImageFormProps = {
   onLoadingChange: (isLoading: boolean) => void;
@@ -50,8 +50,8 @@ const MealPostAddImageForm = ({ onLoadingChange }: MealPostAddImageFormProps): J
   };
 
   return (
-    <form onSubmit={handleAnalyzeSubmit} className="flex flex-col items-center justify-center gap-7">
-      <MealPostAddImage onImagesChange={setImages} />
+    <form onSubmit={handleAnalyzeSubmit} className="flex w-full flex-col items-center justify-center gap-7">
+      <AddImage onImagesChange={setImages} />
       <Button type="submit" variant="primary" disabled={!images.length}>
         사진 올리고 분석하기
       </Button>
