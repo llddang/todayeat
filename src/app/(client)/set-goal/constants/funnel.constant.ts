@@ -1,6 +1,6 @@
 import { ACTIVITY_LEVEL_OPTIONS, NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
-import { FunnelStep, StepUIConfig } from '@/types/set-goal.type';
 import { ActivityLevel, Gender, Purpose } from '@/types/user-personal-info.type';
+import { FunnelStep, StepUIConfig } from '../types/funnel.type';
 
 export const LAST_STEP_FOR_USER_INPUT = 7;
 

@@ -1,16 +1,6 @@
 import { Suspense } from 'react';
 import { z } from 'zod';
 import useFunnel from '@/lib/hooks/use-funnel';
-import {
-  CompleteType,
-  FunnelStep,
-  SetGoalStep1Type,
-  SetGoalStep2Type,
-  SetGoalStep3Type,
-  SetGoalStep4Type,
-  SetGoalStep5Type,
-  SetGoalStep6Type
-} from '@/types/set-goal.type';
 import { ActivityLevelType, GenderType, PurposeType } from '@/types/user-personal-info.type';
 import { SET_GOAL_FUNNEL_SCHEMA } from '@/constants/funnel-schema.constant';
 import PurposeStep from './step-purpose';
@@ -22,6 +12,16 @@ import ActivityLevelStep from './step-activity-level';
 import CalculateStep from './step-calculate';
 import Complete from './step-complete';
 import StepAiLoading from './step-ai-loading';
+import {
+  FunnelStep,
+  StepActivityLevelType,
+  StepAgeType,
+  StepCompleteType,
+  StepGenderType,
+  StepHeightType,
+  StepPurposeType,
+  StepWeightType
+} from '../types/funnel.type';
 
 type SetGoalFunnelProps = {
   userName: string;
@@ -42,15 +42,15 @@ const validateStep = {
 const SetGoalFunnel = ({ userName }: SetGoalFunnelProps) => {
   const Funnel = useFunnel<
     {
-      step1: SetGoalStep1Type;
-      step2: SetGoalStep2Type;
-      step3: SetGoalStep3Type;
-      step4: SetGoalStep4Type;
-      step5: SetGoalStep5Type;
-      step6: SetGoalStep6Type;
-      step7: CompleteType;
-      step8: CompleteType;
-      complete: CompleteType;
+      step1: StepPurposeType;
+      step2: StepGenderType;
+      step3: StepAgeType;
+      step4: StepHeightType;
+      step5: StepWeightType;
+      step6: StepActivityLevelType;
+      step7: StepCompleteType;
+      step8: StepCompleteType;
+      complete: StepCompleteType;
     },
     FunnelStep
   >(

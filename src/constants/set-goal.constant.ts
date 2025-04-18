@@ -1,6 +1,7 @@
-import { FunnelStep, StepUIConfig } from '@/types/set-goal.type';
+import { FunnelStep, StepUIConfig } from '@/app/(client)/set-goal/types/funnel.type';
 
 // TODO 공통 컴포넌트화 논의 필요
+
 // 사용중인 페이지 : 목표 설정, 회원가입 funnel
 export const STEP_UI_CONFIG: Record<FunnelStep, StepUIConfig> = {
   step1: { hasGlassBackground: true, hasProgressBar: true, stepOrder: 1 },

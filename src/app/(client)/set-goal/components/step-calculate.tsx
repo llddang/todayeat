@@ -18,15 +18,15 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { isClient } from '@/lib/utils/predicate.util';
 import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
-import { CompleteType } from '@/types/set-goal.type';
 import USER_PHYSICAL_PROFILE_SCHEMA from '@/constants/user-schema.constant';
 import { useUserStore } from '@/store/user-store';
 import MacronutrientBox from './macronutrient-box';
+import { StepCompleteType } from '../types/funnel.type';
 
 type StepCalculateProps = {
   userName: string;
   nextStep: (data: string) => void;
-  data: CompleteType;
+  data: StepCompleteType;
 };
 
 export type PersonalMacronutrientData = {
