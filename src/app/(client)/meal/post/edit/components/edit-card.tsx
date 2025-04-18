@@ -1,27 +1,26 @@
 'use client';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import { useState } from 'react';
-import MealPostEditInputField from './meal-post-edit-input-field';
-import MealPostEditCardTitle from './meal-post-edit-card-title';
+import { FormEvent, useState } from 'react';
 import MacronutrientBox from '@/components/commons/macronutrient-box';
 import IconButton from '@/components/commons/icon-button';
 import { Button } from '@/components/ui/button';
-import { NutritionEnum, MeasurementUnitEnum } from '@/types/nutrition.type';
+import { NutritionEnum } from '@/types/nutrition.type';
 import {} from '@/types/DTO/meal.dto';
 import { FoodAnalysisRequestsDetailDTO } from '@/types/DTO/food_analysis.dto';
 import dynamic from 'next/dynamic';
+import { Input } from '@/components/ui/input';
 
 const SetGoalAiLoaderLottie = dynamic(() => import('@/components/_set-goal/set-goal-ai-loader-lottie'), {
   ssr: false
 });
 
-type MealPostEditCardProps = {
+type EditCardProps = {
   mealDetail: FoodAnalysisRequestsDetailDTO;
   idx: number;
 };
 
-const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
-  const { control, getValues } = useFormContext();
+const EditCard = ({ mealDetail, idx }: EditCardProps) => {
+  const { control, getValues, register } = useFormContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const { remove: mealListRemove } = useFieldArray({ control, name: 'mealList' });
@@ -66,27 +65,41 @@ const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
     }
   };
 
+  const onHandleMaxLengthInput = (e: FormEvent<HTMLInputElement>) => {
+    e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '').slice(0, MAX_NUMERIC_LENGTH);
+  };
+
   return (
     <div className="flex w-full flex-col items-center justify-center gap-2 self-stretch rounded-2xl bg-white/50 p-2 backdrop-blur-[50px]">
       {isLoading ? (
         <SetGoalAiLoaderLottie />
       ) : (
         <div className="flex flex-col items-start gap-2 self-stretch rounded-xl bg-white p-3">
-          <MealPostEditCardTitle title={mealDetail.menuName} idx={idx} />
+          <Input
+            onInput={onHandleMaxLengthInput}
+            {...register(`meals.${idx}.menuName`, { required: true })}
+            defaultValue={mealDetail.menuName}
+          />
           <div className="flex items-start gap-2 self-stretch">
-            <MealPostEditInputField
-              variety={MeasurementUnitEnum.GRAM}
-              idx={idx}
+            <Input
+              measure={MEASUREMENT_UNIT['GRAM'].unit}
               type="number"
-              maxLength={4}
+              onInput={onHandleMaxLengthInput}
+              inputMode="numeric"
+              {...register(`meals.${idx}.weight}`, {
+                valueAsNumber: true
+              })}
               className="flex-1"
+              defaultValue={mealDetail.weight}
             />
-            <MealPostEditInputField
-              variety={MeasurementUnitEnum.KCAL}
-              idx={idx}
+            <Input
+              measure={MEASUREMENT_UNIT['KCAL'].unit}
               type="number"
-              maxLength={4}
               className="flex-1"
+              {...register(`meals.${idx}.calories}`, {
+                valueAsNumber: true
+              })}
+              defaultValue={mealDetail.calories}
             />
           </div>
           <div className="flex items-center gap-2 self-stretch pb-1 pl-1 pt-2">
@@ -112,4 +125,27 @@ const MealPostEditCard = ({ mealDetail, idx }: MealPostEditCardProps) => {
   );
 };
 
-export default MealPostEditCard;
+export default EditCard;
+
+const MAX_NUMERIC_LENGTH = 4;
+
+const MEASUREMENT_UNIT: Record<MeasurementUnitType, MeasurementUnitValues> = {
+  KCAL: {
+    label: '칼로리',
+    name: 'calories',
+    unit: 'kcal'
+  },
+  GRAM: {
+    label: '그램',
+    name: 'weight',
+    unit: 'g'
+  }
+} as const;
+
+type MeasurementUnitValues = {
+  label: string;
+  name: string;
+  unit: string;
+};
+
+type MeasurementUnitType = 'KCAL' | 'GRAM';
