@@ -107,7 +107,7 @@ const AddImage = ({ onImagesChange }: AddImageProps) => {
             >
               <Image
                 src={imageUrl}
-                alt={`음식 ${index + 1} 이미지`}
+                alt={`음식 ${index + 1}`}
                 width="100"
                 height="100"
                 className="h-full w-full object-cover"
