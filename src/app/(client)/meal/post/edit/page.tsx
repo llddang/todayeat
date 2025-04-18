@@ -126,6 +126,8 @@ const MealPostEditPage = () => {
         fat: meal.fat
       }));
 
+      console.log(newMealDetails);
+
       const { mealDetails } = await createMealWithDetails(
         newMeals as Pick<MealDTO, 'ateAt' | 'foodImages' | 'memo' | 'mealCategory'>,
         newMealDetails

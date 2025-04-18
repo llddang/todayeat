@@ -167,11 +167,8 @@ export const deleteMeal = async (mealId: string) => {
 export const deleteMealAnalysisDetail = async () => {
   const supabase = getServerClient();
   const { id } = await getUser();
-  const { error: requestsError } = await supabase.from('food_analysis_requests').delete().eq('user_id', id);
-  const { error: requestsDetailError } = await supabase
-    .from('food_analysis_requests_detail')
-    .delete()
-    .eq('user_id', id);
+  const { error: requestsError } = await supabase.from('ai_requests').delete().eq('user_id', id);
+  const { error: requestsDetailError } = await supabase.from('ai_responses').delete().eq('user_id', id);
   if (requestsDetailError || requestsError) throw new Error('등록된 식사정보 삭제에 실패하였습니다. ');
 };
 
@@ -243,11 +240,7 @@ export const createFoodAnalysisRequestDetail = async (
 ): Promise<MealDetailDTO> => {
   const supabase = getServerClient();
   const mealDetailRequest = camelToSnakeObject(meal);
-  const { data, error } = await supabase
-    .from('food_analysis_requests_detail')
-    .insert(mealDetailRequest)
-    .select()
-    .single();
+  const { data, error } = await supabase.from('ai_responses').insert(mealDetailRequest).select().single();
   if (error) throw error;
   return snakeToCamelObject<MealDetailSnakeCaseDTO>(data);
 };
