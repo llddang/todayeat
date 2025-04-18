@@ -1,6 +1,6 @@
 import { Typography } from '@/components/ui/typography';
 import { formatNumberWithComma } from '@/lib/utils/format.util';
-import { calculateMacroCaloriesbyGrams, CALORIES_PER_GRAM } from '@/lib/utils/nutrition-calculator.util';
+import { calculateMacroCaloriesByGram, CALORIES_PER_GRAM } from '@/lib/utils/nutrition-calculator.util';
 
 type MacronutrientCardProps = {
   dailyCarbohydrateGoal: string | number;
@@ -8,9 +8,9 @@ type MacronutrientCardProps = {
   dailyFatGoal: string | number;
 };
 const MacronutrientCard = ({ dailyCarbohydrateGoal, dailyProteinGoal, dailyFatGoal }: MacronutrientCardProps) => {
-  const carbInfo = calculateMacroCaloriesbyGrams(dailyCarbohydrateGoal, CALORIES_PER_GRAM.CARBOHYDRATE);
-  const proteinInfo = calculateMacroCaloriesbyGrams(dailyProteinGoal, CALORIES_PER_GRAM.PROTEIN);
-  const fatInfo = calculateMacroCaloriesbyGrams(dailyFatGoal, CALORIES_PER_GRAM.FAT);
+  const carbInfo = calculateMacroCaloriesByGram(dailyCarbohydrateGoal, CALORIES_PER_GRAM.CARBOHYDRATE);
+  const proteinInfo = calculateMacroCaloriesByGram(dailyProteinGoal, CALORIES_PER_GRAM.PROTEIN);
+  const fatInfo = calculateMacroCaloriesByGram(dailyFatGoal, CALORIES_PER_GRAM.FAT);
 
   return (
     <ul className="mt-3 flex w-full flex-col gap-2 rounded-xl bg-gray-100 p-4">

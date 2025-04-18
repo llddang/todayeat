@@ -47,7 +47,7 @@ export const camelToSnake = (str: string): string => str.replace(/[A-Z]/g, (char
  * @param {any} obj - 변환할 객체
  * @returns {any} - 키가 snake_case로 변환된 객체
  */
-export function camelToSnakeObject<T extends object>(obj: T): SnakeCaseObject<T> {
+export const camelToSnakeObject = <T extends object>(obj: T): SnakeCaseObject<T> => {
   if (obj === null || typeof obj !== 'object') {
     return obj;
   }
@@ -64,4 +64,4 @@ export function camelToSnakeObject<T extends object>(obj: T): SnakeCaseObject<T>
   }
 
   return result as SnakeCaseObject<T>;
-}
+};

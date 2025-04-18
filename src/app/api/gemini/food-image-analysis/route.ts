@@ -6,7 +6,6 @@ import {
   getFoodImagesById
 } from '@/lib/apis/analysis-request.api';
 import { generateFoodAnalysisByImage } from '@/lib/apis/gemini.api';
-import { convertImageUrlToBase64 } from '@/lib/utils/convert-image-to-base64.util';
 import { parseGeminiResponse } from '@/lib/utils/gemini.util';
 import { FoodAnalysisRequestsDetailDTO } from '@/types/DTO/food_analysis.dto';
 import { FoodAnalysisResult, ImageContent } from '@/types/gemini.type';
@@ -93,5 +92,27 @@ export const POST = async (req: Request) => {
   } catch (error) {
     console.error('분석 에러:', error);
     return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.UNKNOWN), { status: AI_ERROR_MESSAGE.UNKNOWN.status });
+  }
+};
+
+const convertImageUrlToBase64 = async (url: string): Promise<ImageContent> => {
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`이미지 불러오기 실패: ${response.status} ${response.statusText}`);
+    }
+
+    const buffer: ArrayBuffer = await response.arrayBuffer();
+    const mimeType = response.headers.get('content-type') || 'image/jpeg';
+    return {
+      inlineData: {
+        data: Buffer.from(buffer).toString('base64'),
+        mimeType
+      }
+    };
+  } catch (error) {
+    console.error('이미지 인코딩 실패 :', error);
+    throw new Error('이미지 인코딩에 실패하였습니다.');
   }
 };

@@ -204,7 +204,7 @@ export const calculateNutritionRatio = (meals: MealDTO[], goal: NutritionGoal): 
  * @param caloriesPerGram - 영양소별 1g당 칼로리 계수 (탄수화물: 4, 단백질: 4, 지방: 9)
  * @returns 그램 수와 칼로리 값을 포함하는 객체
  */
-export const calculateMacroCaloriesbyGrams = (
+export const calculateMacroCaloriesByGram = (
   gram: string | number,
   caloriesPerGram: number
 ): { grams: number; calories: number } => {
