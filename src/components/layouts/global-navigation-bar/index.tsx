@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import GlobalNavigationBarItem from '@/components/layouts/global-navigation-bar-item';
+import GlobalNavigationBarItem from './item';
 import SITE_MAP from '@/constants/site-map.constant';
 import { cn } from '@/lib/utils';
 
@@ -22,7 +22,7 @@ const GlobalNavigationBar = () => {
     <nav
       className={cn(
         'fixed bottom-4 left-4 right-4 rounded-[6.25rem] bg-gray-200/[0.64] p-2',
-        'temp-layout left-1/2 right-0 !m-0 w-full -translate-x-1/2'
+        'left-1/2 right-0 !m-0 w-full -translate-x-1/2 temp-layout'
       )}
     >
       <ul className="flex gap-2">

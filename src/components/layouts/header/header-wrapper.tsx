@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { useDetectIsScrolled } from '@/lib/hooks/use-detect-is-scrolled';
 import { ReactNode } from 'react';
 
-const HeaderWithProfileLayer = ({ children }: { children: ReactNode | ReactNode[] }) => {
+const HeaderLayer = ({ children }: { children: ReactNode | ReactNode[] }) => {
   const isScrolled = useDetectIsScrolled();
 
   return (
@@ -20,4 +20,4 @@ const HeaderWithProfileLayer = ({ children }: { children: ReactNode | ReactNode[
   );
 };
 
-export default HeaderWithProfileLayer;
+export default HeaderLayer;
