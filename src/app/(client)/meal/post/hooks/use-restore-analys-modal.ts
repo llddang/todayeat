@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { deleteMealAnalysisDetail } from '@/lib/apis/meal.api';
 import SITE_MAP from '@/constants/site-map.constant';
 
-const useMealPostModal = (isRecorded: boolean = false) => {
+const useRestoreAnalysisModal = (isRecorded: boolean = false) => {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
@@ -34,4 +34,4 @@ const useMealPostModal = (isRecorded: boolean = false) => {
   };
 };
 
-export default useMealPostModal;
+export default useRestoreAnalysisModal;
