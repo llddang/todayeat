@@ -34,7 +34,7 @@ import { useRouter } from 'next/navigation';
 import SITE_MAP from '@/constants/site-map.constant';
 import dynamic from 'next/dynamic';
 import EditCard from './components/edit-card';
-const SetGoalAiLoaderLottie = dynamic(() => import('@/components/_set-goal/set-goal-ai-loader-lottie'), {
+const AiLoaderLottie = dynamic(() => import('@/components/commons/ai-loader-lottie'), {
   ssr: false
 });
 
@@ -144,7 +144,7 @@ const MealPostEditPage = () => {
   if (isLoading)
     return (
       <div className="flex min-h-[calc(100vh-60px)] items-center justify-center">
-        <SetGoalAiLoaderLottie />
+        <AiLoaderLottie />
       </div>
     );
 

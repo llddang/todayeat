@@ -10,7 +10,7 @@ import { FoodAnalysisRequestsDetailDTO } from '@/types/DTO/food_analysis.dto';
 import dynamic from 'next/dynamic';
 import { Input } from '@/components/ui/input';
 
-const SetGoalAiLoaderLottie = dynamic(() => import('@/components/_set-goal/set-goal-ai-loader-lottie'), {
+const AiLoaderLottie = dynamic(() => import('@/components/commons/ai-loader-lottie'), {
   ssr: false
 });
 
@@ -72,7 +72,7 @@ const EditCard = ({ mealDetail, idx }: EditCardProps) => {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-2 self-stretch rounded-2xl bg-white/50 p-2 backdrop-blur-[50px]">
       {isLoading ? (
-        <SetGoalAiLoaderLottie />
+        <AiLoaderLottie />
       ) : (
         <div className="flex flex-col items-start gap-2 self-stretch rounded-xl bg-white p-3">
           <Input

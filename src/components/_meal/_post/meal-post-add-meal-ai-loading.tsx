@@ -2,14 +2,14 @@ import dynamic from 'next/dynamic';
 import { Typography } from '@/components/ui/typography';
 
 // TODO - 공통 컴포넌트로 분리하기
-const SetGoalAiLoaderLottie = dynamic(() => import('@/components/_set-goal/set-goal-ai-loader-lottie'), {
+const AiLoaderLottie = dynamic(() => import('@/components/commons/ai-loader-lottie'), {
   ssr: false
 });
 
 const MealPostAddMealAiLoading = () => {
   return (
     <div className="flex flex-col items-center">
-      <SetGoalAiLoaderLottie />
+      <AiLoaderLottie />
       <Typography as="span" variant="subTitle1">
         AI가 음식 정보를 분석 중이에요!
       </Typography>

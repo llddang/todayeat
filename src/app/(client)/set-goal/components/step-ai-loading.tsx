@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 import { Typography } from '@/components/ui/typography';
 import { useEffect } from 'react';
 
-const AiLoaderLottie = dynamic(() => import('./ai-loader-lottie'), {
+const AiLoaderLottie = dynamic(() => import('@/components/commons/ai-loader-lottie'), {
   ssr: false
 });
 
