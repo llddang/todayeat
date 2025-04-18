@@ -1,18 +1,18 @@
 'use client';
 import { Typography } from '@/components/ui/typography';
 import React, { useState } from 'react';
-import Modal from './restore-analysis-modal';
 import MealPostAddMealAiLoading from '@/components/_meal/_post/meal-post-add-meal-ai-loading';
 import MealPostAddImageForm from '@/components/_meal/_post/meal-post-add-image-form';
-import useModal from '../hooks/use-modal';
+import useRestoreAnalysisModal from '../hooks/use-restore-analys-modal';
+import RestoreAnalysisModal from './restore-analysis-modal';
 
-type ContentsProps = {
+type UploadImageSectionProps = {
   isRecorded: boolean;
 };
 
-const Contents = ({ isRecorded }: ContentsProps): JSX.Element => {
+const UploadImageSection = ({ isRecorded }: UploadImageSectionProps): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { showModal, setShowModal, handleApproveClick, handleCancelClick } = useModal(isRecorded);
+  const { showModal, setShowModal, handleApproveClick, handleCancelClick } = useRestoreAnalysisModal(isRecorded);
 
   if (isLoading) {
     return (
@@ -32,7 +32,7 @@ const Contents = ({ isRecorded }: ContentsProps): JSX.Element => {
           음식 사진을 올리면 AI가 <br /> 음식 종류와 영양소를 분석해 드려요
         </Typography>
       </div>
-      <Modal
+      <RestoreAnalysisModal
         open={showModal}
         onOpenChange={setShowModal}
         onApproveClickHandler={handleApproveClick}
@@ -43,4 +43,4 @@ const Contents = ({ isRecorded }: ContentsProps): JSX.Element => {
   );
 };
 
-export default Contents;
+export default UploadImageSection;
