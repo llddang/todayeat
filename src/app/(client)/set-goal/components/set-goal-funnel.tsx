@@ -19,9 +19,9 @@ import AgeStep from './step-age';
 import HeightStep from './step-height';
 import WeightStep from './step-weight';
 import ActivityLevelStep from './step-activity-level';
-import AiLoadingStep from './ai-loading-step';
 import CalculateStep from './step-calculate';
 import Complete from './step-complete';
+import StepAiLoading from './step-ai-loading';
 
 type SetGoalFunnelProps = {
   userName: string;
@@ -91,7 +91,7 @@ const SetGoalFunnel = ({ userName }: SetGoalFunnelProps) => {
             nextStep={(data: ActivityLevelType) => setStep('step7', { activityLevel: data })}
           />
         )}
-        step7={({ setStep }) => <AiLoadingStep nextStep={() => setStep('step8')} />}
+        step7={({ setStep }) => <StepAiLoading nextStep={() => setStep('step8')} />}
         step8={({ setStep, data }) => <CalculateStep userName={userName} data={data} nextStep={setStep} />}
         complete={() => <Complete userName={userName} />}
       />

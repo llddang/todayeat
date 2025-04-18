@@ -1,4 +1,3 @@
-import MacroNutrientCard from './macronutrient-card';
 import UserInfoList from './user-info-list';
 import ButtonLink from '@/components/commons/button-link';
 import { Typography } from '@/components/ui/typography';
@@ -7,6 +6,7 @@ import { NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.consta
 import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
 import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
 import { UserDTO } from '@/types/DTO/user.dto';
+import MacronutrientCard from './macronutrient-card';
 
 type UserGoalCardProps = {
   userInfo: UserDTO;
@@ -62,7 +62,7 @@ const UserGoalCard = ({ userInfo }: UserGoalCardProps) => {
           <UserInfoList title="1일 목표 칼로리" description={`${formatNumberWithComma(dailyCaloriesGoal)} kcal`} />
           <UserInfoList title="목표 기준 탄단지 비율" description={calculateMacroRatio()} />
         </ul>
-        <MacroNutrientCard
+        <MacronutrientCard
           dailyProteinGoal={dailyProteinGoal}
           dailyCarbohydrateGoal={dailyCarbohydrateGoal}
           dailyFatGoal={dailyFatGoal}
