@@ -2,23 +2,24 @@ import dynamic from 'next/dynamic';
 import { Typography } from '@/components/ui/typography';
 import { useEffect } from 'react';
 
-const SetGoalAiLoaderLottie = dynamic(() => import('@/components/_set-goal/set-goal-ai-loader-lottie'), {
+const AiLoaderLottie = dynamic(() => import('./ai-loader-lottie'), {
   ssr: false
 });
 
-type SetGoalAiLoadingStepProps = {
+type AiLoadingStepProps = {
   nextStep: () => void;
 };
 
-const SetGoalAiLoadingStep = ({ nextStep }: SetGoalAiLoadingStepProps) => {
+const AiLoadingStep = ({ nextStep }: AiLoadingStepProps) => {
   useEffect(() => {
     setTimeout(() => {
       nextStep();
     }, 3000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-2">
-      <SetGoalAiLoaderLottie />
+      <AiLoaderLottie />
       <Typography as="h3" variant="title2">
         AI가 칼로리를 계산 중이에요!
       </Typography>
@@ -31,4 +32,4 @@ const SetGoalAiLoadingStep = ({ nextStep }: SetGoalAiLoadingStepProps) => {
   );
 };
 
-export default SetGoalAiLoadingStep;
+export default AiLoadingStep;

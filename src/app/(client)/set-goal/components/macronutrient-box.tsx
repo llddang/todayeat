@@ -1,14 +1,14 @@
-import { PersonalMacronutrientData } from '@/components/_set-goal/set-goal-calculate-step';
 import { Typography } from '@/components/ui/typography';
 import { MACRONUTRIENT_OPTIONS } from '@/constants/nutrition.constant';
 import { NutritionEnumType } from '@/types/nutrition.type';
+import { PersonalMacronutrientData } from './step-calculate';
 
-type SetGoalMacronutrientBoxProps = {
+type MacronutrientBoxProps = {
   label: NutritionEnumType;
   data: PersonalMacronutrientData;
 };
 
-const SetGoalMacronutrientBox = ({ label, data }: SetGoalMacronutrientBoxProps) => {
+const MacronutrientBox = ({ label, data }: MacronutrientBoxProps) => {
   const barColor = MACRONUTRIENT_OPTIONS[label].color || 'bg-gray-300';
   return (
     <div className="flex flex-1 flex-col gap-1.5 rounded-2xl bg-white p-4">
@@ -34,4 +34,4 @@ const SetGoalMacronutrientBox = ({ label, data }: SetGoalMacronutrientBoxProps) 
   );
 };
 
-export default SetGoalMacronutrientBox;
+export default MacronutrientBox;

@@ -1,14 +1,5 @@
 import { Suspense } from 'react';
 import { z } from 'zod';
-import SetGoalActivityLevelStep from '@/components/_set-goal/set-goal-activity-level-step';
-import SetGoalAgeStep from '@/components/_set-goal/set-goal-age-step';
-import SetGoalAiLoadingStep from '@/components/_set-goal/set-goal-ai-loading-step';
-import SetGoalCalculateStep from '@/components/_set-goal/set-goal-calculate-step';
-import SetGoalComplete from '@/components/_set-goal/set-goal-complete';
-import SetGoalGenderStep from '@/components/_set-goal/set-goal-gender-step';
-import SetGoalHeightStep from '@/components/_set-goal/set-goal-height-step';
-import SetGoalPurposeStep from '@/components/_set-goal/set-goal-purpose-step';
-import SetGoalWeightStep from '@/components/_set-goal/set-goal-weight-step';
 import useFunnel from '@/lib/hooks/use-funnel';
 import {
   CompleteType,
@@ -22,8 +13,17 @@ import {
 } from '@/types/set-goal.type';
 import { ActivityLevelType, GenderType, PurposeType } from '@/types/user-personal-info.type';
 import { SET_GOAL_FUNNEL_SCHEMA } from '@/constants/funnel-schema.constant';
+import PurposeStep from './step-purpose';
+import GenderStep from './step-gender';
+import AgeStep from './step-age';
+import HeightStep from './step-height';
+import WeightStep from './step-weight';
+import ActivityLevelStep from './step-activity-level';
+import AiLoadingStep from './ai-loading-step';
+import CalculateStep from './step-calculate';
+import Complete from './step-complete';
 
-type SetGoalFunnerProps = {
+type SetGoalFunnelProps = {
   userName: string;
 };
 
@@ -39,7 +39,7 @@ const validateStep = {
   complete: SET_GOAL_FUNNEL_SCHEMA
 };
 
-const SetGoalFunnel = ({ userName }: SetGoalFunnerProps) => {
+const SetGoalFunnel = ({ userName }: SetGoalFunnelProps) => {
   const Funnel = useFunnel<
     {
       step1: SetGoalStep1Type;
@@ -73,29 +73,27 @@ const SetGoalFunnel = ({ userName }: SetGoalFunnerProps) => {
     <Suspense>
       <Funnel
         step1={({ setStep }) => (
-          <SetGoalPurposeStep userName={userName} nextStep={(purpose: PurposeType) => setStep('step2', { purpose })} />
+          <PurposeStep userName={userName} nextStep={(purpose: PurposeType) => setStep('step2', { purpose })} />
         )}
         step2={({ setStep }) => (
-          <SetGoalGenderStep userName={userName} nextStep={(gender: GenderType) => setStep('step3', { gender })} />
+          <GenderStep userName={userName} nextStep={(gender: GenderType) => setStep('step3', { gender })} />
         )}
-        step3={({ setStep }) => (
-          <SetGoalAgeStep userName={userName} nextStep={(age: number) => setStep('step4', { age })} />
-        )}
+        step3={({ setStep }) => <AgeStep userName={userName} nextStep={(age: number) => setStep('step4', { age })} />}
         step4={({ setStep }) => (
-          <SetGoalHeightStep userName={userName} nextStep={(height: number) => setStep('step5', { height })} />
+          <HeightStep userName={userName} nextStep={(height: number) => setStep('step5', { height })} />
         )}
         step5={({ setStep }) => (
-          <SetGoalWeightStep userName={userName} nextStep={(weight: number) => setStep('step6', { weight })} />
+          <WeightStep userName={userName} nextStep={(weight: number) => setStep('step6', { weight })} />
         )}
         step6={({ setStep }) => (
-          <SetGoalActivityLevelStep
+          <ActivityLevelStep
             userName={userName}
             nextStep={(data: ActivityLevelType) => setStep('step7', { activityLevel: data })}
           />
         )}
-        step7={({ setStep }) => <SetGoalAiLoadingStep nextStep={() => setStep('step8')} />}
-        step8={({ setStep, data }) => <SetGoalCalculateStep userName={userName} data={data} nextStep={setStep} />}
-        complete={() => <SetGoalComplete userName={userName} />}
+        step7={({ setStep }) => <AiLoadingStep nextStep={() => setStep('step8')} />}
+        step8={({ setStep, data }) => <CalculateStep userName={userName} data={data} nextStep={setStep} />}
+        complete={() => <Complete userName={userName} />}
       />
     </Suspense>
   );

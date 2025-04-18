@@ -1,10 +1,10 @@
 import { Typography } from '@/components/ui/typography';
 
-type SetGoalProgressSectionProps = {
+type ProgressSectionProps = {
   percent: number;
 };
 
-const SetGoalProgressSection = ({ percent }: SetGoalProgressSectionProps) => {
+const ProgressSection = ({ percent }: ProgressSectionProps) => {
   return (
     // TODO 공통 컴포넌트화
     <div>
@@ -21,4 +21,4 @@ const SetGoalProgressSection = ({ percent }: SetGoalProgressSectionProps) => {
   );
 };
 
-export default SetGoalProgressSection;
+export default ProgressSection;

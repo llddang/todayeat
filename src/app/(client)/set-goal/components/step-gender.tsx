@@ -1,20 +1,19 @@
+import { FormEvent, useState } from 'react';
 import OptionSelectCard from '@/components/commons/option-select-card';
 import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
-import { GOAL_OPTIONS } from '@/constants/set-goal.constant';
-import { PurposeType } from '@/types/user-personal-info.type';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { GenderType } from '@/types/user-personal-info.type';
+import { GOAL_OPTIONS } from '../constants/funnel.constant';
 
-type SetGoalPurposeStepProps = {
+type StepGenderProps = {
   userName: string;
-  nextStep: (data: PurposeType) => void;
+  nextStep: (data: GenderType) => void;
 };
+const StepGender = ({ userName, nextStep }: StepGenderProps) => {
+  const [selectedOption, setSelectedOption] = useState<GenderType | null>(null);
 
-const SetGoalPurposeStep = ({ userName, nextStep }: SetGoalPurposeStepProps) => {
-  const [selectedOption, setSelectedOption] = useState<PurposeType | null>(null);
-
-  const handleSelectOption = (e: ChangeEvent<HTMLInputElement>) => {
-    setSelectedOption(e.target.value as PurposeType);
+  const handleSelectOption = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedOption(e.target.value as GenderType);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -26,18 +25,18 @@ const SetGoalPurposeStep = ({ userName, nextStep }: SetGoalPurposeStepProps) => 
     <form onSubmit={handleSubmit}>
       <fieldset>
         <legend>
-          <Typography as="h3" variant={'title2'} className="mb-2">
-            {userName}님은 <br /> 어떤 목표를 가지고 계신가요?
+          <Typography as="h3" variant="title2" className="mb-2">
+            {userName}님의 <br /> 성별을 알려주세요
           </Typography>
-          <Typography as="span" variant={'body2'} className="text-gray-600">
-            목표에 따라 칼로리와 영양소 비율이 달라져요
+          <Typography as="span" variant="body2" className="text-gray-600">
+            성별에 따라 기초대사량 계산이 달라져요
           </Typography>
         </legend>
         <div className="space-y-2 pt-2">
-          {GOAL_OPTIONS.PURPOSE.map((option) => (
+          {GOAL_OPTIONS.GENDER.map((option) => (
             <OptionSelectCard
               key={option.value}
-              groupName="PURPOSE"
+              groupName="GENDER"
               checked={selectedOption === option.value}
               onChange={(e) => handleSelectOption(e)}
               {...option}
@@ -52,4 +51,4 @@ const SetGoalPurposeStep = ({ userName, nextStep }: SetGoalPurposeStepProps) => 
   );
 };
 
-export default SetGoalPurposeStep;
+export default StepGender;

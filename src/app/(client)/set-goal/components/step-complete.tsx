@@ -3,13 +3,13 @@ import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
 import Link from 'next/link';
 
-type SetGoalCompleteProps = {
+type StepCompleteProps = {
   userName: string;
 };
 
-const SetGoalComplete = ({ userName }: SetGoalCompleteProps) => {
+const StepComplete = ({ userName }: StepCompleteProps) => {
   return (
-    <div className="before:bg-complete-confetti absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-3 before:mb-5 before:h-20 before:w-20 before:bg-contain before:content-['']">
+    <div className="absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-3 before:mb-5 before:h-20 before:w-20 before:bg-complete-confetti before:bg-contain before:content-['']">
       <Typography as="h3" variant="title2">
         목표 설정이 완료됐어요!
       </Typography>
@@ -26,4 +26,4 @@ const SetGoalComplete = ({ userName }: SetGoalCompleteProps) => {
   );
 };
 
-export default SetGoalComplete;
+export default StepComplete;

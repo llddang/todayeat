@@ -4,10 +4,11 @@ import GlassBackground from '@/components/commons/glass-background';
 import { useSearchParams } from 'next/navigation';
 import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
 import { FunnelStep } from '@/types/set-goal.type';
-import { LAST_STEP_FOR_USER_INPUT, STEP_UI_CONFIG } from '@/constants/set-goal.constant';
-import SetGoalProgressSection from '@/components/_set-goal/set-goal-progress-section';
-import SetGoalFunnel from '@/components/_set-goal/set-goal-funnel';
+
 import { useUserStore } from '@/store/user-store';
+import ProgressSection from './components/progress-section';
+import SetGoalFunnel from './components/set-goal-funnel';
+import { LAST_STEP_FOR_USER_INPUT, STEP_UI_CONFIG } from './constants/funnel.constant';
 
 const SetGoalPage = () => {
   const user = useUserStore((state) => state.user);
@@ -22,7 +23,7 @@ const SetGoalPage = () => {
   const renderProgressBar = () => {
     if (!currentUIConfig.hasProgressBar) return null;
 
-    return <SetGoalProgressSection percent={progressPercent} />;
+    return <ProgressSection percent={progressPercent} />;
   };
 
   const content = (
