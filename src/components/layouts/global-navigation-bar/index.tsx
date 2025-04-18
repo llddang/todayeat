@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import GlobalNavigationBarItem from './global-navigation-bar-item';
+import GlobalNavigationBarItem from './item';
 import SITE_MAP from '@/constants/site-map.constant';
 import { cn } from '@/lib/utils';
 

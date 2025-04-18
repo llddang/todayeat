@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import Header from '@/components/layouts/header/header';
+import Header from '@/components/layouts/header/variants/header-default';
 import Footer from '@/components/commons/footer';
 
 const Layout = ({
