@@ -3,7 +3,7 @@ import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/componen
 import ClientOnly from '@/components/commons/client-only';
 import { CALENDAR_STAND_COUNT } from '@/app/(home)/constants/calendar.constant';
 import { formatDateWithDash } from '@/lib/utils/format.util';
-import { getAllMyDailyCalories } from '@/lib/apis/meal.api';
+import { getAllMyDailyCalories } from '@/apis/meal.api';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
 import { calculateWeekDates, getWeekDates } from '../utils/calendar.util';

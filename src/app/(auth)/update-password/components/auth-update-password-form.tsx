@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { browserClient } from '@/lib/utils/supabase/client.util';
-import { changePassword } from '@/lib/apis/auth-server.api';
+import { changePassword } from '@/apis/auth-server.api';
 import formSchema from '@/app/schemas/form-schema.schema';
 import SITE_MAP from '@/constants/site-map.constant';
 

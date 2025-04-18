@@ -4,8 +4,8 @@ import MealImageCarousel from '@/app/(client)/meal/components/meal-images-carous
 import TagSelectItem from '@/components/commons/tag-select-item';
 import Textarea from '@/components/commons/textarea';
 import { Typography } from '@/components/ui/typography';
-import { getAiResponses, getFoodImagesById } from '@/lib/apis/analysis-request.api';
-import { getUser } from '@/lib/apis/user.api';
+import { getAiResponses, getFoodImagesById } from '@/apis/analysis-request.api';
+import { getUser } from '@/apis/user.api';
 import { MealCategory } from '@/types/meal-category.type';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
@@ -23,9 +23,9 @@ import {
 } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import IconButton from '@/components/commons/icon-button';
-import { uploadImage } from '@/lib/apis/storage.api';
+import { uploadImage } from '@/apis/storage.api';
 import { formatTimestamp } from '@/lib/utils/format.util';
-import { createMealWithDetails, deleteMealAnalysisDetail } from '@/lib/apis/meal.api';
+import { createMealWithDetails, deleteMealAnalysisDetail } from '@/apis/meal.api';
 import { MealDTO } from '@/types/DTO/meal.dto';
 import MealEditCalendar from '@/app/(client)/meal/post/edit/components/meal-edit-calendar';
 import GlassBackground from '@/components/commons/glass-background';

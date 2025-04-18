@@ -2,7 +2,7 @@
 
 import SITE_MAP from '@/constants/site-map.constant';
 import { Button } from '@/components/ui/button';
-import { getUser } from '@/lib/apis/user.api';
+import { getUser } from '@/apis/user.api';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import AddImage from '@/app/(client)/meal/post/components/add-image';

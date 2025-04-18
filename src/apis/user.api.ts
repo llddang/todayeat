@@ -1,6 +1,6 @@
 'use server';
 
-import { getAuth } from '@/lib/apis/auth-server.api';
+import { getAuth } from '@/apis/auth-server.api';
 import { camelToSnakeObject, snakeToCamelObject } from '@/lib/utils/camelize.util';
 import { getServerClient } from '@/lib/utils/supabase/server.util';
 import { UpdateUserDTO, UpdateUserPersonalInfoDTO, UserDTO, UserPersonalInfoDTO } from '@/types/DTO/user.dto';

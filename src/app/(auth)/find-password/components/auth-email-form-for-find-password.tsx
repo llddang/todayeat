@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import formSchema from '@/app/schemas/form-schema.schema';
-import { checkEmailExists, resetPasswordByEmail } from '@/lib/apis/auth-server.api';
+import { checkEmailExists, resetPasswordByEmail } from '@/apis/auth-server.api';
 
 const AuthEmailFormForFindPassword = () => {
   const [isPending, setIsPending] = useState(false);

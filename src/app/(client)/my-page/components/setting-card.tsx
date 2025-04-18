@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
-import { signOut } from '@/lib/apis/auth-server.api';
+import { signOut } from '@/apis/auth-server.api';
 
 const SettingCard = () => {
   const router = useRouter();

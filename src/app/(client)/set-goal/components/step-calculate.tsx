@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import formSchema from '@/app/schemas/form-schema.schema';
 import { NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
-import { getUser, updateUserPersonalInfo } from '@/lib/apis/user.api';
+import { getUser, updateUserPersonalInfo } from '@/apis/user.api';
 import {
   calculateDailyNutrition,
   calculateDailyNutritionGoal,

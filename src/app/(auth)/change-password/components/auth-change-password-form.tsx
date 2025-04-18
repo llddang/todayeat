@@ -9,7 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import formSchema from '@/app/schemas/form-schema.schema';
 import { browserClient } from '@/lib/utils/supabase/client.util';
-import { changePassword, signIn } from '@/lib/apis/auth-server.api';
+import { changePassword, signIn } from '@/apis/auth-server.api';
 
 const passwordChangeDefaultValue: PasswordChangeForm = {
   currentPassword: '',

@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import { AI_ERROR_KEYS, AI_ERROR_MESSAGE, isAIErrorResponse } from '@/constants/ai-error-message.constant';
-import { createFoodAnalysisRequestDetails, createAiRequest, getFoodImagesById } from '@/lib/apis/analysis-request.api';
-import { generateFoodAnalysisByImage } from '@/lib/apis/gemini.api';
+import { createFoodAnalysisRequestDetails, createAiRequest, getFoodImagesById } from '@/apis/analysis-request.api';
+import { generateFoodAnalysisByImage } from '@/apis/gemini.api';
 import { parseGeminiResponse } from '@/lib/utils/gemini.util';
 import { ImageContent } from '@/types/gemini.type';
-import { uploadImage } from '@/lib/apis/storage.api';
+import { uploadImage } from '@/apis/storage.api';
 import { CreateAiFullResponseDTO } from '@/types/DTO/ai_analysis.dto';
 
 export const POST = async (req: Request) => {

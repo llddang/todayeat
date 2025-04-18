@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import formSchema from '@/app/schemas/form-schema.schema';
 import { useForm } from 'react-hook-form';
-import { checkEmailExists } from '@/lib/apis/auth-server.api';
+import { checkEmailExists } from '@/apis/auth-server.api';
 import { SignUpStep1Type } from '@/types/sign-up-funnel-type';
 
 const signUpEmailSchema = z.object({
