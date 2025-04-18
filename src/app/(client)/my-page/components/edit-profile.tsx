@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import formSchema from '@/app/schemas/form-schema.schema';
 import { UserDTO } from '@/types/DTO/user.dto';
-import { cleanupBlobUrl } from '@/lib/utils/cleanup-blob-url.util';
+import { cleanupBlobUrl } from '@/utils/cleanup-blob-url.util';
 import IconButton from '@/components/commons/icon-button';
 import { Typography } from '@/components/ui/typography';
 import DefaultProfile from '@/../public/illustrations/default-profile.svg';

@@ -1,7 +1,7 @@
 'use client';
 
 import { Typography } from '@/components/ui/typography';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/shadcn';
 import { FormEvent, forwardRef, useImperativeHandle, useMemo, useRef, useState } from 'react';
 
 type TextareaProps = Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'maxLength'> & {

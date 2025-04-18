@@ -2,7 +2,7 @@
 
 import GlassBackground from '@/components/commons/glass-background';
 import { useSearchParams } from 'next/navigation';
-import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
+import { getPercentage } from '@/utils/nutrition-calculator.util';
 import { useUserStore } from '@/store/user-store';
 import ProgressSection from './components/progress-section';
 import SetGoalFunnel from './components/set-goal-funnel';

@@ -1,6 +1,6 @@
 import { Typography } from '@/components/ui/typography';
-import { formatNumberWithComma } from '@/lib/utils/format.util';
-import { calculateMacroCaloriesByGram, CALORIES_PER_GRAM } from '@/lib/utils/nutrition-calculator.util';
+import { formatNumberWithComma } from '@/utils/format.util';
+import { calculateMacroCaloriesByGram, CALORIES_PER_GRAM } from '@/utils/nutrition-calculator.util';
 
 type MacronutrientCardProps = {
   dailyCarbohydrateGoal: string | number;

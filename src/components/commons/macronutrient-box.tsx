@@ -1,6 +1,6 @@
 import { Typography } from '@/components/ui/typography';
 import { MACRONUTRIENT_OPTIONS } from '@/constants/nutrition.constant';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/shadcn';
 import { MacronutrientEnumType } from '@/types/nutrition.type';
 
 const MacronutrientBox = ({ variety, value }: { variety: MacronutrientEnumType; value: number }) => {

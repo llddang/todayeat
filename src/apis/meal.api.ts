@@ -1,8 +1,8 @@
 'use server';
 
-import { camelToSnakeObject, snakeToCamelObject } from '@/lib/utils/camelize.util';
-import { formatDateWithDash } from '@/lib/utils/format.util';
-import { getServerClient } from '@/lib/utils/supabase/server.util';
+import { camelToSnakeObject, snakeToCamelObject } from '@/utils/camelize.util';
+import { formatDateWithDash } from '@/utils/format.util';
+import { getServerClient } from '@/lib/supabase/server';
 import {
   CreateMealDetailDTO,
   CreateMealDTO,

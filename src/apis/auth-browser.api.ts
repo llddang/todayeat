@@ -1,5 +1,5 @@
 import { ENV, ENV_ERROR } from '@/constants/env.constant';
-import { browserClient } from '@/lib/utils/supabase/client.util';
+import { browserClient } from '@/lib/supabase/client';
 
 /** 구글을 통해 로그인하는 함수 */
 export const signInWithGoogle = async () => {

@@ -1,5 +1,5 @@
 import { MACRONUTRIENT_OPTIONS } from '@/constants/nutrition.constant';
-import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
+import { getPercentage } from '@/utils/nutrition-calculator.util';
 import { MacronutrientEnumType } from '@/types/nutrition.type';
 
 type HomeMacronutrientBoxProps = {

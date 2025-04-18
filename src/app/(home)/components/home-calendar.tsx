@@ -7,7 +7,7 @@ import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import HomeCalendarWeek from './home-calendar-week';
 import HomeCalendarMonth from './home-calendar-month';
 import HomeCalendarBottomUpSelector from './home-calendar-bottom-up-selector';
-import { formatDateToLocaleKR } from '@/lib/utils/format.util';
+import { formatDateToLocaleKR } from '@/utils/format.util';
 
 const HomeCalendar = () => {
   const { currentDate } = useCalendar();

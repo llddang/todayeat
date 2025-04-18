@@ -1,6 +1,6 @@
 'use server';
 
-import { getServerClient } from '@/lib/utils/supabase/server.util';
+import { getServerClient } from '@/lib/supabase/server';
 import { categoriesError, ErrorResponse } from '@/types/error.type';
 import { SupabaseBucketValue } from '@/types/supabase-bucket.type';
 

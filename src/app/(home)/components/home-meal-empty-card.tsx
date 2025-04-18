@@ -1,6 +1,6 @@
 import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/shadcn';
 import Link from 'next/link';
 
 const HomeMealEmptyCard = () => {

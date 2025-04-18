@@ -5,7 +5,7 @@ import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } f
 import { useEffect, useState } from 'react';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
-import { formatDateToLocaleKR } from '@/lib/utils/format.util';
+import { formatDateToLocaleKR } from '@/utils/format.util';
 
 type HomeCalendarBottomUpSelectorProps = {
   open: boolean;

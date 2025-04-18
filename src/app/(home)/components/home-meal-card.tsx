@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { MealCategoryType } from '@/types/meal-category.type';
-import { calculateTotalNutrition } from '@/lib/utils/nutrition-calculator.util';
+import { calculateTotalNutrition } from '@/utils/nutrition-calculator.util';
 import { MealDTO } from '@/types/DTO/meal.dto';
 import { Typography } from '@/components/ui/typography';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/shadcn';
 import MacronutrientGroup from '@/components/commons/macronutrient-group';
-import { formatTimeToHHMM, formatTimeWithMeridiem } from '@/lib/utils/format.util';
+import { formatTimeToHHMM, formatTimeWithMeridiem } from '@/utils/format.util';
 
 type HomeMealCardProps = {
   meal: MealDTO;

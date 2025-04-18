@@ -1,7 +1,7 @@
 // ✅ TagSelectItem.tsx
 
 import { Typography } from '@/components/ui/typography';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/shadcn';
 import React, { InputHTMLAttributes } from 'react';
 
 export type TagSelectItemProps = Omit<

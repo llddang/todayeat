@@ -6,21 +6,17 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import formSchema from '@/app/schemas/form-schema.schema';
 import { NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
 import { getUser, updateUserPersonalInfo } from '@/apis/user.api';
-import {
-  calculateDailyNutrition,
-  calculateDailyNutritionGoal,
-  getPercentage
-} from '@/lib/utils/nutrition-calculator.util';
+import { calculateDailyNutrition, calculateDailyNutritionGoal, getPercentage } from '@/utils/nutrition-calculator.util';
 import { Typography } from '@/components/ui/typography';
 import { ControllerRenderProps, useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { isClient } from '@/lib/utils/predicate.util';
+import { isClient } from '@/utils/predicate.util';
 import { useUserStore } from '@/store/user-store';
 import MacronutrientBox from './macronutrient-box';
 import { StepCompleteType } from '../types/funnel.type';
-import { formatNumberWithComma } from '@/lib/utils/format.util';
+import { formatNumberWithComma } from '@/utils/format.util';
 import { userPhysicalProfileSchema } from '../schemas/user-physical-profile.schema';
 
 type StepCalculateProps = {

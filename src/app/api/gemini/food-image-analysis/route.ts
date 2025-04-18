@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { AI_ERROR_KEYS, AI_ERROR_MESSAGE, isAIErrorResponse } from '@/constants/ai-error-message.constant';
 import { createFoodAnalysisRequestDetails, createAiRequest, getFoodImagesById } from '@/apis/analysis-request.api';
 import { generateFoodAnalysisByImage } from '@/apis/gemini.api';
-import { parseGeminiResponse } from '@/lib/utils/gemini.util';
+import { parseGeminiResponse } from '@/lib/gemini';
 import { ImageContent } from '@/types/gemini.type';
 import { uploadImage } from '@/apis/storage.api';
 import { CreateAiFullResponseDTO } from '@/types/DTO/ai_analysis.dto';

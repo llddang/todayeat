@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { AI_ERROR_KEYS, AI_ERROR_MESSAGE, isAIErrorResponse } from '@/constants/ai-error-message.constant';
 import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
-import { parseGeminiResponse } from '@/lib/utils/gemini.util';
+import { parseGeminiResponse } from '@/lib/gemini';
 import { updateCaloriesAnalysisResult } from '@/apis/analysis-request.api';
 
 export const POST = async (req: Request) => {

@@ -4,7 +4,7 @@ import AuthSignUpFunnel from '@/app/(auth)/sign-up/components/auth-sign-up-funne
 import AuthSignUpProgressBar from '@/app/(auth)/sign-up/components/auth-sign-up-progress-bar';
 import GlassBackground from '@/components/commons/glass-background';
 import { STEP_UI_CONFIG } from '@/app/(auth)/sign-up/constants/set-goal.constant';
-import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
+import { getPercentage } from '@/utils/nutrition-calculator.util';
 import { SignUpFunnelStep } from '@/types/sign-up-funnel-type';
 import { useSearchParams } from 'next/navigation';
 

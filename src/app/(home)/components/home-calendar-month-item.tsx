@@ -1,5 +1,5 @@
 import { MAX_WEEK } from '@/app/(home)/constants/calendar.constant';
-import { formatDateWithDash } from '@/lib/utils/format.util';
+import { formatDateWithDash } from '@/utils/format.util';
 import HomeCalendarWeekItem from './home-calendar-week-item';
 
 type HomeCalendarWeekItemProps = {

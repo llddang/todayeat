@@ -1,4 +1,4 @@
-import { getGenAI, getGenerativeAI } from '@/lib/utils/gemini.util';
+import { getGenAI, getGenerativeAI } from '@/lib/gemini';
 import { ImageContent } from '@/types/gemini.type';
 
 export const generateFoodAnalysisByImage = async (imageParts: ImageContent[]): Promise<string> => {

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { useState } from 'react';
 import { Typography } from '@/components/ui/typography';
-import { formatDateToLocaleKR } from '@/lib/utils/format.util';
+import { formatDateToLocaleKR } from '@/utils/format.util';
 
 type MealEditCalendarProps = {
   date: Date;

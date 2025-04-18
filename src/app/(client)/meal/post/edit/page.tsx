@@ -24,7 +24,7 @@ import {
 import { Button } from '@/components/ui/button';
 import IconButton from '@/components/commons/icon-button';
 import { uploadImage } from '@/apis/storage.api';
-import { formatTimestamp } from '@/lib/utils/format.util';
+import { formatTimestamp } from '@/utils/format.util';
 import { createMealWithDetails, deleteMealAnalysisDetail } from '@/apis/meal.api';
 import { MealDTO } from '@/types/DTO/meal.dto';
 import MealEditCalendar from '@/app/(client)/meal/post/edit/components/meal-edit-calendar';

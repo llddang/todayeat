@@ -1,7 +1,7 @@
 'use server';
 
 import { User } from '@supabase/supabase-js';
-import { getServerClient } from '@/lib/utils/supabase/server.util';
+import { getServerClient } from '@/lib/supabase/server';
 import { ENV } from '@/constants/env.constant';
 import SITE_MAP from '@/constants/site-map.constant';
 import { SupabaseAuthDTO, UserAuthDTO } from '@/types/DTO/user.dto';

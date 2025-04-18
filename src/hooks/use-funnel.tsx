@@ -4,12 +4,8 @@
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { isServer } from '@/lib/utils/predicate.util';
-import {
-  getSessionStorageItem,
-  removeSessionStorageItem,
-  setSessionStorageItem
-} from '@/lib/utils/session-storage.util';
+import { isServer } from '@/utils/predicate.util';
+import { getSessionStorageItem, removeSessionStorageItem, setSessionStorageItem } from '@/utils/session-storage.util';
 
 const FUNNEL_QUERY_PARAM = 'step';
 const DEFAULT_SESSION_ID = 'todayeat-funnel-data';

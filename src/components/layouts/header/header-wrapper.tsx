@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/shadcn';
 import { useDetectIsScrolled } from '@/hooks/use-detect-is-scrolled';
 import { ReactNode } from 'react';
 

@@ -1,4 +1,4 @@
-import { isServer } from '@/lib/utils/predicate.util';
+import { isServer } from '@/utils/predicate.util';
 
 /**
  * 세션 스토리지에서 데이터를 가져오는 함수
