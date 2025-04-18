@@ -6,11 +6,11 @@ const AiLoaderLottie = dynamic(() => import('./ai-loader-lottie'), {
   ssr: false
 });
 
-type AiLoadingStepProps = {
+type StepAiLoadingProps = {
   nextStep: () => void;
 };
 
-const AiLoadingStep = ({ nextStep }: AiLoadingStepProps) => {
+const StepAiLoading = ({ nextStep }: StepAiLoadingProps) => {
   useEffect(() => {
     setTimeout(() => {
       nextStep();
@@ -32,4 +32,4 @@ const AiLoadingStep = ({ nextStep }: AiLoadingStepProps) => {
   );
 };
 
-export default AiLoadingStep;
+export default StepAiLoading;
