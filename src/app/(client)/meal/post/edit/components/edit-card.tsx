@@ -86,7 +86,7 @@ const EditCard = ({ mealDetail, idx }: EditCardProps) => {
               type="number"
               onInput={onHandleMaxLengthInput}
               inputMode="numeric"
-              {...register(`meals.${idx}.weight}`, {
+              {...register(`meals.${idx}.weight`, {
                 valueAsNumber: true
               })}
               className="flex-1"
@@ -96,7 +96,7 @@ const EditCard = ({ mealDetail, idx }: EditCardProps) => {
               measure={MEASUREMENT_UNIT['KCAL'].unit}
               type="number"
               className="flex-1"
-              {...register(`meals.${idx}.calories}`, {
+              {...register(`meals.${idx}.calories`, {
                 valueAsNumber: true
               })}
               defaultValue={mealDetail.calories}
