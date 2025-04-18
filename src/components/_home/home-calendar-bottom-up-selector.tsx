@@ -3,8 +3,8 @@ import { ko } from 'date-fns/locale';
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 import { useEffect, useState } from 'react';
-import { useDashboard } from '@/lib/contexts/dashboard.context';
-import { useCalendar } from '@/lib/contexts/calendar.context';
+import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
+import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import { formatDateCaption } from '@/lib/utils/date.util';
 
 type HomeCalendarBottomUpSelectorProps = {
@@ -44,7 +44,7 @@ const HomeCalendarBottomUpSelector = ({ open, onOpenChange }: HomeCalendarBottom
           formatters={{ formatCaption: formatDateCaption }}
         />
         {/* TODO: temp-layout 풀기 */}
-        <div className="temp-layout !mt-2 w-full pb-4 pt-2">
+        <div className="!mt-2 w-full pb-4 pt-2 temp-layout">
           <Button onClick={handleSelectDate} className="w-full">
             날짜 선택 완료
           </Button>

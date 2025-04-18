@@ -8,7 +8,7 @@ import CtaExampleFeedbackBanner from '@/components/commons/cta-example-feedback-
 import GlassBackground from '@/components/commons/glass-background';
 import { Typography } from '@/components/ui/typography';
 import { getMyMealByDate } from '@/lib/apis/meal.api';
-import { useDashboard } from '@/lib/contexts/dashboard.context';
+import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
 import { formatDateWithDash } from '@/lib/utils/date.util';
 import { calculateTotalNutrition } from '@/lib/utils/nutrition-calculator.util';
 import { useUserStore } from '@/store/user-store';

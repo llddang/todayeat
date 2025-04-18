@@ -5,9 +5,9 @@ import ClientOnly from '@/components/commons/client-only';
 import { CALENDAR_STAND_COUNT } from '@/constants/calendar.constant';
 import { calculateWeekDates, formatDateWithDash, getWeekDates } from '@/lib/utils/date.util';
 import { getAllMyDailyCalories } from '@/lib/apis/meal.api';
-import { useCalendar } from '@/lib/contexts/calendar.context';
+import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import HomeCalendarDayLabel from '@/components/_home/home-calendar-day-label';
-import { useDashboard } from '@/lib/contexts/dashboard.context';
+import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
 
 type WeekType = {
   id: number;

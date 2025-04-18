@@ -6,7 +6,7 @@ import HomeCalendarBottomUpSelector from '@/components/_home/home-calendar-botto
 import HomeCalendarMonth from '@/components/_home/home-calendar-month';
 import HomeCalendarWeek from '@/components/_home/home-calendar-week';
 import { Typography } from '@/components/ui/typography';
-import { useCalendar } from '@/lib/contexts/calendar.context';
+import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import { formatDateCaption } from '@/lib/utils/date.util';
 
 const HomeCalendar = () => {

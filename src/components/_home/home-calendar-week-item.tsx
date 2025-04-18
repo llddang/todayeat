@@ -1,11 +1,11 @@
 import { KeyboardEvent } from 'react';
 import CircleProgressBar from '@/components/commons/circle-progress-bar';
 import { Typography } from '@/components/ui/typography';
-import { useCalendar } from '@/lib/contexts/calendar.context';
+import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import { cn } from '@/lib/utils';
 import { formatDateWithDash, isSameDate } from '@/lib/utils/date.util';
 import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
-import { useDashboard } from '@/lib/contexts/dashboard.context';
+import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
 
 type HomeCalendarWeekItemProps = {
   week: Date[];
