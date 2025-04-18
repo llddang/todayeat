@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { z } from 'zod';
-import useFunnel from '@/lib/hooks/use-funnel';
+import useFunnel from '@/hooks/use-funnel';
 import { ActivityLevelType, GenderType, PurposeType } from '@/types/user-personal-info.type';
 import PurposeStep from './step-purpose';
 import GenderStep from './step-gender';

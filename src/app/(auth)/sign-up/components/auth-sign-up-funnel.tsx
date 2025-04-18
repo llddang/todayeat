@@ -5,7 +5,7 @@ import AuthSignUpStepEmail from '@/app/(auth)/sign-up/components/auth-sign-up-st
 import AuthSignUpStepNickname from '@/app/(auth)/sign-up/components/auth-sign-up-step-nickname';
 import AuthSignUpStepPassword from '@/app/(auth)/sign-up/components/auth-sign-up-step-password';
 import formSchema from '@/app/schemas/form-schema.schema';
-import useFunnel from '@/lib/hooks/use-funnel';
+import useFunnel from '@/hooks/use-funnel';
 import {
   SignUpCompleteType,
   SignUpFunnelStep,

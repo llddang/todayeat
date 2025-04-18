@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { useDetectIsScrolled } from '@/lib/hooks/use-detect-is-scrolled';
+import { useDetectIsScrolled } from '@/hooks/use-detect-is-scrolled';
 import { ReactNode } from 'react';
 
 const HeaderLayer = ({ children }: { children: ReactNode | ReactNode[] }) => {
