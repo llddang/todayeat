@@ -12,9 +12,12 @@ type StepAiLoadingProps = {
 
 const StepAiLoading = ({ nextStep }: StepAiLoadingProps) => {
   useEffect(() => {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       nextStep();
     }, 3000);
+    return () => {
+      clearTimeout(timeout);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
