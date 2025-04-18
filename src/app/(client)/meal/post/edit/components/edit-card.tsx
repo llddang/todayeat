@@ -6,7 +6,7 @@ import IconButton from '@/components/commons/icon-button';
 import { Button } from '@/components/ui/button';
 import { MacronutrientEnum } from '@/types/nutrition.type';
 import {} from '@/types/DTO/meal.dto';
-import { FoodAnalysisRequestsDetailDTO } from '@/types/DTO/food_analysis.dto';
+import { CreateAiFullResponseDTO } from '@/types/DTO/ai_analysis.dto';
 import dynamic from 'next/dynamic';
 import { Input } from '@/components/ui/input';
 
@@ -15,7 +15,7 @@ const AiLoaderLottie = dynamic(() => import('@/components/commons/ai-loader-lott
 });
 
 type EditCardProps = {
-  mealDetail: FoodAnalysisRequestsDetailDTO;
+  mealDetail: CreateAiFullResponseDTO;
   idx: number;
 };
 

@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { GoogleGenAI } from '@google/genai';
 import { ENV, ENV_ERROR } from '@/constants/env.constant';
-import { FoodAnalysisResult } from '@/types/gemini.type';
+import { CreateAiFullResponseDTO } from '@/types/DTO/ai_analysis.dto';
 
 export const getGenerativeAI = () => {
   if (!ENV.GEMINI_KEY) throw new Error(ENV_ERROR.GEMINI_KEY);
@@ -19,9 +19,9 @@ export const getGenAI = () => {
  * - JSON 구조가 아닌 경우에도 대응
  *
  * @param {string} text - Gemini JSON 형식 응답 문자열
- * @returns {FoodAnalysisResult[]} - JSON으로 변환된 응답의 Array
+ * @returns {CreateAiFullResponseDTO[]} - JSON으로 변환된 응답의 Array
  */
-export const parseGeminiResponse = (text: string): FoodAnalysisResult[] => {
+export const parseGeminiResponse = (text: string): CreateAiFullResponseDTO[] => {
   try {
     const cleaned = text.replace(/```json|```/g, '').trim();
     const parsed = JSON.parse(cleaned);

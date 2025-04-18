@@ -1,15 +1,11 @@
 import { NextResponse } from 'next/server';
 import { AI_ERROR_KEYS, AI_ERROR_MESSAGE, isAIErrorResponse } from '@/constants/ai-error-message.constant';
-import {
-  createFoodAnalysisRequestDetails,
-  createFoodAnalysisRequests,
-  getFoodImagesById
-} from '@/lib/apis/analysis-request.api';
+import { createFoodAnalysisRequestDetails, createAiRequest, getFoodImagesById } from '@/lib/apis/analysis-request.api';
 import { generateFoodAnalysisByImage } from '@/lib/apis/gemini.api';
 import { parseGeminiResponse } from '@/lib/utils/gemini.util';
-import { FoodAnalysisRequestsDetailDTO } from '@/types/DTO/food_analysis.dto';
-import { FoodAnalysisResult, ImageContent } from '@/types/gemini.type';
+import { ImageContent } from '@/types/gemini.type';
 import { uploadImage } from '@/lib/apis/storage.api';
+import { CreateAiFullResponseDTO } from '@/types/DTO/ai_analysis.dto';
 
 export const POST = async (req: Request) => {
   try {
@@ -41,7 +37,7 @@ export const POST = async (req: Request) => {
         uploadedUrls.push(publicUrl);
       }
 
-      const { error: insertTempError } = await createFoodAnalysisRequests(userId, uploadedUrls);
+      const { error: insertTempError } = await createAiRequest(userId, uploadedUrls);
 
       if (insertTempError) {
         console.error('임시 테이블 저장 실패:', insertTempError);
@@ -53,14 +49,14 @@ export const POST = async (req: Request) => {
 
     const { data, error } = await getFoodImagesById(userId);
 
-    if (error || !data?.image_urls) {
+    if (error || !data?.imageUrls) {
       console.error('Supabase 에러:', error);
       return NextResponse.json(isAIErrorResponse(AI_ERROR_KEYS.IMAGE_NOT_FOUND), {
         status: AI_ERROR_MESSAGE.IMAGE_NOT_FOUND.status
       });
     }
 
-    const imageUrls: string[] = data.image_urls;
+    const imageUrls: string[] = data.imageUrls;
 
     const base64Images: ImageContent[] = await Promise.all(imageUrls.map(convertImageUrlToBase64));
 
@@ -75,7 +71,7 @@ export const POST = async (req: Request) => {
       });
     }
 
-    const insertPayload: FoodAnalysisRequestsDetailDTO[] = parsedResult.map((item: FoodAnalysisResult) => ({
+    const insertPayload: CreateAiFullResponseDTO[] = parsedResult.map((item) => ({
       ...item,
       userId
     }));

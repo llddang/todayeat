@@ -2,68 +2,25 @@
 import { camelToSnakeObject, snakeToCamelObject } from '@/lib/utils/camelize.util';
 import { getServerClient } from '@/lib/utils/supabase/server.util';
 import {
-  CreateFoodAnalysisRequestDetailDTO,
-  FoodAnalysisRequestDetailDTO,
-  FoodAnalysisRequestsDetailDTO,
-  FoodAnalysisRequestsDetailSnakeCaseDTO,
-  FoodAnalysisRequestsDTO
-} from '@/types/DTO/food_analysis.dto';
-import { CaloriesAnalysisUpdatePayload } from '@/types/gemini.type';
+  AiRequestDTO,
+  AiResponseDTO,
+  CreateAiFullResponseDTO,
+  CreateAiPartialResponseDTO
+} from '@/types/DTO/ai_analysis.dto';
 import { PostgrestError } from '@supabase/supabase-js';
 import { getAuth } from '@/lib/apis/auth-server.api';
 
 export const getFoodImagesById = async (
   userId: string
-): Promise<{ data: FoodAnalysisRequestsDTO | null; error: PostgrestError | null }> => {
+): Promise<{ data: AiRequestDTO | null; error: PostgrestError | null }> => {
   const supabase = getServerClient();
 
-  const { data, error } = await supabase
-    .from('food_analysis_requests')
-    .select('id, image_urls')
-    .eq('user_id', userId)
-    .single();
+  const { data, error } = await supabase.from('ai_requests').select().eq('user_id', userId).single();
 
-  return { data, error };
+  return { data: snakeToCamelObject(data), error };
 };
 
-export const getFoodAnalysisDetail = async (): Promise<FoodAnalysisRequestsDetailDTO[]> => {
-  const supabase = getServerClient();
-  const { id } = await getAuth();
-  if (!id) return [];
-  const { data, error } = await supabase.from('food_analysis_requests_detail').select('*').eq('user_id', id);
-  if (error) throw error;
-  return snakeToCamelObject<FoodAnalysisRequestsDetailSnakeCaseDTO[]>(data);
-};
-
-export const createFoodAnalysisRequestDetails = async (
-  insertPayload: FoodAnalysisRequestsDetailDTO[]
-): Promise<{
-  error: PostgrestError | null;
-}> => {
-  const supabase = getServerClient();
-
-  const { error } = await supabase
-    .from('food_analysis_requests_detail')
-    .insert(camelToSnakeObject<FoodAnalysisRequestsDetailDTO[]>(insertPayload));
-
-  return { error };
-};
-
-export const createFoodAnalysisRequestDetail = async (
-  food: CreateFoodAnalysisRequestDetailDTO
-): Promise<FoodAnalysisRequestDetailDTO> => {
-  const supabase = getServerClient();
-
-  const foodSnakeCase = camelToSnakeObject(food);
-
-  const { data, error } = await supabase.from('food_analysis_requests_detail').insert(foodSnakeCase).select().single();
-
-  if (error) throw error;
-
-  return data;
-};
-
-export const createFoodAnalysisRequests = async (
+export const createAiRequest = async (
   userId: string,
   imageUrls: string[]
 ): Promise<{
@@ -72,7 +29,7 @@ export const createFoodAnalysisRequests = async (
   const supabase = getServerClient();
 
   const { error } = await supabase
-    .from('food_analysis_requests')
+    .from('ai_requests')
     .upsert({
       user_id: userId,
       image_urls: imageUrls
@@ -82,6 +39,42 @@ export const createFoodAnalysisRequests = async (
   return { error };
 };
 
+export const getAiResponses = async (): Promise<AiResponseDTO[]> => {
+  const supabase = getServerClient();
+  const { id } = await getAuth();
+  if (!id) return [];
+  const { data, error } = await supabase.from('ai_responses').select('*').eq('user_id', id);
+  if (error) throw error;
+  return snakeToCamelObject(data);
+};
+
+export const createFoodAnalysisRequestDetails = async (
+  insertPayload: CreateAiFullResponseDTO[]
+): Promise<{
+  error: PostgrestError | null;
+}> => {
+  const supabase = getServerClient();
+
+  const { error } = await supabase
+    .from('ai_responses')
+    .insert(camelToSnakeObject<CreateAiFullResponseDTO[]>(insertPayload));
+
+  return { error };
+};
+
+export const createFoodAnalysisRequestDetail = async (food: CreateAiPartialResponseDTO): Promise<AiResponseDTO> => {
+  const supabase = getServerClient();
+
+  const foodSnakeCase = camelToSnakeObject(food);
+
+  const { data, error } = await supabase.from('ai_responses').insert(foodSnakeCase).select().single();
+
+  if (error) throw error;
+
+  return snakeToCamelObject(data);
+};
+
+// TODO: camelToSnakeObject 함수를 통해 깔끔하게 관리하기!
 export const updateCaloriesAnalysisResult = async ({
   id,
   userId,
@@ -91,11 +84,11 @@ export const updateCaloriesAnalysisResult = async ({
   carbohydrate,
   protein,
   fat
-}: CaloriesAnalysisUpdatePayload): Promise<{ error: PostgrestError | null }> => {
+}: AiResponseDTO): Promise<{ error: PostgrestError | null }> => {
   const supabase = getServerClient();
 
   const { error } = await supabase
-    .from('food_analysis_requests_detail')
+    .from('ai_responses')
     .update({
       user_id: userId,
       menu_name: menuName,

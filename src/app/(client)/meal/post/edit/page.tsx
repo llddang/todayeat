@@ -4,7 +4,7 @@ import MealImageCarousel from '@/app/(client)/meal/components/meal-images-carous
 import TagSelectItem from '@/components/commons/tag-select-item';
 import Textarea from '@/components/commons/textarea';
 import { Typography } from '@/components/ui/typography';
-import { getFoodAnalysisDetail, getFoodImagesById } from '@/lib/apis/analysis-request.api';
+import { getAiResponses, getFoodImagesById } from '@/lib/apis/analysis-request.api';
 import { getUser } from '@/lib/apis/user.api';
 import { MealCategory } from '@/types/meal-category.type';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -62,10 +62,10 @@ const MealPostEditPage = () => {
     const fetchFoodAnalysisRequests = async () => {
       const { id: userId } = await getUser();
       const { data: initialImages } = await getFoodImagesById(userId);
-      const mealList = await getFoodAnalysisDetail();
+      const mealList = await getAiResponses();
 
       if (initialImages) {
-        setFoodImages(initialImages?.image_urls);
+        setFoodImages(initialImages?.imageUrls);
       }
       if (mealList) {
         mealFormMethods.setValue('mealList', mealList);
