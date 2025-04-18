@@ -1,6 +1,6 @@
 import { ActivityLevelType, GenderType, PurposeType } from '@/types/user-personal-info.type';
 
-export type SetGoalStep1Type = {
+export type StepPurposeType = {
   purpose?: PurposeType;
   gender?: GenderType;
   age?: number;
@@ -8,7 +8,7 @@ export type SetGoalStep1Type = {
   weight?: number;
   activityLevel?: ActivityLevelType;
 };
-export type SetGoalStep2Type = {
+export type StepGenderType = {
   purpose: PurposeType;
   gender?: GenderType;
   age?: number;
@@ -16,7 +16,7 @@ export type SetGoalStep2Type = {
   weight?: number;
   activityLevel?: ActivityLevelType;
 };
-export type SetGoalStep3Type = {
+export type StepAgeType = {
   purpose: PurposeType;
   gender: GenderType;
   age?: number;
@@ -24,7 +24,7 @@ export type SetGoalStep3Type = {
   weight?: number;
   activityLevel?: ActivityLevelType;
 };
-export type SetGoalStep4Type = {
+export type StepHeightType = {
   purpose: PurposeType;
   gender: GenderType;
   age: number;
@@ -32,7 +32,7 @@ export type SetGoalStep4Type = {
   weight?: number;
   activityLevel?: ActivityLevelType;
 };
-export type SetGoalStep5Type = {
+export type StepWeightType = {
   purpose: PurposeType;
   gender: GenderType;
   age: number;
@@ -40,7 +40,7 @@ export type SetGoalStep5Type = {
   weight?: number;
   activityLevel?: ActivityLevelType;
 };
-export type SetGoalStep6Type = {
+export type StepActivityLevelType = {
   purpose: PurposeType;
   gender: GenderType;
   age: number;
@@ -48,7 +48,7 @@ export type SetGoalStep6Type = {
   weight: number;
   activityLevel?: ActivityLevelType;
 };
-export type CompleteType = {
+export type StepCompleteType = {
   purpose: PurposeType;
   gender: GenderType;
   age: number;
@@ -59,6 +59,7 @@ export type CompleteType = {
 
 export type FunnelStep = 'step1' | 'step2' | 'step3' | 'step4' | 'step5' | 'step6' | 'step7' | 'step8' | 'complete';
 
+// TODO 공통 type으로 뺄까?
 export type StepUIConfig = {
   hasGlassBackground: boolean;
   hasProgressBar: boolean;
