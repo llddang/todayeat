@@ -1,18 +1,31 @@
-import MyPageMacroNutrientBox from '@/components/_my-page/my-page-macronutrient-box';
-import MyPageUserInfoList from '@/components/_my-page/my-page-user-info-list';
+import MacroNutrientCard from './macronutrient-card';
+import UserInfoList from './user-info-list';
 import ButtonLink from '@/components/commons/button-link';
 import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
-import { NUTRITION_PURPOSE_OPTIONS_IN_PROFILE } from '@/constants/user-personal-info.constant';
+import { NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
 import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
 import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
 import { UserDTO } from '@/types/DTO/user.dto';
 
-type MyPageUserGoalCardProps = {
+type UserGoalCardProps = {
   userInfo: UserDTO;
 };
 
-const MyPageUserGoalCard = ({ userInfo }: MyPageUserGoalCardProps) => {
+const NUTRITION_PURPOSE_OPTIONS_IN_PROFILE = {
+  ...NUTRITION_PURPOSE_OPTIONS,
+  NOT_SET: {
+    name: '미설정',
+    factor: 0,
+    ratio: {
+      carbohydrate: 0,
+      protein: 0,
+      fat: 0
+    }
+  }
+};
+
+const UserGoalCard = ({ userInfo }: UserGoalCardProps) => {
   const {
     purpose = 'NOT_SET',
     dailyCaloriesGoal = 0,
@@ -45,14 +58,11 @@ const MyPageUserGoalCard = ({ userInfo }: MyPageUserGoalCardProps) => {
       </div>
       <div className="pt-3">
         <ul className="flex flex-col gap-2">
-          <MyPageUserInfoList title="건강 목표" description={NUTRITION_PURPOSE_OPTIONS_IN_PROFILE[purpose].name} />
-          <MyPageUserInfoList
-            title="1일 목표 칼로리"
-            description={`${formatNumberWithComma(dailyCaloriesGoal)} kcal`}
-          />
-          <MyPageUserInfoList title="목표 기준 탄단지 비율" description={calculateMacroRatio()} />
+          <UserInfoList title="건강 목표" description={NUTRITION_PURPOSE_OPTIONS_IN_PROFILE[purpose].name} />
+          <UserInfoList title="1일 목표 칼로리" description={`${formatNumberWithComma(dailyCaloriesGoal)} kcal`} />
+          <UserInfoList title="목표 기준 탄단지 비율" description={calculateMacroRatio()} />
         </ul>
-        <MyPageMacroNutrientBox
+        <MacroNutrientCard
           dailyProteinGoal={dailyProteinGoal}
           dailyCarbohydrateGoal={dailyCarbohydrateGoal}
           dailyFatGoal={dailyFatGoal}
@@ -62,4 +72,4 @@ const MyPageUserGoalCard = ({ userInfo }: MyPageUserGoalCardProps) => {
   );
 };
 
-export default MyPageUserGoalCard;
+export default UserGoalCard;

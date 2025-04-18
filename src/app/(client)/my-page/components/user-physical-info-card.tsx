@@ -1,13 +1,27 @@
 import { UserDTO } from '@/types/DTO/user.dto';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Typography } from '@/components/ui/typography';
-import MyPageUserInfoList from '@/components/_my-page/my-page-user-info-list';
-import { ACTIVITY_LEVEL_OPTIONS_IN_PROFILE, GENDER_OPTIONS_IN_PROFILE } from '@/constants/user-personal-info.constant';
+import { ACTIVITY_LEVEL_OPTIONS, GENDER_OPTIONS } from '@/constants/user-personal-info.constant';
+import UserInfoList from '@/app/(client)/my-page/components/user-info-list';
 
-type MyPageUserPhysicalInfoCardProps = {
+type UserPhysicalInfoCardProps = {
   userInfo: UserDTO;
 };
-const MyPageUserPhysicalInfoCard = ({ userInfo }: MyPageUserPhysicalInfoCardProps) => {
+
+const GENDER_OPTIONS_IN_PROFILE = {
+  ...GENDER_OPTIONS,
+  NOT_SET: '미설정'
+};
+
+const ACTIVITY_LEVEL_OPTIONS_IN_PROFILE = {
+  ...ACTIVITY_LEVEL_OPTIONS,
+  NOT_SET: {
+    description: '미설정',
+    factor: 0
+  }
+};
+
+const UserPhysicalInfoCard = ({ userInfo }: UserPhysicalInfoCardProps) => {
   const {
     gender = 'NOT_SET',
     height = 'NOT_SET',
@@ -24,20 +38,17 @@ const MyPageUserPhysicalInfoCard = ({ userInfo }: MyPageUserPhysicalInfoCardProp
           </Typography>
         </AccordionTrigger>
         <AccordionContent className="mt-2 flex flex-col gap-3 border-t-[1px] border-gray-200 pb-1 pt-5">
-          <MyPageUserInfoList
+          <UserInfoList
             title="성별"
             description={gender === 'NOT_SET' ? '미설정' : GENDER_OPTIONS_IN_PROFILE[gender]}
           />
-          <MyPageUserInfoList title="키" description={height === 'NOT_SET' ? '미설정' : `${height}cm`} />
-          <MyPageUserInfoList title="몸무게" description={weight === 'NOT_SET' ? '미설정' : `${weight}kg`} />
-          <MyPageUserInfoList
-            title="활동 수준"
-            description={ACTIVITY_LEVEL_OPTIONS_IN_PROFILE[activityLevel].description}
-          />
+          <UserInfoList title="키" description={height === 'NOT_SET' ? '미설정' : `${height}cm`} />
+          <UserInfoList title="몸무게" description={weight === 'NOT_SET' ? '미설정' : `${weight}kg`} />
+          <UserInfoList title="활동 수준" description={ACTIVITY_LEVEL_OPTIONS_IN_PROFILE[activityLevel].description} />
         </AccordionContent>
       </AccordionItem>
     </Accordion>
   );
 };
 
-export default MyPageUserPhysicalInfoCard;
+export default UserPhysicalInfoCard;

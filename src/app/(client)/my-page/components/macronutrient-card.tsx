@@ -1,18 +1,13 @@
 import { Typography } from '@/components/ui/typography';
 import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
 import { calculateMacroCaloriesbyGrams, CALORIES_PER_GRAM } from '@/lib/utils/nutrition-calculator.util';
-import React from 'react';
 
-type MyPageMacroNutrientBoxProps = {
+type MacroNutrientCardProps = {
   dailyCarbohydrateGoal: string | number;
   dailyProteinGoal: string | number;
   dailyFatGoal: string | number;
 };
-const MyPageMacroNutrientBox = ({
-  dailyCarbohydrateGoal,
-  dailyProteinGoal,
-  dailyFatGoal
-}: MyPageMacroNutrientBoxProps) => {
+const MacroNutrientCard = ({ dailyCarbohydrateGoal, dailyProteinGoal, dailyFatGoal }: MacroNutrientCardProps) => {
   const carbInfo = calculateMacroCaloriesbyGrams(dailyCarbohydrateGoal, CALORIES_PER_GRAM.CARBOHYDRATE);
   const proteinInfo = calculateMacroCaloriesbyGrams(dailyProteinGoal, CALORIES_PER_GRAM.PROTEIN);
   const fatInfo = calculateMacroCaloriesbyGrams(dailyFatGoal, CALORIES_PER_GRAM.FAT);
@@ -47,4 +42,4 @@ const MyPageMacroNutrientBox = ({
   );
 };
 
-export default MyPageMacroNutrientBox;
+export default MacroNutrientCard;

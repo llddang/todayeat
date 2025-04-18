@@ -1,7 +1,7 @@
-import MyPageProfileBar from '@/components/_my-page/my-page-profile-bar';
-import MyPageSettingCard from '@/components/_my-page/my-page-setting-card';
-import MyPageUserGoalCard from '@/components/_my-page/my-page-user-goal-card';
-import MyPageUserPhysicalInfoCard from '@/components/_my-page/my-page-user-physical-info-card';
+import ProfileBar from '@/app/(client)/my-page/components/profile-bar';
+import SettingCard from '@/app/(client)/my-page/components/setting-card';
+import UserGoalCard from '@/app/(client)/my-page/components/user-goal-card';
+import UserPhysicalInfoCard from '@/app/(client)/my-page/components/user-physical-info-card';
 import CtaExampleFeedbackBanner from '@/components/commons/cta-example-feedback-banner';
 import GlassBackground from '@/components/commons/glass-background';
 import { getUser } from '@/lib/apis/user.api';
@@ -12,7 +12,7 @@ const MyPage = async () => {
   return (
     <section>
       <h2 className="sr-only">마이페이지</h2>
-      <MyPageProfileBar />
+      <ProfileBar />
       <GlassBackground className="min-h-auto space-y-4 rounded-[2rem]">
         {!userInfo.personalInfo && (
           <CtaExampleFeedbackBanner
@@ -20,9 +20,9 @@ const MyPage = async () => {
             description="1일 목표 칼로리를 설정하고 식사를 기록하면 1일 권장 섭취량과 나에게 딱 맞는 식단 피드백을 받을 수 있어요!"
           />
         )}
-        <MyPageUserGoalCard userInfo={userInfo} />
-        <MyPageUserPhysicalInfoCard userInfo={userInfo} />
-        <MyPageSettingCard />
+        <UserGoalCard userInfo={userInfo} />
+        <UserPhysicalInfoCard userInfo={userInfo} />
+        <SettingCard />
       </GlassBackground>
     </section>
   );
