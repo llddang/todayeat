@@ -2,18 +2,18 @@ import { FormEvent, useState } from 'react';
 import OptionSelectCard from '@/components/commons/option-select-card';
 import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
-import { GOAL_OPTIONS } from '@/constants/set-goal.constant';
-import { GenderType } from '@/types/user-personal-info.type';
+import { ActivityLevelType } from '@/types/user-personal-info.type';
+import { GOAL_OPTIONS } from '../constants/funnel.constant';
 
-type SetGoalGenderStepProps = {
+type StepActivityLevelProps = {
   userName: string;
-  nextStep: (data: GenderType) => void;
+  nextStep: (data: ActivityLevelType) => void;
 };
-const SetGoalGenderStep = ({ userName, nextStep }: SetGoalGenderStepProps) => {
-  const [selectedOption, setSelectedOption] = useState<GenderType | null>(null);
+const StepActivityLevel = ({ userName, nextStep }: StepActivityLevelProps) => {
+  const [selectedOption, setSelectedOption] = useState<ActivityLevelType | null>(null);
 
   const handleSelectOption = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedOption(e.target.value as GenderType);
+    setSelectedOption(e.target.value as ActivityLevelType);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -26,24 +26,25 @@ const SetGoalGenderStep = ({ userName, nextStep }: SetGoalGenderStepProps) => {
       <fieldset>
         <legend>
           <Typography as="h3" variant="title2" className="mb-2">
-            {userName}님의 <br /> 성별을 알려주세요
+            {userName}님의 <br />
+            평소 활동량은 어떤 편인가요?
           </Typography>
           <Typography as="span" variant="body2" className="text-gray-600">
-            성별에 따라 기초대사량 계산이 달라져요
+            생활 패턴에 가장 가까운 걸 선택해 주세요
           </Typography>
         </legend>
-        <div className="space-y-2 pt-2">
-          {GOAL_OPTIONS.GENDER.map((option) => (
+        <div className="space-y-2 pt-8">
+          {GOAL_OPTIONS.ACTIVITY_LEVEL_OPTIONS.map((option) => (
             <OptionSelectCard
               key={option.value}
-              groupName="GENDER"
+              groupName="ACTIVITY_LEVEL_OPTIONS"
               checked={selectedOption === option.value}
               onChange={(e) => handleSelectOption(e)}
               {...option}
             />
           ))}
         </div>
-        <Button disabled={!selectedOption} className="fixed bottom-6 left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2">
+        <Button disabled={!selectedOption} className="!mt-[3.75rem] w-full">
           다음
         </Button>
       </fieldset>
@@ -51,4 +52,4 @@ const SetGoalGenderStep = ({ userName, nextStep }: SetGoalGenderStepProps) => {
   );
 };
 
-export default SetGoalGenderStep;
+export default StepActivityLevel;

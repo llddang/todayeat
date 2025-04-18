@@ -7,37 +7,37 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-type SetGoalHeightStepProps = {
+type StepAgeProps = {
   userName: string;
   nextStep: (data: number) => void;
 };
 
 const formSchema = z.object({
-  height: FormSchema.NUMBER_WITH_ONE_DECIMAL_SCHEMA
+  age: FormSchema.ONLY_NUMBER_SCHEMA
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
-const SetGoalHeightStep = ({ userName, nextStep }: SetGoalHeightStepProps) => {
+const StepAge = ({ userName, nextStep }: StepAgeProps) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      height: ''
+      age: ''
     }
   });
 
   const onSubmit = (data: FormValues) => {
-    nextStep(Number(data.height));
+    nextStep(Number(data.age));
   };
 
   return (
     <>
       <div>
         <Typography as="h3" variant="title2" className="mb-2">
-          {userName}님의 <br /> 키를 알려주세요
+          {userName}님의 <br /> 나이를 알려주세요
         </Typography>
         <Typography as="span" variant="body2" className="text-gray-600">
-          기초대사량과 권장섭취량 계산에 필요해요
+          더 정확하고 맞춤화된 피드백을 위해 필요해요
         </Typography>
       </div>
       <div className="space-y-2 pt-2">
@@ -46,26 +46,16 @@ const SetGoalHeightStep = ({ userName, nextStep }: SetGoalHeightStepProps) => {
             <div className="space-y-[2.3rem]">
               <FormField
                 control={form.control}
-                name="height"
+                name="age"
                 render={({ field }) => {
-                  const hasError = !!form.formState.errors.height;
-
+                  const hasError = !!form.formState.errors.age;
                   return (
                     <FormItem>
-                      <FormLabel className="sr-only">키</FormLabel>
+                      <FormLabel className="sr-only">나이</FormLabel>
                       <FormControl>
-                        <Input
-                          {...field}
-                          type="number"
-                          inputMode="numeric"
-                          measure="cm"
-                          step="0.1"
-                          min="50"
-                          max="250"
-                          className="mb-2"
-                        />
+                        <Input {...field} type="text" inputMode="numeric" className="mb-2" />
                       </FormControl>
-                      {!hasError && <FormDescription>최대 소수점 1자리수까지 입력할 수 있어요</FormDescription>}
+                      {!hasError && <FormDescription>숫자만 입력해 주세요</FormDescription>}
                       <FormMessage />
                     </FormItem>
                   );
@@ -75,7 +65,7 @@ const SetGoalHeightStep = ({ userName, nextStep }: SetGoalHeightStepProps) => {
             <Button
               type="submit"
               className="fixed bottom-6 left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2"
-              disabled={!form.watch('height')}
+              disabled={!form.watch('age')}
             >
               다음
             </Button>
@@ -86,4 +76,4 @@ const SetGoalHeightStep = ({ userName, nextStep }: SetGoalHeightStepProps) => {
   );
 };
 
-export default SetGoalHeightStep;
+export default StepAge;

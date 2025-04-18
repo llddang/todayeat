@@ -15,18 +15,18 @@ import { Typography } from '@/components/ui/typography';
 import { ControllerRenderProps, useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import SetGoalMacronutrientBox from '@/components/_set-goal/set-goal-macronutrient-box';
 import { Button } from '@/components/ui/button';
 import { isClient } from '@/lib/utils/predicate.util';
 import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
-import { CompleteType } from '@/types/set-goal.type';
 import USER_PHYSICAL_PROFILE_SCHEMA from '@/constants/user-schema.constant';
 import { useUserStore } from '@/store/user-store';
+import MacronutrientBox from './macronutrient-box';
+import { StepCompleteType } from '../types/funnel.type';
 
-type SetGoalCalculateStepProps = {
+type StepCalculateProps = {
   userName: string;
   nextStep: (data: string) => void;
-  data: CompleteType;
+  data: StepCompleteType;
 };
 
 export type PersonalMacronutrientData = {
@@ -40,7 +40,7 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStepProps) => {
+const StepCalculate = ({ nextStep, userName, data }: StepCalculateProps) => {
   const setUser = useUserStore((state) => state.setUser);
 
   let userPersonalGoal = {
@@ -157,9 +157,9 @@ const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStep
           목표 칼로리 기준 영양소 권장량
         </Typography>
         <div className="grid grid-cols-2 gap-2">
-          <SetGoalMacronutrientBox label="CARBOHYDRATE" data={macronutrientData.carbohydrate} />
-          <SetGoalMacronutrientBox label="PROTEIN" data={macronutrientData.protein} />
-          <SetGoalMacronutrientBox label="FAT" data={macronutrientData.fat} />
+          <MacronutrientBox label="CARBOHYDRATE" data={macronutrientData.carbohydrate} />
+          <MacronutrientBox label="PROTEIN" data={macronutrientData.protein} />
+          <MacronutrientBox label="FAT" data={macronutrientData.fat} />
         </div>
       </div>
       <div className="fixed bottom-4 left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2">
@@ -174,4 +174,4 @@ const SetGoalCalculateStep = ({ nextStep, userName, data }: SetGoalCalculateStep
   );
 };
 
-export default SetGoalCalculateStep;
+export default StepCalculate;

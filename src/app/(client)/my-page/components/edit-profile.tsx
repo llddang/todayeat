@@ -26,12 +26,12 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-type MyPageEditProfileProps = {
+type EditProfileProps = {
   userInfo: UserDTO;
   setOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const MyPageEditProfile = ({ userInfo, setOpen }: MyPageEditProfileProps): JSX.Element => {
+const EditProfile = ({ userInfo, setOpen }: EditProfileProps): JSX.Element => {
   const setUser = useUserStore((state) => state.setUser);
 
   const [profileState, setProfileState] = useState({
@@ -199,4 +199,4 @@ const MyPageEditProfile = ({ userInfo, setOpen }: MyPageEditProfileProps): JSX.E
   );
 };
 
-export default MyPageEditProfile;
+export default EditProfile;

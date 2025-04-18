@@ -6,7 +6,7 @@ import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
 import { signOut } from '@/lib/apis/auth-server.api';
 
-const MyPageSettingCard = () => {
+const SettingCard = () => {
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -48,4 +48,4 @@ const MyPageSettingCard = () => {
   );
 };
 
-export default MyPageSettingCard;
+export default SettingCard;

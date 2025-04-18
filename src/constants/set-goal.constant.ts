@@ -1,48 +1,8 @@
-import { ACTIVITY_LEVEL_OPTIONS } from '@/constants/user-personal-info.constant';
-import { FunnelStep, StepUIConfig } from '@/types/set-goal.type';
-import { ActivityLevel, Gender, Purpose } from '@/types/user-personal-info.type';
+import { FunnelStep, StepUIConfig } from '@/app/(client)/set-goal/types/funnel.type';
 
-export const LAST_STEP_FOR_USER_INPUT = 7;
+// TODO 공통 컴포넌트화 논의 필요
 
-export const GOAL_OPTIONS = {
-  PURPOSE: [
-    { title: '🎯 체지방 줄이기', value: Purpose.WEIGHT_LOSS },
-    { title: '💪 근육 키우기', value: Purpose.MUSCLE_GAIN },
-    { title: '🔒 현재 상태 유지하기', value: Purpose.WEIGHT_MAINTENANCE }
-  ],
-  GENDER: [
-    { title: '여성', value: Gender.WOMAN },
-    { title: '남성', value: Gender.MAN }
-  ],
-  ACTIVITY_LEVEL_OPTIONS: [
-    {
-      title: `🛏️ ${ACTIVITY_LEVEL_OPTIONS.VERY_LOW.description}`,
-      description: '하루 대부분 앉아서 지내요. 운동은 거의 하지 않아요.',
-      value: ActivityLevel.VERY_LOW
-    },
-    {
-      title: `🚶 ${ACTIVITY_LEVEL_OPTIONS.LOW.description}`,
-      description: '집안일이나 산책 정도 하고, 주 1회 운동해요.',
-      value: ActivityLevel.LOW
-    },
-    {
-      title: `🏃 ${ACTIVITY_LEVEL_OPTIONS.MODERATE.description}`,
-      description: '출퇴근, 걸음 많은 일상 + 주 3~4회 운동하는 편이에요.',
-      value: ActivityLevel.MODERATE
-    },
-    {
-      title: `💪 ${ACTIVITY_LEVEL_OPTIONS.HIGH.description}`,
-      description: '주 5~6회 운동하거나, 몸을 많이 쓰는 일을 해요.',
-      value: ActivityLevel.HIGH
-    },
-    {
-      title: `🔥 ${ACTIVITY_LEVEL_OPTIONS.VERY_HIGH.description}`,
-      description: '아침저녁으로 운동하거나, 체력 소모가 큰 일을 매일 해요.',
-      value: ActivityLevel.VERY_HIGH
-    }
-  ]
-};
-
+// 사용중인 페이지 : 목표 설정, 회원가입 funnel
 export const STEP_UI_CONFIG: Record<FunnelStep, StepUIConfig> = {
   step1: { hasGlassBackground: true, hasProgressBar: true, stepOrder: 1 },
   step2: { hasGlassBackground: true, hasProgressBar: true, stepOrder: 2 },

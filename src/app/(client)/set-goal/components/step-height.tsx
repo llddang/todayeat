@@ -7,37 +7,37 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-type SetGoalWeightStepProps = {
+type StepHeightProps = {
   userName: string;
   nextStep: (data: number) => void;
 };
 
 const formSchema = z.object({
-  weight: FormSchema.NUMBER_WITH_ONE_DECIMAL_SCHEMA
+  height: FormSchema.NUMBER_WITH_ONE_DECIMAL_SCHEMA
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
-const SetGoalWeightStep = ({ userName, nextStep }: SetGoalWeightStepProps) => {
+const StepHeight = ({ userName, nextStep }: StepHeightProps) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      weight: ''
+      height: ''
     }
   });
 
   const onSubmit = (data: FormValues) => {
-    nextStep(Number(data.weight));
+    nextStep(Number(data.height));
   };
 
   return (
     <>
       <div>
         <Typography as="h3" variant="title2" className="mb-2">
-          {userName}님의 <br /> 몸무게를 알려주세요
+          {userName}님의 <br /> 키를 알려주세요
         </Typography>
         <Typography as="span" variant="body2" className="text-gray-600">
-          몸무게를 기준으로 맞춤 칼로리를 계산해요
+          기초대사량과 권장섭취량 계산에 필요해요
         </Typography>
       </div>
       <div className="space-y-2 pt-2">
@@ -46,15 +46,24 @@ const SetGoalWeightStep = ({ userName, nextStep }: SetGoalWeightStepProps) => {
             <div className="space-y-[2.3rem]">
               <FormField
                 control={form.control}
-                name="weight"
+                name="height"
                 render={({ field }) => {
-                  const hasError = !!form.formState.errors.weight;
+                  const hasError = !!form.formState.errors.height;
 
                   return (
                     <FormItem>
-                      <FormLabel className="sr-only">몸무게</FormLabel>
+                      <FormLabel className="sr-only">키</FormLabel>
                       <FormControl>
-                        <Input {...field} type="number" inputMode="numeric" measure="kg" className="mb-2" />
+                        <Input
+                          {...field}
+                          type="number"
+                          inputMode="numeric"
+                          measure="cm"
+                          step="0.1"
+                          min="50"
+                          max="250"
+                          className="mb-2"
+                        />
                       </FormControl>
                       {!hasError && <FormDescription>최대 소수점 1자리수까지 입력할 수 있어요</FormDescription>}
                       <FormMessage />
@@ -66,7 +75,7 @@ const SetGoalWeightStep = ({ userName, nextStep }: SetGoalWeightStepProps) => {
             <Button
               type="submit"
               className="fixed bottom-6 left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2"
-              disabled={!form.watch('weight')}
+              disabled={!form.watch('height')}
             >
               다음
             </Button>
@@ -77,4 +86,4 @@ const SetGoalWeightStep = ({ userName, nextStep }: SetGoalWeightStepProps) => {
   );
 };
 
-export default SetGoalWeightStep;
+export default StepHeight;
