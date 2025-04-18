@@ -10,11 +10,11 @@ import SITE_MAP from '@/constants/site-map.constant';
 import PIC_LINE from '@/../public/icons/pic_line.svg';
 import CLOSE_LINE from '@/../public/icons/close_line.svg';
 
-type MealPostAddImageProps = {
+type AddImageProps = {
   onImagesChange?: (files: File[]) => void;
 };
 
-const MealPostAddImage = ({ onImagesChange }: MealPostAddImageProps) => {
+const AddImage = ({ onImagesChange }: AddImageProps) => {
   const user = useUserStore((state) => state.user);
   const router = useRouter();
   const inputFileRef = useRef<HTMLInputElement>(null);
@@ -134,7 +134,7 @@ const MealPostAddImage = ({ onImagesChange }: MealPostAddImageProps) => {
   );
 };
 
-export default MealPostAddImage;
+export default AddImage;
 
 type ImagePreview = {
   imageUrl: string;
