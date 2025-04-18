@@ -18,11 +18,9 @@ export const getUser = async (): Promise<UserDTO> => {
 
   const { user_personal_infos, ...userAuthInfo } = data;
 
-  const personalInfoData = user_personal_infos.length > 0 ? user_personal_infos[0] : null;
-
   return {
     ...snakeToCamelObject(userAuthInfo),
-    personalInfo: personalInfoData ? snakeToCamelObject(personalInfoData) : null
+    personalInfo: user_personal_infos ? snakeToCamelObject(user_personal_infos) : null
   };
 };
 
@@ -47,12 +45,9 @@ export const updateUserPersonalInfo = async (
   const supabase = getServerClient();
   const { id: userId } = await getAuth();
 
-  const { data: existingData } = await supabase.from('user_personal_infos').select('id').eq('user_id', userId).single();
-
   const userPersonalInfoSnakeCase = {
     ...camelToSnakeObject(userPersonalInfo),
-    user_id: userId,
-    ...(existingData ? { id: existingData.id } : {})
+    user_id: userId
   };
 
   const { data, error } = await supabase
