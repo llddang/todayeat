@@ -1,5 +1,5 @@
 'use client';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useUserStore } from '@/store/user-store';
@@ -10,10 +10,10 @@ import SITE_MAP from '@/constants/site-map.constant';
 import PIC_LINE from '@/../public/icons/pic_line.svg';
 import CLOSE_LINE from '@/../public/icons/close_line.svg';
 
-/**
- * 식사 포스트 이미지 추가 컴포넌트
- * 사용자가 최대 3개의 이미지를 업로드하고 미리보기할 수 있습니다.
- */
+type MealPostAddImageProps = {
+  onImagesChange?: (files: File[]) => void;
+};
+
 const MealPostAddImage = ({ onImagesChange }: MealPostAddImageProps) => {
   const user = useUserStore((state) => state.user);
   const router = useRouter();
@@ -21,10 +21,14 @@ const MealPostAddImage = ({ onImagesChange }: MealPostAddImageProps) => {
 
   const [imageFiles, setImageFiles] = useState<File[]>([]);
 
-  const previewImages: ImagePreview[] = imageFiles.map((file) => ({
-    imageUrl: URL.createObjectURL(file),
-    fileId: getFileId(file)
-  }));
+  const previewImages = useMemo<ImagePreview[]>(
+    () =>
+      imageFiles.map((file) => ({
+        imageUrl: URL.createObjectURL(file),
+        fileId: getFileId(file)
+      })),
+    [imageFiles]
+  );
 
   const emptyImageCount = MAX_MEAL_IMAGE_COUNT - imageFiles.length;
   const emptyImages = Array(emptyImageCount).fill(1);
@@ -137,10 +141,6 @@ type ImagePreview = {
   fileId: string;
 };
 
-type MealPostAddImageProps = {
-  onImagesChange?: (files: File[]) => void;
-};
-
 const ALERT_MESSAGES = {
   MAX_COUNT_EXCEEDED: '3장까지 첨부 가능합니다.',
   FILE_TOO_LARGE: '10MB 이하의 파일을 첨부해주세요.',
@@ -153,7 +153,7 @@ const validateFiles = (newFiles: File[], imageFiles: File[]): string | null => {
     return ALERT_MESSAGES.MAX_COUNT_EXCEEDED;
   }
 
-  const hasOverSizeFile = newFiles.some((file) => file.size >= MAX_FILE_SIZE);
+  const hasOverSizeFile = newFiles.some((file) => file.size > MAX_FILE_SIZE);
   if (hasOverSizeFile) {
     return ALERT_MESSAGES.FILE_TOO_LARGE;
   }
