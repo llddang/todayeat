@@ -1,10 +1,10 @@
 import { Typography } from '@/components/ui/typography';
 import { MACRONUTRIENT_OPTIONS } from '@/constants/nutrition.constant';
-import { NutritionEnumType } from '@/types/nutrition.type';
+import { MacronutrientEnumType } from '@/types/nutrition.type';
 import { PersonalMacronutrientData } from './step-calculate';
 
 type MacronutrientBoxProps = {
-  label: NutritionEnumType;
+  label: MacronutrientEnumType;
   data: PersonalMacronutrientData;
 };
 

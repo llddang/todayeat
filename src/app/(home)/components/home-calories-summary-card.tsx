@@ -1,5 +1,5 @@
 import { CIRCUMFERENCE, RADIUS } from '@/app/(home)/constants/ai-feedback.constant';
-import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
+import { formatNumberWithComma } from '@/lib/utils/format.util';
 import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
 
 type HomeCalorieSummaryCardProps = {

@@ -1,10 +1,10 @@
 import { Typography } from '@/components/ui/typography';
 import { MACRONUTRIENT_OPTIONS } from '@/constants/nutrition.constant';
 import { cn } from '@/lib/utils';
-import { NutritionEnumType } from '@/types/nutrition.type';
+import { MacronutrientEnumType } from '@/types/nutrition.type';
 
-const MacronutrientBox = ({ variety, value }: { variety: NutritionEnumType; value: number }) => {
-  const { label, unit, beforeBgColor } = MACRONUTRIENT_OPTIONS[variety];
+const MacronutrientBox = ({ variety, value }: { variety: MacronutrientEnumType; value: number }) => {
+  const { label, beforeBgColor } = MACRONUTRIENT_OPTIONS[variety];
 
   return (
     <div className="flex flex-1 gap-1.5">
@@ -20,8 +20,7 @@ const MacronutrientBox = ({ variety, value }: { variety: NutritionEnumType; valu
           {label}
         </Typography>
         <Typography as="span" variant="subTitle4" className="text-gray-900">
-          {value}
-          {unit}
+          {value}g
         </Typography>
       </div>
     </div>

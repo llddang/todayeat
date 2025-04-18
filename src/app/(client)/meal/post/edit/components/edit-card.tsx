@@ -4,7 +4,7 @@ import { FormEvent, useState } from 'react';
 import MacronutrientBox from '@/components/commons/macronutrient-box';
 import IconButton from '@/components/commons/icon-button';
 import { Button } from '@/components/ui/button';
-import { NutritionEnum } from '@/types/nutrition.type';
+import { MacronutrientEnum } from '@/types/nutrition.type';
 import {} from '@/types/DTO/meal.dto';
 import { FoodAnalysisRequestsDetailDTO } from '@/types/DTO/food_analysis.dto';
 import dynamic from 'next/dynamic';
@@ -103,9 +103,9 @@ const EditCard = ({ mealDetail, idx }: EditCardProps) => {
             />
           </div>
           <div className="flex items-center gap-2 self-stretch pb-1 pl-1 pt-2">
-            <MacronutrientBox variety={NutritionEnum.CARBOHYDRATE} value={mealDetail.carbohydrate} />
-            <MacronutrientBox variety={NutritionEnum.PROTEIN} value={mealDetail.protein} />
-            <MacronutrientBox variety={NutritionEnum.FAT} value={mealDetail.fat} />
+            <MacronutrientBox variety={MacronutrientEnum.CARBOHYDRATE} value={mealDetail.carbohydrate} />
+            <MacronutrientBox variety={MacronutrientEnum.PROTEIN} value={mealDetail.protein} />
+            <MacronutrientBox variety={MacronutrientEnum.FAT} value={mealDetail.fat} />
           </div>
         </div>
       )}

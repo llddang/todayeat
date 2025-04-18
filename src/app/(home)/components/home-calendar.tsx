@@ -4,10 +4,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
-import { formatDateCaption } from '@/lib/utils/date.util';
 import HomeCalendarWeek from './home-calendar-week';
 import HomeCalendarMonth from './home-calendar-month';
 import HomeCalendarBottomUpSelector from './home-calendar-bottom-up-selector';
+import { formatDateToLocaleKR } from '@/lib/utils/format.util';
 
 const HomeCalendar = () => {
   const { currentDate } = useCalendar();
@@ -23,7 +23,7 @@ const HomeCalendar = () => {
             className="after:bg-down-line-gray-600-icon hover:after:bg-down-line-gray-800-icon disabled:after:bg-down-line-gray-400-icon"
             onClick={() => setIsOpen(true)}
           >
-            <Typography>{formatDateCaption(currentDate)}</Typography>
+            <Typography>{formatDateToLocaleKR(currentDate)}</Typography>
           </Button>
           <TabsList className="">
             <TabsTrigger value="week">주간</TabsTrigger>

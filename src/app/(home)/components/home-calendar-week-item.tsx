@@ -3,7 +3,7 @@ import CircleProgressBar from '@/components/commons/circle-progress-bar';
 import { Typography } from '@/components/ui/typography';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import { cn } from '@/lib/utils';
-import { formatDateWithDash } from '@/lib/utils/date.util';
+import { formatDateWithDash } from '@/lib/utils/format.util';
 import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
 import { isSameDate } from '../utils/calendar.util';

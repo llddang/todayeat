@@ -17,11 +17,11 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { isClient } from '@/lib/utils/predicate.util';
-import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
 import USER_PHYSICAL_PROFILE_SCHEMA from '@/constants/user-schema.constant';
 import { useUserStore } from '@/store/user-store';
 import MacronutrientBox from './macronutrient-box';
 import { StepCompleteType } from '../types/funnel.type';
+import { formatNumberWithComma } from '@/lib/utils/format.util';
 
 type StepCalculateProps = {
   userName: string;

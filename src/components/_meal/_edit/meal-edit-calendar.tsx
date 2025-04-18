@@ -3,8 +3,8 @@ import { ko } from 'date-fns/locale';
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { useState } from 'react';
-import { formatDateCaption } from '@/lib/utils/date.util';
 import { Typography } from '@/components/ui/typography';
+import { formatDateToLocaleKR } from '@/lib/utils/format.util';
 
 type MealEditCalendarProps = {
   date: Date;
@@ -35,7 +35,7 @@ const MealEditCalendar = ({ onDateChange }: MealEditCalendarProps) => {
           weekStartsOn={1}
           fixedWeeks
           defaultMonth={date}
-          formatters={{ formatCaption: formatDateCaption }}
+          formatters={{ formatCaption: formatDateToLocaleKR }}
         />
         {/* TODO: temp-layout 풀기 */}
         <div className="!mt-2 w-full pb-4 pt-2 temp-layout">

@@ -3,10 +3,10 @@ import ButtonLink from '@/components/commons/button-link';
 import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
 import { NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
-import { formatNumberWithComma } from '@/lib/utils/format-number-with-comma';
 import { getPercentage } from '@/lib/utils/nutrition-calculator.util';
 import { UserDTO } from '@/types/DTO/user.dto';
 import MacronutrientCard from './macronutrient-card';
+import { formatNumberWithComma } from '@/lib/utils/format.util';
 
 type UserGoalCardProps = {
   userInfo: UserDTO;

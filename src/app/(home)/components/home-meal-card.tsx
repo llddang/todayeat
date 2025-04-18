@@ -3,9 +3,9 @@ import { MealCategoryType } from '@/types/meal-category.type';
 import { calculateTotalNutrition } from '@/lib/utils/nutrition-calculator.util';
 import { MealDTO } from '@/types/DTO/meal.dto';
 import { Typography } from '@/components/ui/typography';
-import { formatAmPmKorean, formatTime } from '@/lib/utils/date.util';
 import { cn } from '@/lib/utils';
 import MacronutrientGroup from '@/components/commons/macronutrient-group';
+import { formatTimeToHHMM, formatTimeWithMeridiem } from '@/lib/utils/format.util';
 
 type HomeMealCardProps = {
   meal: MealDTO;
@@ -26,9 +26,9 @@ const HomeMealCard = ({ meal }: HomeMealCardProps) => {
         )}
       >
         <Typography variant="caption2" className="text-gray-500">
-          {formatAmPmKorean(meal.ateAt)}
+          {formatTimeWithMeridiem(new Date(meal.ateAt))}
           <br />
-          {formatTime(meal.ateAt)}
+          {formatTimeToHHMM(new Date(meal.ateAt))}
         </Typography>
       </div>
       {/* TODO : Link 태그로 변경 & 식사 상세 페이지로 이동하게끔!! */}

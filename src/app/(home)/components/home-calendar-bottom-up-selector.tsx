@@ -5,7 +5,7 @@ import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } f
 import { useEffect, useState } from 'react';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
-import { formatDateCaption } from '@/lib/utils/date.util';
+import { formatDateToLocaleKR } from '@/lib/utils/format.util';
 
 type HomeCalendarBottomUpSelectorProps = {
   open: boolean;
@@ -41,7 +41,7 @@ const HomeCalendarBottomUpSelector = ({ open, onOpenChange }: HomeCalendarBottom
           weekStartsOn={1}
           fixedWeeks
           defaultMonth={date}
-          formatters={{ formatCaption: formatDateCaption }}
+          formatters={{ formatCaption: formatDateToLocaleKR }}
         />
         {/* TODO: temp-layout 풀기 */}
         <div className="!mt-2 w-full pb-4 pt-2 temp-layout">

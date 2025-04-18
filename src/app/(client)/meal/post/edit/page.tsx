@@ -25,7 +25,7 @@ import { Button } from '@/components/ui/button';
 import IconButton from '@/components/commons/icon-button';
 import { urlToFile } from '@/lib/utils/file.util';
 import { uploadImage } from '@/lib/apis/storage.api';
-import { convertToTimestamp } from '@/lib/utils/date.util';
+import { formatTimestamp } from '@/lib/utils/format.util';
 import { createMealWithDetails, deleteMealAnalysisDetail } from '@/lib/apis/meal.api';
 import { MealDTO } from '@/types/DTO/meal.dto';
 import MealEditCalendar from '@/components/_meal/_edit/meal-edit-calendar';
@@ -103,7 +103,7 @@ const MealPostEditPage = () => {
       }
 
       const { date, day, memo, mealCategory } = data;
-      const ateAt = convertToTimestamp(day, date);
+      const ateAt = formatTimestamp(day, date);
 
       for (const file of files) {
         imagesFormData.append('file', file);

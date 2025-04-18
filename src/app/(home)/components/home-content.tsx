@@ -4,7 +4,7 @@ import GlassBackground from '@/components/commons/glass-background';
 import { Typography } from '@/components/ui/typography';
 import { getMyMealByDate } from '@/lib/apis/meal.api';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
-import { formatDateWithDash } from '@/lib/utils/date.util';
+import { formatDateWithDash } from '@/lib/utils/format.util';
 import { calculateTotalNutrition } from '@/lib/utils/nutrition-calculator.util';
 import { useUserStore } from '@/store/user-store';
 import { MealDTO } from '@/types/DTO/meal.dto';
