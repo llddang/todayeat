@@ -5,7 +5,7 @@ import LOGO from '@/../public/logo.svg';
 import { getAuth } from '@/lib/apis/auth-server.api';
 import { getUser } from '@/lib/apis/user.api';
 import ProfileImage from '@/components/commons/profile-image';
-import HeaderLayer from '@/components/layouts/header/header-layer';
+import HeaderLayer from '@/components/layouts/header/header-wrapper';
 
 const HeaderWithProfile = async () => {
   const { isAuthenticated } = await getAuth();
