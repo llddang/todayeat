@@ -1,6 +1,5 @@
 'use client';
 
-import MealPostEditCard from '@/components/_meal/_post/meal-post-edit-card';
 import MealImageCarousel from '@/components/_meal/meal-images-carousel';
 import TagSelectItem from '@/components/commons/tag-select-item';
 import Textarea from '@/components/commons/textarea';
@@ -34,6 +33,7 @@ import GlassBackground from '@/components/commons/glass-background';
 import { useRouter } from 'next/navigation';
 import SITE_MAP from '@/constants/site-map.constant';
 import dynamic from 'next/dynamic';
+import EditCard from './components/edit-card';
 const SetGoalAiLoaderLottie = dynamic(() => import('@/components/_set-goal/set-goal-ai-loader-lottie'), {
   ssr: false
 });
@@ -162,7 +162,7 @@ const MealPostEditPage = () => {
               </Typography>
             </Typography>
             {mealList.map((meal, idx) => (
-              <MealPostEditCard key={idx} idx={idx} mealDetail={meal} />
+              <EditCard key={idx} idx={idx} mealDetail={meal} />
             ))}
           </div>
 
