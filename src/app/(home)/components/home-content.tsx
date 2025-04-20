@@ -9,7 +9,7 @@ import { calculateTotalNutrition } from '@/utils/nutrition-calculator.util';
 import { useUserStore } from '@/store/user-store';
 import { MealDTO } from '@/types/DTO/meal.dto';
 import { useEffect, useState } from 'react';
-import HomeAiFeedbackText from './home-ai-feedback-text';
+import AiFeedbackText from './ai-feedback-text';
 import HomeCaloriesSummaryCard from './home-calories-summary-card';
 import HomeMacroNutrientGroup from './home-macronutrient-group';
 import HomeMealEmptyCard from './home-meal-empty-card';
@@ -29,7 +29,7 @@ const HomeContent = () => {
 
   return (
     <GlassBackground className="flex min-h-0 flex-col gap-4 rounded-[2rem] pb-8 pt-6">
-      <HomeAiFeedbackText nutritionData={nutrient} nutritionGoal={user.personalInfo} />
+      <AiFeedbackText nutritionData={nutrient} nutritionGoal={user.personalInfo} />
       {!user.personalInfo && (
         <CtaExampleFeedbackBanner
           title="현재는 예시 피드백이에요"
