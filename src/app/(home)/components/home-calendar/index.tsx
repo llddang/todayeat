@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { Typography } from '@/components/ui/typography';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import HomeCalendarWeek from './home-calendar-week';
 import HomeCalendarMonth from './home-calendar-month';
@@ -19,11 +18,11 @@ const HomeCalendar = () => {
         <div className="flex w-full justify-between">
           <Button
             variant="icon"
-            size="sm"
+            size="lg"
             className="after:bg-down-line-gray-600-icon hover:after:bg-down-line-gray-800-icon disabled:after:bg-down-line-gray-400-icon"
             onClick={() => setIsOpen(true)}
           >
-            <Typography>{formatDateToLocaleKR(currentDate)}</Typography>
+            {formatDateToLocaleKR(currentDate)}
           </Button>
           <TabsList className="">
             <TabsTrigger value="week">주간</TabsTrigger>

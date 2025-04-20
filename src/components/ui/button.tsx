@@ -17,7 +17,7 @@ export const buttonVariants = cva(
         icon: 'text-gray-600 hover:text-gray-800 disabled:text-gray-400 after:bg-no-repeat after:bg-center after:bg-right-line-gray-600-icon hover:after:bg-right-line-gray-800-icon disabled:after:bg-right-line-gray-400-icon'
       },
       size: {
-        default: 'h-11 typography-subTitle4 ',
+        default: 'h-11 typography-subTitle4',
         sm: 'h-10 typography-subTitle4 gap-[0.125rem] after:w-4 after:h-4',
         lg: 'h-11 typography-subTitle2 gap-1 after:w-[1.125rem] after:h-[1.125rem]',
         icon: 'h-9 w-9'
