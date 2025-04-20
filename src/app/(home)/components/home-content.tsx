@@ -28,7 +28,7 @@ const HomeContent = () => {
   }, [selectedDate]);
 
   return (
-    <GlassBackground className="flex min-h-0 flex-col gap-4 rounded-[2rem] pb-8 pt-6">
+    <GlassBackground className="min-h-0 space-y-4 rounded-[2rem] pb-8 pt-6">
       <AiFeedbackText nutritionData={nutrient} nutritionGoal={user.personalInfo} />
       {!user.personalInfo && (
         <CtaExampleFeedbackBanner
@@ -42,8 +42,10 @@ const HomeContent = () => {
           }
         />
       )}
-      <CaloriesSummaryCard total={nutrient.calories} goal={user.personalInfo?.dailyCaloriesGoal || 0} />
-      <MacroNutrientGroup total={nutrient} goal={user.personalInfo} />
+      <div className="space-y-3">
+        <CaloriesSummaryCard total={nutrient.calories} goal={user.personalInfo?.dailyCaloriesGoal || 0} />
+        <MacroNutrientGroup total={nutrient} goal={user.personalInfo} />
+      </div>
       <section>
         <Typography as="h3" variant="subTitle2" className="mb-4 pt-3 text-gray-900">
           식단 기록

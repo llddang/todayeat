@@ -39,7 +39,7 @@ const AiFeedbackText = ({ nutritionData, nutritionGoal }: AiFeedbackTextProps) =
   if (!feedbackContent) return null;
 
   const containerClass = cn(
-    'before:bg-ai-sparkle-1 flex w-full items-start gap-2 pb-2',
+    'before:bg-ai-sparkle-1 flex w-full items-start gap-2',
     'before:block before:h-6 before:w-6 before:bg-contain',
     "before:bg-no-repeat before:content-['']",
     {
