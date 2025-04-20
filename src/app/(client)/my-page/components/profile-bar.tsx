@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import DefaultProfile from '@/../public/illustrations/default-profile.svg';
 import { Typography } from '@/components/ui/typography';
-import IconButton from '@/components/commons/icon-button';
 import {
   Drawer,
   DrawerClose,
@@ -40,14 +39,14 @@ const ProfileBar = () => {
                 fill
                 priority
                 sizes="20vw"
-                className="object-contain"
+                className="object-cover"
               />
             </span>
             <div className="flex flex-1 flex-col">
               <Typography as="span" variant="subTitle1">
                 {user.nickname}
               </Typography>
-              <Typography as="span" variant="body4" className="text-gray-600">
+              <Typography as="span" variant="body4" className="pointer-events-none text-gray-600 no-underline">
                 {user.email}
               </Typography>
             </div>
@@ -55,14 +54,14 @@ const ProfileBar = () => {
 
           <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
-              <IconButton
-                alt="프로필 수정하기"
-                size="md"
-                icon="before:bg-edit-info-icon"
+              <span
+                className="flex h-9 w-9 flex-shrink-0 cursor-pointer items-center justify-center rounded-full bg-white/80 bg-center bg-no-repeat object-contain backdrop-blur-[10px] before:block before:h-4 before:w-4 before:bg-edit-info-icon before:bg-contain before:bg-no-repeat before:content-[''] hover:bg-gray-300/80"
                 aria-label="프로필 수정하기"
                 aria-haspopup="dialog"
                 aria-expanded={open}
-              />
+              >
+                <span className="sr-only">프로필 수정하기</span>
+              </span>
             </DrawerTrigger>
             {open && (
               <DrawerContent className="rounded-t-[2rem] px-5 pt-4">
@@ -80,12 +79,9 @@ const ProfileBar = () => {
                   <EditProfile userInfo={user} setOpen={setOpen} />
                   <DrawerFooter>
                     <DrawerClose className="absolute right-0 top-0">
-                      <button
-                        type="button"
-                        className="before:block before:h-10 before:w-10 before:bg-close-line-gray-550-icon before:content-['']"
-                      >
+                      <span className="before:block before:h-10 before:w-10 before:bg-close-line-gray-550-icon before:content-['']">
                         <span className="sr-only">닫기</span>
-                      </button>
+                      </span>
                     </DrawerClose>
                   </DrawerFooter>
                 </div>
