@@ -10,7 +10,7 @@ import { getUser, updateUser } from '@/apis/user.api';
 import { uploadImage } from '@/apis/storage.api';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import formSchema from '@/app/schemas/form-schema.schema';
 import { UserDTO } from '@/types/DTO/user.dto';
 import { cleanupBlobUrl } from '@/utils/cleanup-blob-url.util';
@@ -177,15 +177,20 @@ const EditProfile = ({ userInfo, setOpen }: EditProfileProps): JSX.Element => {
             <FormField
               control={form.control}
               name="nickname"
-              render={({ field }) => (
-                <FormItem className="space-y-2">
-                  <FormLabel>닉네임</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormDescription>한글, 영어, 숫자만 사용해 2~8자로 입력해 주세요</FormDescription>
-                </FormItem>
-              )}
+              render={({ field }) => {
+                const hasError = !!form.formState.errors.nickname;
+
+                return (
+                  <FormItem className="space-y-2">
+                    <FormLabel>닉네임</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    {!hasError && <FormDescription>한글, 영어, 숫자만 사용해 2~8자로 입력해 주세요</FormDescription>}
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
             />
           </div>
 
