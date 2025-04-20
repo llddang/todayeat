@@ -22,17 +22,23 @@ const ProfileBar = () => {
   const user = useUserStore((state) => state.user);
   const [open, setOpen] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [isImageLoading, setIsImageLoading] = useState(true);
 
   useEffect(() => {
     if (user.id) setIsDataLoaded(!!user.id);
   }, [user]);
+
+  useEffect(() => {
+    setIsImageLoading(true);
+  }, [user.profileImage]);
 
   return (
     <div className="flex items-center justify-between gap-2 px-4 pb-4 pt-1">
       {isDataLoaded ? (
         <>
           <div className="flex w-full items-center gap-3">
-            <span className="relative aspect-square w-[4.5rem] overflow-hidden rounded-full">
+            <div className="relative aspect-square w-[4.5rem] overflow-hidden rounded-full bg-gray-100">
+              {isImageLoading && <div className="absolute inset-0 animate-pulse bg-gray-200" />}
               <Image
                 src={user.profileImage || DefaultProfile}
                 alt={user.nickname}
@@ -40,8 +46,11 @@ const ProfileBar = () => {
                 priority
                 sizes="20vw"
                 className="object-cover"
+                key={user.profileImage}
+                quality={75}
+                onLoad={() => setIsImageLoading(false)}
               />
-            </span>
+            </div>
             <div className="flex flex-1 flex-col">
               <Typography as="span" variant="subTitle1">
                 {user.nickname}
