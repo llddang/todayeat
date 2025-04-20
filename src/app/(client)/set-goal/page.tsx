@@ -36,7 +36,7 @@ const SetGoalPage = () => {
     return <GlassBackground className="relative space-y-8">{content}</GlassBackground>;
   }
 
-  return <div className="relative min-h-[calc(100vh-64px)] space-y-8">{content}</div>;
+  return <div className="relative min-h-[calc(100vh-4rem)] space-y-8">{content}</div>;
 };
 
 export default SetGoalPage;
