@@ -6,7 +6,7 @@ import { Typography } from '@/components/ui/typography';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import HomeCalendarWeek from './home-calendar-week';
 import HomeCalendarMonth from './home-calendar-month';
-import HomeCalendarBottomUpSelector from './home-calendar-bottom-up-selector';
+import DateSelectorMobile from './date-selector-mobile';
 import { formatDateToLocaleKR } from '@/utils/format.util';
 
 const HomeCalendar = () => {
@@ -37,7 +37,7 @@ const HomeCalendar = () => {
           <HomeCalendarMonth />
         </TabsContent>
       </Tabs>
-      <HomeCalendarBottomUpSelector open={isOpen} onOpenChange={setIsOpen} />
+      <DateSelectorMobile open={isOpen} onOpenChange={setIsOpen} />
     </>
   );
 };

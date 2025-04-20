@@ -1,13 +1,13 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import ClientOnly from '@/components/commons/client-only';
-import { CALENDAR_STAND_COUNT } from '@/app/(home)/constants/calendar.constant';
 import { formatDateWithDash } from '@/utils/format.util';
 import { getAllMyDailyCalories } from '@/apis/meal.api';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
-import { calculateMonthDates, getFirstDayInMonth, getMonthDates } from '../../utils/calendar.util';
-import HomeCalendarDayLabel from './home-calendar-day-label';
+import { calculateMonthDates, getFirstDayInMonth, getMonthDates } from '@/app/(home)/utils/calendar.util';
+import { CALENDAR_STAND_COUNT } from '@/app/(home)/constants/calendar.constant';
+import DayLabel from './day-label';
 import HomeCalendarMonthItem from './home-calendar-month-item';
 
 type MonthType = {
@@ -79,7 +79,7 @@ const HomeCalendarMonth = () => {
 
   return (
     <div className="space-y-3">
-      <HomeCalendarDayLabel />
+      <DayLabel />
       <ClientOnly fallback={<HomeCalendarMonthItem weeksInMonth={calculateMonthDates(currentDate)} />}>
         <Carousel setApi={setApi} opts={{ startIndex: CALENDAR_STAND_COUNT }}>
           <CarouselContent>
