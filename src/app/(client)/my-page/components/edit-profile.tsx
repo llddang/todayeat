@@ -10,7 +10,7 @@ import { getUser, updateUser } from '@/apis/user.api';
 import { uploadImage } from '@/apis/storage.api';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import formSchema from '@/app/schemas/form-schema.schema';
 import { UserDTO } from '@/types/DTO/user.dto';
 import { cleanupBlobUrl } from '@/utils/cleanup-blob-url.util';
@@ -120,7 +120,7 @@ const EditProfile = ({ userInfo, setOpen }: EditProfileProps): JSX.Element => {
 
   const handleProfileUpdateSuccess = async (nickname: string, newImageUrl: string | null) => {
     form.reset({ nickname, newProfileImage: null });
-    alert('프로필 수정이 완료되었습니다.');
+    // TODO - 프로필 수정 성공 토스트 메시지 추가
 
     setProfileState((prev) => ({
       ...prev,
@@ -151,6 +151,7 @@ const EditProfile = ({ userInfo, setOpen }: EditProfileProps): JSX.Element => {
                         fill
                         priority
                         sizes="30vw"
+                        className="object-cover"
                       />
                     </div>
                     <IconButton
@@ -182,7 +183,6 @@ const EditProfile = ({ userInfo, setOpen }: EditProfileProps): JSX.Element => {
                     <Input {...field} />
                   </FormControl>
                   <FormDescription>한글, 영어, 숫자만 사용해 2~8자로 입력해 주세요</FormDescription>
-                  <FormMessage />
                 </FormItem>
               )}
             />
