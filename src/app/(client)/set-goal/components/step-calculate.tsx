@@ -162,7 +162,10 @@ const StepCalculate = ({ nextStep, userName, data }: StepCalculateProps) => {
         <Button onClick={handleSubmit} className="w-full">
           목표 설정하기
         </Button>
-        <Button onClick={() => nextStep('step1')} className="mt-2 w-full bg-transparent text-gray-600">
+        <Button
+          onClick={() => nextStep('step1')}
+          className="mt-2 w-full bg-transparent text-gray-600 hover:bg-transparent"
+        >
           목표 다시 설정하기
         </Button>
       </div>
