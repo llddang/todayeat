@@ -1,18 +1,18 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import ClientOnly from '@/components/commons/client-only';
 import { formatDateWithDash } from '@/utils/format.util';
 import { getAllMyDailyCalories } from '@/apis/meal.api';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
 import { CALENDAR_STAND_COUNT } from '@/app/(home)/constants/calendar.constant';
-import { calculateWeekDates, getWeekDates } from '@/app/(home)/utils/calendar.util';
+import { getWeekDates } from '@/app/(home)/utils/calendar.util';
 import DayLabel from './day-label';
 import HomeCalendarWeekItem from './home-calendar-week-item';
+import { Week } from '../../types/calendar.type';
 
 type WeekType = {
   id: number;
-  dates: Date[];
+  dates: Week;
 };
 const HomeCalendarWeek = () => {
   const { selectedDate } = useDashboard();
@@ -78,17 +78,19 @@ const HomeCalendarWeek = () => {
   return (
     <div className="space-y-3">
       <DayLabel />
-      <ClientOnly fallback={<HomeCalendarWeekItem week={calculateWeekDates(currentDate)} />}>
-        <Carousel setApi={setApi} opts={{ startIndex: CALENDAR_STAND_COUNT }}>
-          <CarouselContent>
-            {weeks.map((week) => (
-              <CarouselItem key={week.dates[0].getTime()}>
-                <HomeCalendarWeekItem week={week.dates} />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </ClientOnly>
+      <Carousel setApi={setApi} opts={{ startIndex: CALENDAR_STAND_COUNT }}>
+        <CarouselContent>
+          {weeks.map((week) => (
+            <CarouselItem key={week.dates[0].getTime()}>
+              <HomeCalendarWeekItem
+                selectedDate={selectedDate}
+                week={week.dates}
+                dailyMealCalories={dailyMealCalories}
+              />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
     </div>
   );
 };

@@ -1,43 +1,19 @@
-'use client';
-import { useState } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
-import { useCalendar } from '@/app/(home)/contexts/calendar.context';
-import HomeCalendarWeek from './home-calendar-week';
-import HomeCalendarMonth from './home-calendar-month';
-import DateSelectorMobile from './date-selector-mobile';
-import { formatDateToLocaleKR } from '@/utils/format.util';
+import ClientOnly from '@/components/commons/client-only';
+import HomeCalendarClientView from './home-calendar-client-view';
+import HomeCalendarServerView from './home-calendar-server-view';
+import { calculateMonthDates, getFirstDayAndLastDayInMonth } from '../../utils/calendar.util';
+import { getAllMyDailyCalories } from '@/apis/meal.api';
 
-const HomeCalendar = () => {
-  const { currentDate } = useCalendar();
-  const [isOpen, setIsOpen] = useState(false);
+const HomeCalendar = async () => {
+  const today = new Date();
+  const month = calculateMonthDates(today);
+  const [firstDay, lastDay] = getFirstDayAndLastDayInMonth(month);
+  const dailyMealCalories = await getAllMyDailyCalories(firstDay, lastDay);
 
   return (
-    <>
-      <Tabs defaultValue="week" className="space-y-5 px-4 py-7 pt-2">
-        <div className="flex w-full justify-between">
-          <Button
-            variant="icon"
-            size="lg"
-            className="after:bg-down-line-gray-600-icon hover:after:bg-down-line-gray-800-icon disabled:after:bg-down-line-gray-400-icon"
-            onClick={() => setIsOpen(true)}
-          >
-            {formatDateToLocaleKR(currentDate)}
-          </Button>
-          <TabsList className="">
-            <TabsTrigger value="week">주간</TabsTrigger>
-            <TabsTrigger value="month">월간</TabsTrigger>
-          </TabsList>
-        </div>
-        <TabsContent value="week">
-          <HomeCalendarWeek />
-        </TabsContent>
-        <TabsContent value="month">
-          <HomeCalendarMonth />
-        </TabsContent>
-      </Tabs>
-      <DateSelectorMobile open={isOpen} onOpenChange={setIsOpen} />
-    </>
+    <ClientOnly fallback={<HomeCalendarServerView dailyMealCalories={dailyMealCalories} />}>
+      <HomeCalendarClientView dailyMealCalories={dailyMealCalories} />
+    </ClientOnly>
   );
 };
 export default HomeCalendar;

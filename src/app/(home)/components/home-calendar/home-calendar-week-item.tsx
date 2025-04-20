@@ -1,3 +1,4 @@
+'use client';
 import { KeyboardEvent } from 'react';
 import CircleProgressBar from '@/components/commons/circle-progress-bar';
 import { Typography } from '@/components/ui/typography';
@@ -7,13 +8,17 @@ import { getPercentage } from '@/utils/nutrition-calculator.util';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
 import { isSameDate } from '@/app/(home)/utils/calendar.util';
+import { DailyMealCalories } from '@/types/nutrition.type';
+import { Week } from '../../types/calendar.type';
 
 type HomeCalendarWeekItemProps = {
-  week: Date[];
+  selectedDate: Date;
+  week: Week;
+  dailyMealCalories: DailyMealCalories;
 };
-const HomeCalendarWeekItem = ({ week }: HomeCalendarWeekItemProps) => {
-  const { selectedDate, setSelectedDate } = useDashboard();
-  const { dailyMealCalories, setCurrentDate } = useCalendar();
+const HomeCalendarWeekItem = ({ selectedDate, week, dailyMealCalories }: HomeCalendarWeekItemProps) => {
+  const { setSelectedDate } = useDashboard();
+  const { setCurrentDate } = useCalendar();
 
   const handleDateClick = (newSelectedDate: Date): void => {
     if (isSameDate(newSelectedDate, selectedDate)) return;
