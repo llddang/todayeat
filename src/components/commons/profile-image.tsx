@@ -24,7 +24,7 @@ const ProfileImage = ({ src, size }: ProfileImageProps) => {
 
   return (
     <div className={profileImageVariants({ size })}>
-      <Image src={imageUrl} alt="프로필" fill className="object-cover" sizes="20vw" priority />
+      <Image src={imageUrl} alt="프로필" fill className="object-cover" sizes="20vw" priority key={imageUrl} />
     </div>
   );
 };
