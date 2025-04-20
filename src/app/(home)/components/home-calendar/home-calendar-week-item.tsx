@@ -6,7 +6,7 @@ import { cn } from '@/lib/shadcn';
 import { formatDateWithDash } from '@/utils/format.util';
 import { getPercentage } from '@/utils/nutrition-calculator.util';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
-import { isSameDate } from '../utils/calendar.util';
+import { isSameDate } from '../../utils/calendar.util';
 
 type HomeCalendarWeekItemProps = {
   week: Date[];

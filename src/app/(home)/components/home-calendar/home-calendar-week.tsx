@@ -6,7 +6,7 @@ import { formatDateWithDash } from '@/utils/format.util';
 import { getAllMyDailyCalories } from '@/apis/meal.api';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
-import { calculateWeekDates, getWeekDates } from '../utils/calendar.util';
+import { calculateWeekDates, getWeekDates } from '../../utils/calendar.util';
 import HomeCalendarDayLabel from './home-calendar-day-label';
 import HomeCalendarWeekItem from './home-calendar-week-item';
 
