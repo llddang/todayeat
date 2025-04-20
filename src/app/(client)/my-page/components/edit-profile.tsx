@@ -126,9 +126,10 @@ const EditProfile = ({ userInfo, setOpen }: EditProfileProps): JSX.Element => {
       ...prev,
       profilePreviewUrl: newImageUrl
     }));
+
+    const updatedUser = await getUser();
+    setUser(updatedUser);
     setOpen(false);
-    const user = await getUser();
-    setUser(user);
   };
 
   return (
