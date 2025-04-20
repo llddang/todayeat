@@ -148,7 +148,7 @@ const StepCalculate = ({ nextStep, userName, data }: StepCalculateProps) => {
           </div>
         </form>
       </Form>
-      <div className="space-y-2">
+      <div className="space-y-2 pb-40">
         <Typography as="span" variant="body3" className="ml-1">
           목표 칼로리 기준 영양소 권장량
         </Typography>
@@ -158,7 +158,7 @@ const StepCalculate = ({ nextStep, userName, data }: StepCalculateProps) => {
           <MacronutrientBox label="FAT" data={macronutrientData.fat} />
         </div>
       </div>
-      <div className="fixed bottom-4 left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2">
+      <div className="fixed bottom-[calc(env(safe-area-inset-bottom,1.5rem)+1.5rem)] left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2">
         <Button onClick={handleSubmit} className="w-full">
           목표 설정하기
         </Button>
