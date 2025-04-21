@@ -18,8 +18,8 @@ const profileImageVariants = cva('relative overflow-hidden rounded-full', {
 
 type ProfileImageProps = VariantProps<typeof profileImageVariants> & {
   src: string | null;
-  isImageLoading: boolean;
-  setIsImageLoading: (isLoading: boolean) => void;
+  isImageLoading?: boolean;
+  setIsImageLoading?: (isLoading: boolean) => void;
 };
 
 const ProfileImage = ({ src, size, isImageLoading, setIsImageLoading }: ProfileImageProps) => {
