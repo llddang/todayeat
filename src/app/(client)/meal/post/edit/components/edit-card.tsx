@@ -77,7 +77,7 @@ const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
         </div>
       ) : (
         <div className="flex flex-col items-start gap-2 self-stretch rounded-xl bg-white p-3">
-          <Input {...register(`mealList.${idx}.menuName`, { required: true })} maxLength={10} />
+          <Input {...register(`mealList.${idx}.menuName`, { required: true })} maxLength={MAX_MENU_NAME_LENGTH} />
           <div className="flex items-start gap-2 self-stretch">
             <Controller
               control={control}
@@ -140,7 +140,7 @@ const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
 export default EditCard;
 
 const MAX_NUMERIC_LENGTH = 4;
-
+const MAX_MENU_NAME_LENGTH = 16;
 const MEASUREMENT_UNIT: Record<MeasurementUnitType, MeasurementUnitValues> = {
   KCAL: {
     label: '칼로리',
