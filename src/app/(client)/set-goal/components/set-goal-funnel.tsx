@@ -1,3 +1,5 @@
+'use client';
+
 import { Suspense, useEffect } from 'react';
 import { z } from 'zod';
 import useFunnel from '@/hooks/use-funnel';
