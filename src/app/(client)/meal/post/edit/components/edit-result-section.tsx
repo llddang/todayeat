@@ -1,16 +1,24 @@
 'use client';
 
 import { AiResponseDTO } from '@/types/DTO/ai_analysis.dto';
-import EditCard from './edit-card';
-import MealImageCarousel from '../../../components/meal-images-carousel';
-import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
+import { MealDTO } from '@/types/DTO/meal.dto';
+import { MealCategory } from '@/types/meal-category.type';
+import { createMealWithDetails, deleteMealAnalysisDetail } from '@/apis/meal.api';
+import { uploadImage } from '@/apis/storage.api';
+import SITE_MAP from '@/constants/site-map.constant';
+import { formatTimestamp } from '@/utils/format.util';
+import { urlToFile } from '../../../utils/file.util';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import EditCard from './edit-card';
+import MealImageCarousel from '../../../components/meal-images-carousel';
 import { Typography } from '@/components/ui/typography';
 import GlassBackground from '@/components/commons/glass-background';
 import TagSelectItem from '@/components/commons/tag-select-item';
 import MealEditCalendar from './meal-edit-calendar';
-import { MealCategory } from '@/types/meal-category.type';
 import Textarea from '@/components/commons/textarea';
 import { Button } from '@/components/ui/button';
 import TimePicker, { TimeFields } from './time-picker';
@@ -21,8 +29,11 @@ type EditResultSectionProps = {
 };
 
 const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX.Element => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const now = new Date();
   const { meridiem, hours, minutes } = getTimeFieldsFromDate(now);
+
   const mealFormMethods = useForm({
     resolver: zodResolver(mealEditFormSchema),
     defaultValues: {
@@ -39,19 +50,66 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
     },
     mode: 'onBlur'
   });
+
   const { fields: mealCardList, remove } = useFieldArray({ control: mealFormMethods.control, name: 'mealList' });
 
   const day = mealFormMethods.getValues('date.day');
   const date = mealFormMethods.watch('date');
+
   const handleDayChange = (day: Date) => mealFormMethods.setValue('date.day', day);
+
   const handleTimeChange = (time: TimeFields) => {
     mealFormMethods.setValue('date.meridiem', time.meridiem);
     mealFormMethods.setValue('date.hours', time.hours);
     mealFormMethods.setValue('date.minutes', time.minutes);
   };
 
-  const onSubmit = (data: MealEditFormData) => {
-    console.log(data);
+  const onSubmit = async (form: MealEditFormData) => {
+    const files = await Promise.all(form.mealImages.map((url, idx) => urlToFile(url, idx)));
+    const imagesFormData = new FormData();
+    setIsLoading(true);
+    try {
+      if (!form) {
+        return alert(' 데이터 형식이 올바르지 않습니다.');
+      }
+
+      const { mealImages, date, memo, mealCategory } = form;
+      const ateAt = formatTimestamp(date);
+
+      for (const file of files) {
+        imagesFormData.append('file', file);
+        await uploadImage('meal', imagesFormData);
+      }
+
+      const newMeals = {
+        foodImages: mealImages,
+        ateAt,
+        mealCategory,
+        memo
+      };
+
+      const { mealDetails } = await createMealWithDetails(
+        newMeals as Pick<MealDTO, 'ateAt' | 'foodImages' | 'memo' | 'mealCategory'>,
+        mealList.map((meal) => ({
+          menuName: meal.menuName,
+          weight: meal.weight,
+          calories: meal.calories,
+          carbohydrate: meal.carbohydrate,
+          protein: meal.protein,
+          fat: meal.fat
+        }))
+      );
+      if (mealDetails) {
+        await deleteMealAnalysisDetail();
+        router.push(SITE_MAP.HOME);
+      }
+    } catch (err) {
+      alert('식사 정보 등록에 실패하였습니다. 잠시후 다시 시도해주세요');
+      console.error('등록에 실패 했습니다. ', err);
+      router.refresh();
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -118,7 +176,7 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
               />
             </GlassBackground>
           </section>
-          <Button type="submit" className="mt-3 w-full">
+          <Button type="submit" className="mt-3 w-full" disabled={isLoading}>
             제출하기
           </Button>
         </form>
@@ -128,7 +186,6 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
 };
 
 export default EditResultSection;
-
 const mealListSchema = z.object({
   id: z.string(),
   userId: z.string(),
@@ -156,6 +213,18 @@ const mealEditFormSchema = z.object({
 });
 
 type MealEditFormData = z.infer<typeof mealEditFormSchema>;
+export type MealEditFormDataType = z.infer<typeof mealEditFormSchema>;
+
+const getTimeFieldsFromDate = (date: Date = new Date()): TimeFields => {
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+
+  return {
+    meridiem: hours < 12 ? '오전' : '오후',
+    hours: String(hours % 12 === 0 ? 12 : hours % 12).padStart(2, '0'),
+    minutes: String(minutes).padStart(2, '0')
+  };
+};
 
 const MEAL_CATEGORY = [
   {
@@ -179,15 +248,3 @@ const MEAL_CATEGORY = [
     icon: 'before:bg-meal-category-snack'
   }
 ];
-export type MealEditFormDataType = z.infer<typeof mealEditFormSchema>;
-
-const getTimeFieldsFromDate = (date: Date = new Date()): TimeFields => {
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-
-  return {
-    meridiem: hours < 12 ? '오전' : '오후',
-    hours: String(hours % 12 === 0 ? 12 : hours % 12).padStart(2, '0'),
-    minutes: String(minutes).padStart(2, '0')
-  };
-};
