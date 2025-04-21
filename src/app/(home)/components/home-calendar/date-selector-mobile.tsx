@@ -1,17 +1,17 @@
-import Calendar from '@/components/ui/calendar';
+import { useEffect, useState } from 'react';
 import { ko } from 'date-fns/locale';
+import Calendar from '@/components/ui/calendar';
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
-import { useEffect, useState } from 'react';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import { formatDateToLocaleKR } from '@/utils/format.util';
 
-type HomeCalendarBottomUpSelectorProps = {
+type DateSelectorMobileProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 };
-const HomeCalendarBottomUpSelector = ({ open, onOpenChange }: HomeCalendarBottomUpSelectorProps) => {
+const DateSelectorMobile = ({ open, onOpenChange }: DateSelectorMobileProps) => {
   const { selectedDate, setSelectedDate } = useDashboard();
   const { setCurrentDate } = useCalendar();
 
@@ -53,4 +53,4 @@ const HomeCalendarBottomUpSelector = ({ open, onOpenChange }: HomeCalendarBottom
     </Drawer>
   );
 };
-export default HomeCalendarBottomUpSelector;
+export default DateSelectorMobile;

@@ -59,7 +59,6 @@ export type StepCompleteType = {
 
 export type FunnelStep = 'step1' | 'step2' | 'step3' | 'step4' | 'step5' | 'step6' | 'step7' | 'step8' | 'complete';
 
-// TODO 공통 type으로 뺄까?
 export type StepUIConfig = {
   hasGlassBackground: boolean;
   hasProgressBar: boolean;

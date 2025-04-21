@@ -20,7 +20,7 @@ const signInDefaultValue: UserSignInDTO = {
   password: ''
 };
 
-const AuthSignInForm = () => {
+const SignInForm = () => {
   const [isPending, setIsPending] = useState(false);
 
   const router = useRouter();
@@ -92,7 +92,7 @@ const AuthSignInForm = () => {
     </Form>
   );
 };
-export default AuthSignInForm;
+export default SignInForm;
 
 const signInSchema = z.object({
   email: z.string(),

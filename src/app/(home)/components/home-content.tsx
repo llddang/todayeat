@@ -9,11 +9,11 @@ import { calculateTotalNutrition } from '@/utils/nutrition-calculator.util';
 import { useUserStore } from '@/store/user-store';
 import { MealDTO } from '@/types/DTO/meal.dto';
 import { useEffect, useState } from 'react';
-import HomeAiFeedbackText from './home-ai-feedback-text';
-import HomeCaloriesSummaryCard from './home-calories-summary-card';
-import HomeMacroNutrientGroup from './home-macronutrient-group';
-import HomeMealEmptyCard from './home-meal-empty-card';
-import HomeMealCard from './home-meal-card';
+import AiFeedbackText from './ai-feedback-text';
+import CaloriesSummaryCard from './calories-summary-card';
+import MacroNutrientGroup from './macronutrient-group';
+import MealEmptyCard from './meal-empty-card';
+import MealCard from './meal-card';
 
 const HomeContent = () => {
   const { selectedDate } = useDashboard();
@@ -28,8 +28,8 @@ const HomeContent = () => {
   }, [selectedDate]);
 
   return (
-    <GlassBackground className="flex min-h-0 flex-col gap-4 rounded-[2rem] pb-8 pt-6">
-      <HomeAiFeedbackText nutritionData={nutrient} nutritionGoal={user.personalInfo} />
+    <GlassBackground className="min-h-0 space-y-4 rounded-[2rem] pb-8 pt-6">
+      <AiFeedbackText nutritionData={nutrient} nutritionGoal={user.personalInfo} />
       {!user.personalInfo && (
         <CtaExampleFeedbackBanner
           title="현재는 예시 피드백이에요"
@@ -42,18 +42,20 @@ const HomeContent = () => {
           }
         />
       )}
-      <HomeCaloriesSummaryCard total={nutrient.calories} goal={user.personalInfo?.dailyCaloriesGoal || 0} />
-      <HomeMacroNutrientGroup total={nutrient} goal={user.personalInfo} />
+      <div className="space-y-3">
+        <CaloriesSummaryCard total={nutrient.calories} goal={user.personalInfo?.dailyCaloriesGoal || 0} />
+        <MacroNutrientGroup total={nutrient} goal={user.personalInfo} />
+      </div>
       <section>
         <Typography as="h3" variant="subTitle2" className="mb-4 pt-3 text-gray-900">
           식단 기록
         </Typography>
         {meals.length === 0 ? (
-          <HomeMealEmptyCard />
+          <MealEmptyCard />
         ) : (
           <ul className="flex flex-col gap-4">
             {meals.map((meal) => (
-              <HomeMealCard key={meal.id} meal={meal} />
+              <MealCard key={meal.id} meal={meal} />
             ))}
           </ul>
         )}

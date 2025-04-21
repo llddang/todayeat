@@ -12,6 +12,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      maxWidth: {
+        md: '440px'
+      },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
@@ -217,6 +220,12 @@ const config: Config = {
             maxWidth: '1280px'
           },
           margin: 'auto'
+        },
+        '.desktop-width': {
+          width: '100%',
+          '@screen xl': {
+            width: '27.5rem'
+          }
         },
         '.bg-gradient-main': {
           background: `

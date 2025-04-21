@@ -1,31 +1,31 @@
 export type SignUpFunnelStep = 'step1' | 'step2' | 'step3' | 'complete';
 
 export type SignUpFunnelType = {
-  step1: SignUpStep1Type;
-  step2: SignUpStep2Type;
-  step3: SignUpStep3Type;
-  complete: SignUpCompleteType;
+  step1: StepEmailType;
+  step2: StepPasswordType;
+  step3: StepNicknameType;
+  complete: StepCompleteType;
 };
 
-export type SignUpStep1Type = {
+export type StepEmailType = {
   email?: string;
   password?: string;
   nickname?: string;
 };
 
-export type SignUpStep2Type = {
+export type StepPasswordType = {
   email: string;
   password?: string;
   nickname?: string;
 };
 
-export type SignUpStep3Type = {
+export type StepNicknameType = {
   email: string;
   password: string;
   nickname?: string;
 };
 
-export type SignUpCompleteType = {
+export type StepCompleteType = {
   email?: string;
   password?: string;
   nickname?: string;

@@ -1,7 +1,7 @@
 import { Typography } from '@/components/ui/typography';
 import { DAY_LABELS } from '@/app/(home)/constants/calendar.constant';
 
-const HomeCalendarDayLabel = () => {
+const DayLabel = () => {
   return (
     <div className="flex justify-between">
       {DAY_LABELS.map((dayLabel) => (
@@ -12,4 +12,4 @@ const HomeCalendarDayLabel = () => {
     </div>
   );
 };
-export default HomeCalendarDayLabel;
+export default DayLabel;

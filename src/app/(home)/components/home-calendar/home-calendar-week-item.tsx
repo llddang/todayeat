@@ -1,19 +1,24 @@
+'use client';
 import { KeyboardEvent } from 'react';
 import CircleProgressBar from '@/components/commons/circle-progress-bar';
 import { Typography } from '@/components/ui/typography';
-import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import { cn } from '@/lib/shadcn';
 import { formatDateWithDash } from '@/utils/format.util';
 import { getPercentage } from '@/utils/nutrition-calculator.util';
+import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
-import { isSameDate } from '../utils/calendar.util';
+import { isSameDate } from '@/app/(home)/utils/calendar.util';
+import { DailyMealCalories } from '@/types/nutrition.type';
+import { Day } from '../../types/calendar.type';
 
 type HomeCalendarWeekItemProps = {
-  week: Date[];
+  selectedDate: Date;
+  week: Day[];
+  dailyMealCalories: DailyMealCalories;
 };
-const HomeCalendarWeekItem = ({ week }: HomeCalendarWeekItemProps) => {
-  const { selectedDate, setSelectedDate } = useDashboard();
-  const { dailyMealCalories, setCurrentDate } = useCalendar();
+const HomeCalendarWeekItem = ({ selectedDate, week, dailyMealCalories }: HomeCalendarWeekItemProps) => {
+  const { setSelectedDate } = useDashboard();
+  const { setCurrentDate } = useCalendar();
 
   const handleDateClick = (newSelectedDate: Date): void => {
     if (isSameDate(newSelectedDate, selectedDate)) return;
@@ -30,7 +35,7 @@ const HomeCalendarWeekItem = ({ week }: HomeCalendarWeekItemProps) => {
 
   return (
     <div className="flex w-full justify-between">
-      {week.map((day) => {
+      {week.map(({ day, dayOutside }) => {
         const isSelected = isSameDate(day, selectedDate);
         const { calories, caloriesGoal } = dailyMealCalories[formatDateWithDash(day)] ?? {
           calories: 0,
@@ -39,10 +44,11 @@ const HomeCalendarWeekItem = ({ week }: HomeCalendarWeekItemProps) => {
         const progress = getPercentage(calories, caloriesGoal);
         return (
           <button
-            key={day.toDateString()}
+            key={formatDateWithDash(day)}
             className={cn(
               'relative flex h-10 w-10 items-center justify-center',
-              isSelected ? 'text-gray-900' : 'text-gray-600'
+              isSelected ? 'text-gray-900' : 'text-gray-600',
+              dayOutside && 'opacity-40'
             )}
             onClick={() => handleDateClick(day)}
             role="button"
