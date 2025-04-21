@@ -35,7 +35,7 @@ const ProfileImage = ({ src, size, isImageLoading, setIsImageLoading }: ProfileI
         sizes="20vw"
         priority
         key={imageUrl}
-        onLoad={() => setIsImageLoading(false)}
+        onLoad={() => setIsImageLoading?.(false)}
       />
     </div>
   );
