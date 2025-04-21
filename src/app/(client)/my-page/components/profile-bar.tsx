@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import { HorizontalSkeleton } from '@/components/commons/horizontal-skeleton';
 import { useUserStore } from '@/store/user-store';
 import EditProfile from '@/app/(client)/my-page/components/edit-profile';
+import ProfileImage from '@/components/commons/profile-image';
 
 const ProfileBar = () => {
   const user = useUserStore((state) => state.user);
@@ -37,18 +38,12 @@ const ProfileBar = () => {
       {isDataLoaded ? (
         <>
           <div className="flex w-full items-center gap-3">
-            <div className="relative aspect-square w-[4.5rem] overflow-hidden rounded-full bg-gray-100">
-              {isImageLoading && <div className="absolute inset-0 animate-pulse bg-gray-200" />}
-              <Image
-                src={user.profileImage || DefaultProfile}
-                alt={user.nickname}
-                fill
-                priority
-                sizes="20vw"
-                className="object-cover"
-                key={user.profileImage}
-                quality={75}
-                onLoad={() => setIsImageLoading(false)}
+            <div className="relative aspect-square w-[4.5rem] overflow-hidden rounded-full">
+              <ProfileImage
+                src={user.profileImage}
+                size="md"
+                isImageLoading={isImageLoading}
+                setIsImageLoading={setIsImageLoading}
               />
             </div>
             <div className="flex flex-1 flex-col">

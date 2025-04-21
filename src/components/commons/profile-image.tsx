@@ -1,6 +1,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import DEFAULT_PROFILE from '@/../public/illustrations/default-profile.svg';
 import Image from 'next/image';
+import { cn } from '@/lib/shadcn';
 
 const profileImageVariants = cva('relative overflow-hidden rounded-full', {
   variants: {
@@ -17,14 +18,25 @@ const profileImageVariants = cva('relative overflow-hidden rounded-full', {
 
 type ProfileImageProps = VariantProps<typeof profileImageVariants> & {
   src: string | null;
+  isImageLoading: boolean;
+  setIsImageLoading: (isLoading: boolean) => void;
 };
 
-const ProfileImage = ({ src, size }: ProfileImageProps) => {
+const ProfileImage = ({ src, size, isImageLoading, setIsImageLoading }: ProfileImageProps) => {
   const imageUrl = src || DEFAULT_PROFILE;
 
   return (
     <div className={profileImageVariants({ size })}>
-      <Image src={imageUrl} alt="프로필" fill className="object-cover" sizes="20vw" priority key={imageUrl} />
+      <Image
+        src={isImageLoading ? DEFAULT_PROFILE : imageUrl}
+        alt="프로필"
+        fill
+        className={cn('object-cover transition-opacity duration-500', isImageLoading && 'animate-pulse')}
+        sizes="20vw"
+        priority
+        key={imageUrl}
+        onLoad={() => setIsImageLoading(false)}
+      />
     </div>
   );
 };
