@@ -30,8 +30,7 @@ type EditResultSectionProps = {
 const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX.Element => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const now = new Date();
-  const { meridiem, hours, minutes } = getTimeFieldsFromDate(now);
+  const { meridiem, hours, minutes } = getTimeFieldsFromDate();
 
   const mealFormMethods = useForm({
     resolver: zodResolver(mealEditFormSchema),
@@ -216,9 +215,10 @@ const mealEditFormSchema = z.object({
 type MealEditFormData = z.infer<typeof mealEditFormSchema>;
 export type MealEditFormDataType = z.infer<typeof mealEditFormSchema>;
 
-const getTimeFieldsFromDate = (date: Date = new Date()): TimeFields => {
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
+const getTimeFieldsFromDate = (): TimeFields => {
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
 
   return {
     meridiem: hours < 12 ? '오전' : '오후',
