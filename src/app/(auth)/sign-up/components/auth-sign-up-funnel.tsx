@@ -17,7 +17,7 @@ import {
 import { z } from 'zod';
 
 const AuthSignUpFunnel = () => {
-  const Funnel = useFunnel<SignUpFunnelType, SignUpFunnelStep>('step1', signUpValidateFn, 'sign-up-funnel-data');
+  const { Funnel } = useFunnel<SignUpFunnelType, SignUpFunnelStep>('step1', signUpValidateFn, 'sign-up-funnel-data');
 
   return (
     <Funnel
