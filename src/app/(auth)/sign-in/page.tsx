@@ -6,6 +6,7 @@ import Image from 'next/image';
 import LOGO from '@/../public/logo.svg';
 import Link from 'next/link';
 import SITE_MAP from '@/constants/site-map.constant';
+import GlassBackground from '@/components/commons/glass-background';
 
 const SignInPage = () => {
   return (
@@ -20,13 +21,13 @@ const SignInPage = () => {
           사진 한 장으로 완성되는 식단 기록
         </Typography>
       </div>
-      <div className="space-y-6 px-5 pb-8 pt-7">
+      <GlassBackground className="min-h-0 space-y-6 rounded-[2rem] px-5 pb-8 pt-7">
         <AuthSignInForm />
         <div className="flex flex-col gap-2">
           <AuthSignInWithKakaoButton />
           <AuthSignInWithGoogleButton />
         </div>
-      </div>
+      </GlassBackground>
     </section>
   );
 };
