@@ -1,5 +1,5 @@
+import Header from '@/components/layouts/header';
 import Footer from '@/components/commons/footer';
-import HeaderBackButton from '@/components/layouts/header/variants/header-back-button';
 
 const Layout = ({
   children
@@ -8,7 +8,7 @@ const Layout = ({
 }>) => {
   return (
     <div className="temp-layout">
-      <HeaderBackButton />
+      <Header variant="backButton" />
       <main className="py-layout">{children}</main>
       <Footer />
     </div>
