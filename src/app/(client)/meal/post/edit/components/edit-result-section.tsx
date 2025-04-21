@@ -1,7 +1,6 @@
 'use client';
 
 import { AiResponseDTO } from '@/types/DTO/ai_analysis.dto';
-import { MealDTO } from '@/types/DTO/meal.dto';
 import { MealCategory } from '@/types/meal-category.type';
 import { createMealWithDetails, deleteMealAnalysisDetail } from '@/apis/meal.api';
 import { uploadImage } from '@/apis/storage.api';
@@ -72,24 +71,26 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
         return alert(' 데이터 형식이 올바르지 않습니다.');
       }
 
-      const { mealImages, date, memo, mealCategory } = form;
+      const { date, memo, mealCategory } = form;
       const ateAt = formatTimestamp(date);
-
+      const storedImageUrls: string[] = [];
       for (const file of files) {
         const formData = new FormData();
         formData.append('file', file);
-        await uploadImage('meal', formData);
+        const { data: fileUrl } = await uploadImage('meal', formData);
+        if (fileUrl) {
+          storedImageUrls.push(fileUrl);
+        }
       }
 
       const newMeals = {
-        foodImages: mealImages,
+        foodImages: storedImageUrls,
         ateAt,
         mealCategory,
         memo
       };
-
       const { mealDetails } = await createMealWithDetails(
-        newMeals as Pick<MealDTO, 'ateAt' | 'foodImages' | 'memo' | 'mealCategory'>,
+        newMeals,
         mealList.map((meal) => ({
           menuName: meal.menuName,
           weight: meal.weight,
@@ -117,7 +118,7 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
       <MealImageCarousel imageList={imageList} />
       <FormProvider {...mealFormMethods}>
         <form onSubmit={mealFormMethods.handleSubmit(onSubmit)}>
-          <div className="mt-10 flex flex-col gap-3">
+          <section className="mt-10 flex flex-col gap-3">
             <Typography className="pl-1">
               음식 정보
               <Typography variant="subTitle2" as="span" className="ml-2">
@@ -127,7 +128,7 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
             {mealCardList.map((meal, idx) => (
               <EditCard key={meal.id} idx={idx} mealDetail={meal} onRemove={remove} />
             ))}
-          </div>
+          </section>
 
           <section className="my-10 flex w-full flex-col items-start justify-center gap-3">
             <Typography as="h3" variant="body1" className="pl-1">
