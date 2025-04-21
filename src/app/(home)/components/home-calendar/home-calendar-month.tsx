@@ -19,6 +19,7 @@ const HomeCalendarMonth = () => {
   const { currentDate, dailyMealCalories, setCurrentDate, setDailyMealCalories } = useCalendar();
 
   const [months, setMonths] = useState<MonthType[]>(getMonthDates(currentDate));
+  const [monthDate, setMonthDate] = useState<Date>(currentDate);
 
   useEffect(() => {
     setMonths(getMonthDates(selectedDate));
@@ -50,17 +51,16 @@ const HomeCalendarMonth = () => {
 
       const newDate = new Date(baseYear, baseMonth, 1);
       setMonths(getMonthDates(newDate));
+      setMonthDate(newDate);
     };
     const onSelect = (): void => {
       const currentIndex = api.selectedScrollSnap();
       const diff = currentIndex - CALENDAR_STAND_COUNT;
-      if (diff === 0) return;
 
-      const baseYear = currentDate.getFullYear();
-      const baseMonth = currentDate.getMonth();
+      const baseYear = monthDate.getFullYear();
+      const baseMonth = monthDate.getMonth();
 
-      const offset = diff > 0 ? 1 : -1;
-      const newDate = new Date(baseYear, baseMonth + offset, 1);
+      const newDate = new Date(baseYear, baseMonth + diff, 1);
       setCurrentDate(newDate);
     };
 
@@ -70,12 +70,13 @@ const HomeCalendarMonth = () => {
       api.off('settle', onSettle);
       api.off('select', onSelect);
     };
-  }, [api, currentDate, setCurrentDate]);
+  }, [api, currentDate, monthDate, setCurrentDate]);
 
   useLayoutEffect(() => {
     if (!api) return;
     api.scrollTo(CALENDAR_STAND_COUNT, true);
-  }, [months, api]);
+    setCurrentDate(monthDate);
+  }, [months, api, monthDate, setCurrentDate]);
 
   return (
     <div className="space-y-3">

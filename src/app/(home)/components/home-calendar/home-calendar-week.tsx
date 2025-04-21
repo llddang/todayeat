@@ -19,6 +19,7 @@ const HomeCalendarWeek = () => {
   const { currentDate, dailyMealCalories, setCurrentDate, setDailyMealCalories } = useCalendar();
 
   const [weeks, setWeeks] = useState<WeekType[]>(getWeekDates(currentDate));
+  const [weekDate, setWeekDate] = useState<Date>(currentDate);
 
   useEffect(() => {
     setWeeks(getWeekDates(selectedDate));
@@ -46,15 +47,14 @@ const HomeCalendarWeek = () => {
       const newDate = new Date(currentDate);
       newDate.setDate(currentDate.getDate());
       setWeeks(getWeekDates(newDate));
+      setWeekDate(newDate);
     };
     const onSelect = (): void => {
       const currentIndex = api.selectedScrollSnap();
       const diff = currentIndex - CALENDAR_STAND_COUNT;
-      if (diff === 0) return;
 
-      const newDate = new Date(currentDate);
-      const offset = diff > 0 ? 1 : -1;
-      newDate.setDate(currentDate.getDate() + offset * 7);
+      const newDate = new Date(weekDate);
+      newDate.setDate(weekDate.getDate() + diff * 7);
       setCurrentDate(newDate);
     };
 
@@ -64,12 +64,13 @@ const HomeCalendarWeek = () => {
       api.off('settle', onSettle);
       api.off('select', onSelect);
     };
-  }, [api, currentDate, setCurrentDate]);
+  }, [api, currentDate, setCurrentDate, weekDate]);
 
   useLayoutEffect(() => {
     if (!api) return;
     api.scrollTo(CALENDAR_STAND_COUNT, true);
-  }, [weeks, api]);
+    setCurrentDate(weekDate);
+  }, [weeks, api, setCurrentDate, weekDate]);
 
   /** // TODO: UI에 보이는 날짜만 tab으로 이동가능하도록
    * 현재 날짜마다 버튼이 들어가서 tag으로 이동이 가능한데 요소가 너무 많음.
