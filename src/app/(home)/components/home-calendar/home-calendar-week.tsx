@@ -1,44 +1,28 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import { formatDateWithDash } from '@/utils/format.util';
 import { getAllMyDailyCalories } from '@/apis/meal.api';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
 import { CALENDAR_STAND_COUNT } from '@/app/(home)/constants/calendar.constant';
-import { getWeekDates } from '@/app/(home)/utils/calendar.util';
+import { getFirstDayInWeek, getPeriodInCarouselWeek, getWeekDates } from '@/app/(home)/utils/calendar.util';
 import DayLabel from './day-label';
 import HomeCalendarWeekItem from './home-calendar-week-item';
-import { Week } from '../../types/calendar.type';
+import { CarouselWeek } from '../../types/calendar.type';
+import { formatDateWithDash } from '@/utils/format.util';
 
-type WeekType = {
-  id: number;
-  dates: Week;
-};
 const HomeCalendarWeek = () => {
   const { selectedDate } = useDashboard();
   const { currentDate, dailyMealCalories, setCurrentDate, setDailyMealCalories } = useCalendar();
 
-  const [weeks, setWeeks] = useState<WeekType[]>(getWeekDates(currentDate));
+  const [weeks, setWeeks] = useState<CarouselWeek[]>(getWeekDates(currentDate));
   const [weekDate, setWeekDate] = useState<Date>(currentDate);
-
-  useEffect(() => {
-    setWeeks(getWeekDates(selectedDate));
-  }, [selectedDate]);
-
-  useEffect(() => {
-    const filteredWeeksWithoutInfo = weeks.filter((week) => {
-      const key = formatDateWithDash(week.dates[0]);
-      return dailyMealCalories[key] === undefined;
-    });
-    const flatDates = filteredWeeksWithoutInfo.flatMap((week) => week.dates);
-    const startDate = flatDates[0];
-    const endDate = flatDates.at(-1);
-    if (!startDate || !endDate) return;
-    getAllMyDailyCalories(startDate, endDate).then(setDailyMealCalories);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [weeks]);
-
   const [api, setApi] = useState<CarouselApi>();
+
+  useEffect(() => {
+    const [startDay, endDay] = getPeriodInCarouselWeek(weeks, dailyMealCalories);
+    if (!startDay || !endDay) return;
+    getAllMyDailyCalories(startDay, endDay).then(setDailyMealCalories);
+  }, [weeks]);
 
   useEffect(() => {
     if (!api) return;
@@ -81,15 +65,18 @@ const HomeCalendarWeek = () => {
       <DayLabel />
       <Carousel setApi={setApi} opts={{ startIndex: CALENDAR_STAND_COUNT }}>
         <CarouselContent>
-          {weeks.map((week) => (
-            <CarouselItem key={week.dates[0].getTime()}>
-              <HomeCalendarWeekItem
-                selectedDate={selectedDate}
-                week={week.dates}
-                dailyMealCalories={dailyMealCalories}
-              />
-            </CarouselItem>
-          ))}
+          {weeks.map((week) => {
+            const firstDay = getFirstDayInWeek(week.dates);
+            return (
+              <CarouselItem key={formatDateWithDash(firstDay)}>
+                <HomeCalendarWeekItem
+                  selectedDate={selectedDate}
+                  week={week.dates}
+                  dailyMealCalories={dailyMealCalories}
+                />
+              </CarouselItem>
+            );
+          })}
         </CarouselContent>
       </Carousel>
     </div>

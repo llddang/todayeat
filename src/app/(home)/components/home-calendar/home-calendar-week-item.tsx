@@ -9,11 +9,11 @@ import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
 import { isSameDate } from '@/app/(home)/utils/calendar.util';
 import { DailyMealCalories } from '@/types/nutrition.type';
-import { Week } from '../../types/calendar.type';
+import { Day } from '../../types/calendar.type';
 
 type HomeCalendarWeekItemProps = {
   selectedDate: Date;
-  week: Week;
+  week: Day[];
   dailyMealCalories: DailyMealCalories;
 };
 const HomeCalendarWeekItem = ({ selectedDate, week, dailyMealCalories }: HomeCalendarWeekItemProps) => {
@@ -35,7 +35,7 @@ const HomeCalendarWeekItem = ({ selectedDate, week, dailyMealCalories }: HomeCal
 
   return (
     <div className="flex w-full justify-between">
-      {week.map((day) => {
+      {week.map(({ day, dayOutside }) => {
         const isSelected = isSameDate(day, selectedDate);
         const { calories, caloriesGoal } = dailyMealCalories[formatDateWithDash(day)] ?? {
           calories: 0,
@@ -47,7 +47,8 @@ const HomeCalendarWeekItem = ({ selectedDate, week, dailyMealCalories }: HomeCal
             key={day.toDateString()}
             className={cn(
               'relative flex h-10 w-10 items-center justify-center',
-              isSelected ? 'text-gray-900' : 'text-gray-600'
+              isSelected ? 'text-gray-900' : 'text-gray-600',
+              dayOutside && 'opacity-40'
             )}
             onClick={() => handleDateClick(day)}
             role="button"

@@ -4,43 +4,26 @@ import { formatDateWithDash } from '@/utils/format.util';
 import { getAllMyDailyCalories } from '@/apis/meal.api';
 import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
-import { getFirstDayInMonth, getMonthDates } from '@/app/(home)/utils/calendar.util';
+import { getFirstDayInMonth, getMonthDates, getPeriodInCarouselMonth } from '@/app/(home)/utils/calendar.util';
 import { CALENDAR_STAND_COUNT } from '@/app/(home)/constants/calendar.constant';
 import DayLabel from './day-label';
 import HomeCalendarMonthItem from './home-calendar-month-item';
-import { Month } from '../../types/calendar.type';
+import { CarouselMonth } from '../../types/calendar.type';
 
-type MonthType = {
-  id: number;
-  dates: Month;
-};
 const HomeCalendarMonth = () => {
   const { selectedDate } = useDashboard();
   const { currentDate, dailyMealCalories, setCurrentDate, setDailyMealCalories } = useCalendar();
 
-  const [months, setMonths] = useState<MonthType[]>(getMonthDates(currentDate));
+  const [months, setMonths] = useState<CarouselMonth[]>(getMonthDates(currentDate));
   const [monthDate, setMonthDate] = useState<Date>(currentDate);
-
-  useEffect(() => {
-    setMonths(getMonthDates(selectedDate));
-  }, [selectedDate]);
-
-  useEffect(() => {
-    const filteredMonthsWithoutInfo = months.filter((month) => {
-      const firstDay = getFirstDayInMonth(month.dates);
-      const key = formatDateWithDash(firstDay);
-      return dailyMealCalories[key] === undefined;
-    });
-    const flatDates = filteredMonthsWithoutInfo.flatMap((month) => month.dates.flatMap((date) => date));
-    const startDate = flatDates[0];
-    const endDate = flatDates.at(-1);
-    if (!startDate || !endDate) return;
-
-    getAllMyDailyCalories(startDate, endDate).then(setDailyMealCalories);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [months]);
-
   const [api, setApi] = useState<CarouselApi>();
+
+  useEffect(() => {
+    const [startDay, endDay] = getPeriodInCarouselMonth(months, dailyMealCalories);
+    if (!startDay || !endDay) return;
+
+    getAllMyDailyCalories(startDay, endDay).then(setDailyMealCalories);
+  }, [months]);
 
   useEffect(() => {
     if (!api) return;
@@ -75,8 +58,9 @@ const HomeCalendarMonth = () => {
   useLayoutEffect(() => {
     if (!api) return;
     api.scrollTo(CALENDAR_STAND_COUNT, true);
-    setCurrentDate(monthDate);
-  }, [months, api, monthDate, setCurrentDate]);
+    if (selectedDate.getMonth() === monthDate.getMonth()) setCurrentDate(selectedDate);
+    else setCurrentDate(monthDate);
+  }, [months, api]);
 
   return (
     <div className="space-y-3">

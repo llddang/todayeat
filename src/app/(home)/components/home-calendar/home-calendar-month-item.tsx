@@ -4,10 +4,10 @@ import { MAX_WEEK } from '@/app/(home)/constants/calendar.constant';
 import { formatDateWithDash } from '@/utils/format.util';
 import HomeCalendarWeekItem from './home-calendar-week-item';
 import { DailyMealCalories } from '@/types/nutrition.type';
-import { Month } from '../../types/calendar.type';
+import { Day } from '../../types/calendar.type';
 
 type HomeCalendarWeekItemProps = {
-  month: Month;
+  month: Day[][];
   selectedDate: Date;
   dailyMealCalories: DailyMealCalories;
 };
@@ -16,7 +16,7 @@ const HomeCalendarMonthItem = ({ selectedDate, month, dailyMealCalories }: HomeC
     <div className="flex w-full flex-col gap-3">
       {month.map((week) => (
         <HomeCalendarWeekItem
-          key={formatDateWithDash(week[0])}
+          key={formatDateWithDash(week[0].day)}
           selectedDate={selectedDate}
           week={week}
           dailyMealCalories={dailyMealCalories}

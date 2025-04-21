@@ -1,2 +1,11 @@
-export type Week = [Date, Date, Date, Date, Date, Date, Date];
-export type Month = [Week, Week, Week, Week, Week, Week];
+export type Day = { day: Date; dayOutside: boolean };
+
+export type CarouselMonth = {
+  id: number;
+  dates: Day[][];
+};
+
+export type CarouselWeek = {
+  id: number;
+  dates: Day[];
+};
