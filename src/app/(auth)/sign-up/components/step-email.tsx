@@ -1,5 +1,5 @@
 import { Typography } from '@/components/ui/typography';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
@@ -8,24 +8,24 @@ import { z } from 'zod';
 import formSchema from '@/app/schemas/form-schema.schema';
 import { useForm } from 'react-hook-form';
 import { checkEmailExists } from '@/apis/auth-server.api';
-import { SignUpStep1Type } from '@/types/sign-up-funnel-type';
+import { StepEmailType } from '@/app/(auth)/sign-up/types/funnel-type';
 
-const signUpEmailSchema = z.object({
+const emailSchema = z.object({
   email: formSchema.EMAIL_SCHEMA
 });
-type SignUpEmailSchemaType = z.infer<typeof signUpEmailSchema>;
-type AuthSignUpStepEmailProps = {
-  data: SignUpStep1Type;
+type EmailSchemaType = z.infer<typeof emailSchema>;
+type StepEmailProps = {
+  data: StepEmailType;
   nextStep: (email: string) => void;
 };
 
-const AuthSignUpStepEmail = ({ data, nextStep }: AuthSignUpStepEmailProps) => {
+const StepEmail = ({ data, nextStep }: StepEmailProps) => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [isCheckingEmail, setIsCheckingEmail] = useState(false);
 
-  const form = useForm<SignUpEmailSchemaType>({
+  const form = useForm<EmailSchemaType>({
     mode: 'onBlur',
-    resolver: zodResolver(signUpEmailSchema),
+    resolver: zodResolver(emailSchema),
     defaultValues: { email: data.email ?? '' }
   });
 
@@ -53,7 +53,7 @@ const AuthSignUpStepEmail = ({ data, nextStep }: AuthSignUpStepEmailProps) => {
     setEmailVerified(true);
   };
 
-  const onSubmit = async ({ email }: SignUpEmailSchemaType) => {
+  const onSubmit = async ({ email }: EmailSchemaType) => {
     nextStep(email);
   };
 
@@ -91,6 +91,8 @@ const AuthSignUpStepEmail = ({ data, nextStep }: AuthSignUpStepEmailProps) => {
                     disabled={isCheckingEmail}
                   />
                 </FormControl>
+                {/* TODO: 디자이너님께 검수받기. */}
+                {isCheckingEmail && <FormDescription>이메일 중복 검사하고 있어요</FormDescription>}
                 <FormMessage />
               </FormItem>
             )}
@@ -104,4 +106,4 @@ const AuthSignUpStepEmail = ({ data, nextStep }: AuthSignUpStepEmailProps) => {
   );
 };
 
-export default AuthSignUpStepEmail;
+export default StepEmail;
