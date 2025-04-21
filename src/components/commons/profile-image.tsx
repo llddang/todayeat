@@ -5,9 +5,9 @@ import Image from 'next/image';
 const profileImageVariants = cva('relative overflow-hidden rounded-full', {
   variants: {
     size: {
-      sm: 'w-9 h-9',
-      md: 'w-16 h-16',
-      lg: 'w-[5.625rem] h-[5.625rem]'
+      sm: 'w-10 h-10 p-4',
+      md: 'w-[4.5rem] h-[4.5rem] p-[0.225rem]',
+      lg: 'w-[6.25rem] h-[6.25rem] p-[0.3125rem]'
     }
   },
   defaultVariants: {
