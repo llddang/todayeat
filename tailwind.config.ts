@@ -215,7 +215,7 @@ const config: Config = {
     plugin(({ addUtilities }) => {
       addUtilities({
         '.layout-container': {
-          maxWidth: '480px',
+          maxWidth: '440px',
           '@screen xl': {
             maxWidth: '1280px'
           },
