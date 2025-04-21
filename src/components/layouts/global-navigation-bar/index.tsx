@@ -3,7 +3,6 @@
 import { usePathname } from 'next/navigation';
 import GlobalNavigationBarItem from './item';
 import SITE_MAP from '@/constants/site-map.constant';
-import { cn } from '@/lib/shadcn';
 
 const HOME = 'home';
 const REPORT = 'report';
@@ -19,12 +18,7 @@ const GlobalNavigationBar = () => {
       : HOME;
 
   return (
-    <nav
-      className={cn(
-        'fixed bottom-4 left-4 right-4 rounded-[6.25rem] bg-gray-200/[0.64] p-2 backdrop-blur-[30px]',
-        'layout-container left-1/2 right-0 !m-0 w-full -translate-x-1/2'
-      )}
-    >
+    <nav className="layout-container fixed bottom-4 left-4 right-4 rounded-[6.25rem] bg-gray-200/[0.64] p-2 backdrop-blur-[30px]">
       <ul className="flex gap-2">
         <li className="flex-1">
           <GlobalNavigationBarItem
