@@ -42,33 +42,38 @@ export const formatDateWithDash = (date: Date): string => {
 /**
  * 날짜와 시간 정보를 타임스탬프 문자열로 변환하는 함수입니다.
  *
- * @function formatTimestamp
- * @param {Date} baseDate - 기준 날짜 객체
- * @param {Object} time - 시간 정보 객체
- * @param {('오전'|'오후')} time.meridiem - 오전/오후 구분
- * @param {string} time.hours - 시간
- * @param {string} time.minutes - 분
- * @returns {string} 'YYYY-MM-DD HH:MM:00' 형식의 타임스탬프 문자열
- */
-export const formatTimestamp = (
-  baseDate: Date,
-  time: { meridiem: '오전' | '오후'; hours: string; minutes: string }
-): string => {
-  let hour = parseInt(time.hours, 10);
-  const minutes = time.minutes.padStart(2, '0');
+ * @param datetime - 날짜 및 시간 정보를 포함한 객체
+ * @param datetime.day - 기준 날짜 (Date 객체)
+ * @param datetime.meridiem - '오전' 또는 '오후'
+ * @param datetime.hours - 시(hour), 문자열 형태 ('01' ~ '12')
+ * @param datetime.minutes - 분(minute), 문자열 형태 ('00' ~ '59')
+ * @returns 포맷된 timestamp 문자열 ('YYYY-MM-DD HH:mm:ss')
+ *
 
-  if (time.meridiem === '오전' && hour === 12) {
+ */
+export const formatTimestamp = (datetime: {
+  day: Date;
+  meridiem: '오전' | '오후';
+  hours: string;
+  minutes: string;
+}): string => {
+  const { day, meridiem, hours, minutes } = datetime;
+
+  let hour = parseInt(hours, 10);
+  const paddedMinutes = minutes.padStart(2, '0');
+
+  if (meridiem === '오전' && hour === 12) {
     hour = 0;
-  } else if (time.meridiem === '오후' && hour !== 12) {
+  } else if (meridiem === '오후' && hour !== 12) {
     hour += 12;
   }
 
-  const yyyy = baseDate.getFullYear();
-  const mm = String(baseDate.getMonth() + 1).padStart(2, '0');
-  const dd = String(baseDate.getDate()).padStart(2, '0');
+  const yyyy = day.getFullYear();
+  const mm = String(day.getMonth() + 1).padStart(2, '0');
+  const dd = String(day.getDate()).padStart(2, '0');
   const hh = String(hour).padStart(2, '0');
 
-  return `${yyyy}-${mm}-${dd} ${hh}:${minutes}:00`;
+  return `${yyyy}-${mm}-${dd} ${hh}:${paddedMinutes}:00`;
 };
 
 /**
