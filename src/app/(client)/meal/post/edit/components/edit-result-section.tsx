@@ -66,7 +66,6 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
 
   const onSubmit = async (form: MealEditFormData) => {
     const files = await Promise.all(form.mealImages.map((url, idx) => urlToFile(url, idx)));
-    const imagesFormData = new FormData();
     setIsLoading(true);
     try {
       if (!form) {
@@ -77,8 +76,9 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
       const ateAt = formatTimestamp(date);
 
       for (const file of files) {
-        imagesFormData.append('file', file);
-        await uploadImage('meal', imagesFormData);
+        const formData = new FormData();
+        formData.append('file', file);
+        await uploadImage('meal', formData);
       }
 
       const newMeals = {
