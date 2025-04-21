@@ -2,13 +2,13 @@ import { MACRONUTRIENT_OPTIONS } from '@/constants/nutrition.constant';
 import { getPercentage } from '@/utils/nutrition-calculator.util';
 import { MacronutrientEnumType } from '@/types/nutrition.type';
 
-type HomeMacronutrientBoxProps = {
+type MacronutrientBoxProps = {
   variety: MacronutrientEnumType;
   value: number;
   goal: number;
 };
 
-const HomeMacronutrientBox = ({ variety, value, goal }: HomeMacronutrientBoxProps) => {
+const MacronutrientBox = ({ variety, value, goal }: MacronutrientBoxProps) => {
   const percent = Math.min(getPercentage(value, goal), 100);
   const barColor = MACRONUTRIENT_OPTIONS[variety].color || 'bg-gray-300';
   const label = MACRONUTRIENT_OPTIONS[variety].label;
@@ -31,4 +31,4 @@ const HomeMacronutrientBox = ({ variety, value, goal }: HomeMacronutrientBoxProp
   );
 };
 
-export default HomeMacronutrientBox;
+export default MacronutrientBox;

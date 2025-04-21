@@ -29,10 +29,9 @@ const Calendar = ({ className, classNames, showOutsideDays = true, ...props }: C
         head_cell: 'rounded-md w-9 text-center typography-body4 text-gray-550',
         row: 'flex w-full mt-3 justify-between',
         cell: cn(
-          'relative p-0 typography-body3 focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-gray-600/40 [&:has([aria-selected].day-outside)]:bg-gray-600/40 [&:has([aria-selected].day-range-end)]:rounded-full',
-          props.mode === 'range'
-            ? '[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md'
-            : '[&:has([aria-selected])]:rounded-full'
+          'relative p-0 typography-body3 focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-gray-900 [&:has([aria-selected])]:text-gray-50 hover:bg-gray-200 [&:has([aria-selected].day-outside)]:bg-gray-600/40 rounded-full',
+          props.mode === 'range' &&
+            '[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md'
         ),
         day: 'h-9 w-9 flex items-center justify-center typography-body3',
         day_range_start: 'day-range-start',

@@ -1,5 +1,5 @@
-import Header from '@/components/layouts/header/variants/header-default';
 import { Suspense } from 'react';
+import Header from '@/components/layouts/header';
 
 const Layout = ({
   children
@@ -7,9 +7,9 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="temp-layout">
+    <div className="layout-container">
       <Header />
-      <main className="py-layout">
+      <main className="pt-layout">
         <Suspense>{children}</Suspense>
       </main>
     </div>

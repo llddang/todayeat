@@ -1,6 +1,6 @@
+import Header from '@/components/layouts/header';
 import Footer from '@/components/commons/footer';
 import GlobalNavigationBar from '@/components/layouts/global-navigation-bar';
-import HeaderWithProfile from '@/components/layouts/header/variants/header-with-profile';
 
 const Layout = ({
   children
@@ -9,7 +9,7 @@ const Layout = ({
 }>) => {
   return (
     <div className="layout-container">
-      <HeaderWithProfile />
+      <Header variant="withProfile" />
       <div className="py-layout">
         <main>{children}</main>
         <Footer />
