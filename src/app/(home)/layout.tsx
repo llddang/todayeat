@@ -8,7 +8,7 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="temp-layout">
+    <div className="layout-container">
       <HeaderWithProfile />
       <div className="py-layout">
         <main>{children}</main>

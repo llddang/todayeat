@@ -3,7 +3,7 @@ import SITE_MAP from '@/constants/site-map.constant';
 import { cn } from '@/lib/shadcn';
 import Link from 'next/link';
 
-const HomeMealEmptyCard = () => {
+const MealEmptyCard = () => {
   return (
     <Link
       href={SITE_MAP.MEAL_POST}
@@ -25,4 +25,4 @@ const HomeMealEmptyCard = () => {
     </Link>
   );
 };
-export default HomeMealEmptyCard;
+export default MealEmptyCard;
