@@ -1,6 +1,6 @@
-import AuthSignInForm from '@/app/(auth)/sign-in/components/auth-sign-in-form';
-import AuthSignInWithGoogleButton from '@/app/(auth)/sign-in/components/auth-sign-in-with-google-button';
-import AuthSignInWithKakaoButton from '@/app/(auth)/sign-in/components/auth-sign-in-with-kakao-button';
+import SignInForm from '@/app/(auth)/sign-in/components/sign-in-form';
+import GoogleSignInButton from '@/app/(auth)/sign-in/components/google-sign-in-button';
+import KakaoSignInButton from '@/app/(auth)/sign-in/components/kakao-sign-in-button';
 import { Typography } from '@/components/ui/typography';
 import Image from 'next/image';
 import LOGO from '@/../public/logo.svg';
@@ -22,10 +22,10 @@ const SignInPage = () => {
         </Typography>
       </div>
       <GlassBackground className="min-h-0 space-y-6 rounded-[2rem] px-5 pb-8 pt-7">
-        <AuthSignInForm />
+        <SignInForm />
         <div className="flex flex-col gap-2">
-          <AuthSignInWithKakaoButton />
-          <AuthSignInWithGoogleButton />
+          <KakaoSignInButton />
+          <GoogleSignInButton />
         </div>
       </GlassBackground>
     </section>

@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { signInWithKakao } from '@/apis/auth-browser.api';
 
-const AuthSignInWithKakaoButton = () => {
+const KakaoSignInButton = () => {
   return (
     <Button
       onClick={signInWithKakao}
@@ -13,4 +13,4 @@ const AuthSignInWithKakaoButton = () => {
     </Button>
   );
 };
-export default AuthSignInWithKakaoButton;
+export default KakaoSignInButton;
