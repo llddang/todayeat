@@ -211,8 +211,11 @@ const config: Config = {
     animate,
     plugin(({ addUtilities }) => {
       addUtilities({
-        '.temp-layout': {
+        '.layout-container': {
           maxWidth: '480px',
+          '@screen xl': {
+            maxWidth: '1280px'
+          },
           margin: 'auto'
         },
         '.bg-gradient-main': {
