@@ -104,8 +104,8 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
         router.push(SITE_MAP.HOME);
       }
     } catch (err) {
-      alert('식사 정보 등록에 실패하였습니다. 잠시후 다시 시도해주세요');
-      console.error('등록에 실패 했습니다. ', err);
+      alert('식사 정보 등록에 실패했습니다. 잠시후 다시 시도해주세요');
+      console.error('식사 정보 등록에 실패했습니다.', err);
       router.refresh();
     } finally {
       setIsLoading(false);
