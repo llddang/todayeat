@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { getAllMyDailyCalories } from '@/apis/meal.api';
@@ -21,7 +22,7 @@ const HomeCalendarWeek = () => {
   useEffect(() => {
     const [startDay, endDay] = getPeriodInCarouselWeek(weeks, dailyMealCalories);
     if (!startDay || !endDay) return;
-    getAllMyDailyCalories(startDay, endDay).then(setDailyMealCalories);
+    getAllMyDailyCalories(startDay, endDay).then(setDailyMealCalories).catch();
   }, [weeks]);
 
   useEffect(() => {
@@ -29,7 +30,6 @@ const HomeCalendarWeek = () => {
 
     const onSettle = (): void => {
       const newDate = new Date(currentDate);
-      newDate.setDate(currentDate.getDate());
       setWeeks(getWeekDates(newDate));
       setWeekDate(newDate);
     };

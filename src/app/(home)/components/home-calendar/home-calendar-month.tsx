@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { formatDateWithDash } from '@/utils/format.util';
@@ -22,7 +23,7 @@ const HomeCalendarMonth = () => {
     const [startDay, endDay] = getPeriodInCarouselMonth(months, dailyMealCalories);
     if (!startDay || !endDay) return;
 
-    getAllMyDailyCalories(startDay, endDay).then(setDailyMealCalories);
+    getAllMyDailyCalories(startDay, endDay).then(setDailyMealCalories).catch();
   }, [months]);
 
   useEffect(() => {

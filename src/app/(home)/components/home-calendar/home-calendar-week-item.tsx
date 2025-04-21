@@ -44,7 +44,7 @@ const HomeCalendarWeekItem = ({ selectedDate, week, dailyMealCalories }: HomeCal
         const progress = getPercentage(calories, caloriesGoal);
         return (
           <button
-            key={day.toDateString()}
+            key={formatDateWithDash(day)}
             className={cn(
               'relative flex h-10 w-10 items-center justify-center',
               isSelected ? 'text-gray-900' : 'text-gray-600',
