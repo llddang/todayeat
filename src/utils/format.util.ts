@@ -60,20 +60,16 @@ export const formatTimestamp = (datetime: {
   const { day, meridiem, hours, minutes } = datetime;
 
   let hour = parseInt(hours, 10);
-  const paddedMinutes = minutes.padStart(2, '0');
+  if (meridiem === '오전' && hour === 12) hour = 0;
+  if (meridiem === '오후' && hour !== 12) hour += 12;
 
-  if (meridiem === '오전' && hour === 12) {
-    hour = 0;
-  } else if (meridiem === '오후' && hour !== 12) {
-    hour += 12;
-  }
+  const timestamp = new Date(day);
+  timestamp.setHours(hour);
+  timestamp.setMinutes(parseInt(minutes, 10));
+  timestamp.setSeconds(0);
+  timestamp.setMilliseconds(0);
 
-  const yyyy = day.getFullYear();
-  const mm = String(day.getMonth() + 1).padStart(2, '0');
-  const dd = String(day.getDate()).padStart(2, '0');
-  const hh = String(hour).padStart(2, '0');
-
-  return `${yyyy}-${mm}-${dd} ${hh}:${paddedMinutes}:00`;
+  return timestamp.toISOString(); // '2025-04-21T08:53:56.103Z'
 };
 
 /**
