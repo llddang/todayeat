@@ -33,7 +33,7 @@ const StepPurpose = ({ userName, nextStep }: StepPurposeProps) => {
             목표에 따라 칼로리와 영양소 비율이 달라져요
           </Typography>
         </legend>
-        <div className="space-y-2 pt-2">
+        <div className="mt-8 space-y-2 pt-2">
           {GOAL_OPTIONS.PURPOSE.map((option) => (
             <OptionSelectCard
               key={option.value}
@@ -44,7 +44,10 @@ const StepPurpose = ({ userName, nextStep }: StepPurposeProps) => {
             />
           ))}
         </div>
-        <Button disabled={!selectedOption} className="fixed bottom-6 left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2">
+        <Button
+          disabled={!selectedOption}
+          className="fixed bottom-[calc(env(safe-area-inset-bottom,1.5rem)+1.5rem)] left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2"
+        >
           다음
         </Button>
       </fieldset>

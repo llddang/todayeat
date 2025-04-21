@@ -1,4 +1,6 @@
-import { Suspense } from 'react';
+'use client';
+
+import { Suspense, useEffect } from 'react';
 import { z } from 'zod';
 import useFunnel from '@/hooks/use-funnel';
 import { ActivityLevelType, GenderType, PurposeType } from '@/types/user-personal-info.type';
@@ -40,7 +42,7 @@ const validateStep = {
 };
 
 const SetGoalFunnel = ({ userName }: SetGoalFunnelProps) => {
-  const Funnel = useFunnel<
+  const { Funnel, currentStep } = useFunnel<
     {
       step1: StepPurposeType;
       step2: StepGenderType;
@@ -68,6 +70,10 @@ const SetGoalFunnel = ({ userName }: SetGoalFunnelProps) => {
     },
     'session-key'
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentStep]);
 
   return (
     <Suspense>
