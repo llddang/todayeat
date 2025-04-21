@@ -8,25 +8,25 @@ import formSchema from '@/app/schemas/form-schema.schema';
 import { useForm } from 'react-hook-form';
 import { useEffect, useRef } from 'react';
 
-const signUpPasswordSchema = z.object({
+const passwordSchema = z.object({
   password: formSchema.PASSWORD_SCHEMA
 });
-type SignUpPasswordSchemaType = z.infer<typeof signUpPasswordSchema>;
-const signUpPasswordDefault: SignUpPasswordSchemaType = {
+type PasswordSchemaType = z.infer<typeof passwordSchema>;
+const passwordDefault: PasswordSchemaType = {
   password: ''
 };
 
-type AuthSignUpStepPasswordProps = {
+type StepPasswordProps = {
   nextStep: (password: string) => void;
 };
 
-const AuthSignUpStepPassword = ({ nextStep }: AuthSignUpStepPasswordProps) => {
+const StepPassword = ({ nextStep }: StepPasswordProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const form = useForm<SignUpPasswordSchemaType>({
+  const form = useForm<PasswordSchemaType>({
     mode: 'onBlur',
-    resolver: zodResolver(signUpPasswordSchema),
-    defaultValues: signUpPasswordDefault
+    resolver: zodResolver(passwordSchema),
+    defaultValues: passwordDefault
   });
 
   const password = form.watch('password');
@@ -38,7 +38,7 @@ const AuthSignUpStepPassword = ({ nextStep }: AuthSignUpStepPasswordProps) => {
     }
   }, []);
 
-  const onSubmit = async ({ password }: SignUpPasswordSchemaType) => {
+  const onSubmit = async ({ password }: PasswordSchemaType) => {
     nextStep(password);
   };
 
@@ -76,4 +76,4 @@ const AuthSignUpStepPassword = ({ nextStep }: AuthSignUpStepPasswordProps) => {
   );
 };
 
-export default AuthSignUpStepPassword;
+export default StepPassword;

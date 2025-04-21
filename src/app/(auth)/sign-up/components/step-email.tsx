@@ -10,22 +10,22 @@ import { useForm } from 'react-hook-form';
 import { checkEmailExists } from '@/apis/auth-server.api';
 import { SignUpStep1Type } from '@/types/sign-up-funnel-type';
 
-const signUpEmailSchema = z.object({
+const emailSchema = z.object({
   email: formSchema.EMAIL_SCHEMA
 });
-type SignUpEmailSchemaType = z.infer<typeof signUpEmailSchema>;
-type AuthSignUpStepEmailProps = {
+type EmailSchemaType = z.infer<typeof emailSchema>;
+type StepEmailProps = {
   data: SignUpStep1Type;
   nextStep: (email: string) => void;
 };
 
-const AuthSignUpStepEmail = ({ data, nextStep }: AuthSignUpStepEmailProps) => {
+const StepEmail = ({ data, nextStep }: StepEmailProps) => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [isCheckingEmail, setIsCheckingEmail] = useState(false);
 
-  const form = useForm<SignUpEmailSchemaType>({
+  const form = useForm<EmailSchemaType>({
     mode: 'onBlur',
-    resolver: zodResolver(signUpEmailSchema),
+    resolver: zodResolver(emailSchema),
     defaultValues: { email: data.email ?? '' }
   });
 
@@ -53,7 +53,7 @@ const AuthSignUpStepEmail = ({ data, nextStep }: AuthSignUpStepEmailProps) => {
     setEmailVerified(true);
   };
 
-  const onSubmit = async ({ email }: SignUpEmailSchemaType) => {
+  const onSubmit = async ({ email }: EmailSchemaType) => {
     nextStep(email);
   };
 
@@ -104,4 +104,4 @@ const AuthSignUpStepEmail = ({ data, nextStep }: AuthSignUpStepEmailProps) => {
   );
 };
 
-export default AuthSignUpStepEmail;
+export default StepEmail;

@@ -1,9 +1,9 @@
 'use client';
 
-import AuthSignUpStepComplete from '@/app/(auth)/sign-up/components/auth-sign-up-step-complete';
-import AuthSignUpStepEmail from '@/app/(auth)/sign-up/components/auth-sign-up-step-email';
-import AuthSignUpStepNickname from '@/app/(auth)/sign-up/components/auth-sign-up-step-nickname';
-import AuthSignUpStepPassword from '@/app/(auth)/sign-up/components/auth-sign-up-step-password';
+import StepComplete from '@/app/(auth)/sign-up/components/step-complete';
+import StepEmail from '@/app/(auth)/sign-up/components/step-email';
+import StepNickname from '@/app/(auth)/sign-up/components/step-nickname';
+import StepPassword from '@/app/(auth)/sign-up/components/step-password';
 import formSchema from '@/app/schemas/form-schema.schema';
 import useFunnel from '@/hooks/use-funnel';
 import {
@@ -16,25 +16,21 @@ import {
 } from '@/types/sign-up-funnel-type';
 import { z } from 'zod';
 
-const AuthSignUpFunnel = () => {
+const SignUpFunnel = () => {
   const Funnel = useFunnel<SignUpFunnelType, SignUpFunnelStep>('step1', signUpValidateFn, 'sign-up-funnel-data');
 
   return (
     <Funnel
-      step1={({ data, setStep }) => (
-        <AuthSignUpStepEmail data={data} nextStep={(email: string) => setStep('step2', { email })} />
-      )}
-      step2={({ setStep }) => (
-        <AuthSignUpStepPassword nextStep={(password: string) => setStep('step3', { password })} />
-      )}
+      step1={({ data, setStep }) => <StepEmail data={data} nextStep={(email: string) => setStep('step2', { email })} />}
+      step2={({ setStep }) => <StepPassword nextStep={(password: string) => setStep('step3', { password })} />}
       step3={({ data, setStep, clearFunnelData }) => (
-        <AuthSignUpStepNickname data={data} nextStep={() => setStep('complete')} clear={clearFunnelData} />
+        <StepNickname data={data} nextStep={() => setStep('complete')} clear={clearFunnelData} />
       )}
-      complete={() => <AuthSignUpStepComplete />}
+      complete={() => <StepComplete />}
     />
   );
 };
-export default AuthSignUpFunnel;
+export default SignUpFunnel;
 
 const signUpFunnelSchema = z.object({
   email: formSchema.EMAIL_SCHEMA,

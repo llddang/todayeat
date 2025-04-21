@@ -1,12 +1,12 @@
 'use client';
 
-import AuthSignUpFunnel from '@/app/(auth)/sign-up/components/auth-sign-up-funnel';
-import AuthSignUpProgressBar from '@/app/(auth)/sign-up/components/auth-sign-up-progress-bar';
+import SignUpFunnel from '@/app/(auth)/sign-up/components/sign-up-funnel';
 import GlassBackground from '@/components/commons/glass-background';
 import { STEP_UI_CONFIG } from '@/app/(auth)/sign-up/constants/set-goal.constant';
 import { getPercentage } from '@/utils/nutrition-calculator.util';
 import { SignUpFunnelStep } from '@/types/sign-up-funnel-type';
 import { useSearchParams } from 'next/navigation';
+import FunnelProgressSection from '@/components/commons/funnel-progress-section';
 
 const SIGN_UP_LAST_STEP = 3;
 
@@ -21,8 +21,8 @@ const SignUpPage = () => {
 
   const content = (
     <>
-      {hasProgressBar && <AuthSignUpProgressBar percent={progressPercent} />}
-      <AuthSignUpFunnel />
+      {hasProgressBar && <FunnelProgressSection percent={progressPercent} />}
+      <SignUpFunnel />
     </>
   );
 
