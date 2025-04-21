@@ -21,7 +21,7 @@ const GlobalNavigationBar = () => {
   return (
     <nav
       className={cn(
-        'fixed bottom-4 left-4 right-4 rounded-[6.25rem] bg-gray-200/[0.64] p-2',
+        'fixed bottom-4 left-4 right-4 rounded-[6.25rem] bg-gray-200/[0.64] p-2 backdrop-blur-[30px]',
         'left-1/2 right-0 !m-0 w-full -translate-x-1/2 temp-layout'
       )}
     >
