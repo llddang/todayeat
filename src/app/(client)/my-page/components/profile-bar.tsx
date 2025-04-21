@@ -1,7 +1,5 @@
 'use client';
 
-import Image from 'next/image';
-import DefaultProfile from '@/../public/illustrations/default-profile.svg';
 import { Typography } from '@/components/ui/typography';
 import {
   Drawer,
