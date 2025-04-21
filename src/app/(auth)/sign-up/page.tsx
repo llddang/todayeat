@@ -2,9 +2,8 @@
 
 import SignUpFunnel from '@/app/(auth)/sign-up/components/sign-up-funnel';
 import GlassBackground from '@/components/commons/glass-background';
-import { STEP_UI_CONFIG } from '@/app/(auth)/sign-up/constants/set-goal.constant';
 import { getPercentage } from '@/utils/nutrition-calculator.util';
-import { SignUpFunnelStep } from '@/types/sign-up-funnel-type';
+import { SignUpFunnelStep } from '@/app/(auth)/sign-up/types/funnel-type';
 import { useSearchParams } from 'next/navigation';
 import FunnelProgressSection from '@/components/commons/funnel-progress-section';
 
@@ -14,19 +13,19 @@ const SignUpPage = () => {
   const params = useSearchParams();
   const currentStep = (params.get('step') || 'step1') as SignUpFunnelStep;
 
-  const currentOrder = STEP_UI_CONFIG[currentStep].stepOrder;
-  const progressPercent = Math.min(getPercentage(currentOrder, SIGN_UP_LAST_STEP), 100);
+  const isInStep = currentStep !== 'complete';
 
-  const { hasGlassBackground, hasProgressBar } = STEP_UI_CONFIG[currentStep];
+  const currentOrder = Number(currentStep.replace(/step/, ''));
+  const progressPercent = Math.min(getPercentage(currentOrder, SIGN_UP_LAST_STEP), 100);
 
   const content = (
     <>
-      {hasProgressBar && <FunnelProgressSection percent={progressPercent} />}
+      {isInStep && <FunnelProgressSection percent={progressPercent} />}
       <SignUpFunnel />
     </>
   );
 
-  if (hasGlassBackground) {
+  if (isInStep) {
     return <GlassBackground className="flex flex-col gap-6 px-5 pb-6 pt-7">{content}</GlassBackground>;
   }
 

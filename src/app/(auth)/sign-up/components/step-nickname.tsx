@@ -7,7 +7,7 @@ import { z } from 'zod';
 import formSchema from '@/app/schemas/form-schema.schema';
 import { useForm } from 'react-hook-form';
 import { useEffect, useRef, useState } from 'react';
-import { SignUpStep3Type } from '@/types/sign-up-funnel-type';
+import { StepNicknameType } from '@/app/(auth)/sign-up/types/funnel-type';
 import { signUp } from '@/apis/auth-server.api';
 
 const nicknameSchema = z.object({
@@ -16,7 +16,7 @@ const nicknameSchema = z.object({
 type NicknameSchemaType = z.infer<typeof nicknameSchema>;
 
 type StepNicknameProps = {
-  data: SignUpStep3Type;
+  data: StepNicknameType;
   nextStep: () => void;
   clear: () => void;
 };

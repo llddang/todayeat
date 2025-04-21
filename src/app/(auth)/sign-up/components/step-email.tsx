@@ -8,14 +8,14 @@ import { z } from 'zod';
 import formSchema from '@/app/schemas/form-schema.schema';
 import { useForm } from 'react-hook-form';
 import { checkEmailExists } from '@/apis/auth-server.api';
-import { SignUpStep1Type } from '@/types/sign-up-funnel-type';
+import { StepEmailType } from '@/app/(auth)/sign-up/types/funnel-type';
 
 const emailSchema = z.object({
   email: formSchema.EMAIL_SCHEMA
 });
 type EmailSchemaType = z.infer<typeof emailSchema>;
 type StepEmailProps = {
-  data: SignUpStep1Type;
+  data: StepEmailType;
   nextStep: (email: string) => void;
 };
 

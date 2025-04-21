@@ -7,13 +7,13 @@ import StepPassword from '@/app/(auth)/sign-up/components/step-password';
 import formSchema from '@/app/schemas/form-schema.schema';
 import useFunnel from '@/hooks/use-funnel';
 import {
-  SignUpCompleteType,
+  StepCompleteType,
   SignUpFunnelStep,
   SignUpFunnelType,
-  SignUpStep1Type,
-  SignUpStep2Type,
-  SignUpStep3Type
-} from '@/types/sign-up-funnel-type';
+  StepEmailType,
+  StepPasswordType,
+  StepNicknameType
+} from '@/app/(auth)/sign-up/types/funnel-type';
 import { z } from 'zod';
 
 const SignUpFunnel = () => {
@@ -46,8 +46,8 @@ const signUpValidateStep = {
 };
 
 const signUpValidateFn = {
-  step1: (data: SignUpStep1Type) => signUpValidateStep.step1.safeParse(data).success,
-  step2: (data: SignUpStep2Type) => signUpValidateStep.step2.safeParse(data).success,
-  step3: (data: SignUpStep3Type) => signUpValidateStep.step3.safeParse(data).success,
-  complete: (data: SignUpCompleteType) => signUpValidateStep.complete.safeParse(data).success
+  step1: (data: StepEmailType) => signUpValidateStep.step1.safeParse(data).success,
+  step2: (data: StepPasswordType) => signUpValidateStep.step2.safeParse(data).success,
+  step3: (data: StepNicknameType) => signUpValidateStep.step3.safeParse(data).success,
+  complete: (data: StepCompleteType) => signUpValidateStep.complete.safeParse(data).success
 };
