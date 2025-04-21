@@ -10,6 +10,7 @@ import DayLabel from './day-label';
 import HomeCalendarWeekItem from './home-calendar-week-item';
 import { CarouselWeek } from '../../types/calendar.type';
 import { formatDateWithDash } from '@/utils/format.util';
+import { addWeeks } from 'date-fns';
 
 const HomeCalendarWeek = () => {
   const { selectedDate } = useDashboard();
@@ -37,8 +38,7 @@ const HomeCalendarWeek = () => {
       const currentIndex = api.selectedScrollSnap();
       const diff = currentIndex - CALENDAR_STAND_COUNT;
 
-      const newDate = new Date(weekDate);
-      newDate.setDate(weekDate.getDate() + diff * 7);
+      const newDate = addWeeks(weekDate, diff);
       setCurrentDate(newDate);
     };
 
