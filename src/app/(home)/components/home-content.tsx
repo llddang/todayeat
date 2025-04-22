@@ -28,26 +28,28 @@ const HomeContent = () => {
   }, [selectedDate]);
 
   return (
-    <GlassBackground className="min-h-0 space-y-4 rounded-[2rem] pb-8 pt-6">
-      <AiFeedbackText nutritionData={nutrient} nutritionGoal={user.personalInfo} />
-      {!user.personalInfo && (
-        <CtaExampleFeedbackBanner
-          title="현재는 예시 피드백이에요"
-          description={
-            <>
-              지금 바로 1일 목표 칼로리를 설정하고,
-              <br />
-              나에게 딱 맞는 식단 피드백을 받아보세요!
-            </>
-          }
-        />
-      )}
-      <div className="space-y-3">
-        <CaloriesSummaryCard total={nutrient.calories} goal={user.personalInfo?.dailyCaloriesGoal || 0} />
-        <MacroNutrientGroup total={nutrient} goal={user.personalInfo} />
+    <GlassBackground className="flex min-h-0 flex-1 flex-col gap-7 rounded-[2rem] pb-8 pt-6 xl:flex-row xl:gap-10 xl:p-6">
+      <div className="space-y-4 overflow-y-scroll xl:flex-1">
+        <AiFeedbackText nutritionData={nutrient} nutritionGoal={user.personalInfo} />
+        {!user.personalInfo && (
+          <CtaExampleFeedbackBanner
+            title="현재는 예시 피드백이에요"
+            description={
+              <>
+                지금 바로 1일 목표 칼로리를 설정하고,
+                <br />
+                나에게 딱 맞는 식단 피드백을 받아보세요!
+              </>
+            }
+          />
+        )}
+        <div className="space-y-3">
+          <CaloriesSummaryCard total={nutrient.calories} goal={user.personalInfo?.dailyCaloriesGoal || 0} />
+          <MacroNutrientGroup total={nutrient} goal={user.personalInfo} />
+        </div>
       </div>
-      <section>
-        <Typography as="h3" variant="subTitle2" className="mb-4 pt-3 text-gray-900">
+      <section className="overflow-y-scroll xl:flex-1">
+        <Typography as="h3" variant="subTitle2" className="mb-4 text-gray-900">
           식단 기록
         </Typography>
         {meals.length === 0 ? (

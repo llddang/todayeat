@@ -30,7 +30,7 @@ const AppUseSummary = () => {
   return (
     <GlassBackground
       className={cn(
-        'min-h-0 space-y-4 overflow-hidden rounded-[2rem] p-6 xl:block',
+        'hidden min-h-0 space-y-4 overflow-hidden rounded-[2rem] p-6 xl:block',
         "before:absolute before:-bottom-0.5 before:right-2.5 before:aspect-square before:w-[4.375rem] before:content-['']",
         'before:bg-career-illustration before:bg-contain before:bg-center before:bg-no-repeat'
       )}

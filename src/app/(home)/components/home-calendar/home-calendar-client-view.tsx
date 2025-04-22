@@ -24,7 +24,7 @@ const HomeCalendarClientView = ({ dailyMealCalories }: HomeCalendarClientViewPro
 
   return (
     <>
-      <Tabs defaultValue="week" className="space-y-5 px-4 py-7 pt-2">
+      <Tabs defaultValue="week" className="space-y-5 px-4 py-7 pt-2 xl:max-w-[23.75rem]">
         <div className="flex w-full justify-between">
           <Button
             variant="icon"
