@@ -60,7 +60,7 @@ const MealPostAddMealDrawer = () => {
         body: JSON.stringify({
           id: requestDetail.id,
           userId: user.id,
-          menuName: requestDetail.menu_name,
+          menuName: requestDetail.menuName,
           weight: requestDetail.weight
         })
       });
