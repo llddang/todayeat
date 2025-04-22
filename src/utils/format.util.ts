@@ -69,7 +69,7 @@ export const formatTimestamp = (datetime: {
   timestamp.setSeconds(0);
   timestamp.setMilliseconds(0);
 
-  return timestamp.toISOString(); // '2025-04-21T08:53:56.103Z'
+  return timestamp.toISOString();
 };
 
 /**
