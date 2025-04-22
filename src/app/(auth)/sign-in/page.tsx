@@ -10,7 +10,7 @@ import GlassBackground from '@/components/commons/glass-background';
 
 const SignInPage = () => {
   return (
-    <section className="">
+    <section>
       <div className="gap flex flex-col items-center gap-2 px-4 pb-7 pt-2 xl:pt-0">
         <h2>
           <Link href={SITE_MAP.HOME}>
