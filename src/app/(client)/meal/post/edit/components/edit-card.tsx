@@ -9,10 +9,11 @@ import {} from '@/types/DTO/meal.dto';
 import { AiResponseDTO } from '@/types/DTO/ai_analysis.dto';
 import dynamic from 'next/dynamic';
 import { Input } from '@/components/ui/input';
-import { formatNumberWithComma } from '@/utils/format.util';
 import { parseGeminiResponse } from '@/lib/gemini';
 import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
 import { Typography } from '@/components/ui/typography';
+import { formatNumberWithComma } from '@/utils/format.util';
+import { parseNumber } from '../utils/meal-edit.util';
 
 const AiLoaderWithoutBg = dynamic(() => import('./ai-loader-without-bg'), {
   ssr: false
@@ -139,9 +140,9 @@ const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
 
 export default EditCard;
 
-const MAX_NUMERIC_LENGTH = 4;
-const MAX_MENU_NAME_LENGTH = 16;
-const MEASUREMENT_UNIT: Record<MeasurementUnitType, MeasurementUnitValues> = {
+export const MAX_NUMERIC_LENGTH = 4;
+export const MAX_MENU_NAME_LENGTH = 16;
+export const MEASUREMENT_UNIT: Record<MeasurementUnitType, MeasurementUnitValues> = {
   KCAL: {
     label: '칼로리',
     name: 'calories',
@@ -154,14 +155,10 @@ const MEASUREMENT_UNIT: Record<MeasurementUnitType, MeasurementUnitValues> = {
   }
 } as const;
 
-type MeasurementUnitValues = {
+export type MeasurementUnitValues = {
   label: string;
   name: string;
   unit: string;
 };
 
-type MeasurementUnitType = 'KCAL' | 'GRAM';
-
-const parseNumber = (value: string) => {
-  return Number(value.replace(/,/g, ''));
-};
+export type MeasurementUnitType = 'KCAL' | 'GRAM';
