@@ -34,19 +34,17 @@ export const useUserStore = create<UserStore>()(
 );
 
 export const initializeAuthListener = () => {
-  browserClient.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'INITIAL_SESSION') {
-      if (session) {
-        try {
-          const user = await getUser();
-          if (user) {
-            useUserStore.getState().setUser(user);
-          }
-        } catch (error) {
-          console.error('Failed to fetch user data:', error);
+  browserClient.auth.onAuthStateChange(async (_, session) => {
+    if (session) {
+      try {
+        const user = await getUser();
+        if (user) {
+          useUserStore.getState().setUser(user);
         }
+      } catch (error) {
+        console.error('Failed to fetch user data:', error);
       }
-    } else if (event === 'SIGNED_OUT') {
+    } else {
       useUserStore.getState().resetUser();
     }
   });
