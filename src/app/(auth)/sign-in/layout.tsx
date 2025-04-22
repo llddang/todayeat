@@ -9,7 +9,7 @@ const Layout = ({
   return (
     <div className="layout-container">
       <Header variant="backButton" />
-      <div className="desktop-width mx-auto flex flex-col items-center justify-center pt-layout xl:min-h-[100vh] xl:pt-20">
+      <div className="desktop-width mx-auto flex min-h-screen flex-col items-center justify-center">
         <main className="w-full">{children}</main>
         <Footer />
       </div>
