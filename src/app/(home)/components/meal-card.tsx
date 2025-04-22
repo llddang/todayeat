@@ -7,10 +7,10 @@ import { cn } from '@/lib/shadcn';
 import MacronutrientGroup from '@/components/commons/macronutrient-group';
 import { formatTimeToHHMM, formatTimeWithMeridiem } from '@/utils/format.util';
 
-type HomeMealCardProps = {
+type MealCardProps = {
   meal: MealDTO;
 };
-const HomeMealCard = ({ meal }: HomeMealCardProps) => {
+const MealCard = ({ meal }: MealCardProps) => {
   const { calories, ...macronutrients } = calculateTotalNutrition([meal]);
 
   const { name: mealLabel, icon: mealIcon } = MEAL_CATEGORY_OPTIONS[meal.mealCategory];
@@ -80,7 +80,7 @@ const HomeMealCard = ({ meal }: HomeMealCardProps) => {
   );
 };
 
-export default HomeMealCard;
+export default MealCard;
 
 const MEAL_CATEGORY_OPTIONS: { [key in MealCategoryType]: { name: string; icon: string } } = {
   BREAKFAST: { name: '아침', icon: 'before:bg-meal-category-breakfast' },
