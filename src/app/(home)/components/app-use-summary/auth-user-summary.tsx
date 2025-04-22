@@ -1,31 +1,24 @@
 'use client';
 
 import { differenceInDays, getDaysInMonth } from 'date-fns';
-import { getMyMealCountByMonth, getMyMealsCount } from '@/apis/meal.api';
 import { useUserStore } from '@/store/user-store';
-import { useEffect, useState } from 'react';
 import GlassBackground from '@/components/commons/glass-background';
 import { Typography } from '@/components/ui/typography';
 import { cn } from '@/lib/shadcn';
 import { getPercentage } from '@/utils/nutrition-calculator.util';
 import React from 'react';
 
-const AppUseSummary = () => {
+type AuthUserSummaryProps = {
+  allMealCount: number;
+  thisMonthMealCount: number;
+};
+const AuthUserSummary = ({ allMealCount, thisMonthMealCount }: AuthUserSummaryProps) => {
   const user = useUserStore((state) => state.user);
-  const [appUseSummary, setAppUseSummary] = useState<{ all: number; month: number }>({ all: 0, month: 0 });
 
   const today = new Date();
 
-  useEffect(() => {
-    const getSummary = async () => {
-      const res = await Promise.all([getMyMealsCount(), getMyMealCountByMonth(today)]);
-      setAppUseSummary({ all: res[0], month: res[1] });
-    };
-    getSummary();
-  }, []);
-
   const daysDiff = differenceInDays(today, user.createdAt) || 0;
-  const percent = getPercentage(appUseSummary.month, getDaysInMonth(today));
+  const percent = getPercentage(thisMonthMealCount, getDaysInMonth(today));
 
   return (
     <GlassBackground
@@ -48,7 +41,7 @@ const AppUseSummary = () => {
         <Typography variant="body1" className="flex gap-1 text-gray-800">
           🍽️ 지금까지
           <Typography as="span" variant="subTitle2" className="text-gray-900">
-            {appUseSummary.all}끼
+            {allMealCount}끼
           </Typography>
           식사를 기록했어요
         </Typography>
@@ -64,4 +57,4 @@ const AppUseSummary = () => {
   );
 };
 
-export default React.memo(AppUseSummary);
+export default React.memo(AuthUserSummary);

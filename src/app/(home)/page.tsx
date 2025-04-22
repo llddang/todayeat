@@ -6,17 +6,15 @@ import AppUseSummary from './components/app-use-summary';
 
 const HomePage = async () => {
   return (
-    <>
-      <DashboardProvider>
-        <div>
-          <CalendarProvider>
-            <HomeCalendar />
-          </CalendarProvider>
-          <AppUseSummary />
-        </div>
-        <HomeContent />
-      </DashboardProvider>
-    </>
+    <DashboardProvider>
+      <div>
+        <CalendarProvider>
+          <HomeCalendar />
+        </CalendarProvider>
+        <AppUseSummary />
+      </div>
+      <HomeContent />
+    </DashboardProvider>
   );
 };
 
