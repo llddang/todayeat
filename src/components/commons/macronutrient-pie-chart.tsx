@@ -37,7 +37,7 @@ const MacroNutrientPieChart = ({ data, displayCalories = false }: MacroNutrientP
 
   return (
     <div className="relative w-fit">
-      <ChartContainer config={chartConfig} className="aspect-square h-60">
+      <ChartContainer config={chartConfig} className="aspect-square max-h-60">
         <PieChart>
           <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
           <Pie
