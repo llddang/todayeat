@@ -89,8 +89,8 @@ const MealPostAddMealDrawer = ({ onAddMeal }: MealPostAddMealDrawerProps) => {
       </DrawerTrigger>
 
       <DrawerContent>
-        <div className="mb-2 flex items-center justify-between pl-1">
-          <DrawerTitle className="text-left typography-subTitle2">
+        <div className="flex items-center justify-between gap-4 pl-1">
+          <DrawerTitle className="flex-1 text-left typography-subTitle2">
             <Typography as="span" variant="subTitle2" className="text-gray-800">
               음식 추가하기
             </Typography>
@@ -104,13 +104,13 @@ const MealPostAddMealDrawer = ({ onAddMeal }: MealPostAddMealDrawerProps) => {
           <MealPostAddMealAiLoading />
         ) : (
           <div className="space-y-2">
-            <div className="space-y-4">
+            <div className="flex flex-col gap-4">
               <FormField
                 control={form.control}
                 name="menuName"
                 render={({ field }) => (
-                  <FormItem className="space-y-2">
-                    <FormLabel>먹은 음식</FormLabel>
+                  <FormItem className="space-y-2 pt-3">
+                    <FormLabel className="text-gray-900">먹은 음식</FormLabel>
                     <FormControl>
                       <Input placeholder="예시) 김치찌개, 닭가슴살, 크림파스타" {...field} />
                     </FormControl>
@@ -123,7 +123,7 @@ const MealPostAddMealDrawer = ({ onAddMeal }: MealPostAddMealDrawerProps) => {
                 name="weight"
                 render={({ field }) => (
                   <FormItem className="space-y-2">
-                    <FormLabel>먹은 양 (선택)</FormLabel>
+                    <FormLabel className="text-gray-900">먹은 양 (선택)</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -148,7 +148,7 @@ const MealPostAddMealDrawer = ({ onAddMeal }: MealPostAddMealDrawerProps) => {
               <Button
                 type="button"
                 disabled={!canSubmit}
-                className="typography-subTitle4"
+                className="w-full typography-subTitle4"
                 onClick={form.handleSubmit(onSubmit)}
               >
                 AI에게 분석 요청하기
