@@ -10,6 +10,7 @@ import HomeCalendarMonth from './home-calendar-month';
 import DateSelectorMobile from './date-selector-mobile';
 import { formatDateToLocaleKR } from '@/utils/format.util';
 import { DailyMealCalories } from '@/types/nutrition.type';
+import useIsMobile from '@/hooks/use-is-mobile';
 
 type HomeCalendarClientViewProps = {
   dailyMealCalories: DailyMealCalories;
@@ -17,24 +18,35 @@ type HomeCalendarClientViewProps = {
 const HomeCalendarClientView = ({ dailyMealCalories }: HomeCalendarClientViewProps) => {
   const { currentDate, setDailyMealCalories } = useCalendar();
   const [isOpen, setIsOpen] = useState(false);
+  const [currentTab, setCurrentTab] = useState('week');
+
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     setDailyMealCalories(dailyMealCalories);
   }, []);
 
+  useEffect(() => {
+    setCurrentTab(isMobile ? 'week' : 'month');
+  }, [isMobile]);
+
   return (
     <>
-      <Tabs defaultValue="week" className="space-y-5 px-4 py-7 pt-2 xl:max-w-[23.75rem]">
+      <Tabs
+        value={currentTab}
+        onValueChange={setCurrentTab}
+        className="space-y-5 px-4 py-7 pt-2 xl:max-w-[23.75rem] xl:space-y-2"
+      >
         <div className="flex w-full justify-between">
           <Button
             variant="icon"
             size="lg"
-            className="after:bg-down-line-gray-600-icon hover:after:bg-down-line-gray-800-icon disabled:after:bg-down-line-gray-400-icon"
+            className="after:bg-down-line-gray-600-icon hover:after:bg-down-line-gray-800-icon disabled:after:bg-down-line-gray-400-icon xl:pl-1"
             onClick={() => setIsOpen(true)}
           >
             {formatDateToLocaleKR(currentDate)}
           </Button>
-          <TabsList className="">
+          <TabsList className="xl:hidden">
             <TabsTrigger value="week">주간</TabsTrigger>
             <TabsTrigger value="month">월간</TabsTrigger>
           </TabsList>
