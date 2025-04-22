@@ -11,7 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import EditCard from './edit-card';
 import MealImageCarousel from '../../../components/meal-images-carousel';
 import { Typography } from '@/components/ui/typography';
@@ -23,6 +23,8 @@ import { Button } from '@/components/ui/button';
 import TimePicker, { TimeFields } from './time-picker';
 import MealPostAddMealDrawer from '../../components/meal-post-add-meal-drawer';
 import { MEAL_CATEGORY } from '../constants/meal-edit.constant';
+import MacronutrientBox from '@/components/commons/macronutrient-box';
+import { MacronutrientEnum } from '@/types/nutrition.type';
 
 type EditResultSectionProps = {
   imageList: string[];
@@ -32,6 +34,7 @@ type EditResultSectionProps = {
 const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX.Element => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [totalNutrient, setTotalNutrient] = useState({ calories: 0, protein: 0, carbohydrate: 0, fat: 0 });
   const { meridiem, hours, minutes } = getTimeFieldsFromDate();
 
   const mealFormMethods = useForm({
@@ -50,14 +53,24 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
     },
     mode: 'onBlur'
   });
-
   const { fields: mealCardList, remove } = useFieldArray({ control: mealFormMethods.control, name: 'mealList' });
-
   const day = mealFormMethods.getValues('date.day');
   const date = mealFormMethods.watch('date');
 
-  const handleDayChange = (day: Date) => mealFormMethods.setValue('date.day', day);
+  useEffect(() => {
+    const sumTotalNutrient = mealCardList.reduce(
+      (acc, meal) => ({
+        calories: acc.calories + meal.calories,
+        carbohydrate: acc.carbohydrate + meal.carbohydrate,
+        protein: acc.protein + meal.protein,
+        fat: acc.fat + meal.fat
+      }),
+      { calories: 0, protein: 0, carbohydrate: 0, fat: 0 }
+    );
+    setTotalNutrient(sumTotalNutrient);
+  }, [mealCardList]);
 
+  const handleDayChange = (day: Date) => mealFormMethods.setValue('date.day', day);
   const handleTimeChange = (time: TimeFields) => {
     mealFormMethods.setValue('date.meridiem', time.meridiem);
     mealFormMethods.setValue('date.hours', time.hours);
@@ -110,75 +123,88 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
   };
 
   return (
-    <div className="px-4 pb-4 pt-2">
+    <div className="flex flex-col gap-6 px-4 pb-4 pt-2">
       <MealImageCarousel imageList={imageList} />
-      <FormProvider {...mealFormMethods}>
-        <form onSubmit={mealFormMethods.handleSubmit(onSubmit)}>
-          <section className="mt-10 flex flex-col gap-3">
-            <Typography className="pl-1">
-              음식 정보
-              <Typography variant="subTitle2" as="span" className="ml-2">
-                {mealCardList.length}
-              </Typography>
-            </Typography>
-            {mealCardList.map((meal, idx) => (
-              <EditCard key={meal.id} idx={idx} mealDetail={meal} onRemove={remove} />
-            ))}
-            <MealPostAddMealDrawer onAddMeal={handleAddMeal} />
-          </section>
-
-          <section className="my-10 flex w-full flex-col items-start justify-center gap-3">
-            <Typography as="h3" variant="body1" className="pl-1">
-              식사 시간
-            </Typography>
-            <GlassBackground className="min-h-auto flex w-full flex-col items-start gap-3 rounded-2xl border-none p-4">
-              <div className="scrollbar-hidden flex w-full items-start justify-between gap-2 overflow-x-auto">
-                {MEAL_CATEGORY.map((option) => {
-                  const field = mealFormMethods.register('mealCategory');
-                  const selected = mealFormMethods.watch('mealCategory');
-                  return (
-                    <TagSelectItem
-                      key={option.value}
-                      id={option.value}
-                      groupName="MEAL_CATEGORY"
-                      icon={option.icon}
-                      label={option.label}
-                      value={option.value}
-                      checked={selected === option.value}
-                      {...field}
-                    />
-                  );
-                })}
-              </div>
-              <div className="flex w-full gap-2">
-                <MealEditCalendar date={day} onDateChange={handleDayChange} />
-                <TimePicker currentTime={date} onTimeChange={handleTimeChange} />
-              </div>
-            </GlassBackground>
-          </section>
-          <section className="space-y-3">
-            <Typography as="h3" variant="body1" className="pl-1">
-              식사 일기
-            </Typography>
-            <GlassBackground className="min-h-auto flex w-full flex-col gap-3 rounded-2xl border-none">
-              <div className="flex items-start justify-between gap-[0.38rem] before:mt-[0.13rem] before:block before:aspect-square before:w-[1.125rem] before:bg-edit-4-icon before:bg-contain before:content-['']">
-                <Typography as="span" variant="subTitle3" className="flex-1 !font-medium text-gray-600">
-                  음식을 먹을 때 어떤 기분이었는지 간단하게 적어주세요. 식습관을 돌아보는데 큰 도움이 돼요!
+      <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-3">
+          <Typography as="p" variant="body1" className="px-1">
+            총 영양 정보
+          </Typography>
+          <div className="flex min-h-[13.125rem] w-full items-center justify-center gap-3 rounded-2xl bg-white/50 p-3 backdrop-blur-[50px]">
+            <div className="flex w-[5.75rem] flex-col items-start justify-center gap-4 px-1">
+              <MacronutrientBox variety={MacronutrientEnum.CARBOHYDRATE} value={totalNutrient.carbohydrate} />
+              <MacronutrientBox variety={MacronutrientEnum.PROTEIN} value={totalNutrient.protein} />
+              <MacronutrientBox variety={MacronutrientEnum.FAT} value={totalNutrient.fat} />
+            </div>
+          </div>
+        </div>
+        <FormProvider {...mealFormMethods}>
+          <form onSubmit={mealFormMethods.handleSubmit(onSubmit)}>
+            <section className="flex flex-col gap-3">
+              <Typography className="pl-1">
+                음식 정보
+                <Typography variant="subTitle2" as="span" className="ml-2">
+                  {mealCardList.length}
                 </Typography>
-              </div>
-              <Textarea
-                {...mealFormMethods.register('memo')}
-                className="min-h-60 text-gray-500"
-                maxLength={200}
-                placeholder="예시) 스트레스로 폭식했다, 기분 좋게 잘먹었다, 이 음식 먹고 속이 안 좋았다."
-              />
-            </GlassBackground>
-          </section>
-          <Button type="submit" className="mt-3 w-full" disabled={isLoading}>
-            제출하기
-          </Button>
-        </form>
-      </FormProvider>
+              </Typography>
+              {mealCardList.map((meal, idx) => (
+                <EditCard key={meal.id} idx={idx} mealDetail={meal} onRemove={remove} />
+              ))}
+              <MealPostAddMealDrawer onAddMeal={handleAddMeal} />
+            </section>
+            <section className="my-10 flex w-full flex-col items-start justify-center gap-3">
+              <Typography as="h3" variant="body1" className="pl-1">
+                식사 시간
+              </Typography>
+              <GlassBackground className="min-h-auto flex w-full flex-col items-start gap-3 rounded-2xl border-none p-4">
+                <div className="scrollbar-hidden flex w-full items-start justify-between gap-2 overflow-x-auto">
+                  {MEAL_CATEGORY.map((option) => {
+                    const field = mealFormMethods.register('mealCategory');
+                    const selected = mealFormMethods.watch('mealCategory');
+                    return (
+                      <TagSelectItem
+                        key={option.value}
+                        id={option.value}
+                        groupName="MEAL_CATEGORY"
+                        icon={option.icon}
+                        label={option.label}
+                        value={option.value}
+                        checked={selected === option.value}
+                        {...field}
+                      />
+                    );
+                  })}
+                </div>
+                <div className="flex w-full gap-2">
+                  <MealEditCalendar date={day} onDateChange={handleDayChange} />
+                  <TimePicker currentTime={date} onTimeChange={handleTimeChange} />
+                </div>
+              </GlassBackground>
+            </section>
+            <section className="space-y-3">
+              <Typography as="h3" variant="body1" className="pl-1">
+                식사 일기
+              </Typography>
+              <GlassBackground className="min-h-auto flex w-full flex-col gap-3 rounded-2xl border-none">
+                <div className="flex items-start justify-between gap-[0.38rem] before:mt-[0.13rem] before:block before:aspect-square before:w-[1.125rem] before:bg-edit-4-icon before:bg-contain before:content-['']">
+                  <Typography as="span" variant="subTitle3" className="flex-1 !font-medium text-gray-600">
+                    음식을 먹을 때 어떤 기분이었는지 간단하게 적어주세요. 식습관을 돌아보는데 큰 도움이 돼요!
+                  </Typography>
+                </div>
+                <Textarea
+                  {...mealFormMethods.register('memo')}
+                  className="min-h-60 text-gray-500"
+                  maxLength={200}
+                  placeholder="예시) 스트레스로 폭식했다, 기분 좋게 잘먹었다, 이 음식 먹고 속이 안 좋았다."
+                />
+              </GlassBackground>
+            </section>
+            <Button type="submit" className="mt-3 w-full" disabled={isLoading}>
+              제출하기
+            </Button>
+          </form>
+        </FormProvider>
+      </div>
     </div>
   );
 };
