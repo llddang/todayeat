@@ -7,9 +7,9 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="temp-layout">
+    <div className="layout-container">
       <Header />
-      <div className="pt-layout">
+      <div className="desktop-width mx-auto pt-layout xl:py-[5.62rem]">
         <Suspense>{children}</Suspense>
       </div>
     </div>
