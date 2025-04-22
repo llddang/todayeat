@@ -44,7 +44,7 @@ const StepActivityLevel = ({ userName, nextStep }: StepActivityLevelProps) => {
             />
           ))}
         </div>
-        <Button disabled={!selectedOption} className="!mt-[3.75rem] w-full">
+        <Button disabled={!selectedOption} className="mt-[3.75rem] w-full xl:mt-6">
           다음
         </Button>
       </fieldset>
