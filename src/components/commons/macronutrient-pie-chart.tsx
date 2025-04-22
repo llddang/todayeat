@@ -56,7 +56,10 @@ const MacroNutrientPieChart = ({ data, displayCalories = false }: MacroNutrientP
         </PieChart>
       </ChartContainer>
       {displayCalories && (
-        <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
+        <div
+          className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center"
+          aria-label={`총 칼로리: ${formatNumberWithComma(data.calories)} kcal`}
+        >
           <Typography variant="title2" as="span">
             {formatNumberWithComma(data.calories)}
           </Typography>
