@@ -15,8 +15,7 @@ const Calendar = ({ className, classNames, showOutsideDays = true, ...props }: C
       showOutsideDays={showOutsideDays}
       className={cn('p-2', className)}
       classNames={{
-        // TODO: temp-layout 풀기
-        months: 'w-full temp-layout',
+        months: 'w-full layout-container',
         month: 'space-y-4',
         caption: 'h-11 flex justify-center relative items-center',
         caption_label: 'typography-body2 text-gray-800',
@@ -29,7 +28,7 @@ const Calendar = ({ className, classNames, showOutsideDays = true, ...props }: C
         head_cell: 'rounded-md w-9 text-center typography-body4 text-gray-550',
         row: 'flex w-full mt-3 justify-between',
         cell: cn(
-          'relative p-0 typography-body3 focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-gray-900 [&:has([aria-selected])]:text-gray-50 hover:bg-gray-200 [&:has([aria-selected].day-outside)]:bg-gray-600/40 rounded-full',
+          'relative p-0 typography-body3 focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-gray-900 [&:has([aria-selected])]:text-gray-50 hover:bg-gray-200 rounded-full',
           props.mode === 'range' &&
             '[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md'
         ),
