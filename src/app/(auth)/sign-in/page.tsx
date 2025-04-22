@@ -10,8 +10,8 @@ import GlassBackground from '@/components/commons/glass-background';
 
 const SignInPage = () => {
   return (
-    <section>
-      <div className="gap flex flex-col items-center gap-2 px-4 pb-7 pt-2">
+    <section className="">
+      <div className="gap flex flex-col items-center gap-2 px-4 pb-7 pt-2 xl:pt-0">
         <h2>
           <Link href={SITE_MAP.HOME}>
             <Image src={LOGO} alt="투데잇 로고" className="h-[38px] w-[137px]" />
@@ -21,7 +21,7 @@ const SignInPage = () => {
           사진 한 장으로 완성되는 식단 기록
         </Typography>
       </div>
-      <GlassBackground className="min-h-0 space-y-6 rounded-[2rem] px-5 pb-8 pt-7">
+      <GlassBackground className="min-h-0 space-y-6 rounded-[2rem] px-5 pb-8 pt-7 xl:p-10">
         <SignInForm />
         <div className="flex flex-col gap-2">
           <KakaoSignInButton />
