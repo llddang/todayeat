@@ -63,9 +63,10 @@ type FunnelComponentProps<K extends Record<string, unknown>, T extends Extract<k
  * useFunnel 훅의 반환 타입
  * Funnel 컴포넌트
  */
-type UseFunnelReturnType<K extends Record<string, unknown>, T extends Extract<keyof K, string>> = (
-  props: FunnelComponentProps<K, T>
-) => JSX.Element;
+type UseFunnelReturnType<K extends Record<string, unknown>, T extends Extract<keyof K, string>> = {
+  Funnel: (props: FunnelComponentProps<K, T>) => JSX.Element;
+  currentStep: T;
+};
 
 /**
  * 다단계 폼 프로세스(funnel)를 쉽게 관리하기 위한 커스텀 훅
@@ -158,7 +159,7 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
     return props[currentStep]({ setStep, data: funnelData as K[T], clearFunnelData });
   };
 
-  return Funnel;
+  return { Funnel, currentStep };
 };
 
 export default useFunnel;

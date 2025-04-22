@@ -7,27 +7,27 @@ import { z } from 'zod';
 import formSchema from '@/app/schemas/form-schema.schema';
 import { useForm } from 'react-hook-form';
 import { useEffect, useRef, useState } from 'react';
-import { SignUpStep3Type } from '@/types/sign-up-funnel-type';
+import { StepNicknameType } from '@/app/(auth)/sign-up/types/funnel-type';
 import { signUp } from '@/apis/auth-server.api';
 
-const signUpNicknameSchema = z.object({
+const nicknameSchema = z.object({
   nickname: formSchema.NICKNAME_SCHEMA
 });
-type SignUpNicknameSchemaType = z.infer<typeof signUpNicknameSchema>;
+type NicknameSchemaType = z.infer<typeof nicknameSchema>;
 
-type AuthSignUpStepNicknameProps = {
-  data: SignUpStep3Type;
+type StepNicknameProps = {
+  data: StepNicknameType;
   nextStep: () => void;
   clear: () => void;
 };
 
-const AuthSignUpStepNickname = ({ data, nextStep, clear }: AuthSignUpStepNicknameProps) => {
+const StepNickname = ({ data, nextStep, clear }: StepNicknameProps) => {
   const [isPending, setIsPending] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const form = useForm<SignUpNicknameSchemaType>({
+  const form = useForm<NicknameSchemaType>({
     mode: 'onBlur',
-    resolver: zodResolver(signUpNicknameSchema),
+    resolver: zodResolver(nicknameSchema),
     defaultValues: { nickname: data.nickname ?? '' }
   });
 
@@ -40,7 +40,7 @@ const AuthSignUpStepNickname = ({ data, nextStep, clear }: AuthSignUpStepNicknam
     }
   }, []);
 
-  const onSubmit = async ({ nickname }: SignUpNicknameSchemaType) => {
+  const onSubmit = async ({ nickname }: NicknameSchemaType) => {
     setIsPending(true);
     const { error } = await signUp(data.email, data.password, nickname);
     setIsPending(false);
@@ -83,4 +83,4 @@ const AuthSignUpStepNickname = ({ data, nextStep, clear }: AuthSignUpStepNicknam
   );
 };
 
-export default AuthSignUpStepNickname;
+export default StepNickname;

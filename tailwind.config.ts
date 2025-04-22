@@ -12,6 +12,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      maxWidth: {
+        md: '440px'
+      },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
@@ -212,8 +215,21 @@ const config: Config = {
     plugin(({ addUtilities }) => {
       addUtilities({
         '.temp-layout': {
-          maxWidth: '480px',
+          maxWidth: '440px',
           margin: 'auto'
+        },
+        '.layout-container': {
+          maxWidth: '440px',
+          '@screen xl': {
+            maxWidth: '1280px'
+          },
+          margin: 'auto'
+        },
+        '.desktop-width': {
+          width: '100%',
+          '@screen xl': {
+            width: '27.5rem'
+          }
         },
         '.bg-gradient-main': {
           background: `

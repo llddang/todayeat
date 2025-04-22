@@ -1,3 +1,4 @@
+'use client';
 import { useSyncExternalStore, ReactNode } from 'react';
 
 const clientStore = {

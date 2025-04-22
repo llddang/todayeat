@@ -5,12 +5,12 @@ import { calculateNutritionDifferences, getMostSignificantDiff } from '@/app/(ho
 import { cn } from '@/lib/shadcn';
 import { Typography } from '@/components/ui/typography';
 
-type HomeAiFeedbackTextProps = {
+type AiFeedbackTextProps = {
   nutritionData: MealNutrition | null;
   nutritionGoal: NutritionGoal | null;
 };
 
-const HomeAiFeedbackText = ({ nutritionData, nutritionGoal }: HomeAiFeedbackTextProps) => {
+const AiFeedbackText = ({ nutritionData, nutritionGoal }: AiFeedbackTextProps) => {
   const hasGoal = !!nutritionGoal;
   const hasMealRecord = !!nutritionData;
   const isInactive = !hasGoal || !hasMealRecord;
@@ -39,7 +39,7 @@ const HomeAiFeedbackText = ({ nutritionData, nutritionGoal }: HomeAiFeedbackText
   if (!feedbackContent) return null;
 
   const containerClass = cn(
-    'before:bg-ai-sparkle-1 flex w-full items-start gap-2 pb-2',
+    'before:bg-ai-sparkle-1 flex w-full items-start gap-2',
     'before:block before:h-6 before:w-6 before:bg-contain',
     "before:bg-no-repeat before:content-['']",
     {
@@ -61,4 +61,4 @@ const HomeAiFeedbackText = ({ nutritionData, nutritionGoal }: HomeAiFeedbackText
   );
 };
 
-export default HomeAiFeedbackText;
+export default AiFeedbackText;

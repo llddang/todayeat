@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { signInWithGoogle } from '@/apis/auth-browser.api';
 
-const AuthSignInWithGoogleButton = () => {
+const GoogleSignInButton = () => {
   return (
     <Button
       onClick={signInWithGoogle}
@@ -14,4 +14,4 @@ const AuthSignInWithGoogleButton = () => {
     </Button>
   );
 };
-export default AuthSignInWithGoogleButton;
+export default GoogleSignInButton;

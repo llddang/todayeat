@@ -15,7 +15,7 @@ let nextConfig = {
     ]
   },
   webpack: (config) => {
-    if (process.env.SENTRY !== 'true') config.resolve.alias['@sentry/nextjs'] = require.resolve('./src/sentryDev.ts');
+    if (process.env.SENTRY !== 'true') config.resolve.alias['@sentry/nextjs'] = require.resolve('./src/lib/sentry.ts');
     return config;
   }
 };

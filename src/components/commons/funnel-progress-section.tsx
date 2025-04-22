@@ -1,12 +1,10 @@
 import { Typography } from '@/components/ui/typography';
 
-// TODO: 여러 플로우에서 사용할 수 있는 공통 컴포넌트로 분리하기.
-
-type AuthSignUpProgressBarProps = {
+type FunnelProgressSectionProps = {
   title?: string;
   percent: number;
 };
-const AuthSignUpProgressBar = ({ title, percent }: AuthSignUpProgressBarProps) => {
+const FunnelProgressSection = ({ title, percent }: FunnelProgressSectionProps) => {
   return (
     <div>
       {title && (
@@ -16,7 +14,7 @@ const AuthSignUpProgressBar = ({ title, percent }: AuthSignUpProgressBarProps) =
       )}
       <div className="relative h-1 w-full rounded-sm bg-gray-200">
         <span
-          className="bg-gradient-linear-progress absolute left-0 top-0 block h-1 w-full transition-all"
+          className="absolute left-0 top-0 block h-1 w-full transition-all bg-gradient-linear-progress"
           style={{ width: `${percent}%` }}
         />
       </div>
@@ -24,4 +22,4 @@ const AuthSignUpProgressBar = ({ title, percent }: AuthSignUpProgressBarProps) =
   );
 };
 
-export default AuthSignUpProgressBar;
+export default FunnelProgressSection;
