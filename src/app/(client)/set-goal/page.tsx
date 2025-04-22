@@ -33,10 +33,12 @@ const SetGoalPage = () => {
   );
 
   if (currentUIConfig.hasGlassBackground) {
-    return <GlassBackground className="relative space-y-8">{content}</GlassBackground>;
+    return (
+      <GlassBackground className="relative space-y-8 xl:min-h-fit xl:rounded-[2rem] xl:p-6">{content}</GlassBackground>
+    );
   }
 
-  return <div className="relative min-h-[calc(100vh-4rem)] space-y-8">{content}</div>;
+  return <div className="relative min-h-[calc(100vh-4rem)] space-y-8 xl:min-h-[calc(100vh-11.24rem)]">{content}</div>;
 };
 
 export default SetGoalPage;
