@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 const UserInitialize = () => {
   useEffect(() => {
     initializeAuthListener();
-  }, []);
+  });
   return null;
 };
 export default UserInitialize;
