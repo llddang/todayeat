@@ -74,7 +74,6 @@ export const createFoodAnalysisRequestDetail = async (food: CreateAiPartialRespo
   return snakeToCamelObject(data);
 };
 
-// TODO: camelToSnakeObject 함수를 통해 깔끔하게 관리하기!
 export const updateCaloriesAnalysisResult = async ({
   id,
   ...response
