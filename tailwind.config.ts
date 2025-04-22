@@ -214,6 +214,10 @@ const config: Config = {
     animate,
     plugin(({ addUtilities }) => {
       addUtilities({
+        '.temp-layout': {
+          maxWidth: '440px',
+          margin: 'auto'
+        },
         '.layout-container': {
           maxWidth: '440px',
           '@screen xl': {
