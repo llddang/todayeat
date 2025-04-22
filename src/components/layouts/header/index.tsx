@@ -9,7 +9,7 @@ import WithProfile from './variants/with-profile';
 type HeaderVariants = 'backButton' | 'default' | 'withProfile';
 
 type HeaderProps = {
-  variant?: HeaderVariants; // ❗️여기 optional로 바꿔주기
+  variant?: HeaderVariants;
 };
 
 const Header = ({ variant = 'default' }: HeaderProps) => {
@@ -31,7 +31,7 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
   return (
     <header
       className={cn(
-        'temp-layout fixed left-0 right-0 top-0 z-layout flex h-16 w-full items-center justify-between px-4 py-3',
+        'fixed left-0 right-0 top-0 z-layout flex h-16 w-full items-center justify-between px-4 py-3 temp-layout',
         isScrolled ? 'bg-purple-10/[0.94] backdrop-blur-[20px]' : 'bg-transparent'
       )}
     >
