@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { AI_ERROR_KEYS, AI_ERROR_MESSAGE, isAIErrorResponse } from '@/constants/ai-error-message.constant';
-import { createFoodAnalysisRequestDetails, createAiRequest, getFoodImagesById } from '@/apis/analysis-request.api';
+import { createAiResponse, createAiRequest, getFoodImagesById } from '@/apis/analysis-request.api';
 import { generateFoodAnalysisByImage } from '@/apis/gemini.api';
 import { parseGeminiResponse } from '@/lib/gemini';
 import { ImageContent } from '@/types/gemini.type';
@@ -76,7 +76,7 @@ export const POST = async (req: Request) => {
       userId
     }));
 
-    const { error: insertError } = await createFoodAnalysisRequestDetails(insertPayload);
+    const { error: insertError } = await createAiResponse(insertPayload);
 
     if (insertError) {
       console.error('분석 결과 저장 실패:', insertError);

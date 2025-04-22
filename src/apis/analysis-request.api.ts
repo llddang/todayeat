@@ -48,7 +48,7 @@ export const getAiResponses = async (): Promise<AiResponseDTO[]> => {
   return snakeToCamelObject(data);
 };
 
-export const createFoodAnalysisRequestDetails = async (
+export const createAiResponse = async (
   insertPayload: CreateAiFullResponseDTO[]
 ): Promise<{
   error: PostgrestError | null;
@@ -62,7 +62,7 @@ export const createFoodAnalysisRequestDetails = async (
   return { error };
 };
 
-export const createFoodAnalysisRequestDetail = async (food: CreateAiPartialResponseDTO): Promise<AiResponseDTO> => {
+export const createAiPartialResponse = async (food: CreateAiPartialResponseDTO): Promise<AiResponseDTO> => {
   const supabase = getServerClient();
 
   const foodSnakeCase = camelToSnakeObject(food);
