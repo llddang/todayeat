@@ -64,7 +64,7 @@ const StepAge = ({ userName, nextStep }: StepAgeProps) => {
             </div>
             <Button
               type="submit"
-              className="fixed bottom-[calc(env(safe-area-inset-bottom,1.5rem)+1.5rem)] left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2"
+              className="fixed bottom-[calc(env(safe-area-inset-bottom,1.5rem)+1.5rem)] left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2 xl:relative xl:bottom-auto xl:left-auto xl:mt-6 xl:w-full xl:-translate-x-0"
               disabled={!form.watch('age')}
             >
               다음
