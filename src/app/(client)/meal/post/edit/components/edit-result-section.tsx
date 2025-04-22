@@ -21,6 +21,8 @@ import MealEditCalendar from './meal-edit-calendar';
 import Textarea from '@/components/commons/textarea';
 import { Button } from '@/components/ui/button';
 import TimePicker, { TimeFields } from './time-picker';
+import MealPostAddMealDrawer from '../../components/meal-post-add-meal-drawer';
+import { MEAL_CATEGORY } from '../constants/meal-edit.constant';
 
 type EditResultSectionProps = {
   imageList: string[];
@@ -63,24 +65,15 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
   };
 
   const onSubmit = async (form: MealEditFormData) => {
-    const files = await Promise.all(form.mealImages.map((url, idx) => urlToFile(url, idx)));
     setIsLoading(true);
     try {
       if (!form) {
         return alert(' 데이터 형식이 올바르지 않습니다.');
       }
 
-      const { date, memo, mealCategory } = form;
+      const { date, memo, mealCategory, mealList, mealImages } = form;
       const ateAt = formatTimestamp(date);
-      const storedImageUrls: string[] = [];
-      for (const file of files) {
-        const formData = new FormData();
-        formData.append('file', file);
-        const { data: fileUrl } = await uploadImage('meal', formData);
-        if (fileUrl) {
-          storedImageUrls.push(fileUrl);
-        }
-      }
+      const storedImageUrls = await uploadMealImages(mealImages);
 
       const newMeals = {
         foodImages: storedImageUrls,
@@ -112,6 +105,10 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
     }
   };
 
+  const handleAddMeal = (newMeal: AiResponseDTO) => {
+    mealFormMethods.setValue('mealList', [...mealFormMethods.getValues('mealList'), newMeal]);
+  };
+
   return (
     <div className="px-4 pb-4 pt-2">
       <MealImageCarousel imageList={imageList} />
@@ -127,6 +124,7 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
             {mealCardList.map((meal, idx) => (
               <EditCard key={meal.id} idx={idx} mealDetail={meal} onRemove={remove} />
             ))}
+            <MealPostAddMealDrawer onAddMeal={handleAddMeal} />
           </section>
 
           <section className="my-10 flex w-full flex-col items-start justify-center gap-3">
@@ -186,6 +184,7 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
 };
 
 export default EditResultSection;
+
 const mealListSchema = z.object({
   id: z.string(),
   userId: z.string(),
@@ -215,37 +214,32 @@ const mealEditFormSchema = z.object({
 type MealEditFormData = z.infer<typeof mealEditFormSchema>;
 export type MealEditFormDataType = z.infer<typeof mealEditFormSchema>;
 
-const getTimeFieldsFromDate = (): TimeFields => {
-  const now = new Date();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
+const uploadMealImages = async (imageUrls: string[]): Promise<string[]> => {
+  const files = await Promise.all(imageUrls.map((url, idx) => urlToFile(url, idx)));
+  const storedImageUrls: string[] = [];
 
-  return {
-    meridiem: hours < 12 ? '오전' : '오후',
-    hours: String(hours % 12 === 0 ? 12 : hours % 12).padStart(2, '0'),
-    minutes: String(minutes).padStart(2, '0')
-  };
+  for (const file of files) {
+    const formData = new FormData();
+    formData.append('file', file);
+    const { data: fileUrl } = await uploadImage('meal', formData);
+    if (fileUrl) {
+      storedImageUrls.push(fileUrl);
+    }
+  }
+
+  return storedImageUrls;
 };
 
-const MEAL_CATEGORY = [
-  {
-    value: MealCategory.BREAKFAST,
-    label: '아침',
-    icon: 'before:bg-meal-category-breakfast'
-  },
-  {
-    value: MealCategory.LUNCH,
-    label: '점심',
-    icon: 'before:bg-meal-category-lunch'
-  },
-  {
-    value: MealCategory.DINNER,
-    label: '저녁',
-    icon: 'before:bg-meal-category-dinner'
-  },
-  {
-    value: MealCategory.SNACK,
-    label: '간식',
-    icon: 'before:bg-meal-category-snack'
-  }
-];
+const getTimeFieldsFromDate = (date: Date = new Date()): TimeFields => {
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const meridiem = hours < 12 ? '오전' : '오후';
+  const formattedHours = String(hours % 12 || 12).padStart(2, '0');
+  const formattedMinutes = String(minutes).padStart(2, '0');
+
+  return {
+    meridiem,
+    hours: formattedHours,
+    minutes: formattedMinutes
+  };
+};
