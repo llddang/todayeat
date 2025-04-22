@@ -31,7 +31,7 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
   return (
     <header
       className={cn(
-        'layout-container fixed left-0 right-0 top-0 z-layout flex h-16 w-full items-center justify-between px-4 py-3',
+        'temp-layout fixed left-0 right-0 top-0 z-layout flex h-16 w-full items-center justify-between px-4 py-3',
         isScrolled ? 'bg-purple-10/[0.94] backdrop-blur-[20px]' : 'bg-transparent'
       )}
     >
