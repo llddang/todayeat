@@ -10,7 +10,7 @@ const Layout = ({
   return (
     <div className="temp-layout">
       <Header variant="withProfile" />
-      <div className="p-layout">
+      <div className="py-layout">
         <main>{children}</main>
         <Footer />
       </div>
