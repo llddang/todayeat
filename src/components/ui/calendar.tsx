@@ -15,7 +15,7 @@ const Calendar = ({ className, classNames, showOutsideDays = true, ...props }: C
       showOutsideDays={showOutsideDays}
       className={cn('p-2', className)}
       classNames={{
-        months: 'w-full layout-container',
+        months: 'w-full',
         month: 'space-y-4',
         caption: 'h-11 flex justify-center relative items-center',
         caption_label: 'typography-body2 text-gray-800',

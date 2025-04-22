@@ -15,6 +15,9 @@ const config: Config = {
       maxWidth: {
         md: '440px'
       },
+      boxShadow: {
+        modal: '0px 6px 32px 0px rgba(87, 33, 211, 0.06), 0px 0px 0px 1px rgba(186, 55, 41, 0.10)'
+      },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
