@@ -7,7 +7,7 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="layout-container">
+    <div className="temp-layout">
       <Header />
       <main className="pt-layout">
         <Suspense>{children}</Suspense>
