@@ -1,22 +1,30 @@
-'use client';
-import { Typography } from '@/components/ui/typography';
-import dynamic from 'next/dynamic';
-
-const AiLoaderLottie = dynamic(() => import('@/components/commons/ai-loader-lottie'), {
-  ssr: false
-});
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import Weekly from './components/weekly';
 
 const Report = () => {
   return (
-    <div className="relative flex h-[calc(100vh-14rem)] w-full items-center">
-      <div className="flex w-full flex-col items-center gap-2 text-center">
-        <AiLoaderLottie />
-        <Typography>
-          리포트 페이지는 <br />
-          추후 개발될 예정이에요!
-        </Typography>
-      </div>
-    </div>
+    <Tabs defaultValue="weekly">
+      <TabsList className="flex w-full">
+        <TabsTrigger value="daily" className="flex-1">
+          일간
+        </TabsTrigger>
+        <TabsTrigger value="weekly" className="flex-1">
+          주간
+        </TabsTrigger>
+        <TabsTrigger value="monthly" className="flex-1">
+          월간
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value="daily" className="mt-4">
+        <Weekly />
+      </TabsContent>
+      <TabsContent value="weekly" className="mt-4">
+        <Weekly />
+      </TabsContent>
+      <TabsContent value="monthly" className="mt-4">
+        <Weekly />
+      </TabsContent>
+    </Tabs>
   );
 };
 
