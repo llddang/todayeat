@@ -14,6 +14,7 @@ import {
   MealSnakeCaseDTO
 } from '@/types/DTO/meal.dto';
 import { getUser } from './user.api';
+import { endOfMonth, startOfMonth } from 'date-fns';
 
 /**
  * 특정 기간 내의 사용자 식사 기록을 모든 상세 정보와 함께 조회한다.
@@ -158,6 +159,7 @@ export const deleteMeal = async (mealId: string) => {
   if (error) throw error;
 };
 
+// TODO: deleteMealAnalysisDetail 함수 analysis-request.api.ts로 위치 이동 & 함수 주석 수정
 /**
  * 분석시 저장한 상세 식사 데이터를 데이터베이스에서 삭제합니다.
  *
@@ -226,15 +228,14 @@ export const getAllMyDailyCalories = async (
   return mealCalories;
 };
 
+// TODO: createFoodAnalysisRequestDetail 함수 analysis-request.api.ts로 위치 이동
 /**
  * 임시식사의 상세 항목을 데이터베이스에 추가합니다.
- *
  *
  * @param {Partial<Pick<MealDetailDTO, 'calories' | 'menuName' | 'weight'>>} meal 삽입할 식단 상세 정보 (일부 필드만 포함 가능).
  * @returns {Promise<MealDetailSnakeCaseDTO>}  생성된 식사 상세 정보
  * @throws {Error} Supabase 요청 중 오류 발생 시 예러를 던집니다.
  */
-
 export const createFoodAnalysisRequestDetail = async (
   meal: Partial<Pick<MealDetailDTO, 'calories' | 'menuName' | 'weight'>>
 ): Promise<MealDetailDTO> => {
@@ -243,4 +244,40 @@ export const createFoodAnalysisRequestDetail = async (
   const { data, error } = await supabase.from('ai_responses').insert(mealDetailRequest).select().single();
   if (error) throw error;
   return snakeToCamelObject<MealDetailSnakeCaseDTO>(data);
+};
+
+/**
+ * 자신의 식사 기록 갯수를 가져오는 API 함수
+ *
+ * @returns {Promise<number>}  기록한 식사의 갯수
+ * @throws {Error} Supabase 요청 중 오류 발생 시 예러를 던집니다.
+ */
+export const getMyMealsCount = async (): Promise<number> => {
+  const supabase = getServerClient();
+
+  const { count, error } = await supabase.from('meals').select('*', { count: 'exact', head: true });
+  if (error) throw error;
+
+  return count || 0;
+};
+
+/**
+ * 인자로 넘어온 달의 기록 갯수를 반환하는 함수
+ *
+ * @param {Date} date 조회하려는 달의 날짜
+ * @returns {Promise<number>}  해당 달의 기록한 일 수
+ * @throws {Error} Supabase 요청 중 오류 발생 시 예러를 던집니다.
+ */
+export const getMyMealCountByMonth = async (date: Date): Promise<number> => {
+  const startDate = startOfMonth(date);
+  const endDate = endOfMonth(date);
+  const supabase = getServerClient();
+
+  const { data, error } = await supabase.rpc('count_unique_meal_dates', {
+    start_date: startDate.toISOString(),
+    end_date: endDate.toISOString()
+  });
+
+  if (error) throw error;
+  return data || 0;
 };
