@@ -16,7 +16,7 @@ const UploadImageSection = ({ isRecorded }: UploadImageSectionProps): JSX.Elemen
 
   if (isLoading) {
     return (
-      <div className="flex min-h-[calc(100vh-140px)] items-center justify-center">
+      <div className="flex min-h-[calc(100vh-8.75rem)] items-center justify-center">
         <MealPostAddMealAiLoading />
       </div>
     );
