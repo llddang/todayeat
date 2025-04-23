@@ -143,9 +143,14 @@ const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
   );
 };
 
-export default EditCard;
+type MeasurementUnit = 'KCAL' | 'GRAM';
+type MeasurementUnitValues = {
+  label: string;
+  name: string;
+  unit: string;
+};
 
-const MEASUREMENT_UNIT: Record<'KCAL' | 'GRAM', MeasurementUnitValues> = {
+const MEASUREMENT_UNIT: Record<MeasurementUnit, MeasurementUnitValues> = {
   KCAL: {
     label: '칼로리',
     name: 'calories',
@@ -158,8 +163,4 @@ const MEASUREMENT_UNIT: Record<'KCAL' | 'GRAM', MeasurementUnitValues> = {
   }
 } as const;
 
-type MeasurementUnitValues = {
-  label: string;
-  name: string;
-  unit: string;
-};
+export default EditCard;
