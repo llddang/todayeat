@@ -30,7 +30,7 @@ const HomeContent = () => {
 
   return (
     <GlassBackground className="flex min-h-0 flex-1 flex-col gap-7 rounded-[2rem] pb-8 pt-6 xl:flex-row xl:gap-8 xl:py-6 xl:pl-6 xl:pr-3">
-      <ScrollbarContainer className="overflow-y-scroll xl:flex-1 xl:pr-4" contentClassName="space-y-4">
+      <ScrollbarContainer className="xl:flex-1 xl:pr-4" contentClassName="space-y-4">
         <AiFeedbackText nutritionData={nutrient} nutritionGoal={user.personalInfo} />
         {!user.personalInfo && (
           <CtaExampleFeedbackBanner
@@ -49,7 +49,7 @@ const HomeContent = () => {
           <MacroNutrientGroup total={nutrient} goal={user.personalInfo} />
         </div>
       </ScrollbarContainer>
-      <ScrollbarContainer className="overflow-y-scroll xl:flex-1 xl:pr-4">
+      <ScrollbarContainer className="xl:flex-1 xl:pr-4">
         <Typography as="h3" variant="subTitle2" className="mb-4 text-gray-900">
           식단 기록
         </Typography>
