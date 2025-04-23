@@ -1,4 +1,4 @@
-export const CALENDAR_STAND_COUNT = 6;
+export const CALENDAR_STAND_COUNT = 4;
 export const CALENDAR_RANGE_OFFSET: readonly number[] = Array.from(
   { length: CALENDAR_STAND_COUNT * 2 + 1 },
   (_, i) => i - CALENDAR_STAND_COUNT

@@ -20,6 +20,11 @@ const HomeCalendarMonth = () => {
   const [api, setApi] = useState<CarouselApi>();
 
   useEffect(() => {
+    setMonthDate(selectedDate);
+    setMonths(getMonthDates(selectedDate));
+  }, [selectedDate]);
+
+  useEffect(() => {
     const [startDay, endDay] = getPeriodInCarouselMonth(months, dailyMealCalories);
     if (!startDay || !endDay) return;
 

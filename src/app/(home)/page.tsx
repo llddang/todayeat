@@ -2,17 +2,19 @@ import CalendarProvider from '@/app/(home)/contexts/calendar.context';
 import DashboardProvider from '@/app/(home)/contexts/dashboard.context';
 import HomeCalendar from './components/home-calendar';
 import HomeContent from './components/home-content';
+import AppUseSummary from './components/app-use-summary';
 
 const HomePage = async () => {
   return (
-    <div>
-      <DashboardProvider>
+    <DashboardProvider>
+      <div>
         <CalendarProvider>
           <HomeCalendar />
         </CalendarProvider>
-        <HomeContent />
-      </DashboardProvider>
-    </div>
+        <AppUseSummary />
+      </div>
+      <HomeContent />
+    </DashboardProvider>
   );
 };
 
