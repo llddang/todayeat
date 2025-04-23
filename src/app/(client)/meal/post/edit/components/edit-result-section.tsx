@@ -136,6 +136,9 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
     mealFormMethods.reset(currentValues);
   };
 
+  const mealCategoryField = mealFormMethods.register('mealCategory');
+  const selectedMealCategory = mealFormMethods.watch('mealCategory');
+
   return (
     <div className="flex flex-col gap-6 px-4 pb-4 pt-2">
       <MealImageCarousel imageList={imageList} />
@@ -173,22 +176,18 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
               </Typography>
               <GlassBackground className="min-h-auto flex w-full flex-col items-start gap-3 rounded-2xl border-none p-4">
                 <div className="scrollbar-hidden flex w-full items-start justify-between gap-2 overflow-x-auto">
-                  {MEAL_CATEGORY.map((option) => {
-                    const field = mealFormMethods.register('mealCategory');
-                    const selected = mealFormMethods.watch('mealCategory');
-                    return (
-                      <TagSelectItem
-                        key={option.value}
-                        id={option.value}
-                        groupName="MEAL_CATEGORY"
-                        icon={option.icon}
-                        label={option.label}
-                        value={option.value}
-                        checked={selected === option.value}
-                        {...field}
-                      />
-                    );
-                  })}
+                  {MEAL_CATEGORY.map((option) => (
+                    <TagSelectItem
+                      key={option.value}
+                      id={option.value}
+                      groupName="MEAL_CATEGORY"
+                      icon={option.icon}
+                      label={option.label}
+                      value={option.value}
+                      checked={selectedMealCategory === option.value}
+                      {...mealCategoryField}
+                    />
+                  ))}
                 </div>
                 <div className="flex w-full gap-2">
                   <EditCalendarDrawer date={day} onDateChange={handleDayChange} />
