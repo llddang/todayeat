@@ -54,9 +54,13 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
     },
     mode: 'onBlur'
   });
-  const { fields: mealCardList, remove } = useFieldArray({ control: mealFormMethods.control, name: 'mealList' });
+  const { fields: mealCardList, remove } = useFieldArray({
+    control: mealFormMethods.control,
+    name: 'mealList',
+    keyName: 'id'
+  });
   const day = mealFormMethods.getValues('date.day');
-  const date = mealFormMethods.watch('date');
+  const date = mealFormMethods.getValues('date');
 
   useEffect(() => {
     const sumTotalNutrient = mealCardList.reduce(
@@ -123,6 +127,12 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
     mealFormMethods.setValue('mealList', [...mealFormMethods.getValues('mealList'), newMeal]);
   };
 
+  const handleRemoveMeal = (index: number) => {
+    remove(index);
+    const currentValues = mealFormMethods.getValues();
+    mealFormMethods.reset(currentValues);
+  };
+
   return (
     <div className="flex flex-col gap-6 px-4 pb-4 pt-2">
       <MealImageCarousel imageList={imageList} />
@@ -150,7 +160,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
                 </Typography>
               </Typography>
               {mealCardList.map((meal, idx) => (
-                <EditCard key={meal.id} idx={idx} mealDetail={meal} onRemove={remove} />
+                <EditCard key={meal.id} idx={idx} mealDetail={meal} onRemove={() => handleRemoveMeal(idx)} />
               ))}
               <MealPostAddMealDrawer onAddMeal={handleAddMeal} />
             </section>

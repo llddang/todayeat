@@ -13,7 +13,6 @@ import { parseGeminiResponse } from '@/lib/gemini';
 import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
 import { Typography } from '@/components/ui/typography';
 import { formatNumberWithComma } from '@/utils/format.util';
-import { parseNumber } from '../utils/meal-edit.util';
 
 const AiLoaderWithoutBg = dynamic(() => import('./ai-loader-without-bg'), {
   ssr: false
@@ -22,16 +21,21 @@ const AiLoaderWithoutBg = dynamic(() => import('./ai-loader-without-bg'), {
 type EditCardProps = {
   mealDetail: AiResponseDTO;
   idx: number;
-  onRemove: (idx: number) => void;
+  onRemove: () => void;
 };
 
 const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
   const { control, register, watch, setValue, getValues } = useFormContext();
   const [isLoading, setIsLoading] = useState(false);
-
+  console.log(idx, 'idx');
   const menuName = watch(`mealList.${idx}.menuName`);
+  
   const weight = watch(`mealList.${idx}.weight`);
+  console.log('weight',weight)
   const menuDetail = watch(`mealList.${idx}`);
+
+  console.log('menuName', menuName);
+  console.log('weight', weight);
   const isChanged = useMemo(() => {
     const isMenuChanged = menuName !== mealDetail.menuName;
     const isWeightChanged = weight !== mealDetail.weight;
@@ -59,7 +63,7 @@ const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
   const handleDelete = async () => {
     const isConfirm = window.confirm('정말 삭제하시겠습니까?');
     if (isConfirm) {
-      onRemove(idx);
+      onRemove();
     }
   };
 
@@ -83,16 +87,18 @@ const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
             <Controller
               control={control}
               name={`mealList.${idx}.weight`}
-              defaultValue={mealDetail.weight}
-              render={({ field: { value, onChange, ...rest } }) => (
+              render={({ field }) => (
                 <Input
-                  {...rest}
+                  {...field}
                   type="text"
                   inputMode="numeric"
                   maxLength={MAX_NUMERIC_LENGTH}
                   measure={MEASUREMENT_UNIT['GRAM'].unit}
-                  value={value !== undefined ? formatNumberWithComma(value) : ''}
-                  onChange={(e) => onChange(parseNumber(e.target.value))}
+                  value={field.value === undefined ? '' : formatNumberWithComma(field.value)}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9]/g, '');
+                    field.onChange(value ? Number(value) : '');
+                  }}
                   className="flex-1"
                 />
               )}
@@ -100,16 +106,18 @@ const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
             <Controller
               control={control}
               name={`mealList.${idx}.calories`}
-              defaultValue={mealDetail.calories}
-              render={({ field: { value, onChange, ...rest } }) => (
+              render={({ field }) => (
                 <Input
-                  {...rest}
+                  {...field}
                   type="text"
                   inputMode="numeric"
                   measure={MEASUREMENT_UNIT['KCAL'].unit}
                   maxLength={MAX_NUMERIC_LENGTH}
-                  value={value !== undefined ? formatNumberWithComma(value) : ''}
-                  onChange={(e) => onChange(parseNumber(e.target.value))}
+                  value={field.value === undefined ? '' : formatNumberWithComma(field.value)}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9]/g, '');
+                    field.onChange(value ? Number(value) : undefined);
+                  }}
                   className="flex-1"
                 />
               )}
