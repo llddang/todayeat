@@ -24,10 +24,10 @@ import TimePicker, { TimeFields } from './time-picker';
 
 type EditResultSectionProps = {
   imageList: string[];
-  mealList: AiResponseDTO[];
+  initialMealList: AiResponseDTO[];
 };
 
-const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX.Element => {
+const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProps): JSX.Element => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const { meridiem, hours, minutes } = getTimeFieldsFromDate();
@@ -36,7 +36,7 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
     resolver: zodResolver(mealEditFormSchema),
     defaultValues: {
       mealImages: imageList,
-      mealList: mealList,
+        mealList: initialMealList,
       date: {
         day: new Date(),
         meridiem,
@@ -70,7 +70,7 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
         return alert(' 데이터 형식이 올바르지 않습니다.');
       }
 
-      const { date, memo, mealCategory } = form;
+      const { date, memo, mealCategory, mealList } = form;
       const ateAt = formatTimestamp(date);
       const storedImageUrls: string[] = [];
       for (const file of files) {

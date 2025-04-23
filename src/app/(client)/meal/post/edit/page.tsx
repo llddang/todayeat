@@ -31,7 +31,7 @@ const MealPostEditPage = async (): Promise<JSX.Element> => {
     redirect('/meal/post');
   }
 
-  return <EditResultSection imageList={imageList.imageUrls} mealList={aiResponses} />;
+  return <EditResultSection imageList={imageList.imageUrls} initialMealList={aiResponses} />;
 };
 
 export default MealPostEditPage;
