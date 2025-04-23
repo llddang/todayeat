@@ -9,7 +9,7 @@ const Layout = ({
   return (
     <div className="layout-container">
       <Header />
-      <main className="pt-layout xl:flex xl:min-h-screen xl:items-center xl:pt-0">
+      <main className="pt-layout xl:flex xl:min-h-screen xl:items-center xl:justify-center xl:pt-0">
         <Suspense>{children}</Suspense>
       </main>
     </div>
