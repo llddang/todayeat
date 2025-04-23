@@ -34,7 +34,7 @@ const HomeCalendarWeekItem = ({ selectedDate, week, dailyMealCalories }: HomeCal
   };
 
   return (
-    <div className="flex w-full justify-between">
+    <div className="flex w-full justify-between xl:justify-stretch xl:gap-3">
       {week.map(({ day, dayOutside }) => {
         const isSelected = isSameDate(day, selectedDate);
         const { calories, caloriesGoal } = dailyMealCalories[formatDateWithDash(day)] ?? {

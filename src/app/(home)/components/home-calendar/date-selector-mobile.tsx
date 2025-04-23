@@ -30,24 +30,25 @@ const DateSelectorMobile = ({ open, onOpenChange }: DateSelectorMobileProps) => 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent>
-        <DrawerHeader className="sr-only">
-          <DrawerTitle>날짜 선택</DrawerTitle>
-          <DrawerDescription>섭취 정보를 조회할 날짜를 선택하세요.</DrawerDescription>
-        </DrawerHeader>
-        <Calendar
-          locale={ko}
-          selected={date}
-          onDayClick={setDate}
-          weekStartsOn={1}
-          fixedWeeks
-          defaultMonth={date}
-          formatters={{ formatCaption: formatDateToLocaleKR }}
-        />
-        {/* TODO: temp-layout 풀기 */}
-        <div className="!mt-2 w-full pb-4 pt-2 temp-layout">
-          <Button onClick={handleSelectDate} className="w-full">
-            날짜 선택 완료
-          </Button>
+        <div className="w-full layout-container">
+          <DrawerHeader className="sr-only">
+            <DrawerTitle>날짜 선택</DrawerTitle>
+            <DrawerDescription>섭취 정보를 조회할 날짜를 선택하세요.</DrawerDescription>
+          </DrawerHeader>
+          <Calendar
+            locale={ko}
+            selected={date}
+            onDayClick={setDate}
+            weekStartsOn={1}
+            fixedWeeks
+            defaultMonth={date}
+            formatters={{ formatCaption: formatDateToLocaleKR }}
+          />
+          <div className="!mt-2 w-full pb-4 pt-2">
+            <Button onClick={handleSelectDate} className="w-full">
+              날짜 선택 완료
+            </Button>
+          </div>
         </div>
       </DrawerContent>
     </Drawer>

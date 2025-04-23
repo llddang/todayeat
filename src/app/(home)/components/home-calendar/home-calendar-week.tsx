@@ -21,6 +21,11 @@ const HomeCalendarWeek = () => {
   const [api, setApi] = useState<CarouselApi>();
 
   useEffect(() => {
+    setWeekDate(selectedDate);
+    setWeeks(getWeekDates(selectedDate));
+  }, [selectedDate]);
+
+  useEffect(() => {
     const [startDay, endDay] = getPeriodInCarouselWeek(weeks, dailyMealCalories);
     if (!startDay || !endDay) return;
     getAllMyDailyCalories(startDay, endDay).then(setDailyMealCalories).catch();

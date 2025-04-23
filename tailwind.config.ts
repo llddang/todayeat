@@ -15,6 +15,9 @@ const config: Config = {
       maxWidth: {
         md: '440px'
       },
+      boxShadow: {
+        modal: '0px 6px 32px 0px rgba(87, 33, 211, 0.06), 0px 0px 0px 1px rgba(186, 55, 41, 0.10)'
+      },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
@@ -158,6 +161,7 @@ const config: Config = {
         'down-line-gray-800-icon': "url('/icons/down-line-gray-800.svg')",
         'sparkle-illustration': "url('/illustrations/cta-banner-sparkle.svg')",
         'image-upload-illustration': "url('/illustrations/image-upload.svg')",
+        'career-illustration': 'url(/illustrations/career.svg)',
         'ai-sparkle-1': "url('/illustrations/ai-sparkle-1.svg')",
         'ai-sparkle-2': "url('/illustrations/ai-sparkle-2.svg')",
         'delete-2-line-icon': 'url(/icons/delete_2_line.svg)',

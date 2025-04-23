@@ -8,7 +8,7 @@ type MacroNutrientGroupProps = {
 
 const MacroNutrientGroup = ({ total, goal }: MacroNutrientGroupProps) => {
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-3 xl:flex-col">
       <MacronutrientBox
         variety={MacronutrientEnum.CARBOHYDRATE}
         value={total.carbohydrate}
