@@ -13,7 +13,7 @@ type ScrollbarContainerProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> 
 const ScrollbarContainer = ({ children, className, contentClassName, ...props }: ScrollbarContainerProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const timerId = useRef<NodeJS.Timeout>();
+  const timerId = useRef<number | NodeJS.Timeout | null>(null);
 
   const [scrollbarHeight, setScrollbarHeight] = useState<number>(MIN_SCROLLBAR_HEIGHT);
   const [scrollPosition, setScrollPosition] = useState<number>(0);
