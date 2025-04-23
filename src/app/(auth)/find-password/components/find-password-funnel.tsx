@@ -1,15 +1,15 @@
 import useFunnel from '@/hooks/use-funnel';
-import { ResetPasswordFunnelStep, ResetPasswordFunnelType } from '../types/funnel-type';
+import { FindPasswordFunnelStep, FindPasswordFunnelType } from '../types/funnel-type';
 import StepEmail from './step-email';
 import React from 'react';
 import StepPassword from './step-password';
 import StepComplete from './step-complete';
 
-const ResetPasswordFunnel = () => {
-  const { Funnel } = useFunnel<ResetPasswordFunnelType, ResetPasswordFunnelStep>(
+const FindPasswordFunnel = () => {
+  const { Funnel } = useFunnel<FindPasswordFunnelType, FindPasswordFunnelStep>(
     'step1',
-    resetPasswordValidateFn,
-    'reset-password-funnel-data'
+    findPasswordValidateFn,
+    'find-password-funnel-data'
   );
 
   return (
@@ -20,9 +20,9 @@ const ResetPasswordFunnel = () => {
     />
   );
 };
-export default React.memo(ResetPasswordFunnel);
+export default React.memo(FindPasswordFunnel);
 
-const resetPasswordValidateFn = {
+const findPasswordValidateFn = {
   step1: () => true,
   step2: () => true,
   complete: () => true

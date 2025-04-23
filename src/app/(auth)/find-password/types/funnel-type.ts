@@ -1,6 +1,6 @@
-export type ResetPasswordFunnelStep = 'step1' | 'step2' | 'complete';
+export type FindPasswordFunnelStep = 'step1' | 'step2' | 'complete';
 
-export type ResetPasswordFunnelType = {
+export type FindPasswordFunnelType = {
   step1: StepEmailType;
   step2: StepPasswordType;
   complete: StepCompleteType;

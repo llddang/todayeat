@@ -93,7 +93,7 @@ export const changePassword = async (newPassword: string): Promise<ErrorResponse
 export const resetPasswordByEmail = async (email: string): Promise<ErrorResponse<Record<string, never>>> => {
   const supabase = getServerClient();
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${ENV.PROJECT_URL}/${SITE_MAP.RESET_PASSWORD}?step=step2`
+    redirectTo: `${ENV.PROJECT_URL}/${SITE_MAP.FIND_PASSWORD}?step=step2`
   });
   if (error) return { data: null, error: categoriesError(error) };
   return { data: {}, error };
