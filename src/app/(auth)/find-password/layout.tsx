@@ -1,5 +1,6 @@
 import Header from '@/components/layouts/header';
 import { Suspense } from 'react';
+import TabVisibilityHandler from './components/tab-visibility-handler';
 
 const Layout = ({
   children
@@ -11,6 +12,7 @@ const Layout = ({
       <Header />
       <main className="desktop-width pt-layout xl:pt-0">
         <Suspense>{children}</Suspense>
+        <TabVisibilityHandler />
       </main>
     </div>
   );

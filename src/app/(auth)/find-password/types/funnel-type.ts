@@ -6,8 +6,8 @@ export type FindPasswordFunnelType = {
   complete: StepCompleteType;
 };
 
-export type StepEmailType = {};
+export type StepEmailType = '';
 
-export type StepPasswordType = {};
+export type StepPasswordType = '';
 
-export type StepCompleteType = {};
+export type StepCompleteType = '';

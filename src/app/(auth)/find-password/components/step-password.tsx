@@ -26,13 +26,14 @@ type StepPasswordProps = {
 const StepPassword = ({ nextStep }: StepPasswordProps) => {
   const [isPending, setIsPending] = useState(false);
   const accessToken = useSearchParams().get('code');
-  if (!accessToken) return redirect(`${SITE_MAP.HOME}?error_code=${PUBLIC_ERROR_MESSAGE.EXPIRED_EMAIL_TOKEN.code}`);
 
   const form = useForm<PasswordSchemaType>({
     mode: 'onBlur',
     resolver: zodResolver(passwordSchema),
     defaultValues: { password: '' }
   });
+
+  if (!accessToken) return redirect(`${SITE_MAP.HOME}?error_code=${PUBLIC_ERROR_MESSAGE.EXPIRED_EMAIL_TOKEN.code}`);
 
   const password = form.getValues('password');
   const passwordState = form.getFieldState('password');
