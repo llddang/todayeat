@@ -13,6 +13,7 @@ import { parseGeminiResponse } from '@/lib/gemini';
 import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
 import { Typography } from '@/components/ui/typography';
 import { formatNumberWithComma } from '@/utils/format.util';
+import { MAX_MENU_NAME_LENGTH, MAX_NUMERIC_LENGTH } from '../constants/meal-edit.constant';
 
 const AiLoaderWithoutBg = dynamic(() => import('./ai-loader-without-bg'), {
   ssr: false
@@ -90,10 +91,10 @@ const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
                   inputMode="numeric"
                   maxLength={MAX_NUMERIC_LENGTH}
                   measure={MEASUREMENT_UNIT['GRAM'].unit}
-                  value={field.value === undefined ? '' : formatNumberWithComma(field.value)}
+                  value={field.value ? formatNumberWithComma(field.value) : ''}
                   onChange={(e) => {
                     const value = e.target.value.replace(/[^0-9]/g, '');
-                    field.onChange(value ? Number(value) : '');
+                    field.onChange(value ? Number(value) : undefined);
                   }}
                   className="flex-1"
                 />
@@ -109,7 +110,7 @@ const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
                   inputMode="numeric"
                   measure={MEASUREMENT_UNIT['KCAL'].unit}
                   maxLength={MAX_NUMERIC_LENGTH}
-                  value={field.value === undefined ? '' : formatNumberWithComma(field.value)}
+                  value={field.value ? formatNumberWithComma(field.value) : ''}
                   onChange={(e) => {
                     const value = e.target.value.replace(/[^0-9]/g, '');
                     field.onChange(value ? Number(value) : undefined);
@@ -144,9 +145,7 @@ const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
 
 export default EditCard;
 
-export const MAX_NUMERIC_LENGTH = 4;
-export const MAX_MENU_NAME_LENGTH = 16;
-export const MEASUREMENT_UNIT: Record<MeasurementUnitType, MeasurementUnitValues> = {
+const MEASUREMENT_UNIT: Record<'KCAL' | 'GRAM', MeasurementUnitValues> = {
   KCAL: {
     label: '칼로리',
     name: 'calories',
@@ -159,10 +158,8 @@ export const MEASUREMENT_UNIT: Record<MeasurementUnitType, MeasurementUnitValues
   }
 } as const;
 
-export type MeasurementUnitValues = {
+type MeasurementUnitValues = {
   label: string;
   name: string;
   unit: string;
 };
-
-export type MeasurementUnitType = 'KCAL' | 'GRAM';

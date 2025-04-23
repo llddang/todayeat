@@ -8,24 +8,25 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import IconButton from '@/components/commons/icon-button';
 import { Typography } from '@/components/ui/typography';
-import MealPostAddMealAiLoading from '@/app/(client)/meal/post/components/meal-post-add-meal-ai-loading';
+import MealPostAddMealAiLoading from '@/app/(client)/meal/post/components/add-meal-ai-loading';
 import { useUserStore } from '@/store/user-store';
 import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
 import { parseGeminiResponse } from '@/lib/gemini';
 import { AiResponseDTO } from '@/types/DTO/ai_analysis.dto';
 import { formatNumberWithComma } from '@/utils/format.util';
 import { parseNumber } from '../edit/utils/meal-edit.util';
+import { MAX_MENU_NAME_LENGTH, MAX_NUMERIC_LENGTH } from '../edit/constants/meal-edit.constant';
 
 type FoodFormValues = {
   menuName: string;
   weight: string;
 };
 
-type MealPostAddMealDrawerProps = {
-  onAddMeal: (meal: AiResponseDTO) => void;
+type AddMealDrawerProps = {
+  onAddMeal: (meal: Omit<AiResponseDTO, 'id'>) => void;
 };
 
-const MealPostAddMealDrawer = ({ onAddMeal }: MealPostAddMealDrawerProps) => {
+const AddMealDrawer = ({ onAddMeal }: AddMealDrawerProps) => {
   const user = useUserStore((state) => state.user);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -51,7 +52,6 @@ const MealPostAddMealDrawer = ({ onAddMeal }: MealPostAddMealDrawerProps) => {
       const aiResult = parsedResult[0];
 
       const newMeal = {
-        id: crypto.randomUUID(),
         userId: user.id,
         menuName: data.menuName,
         weight: aiResult.weight,
@@ -70,6 +70,12 @@ const MealPostAddMealDrawer = ({ onAddMeal }: MealPostAddMealDrawerProps) => {
       setIsAnalyzing(false);
       alert('AI 분석 중 문제가 발생했어요. 다시 시도해 주세요.');
     }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    form.handleSubmit(onSubmit)(e);
   };
 
   return (
@@ -103,7 +109,7 @@ const MealPostAddMealDrawer = ({ onAddMeal }: MealPostAddMealDrawerProps) => {
         {isAnalyzing ? (
           <MealPostAddMealAiLoading />
         ) : (
-          <div className="space-y-2">
+          <form onSubmit={handleSubmit} className="space-y-2">
             <div className="flex flex-col gap-4">
               <FormField
                 control={form.control}
@@ -112,7 +118,12 @@ const MealPostAddMealDrawer = ({ onAddMeal }: MealPostAddMealDrawerProps) => {
                   <FormItem className="space-y-2 pt-3">
                     <FormLabel className="text-gray-900">먹은 음식</FormLabel>
                     <FormControl>
-                      <Input placeholder="예시) 김치찌개, 닭가슴살, 크림파스타" {...field} />
+                      <Input
+                        placeholder="예시) 김치찌개, 닭가슴살, 크림파스타"
+                        type="text"
+                        maxLength={MAX_MENU_NAME_LENGTH}
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -129,7 +140,7 @@ const MealPostAddMealDrawer = ({ onAddMeal }: MealPostAddMealDrawerProps) => {
                         {...field}
                         type="text"
                         inputMode="numeric"
-                        maxLength={4}
+                        maxLength={MAX_NUMERIC_LENGTH}
                         measure="g"
                         placeholder="숫자를 입력할 수 있어요"
                         value={field.value ? formatNumberWithComma(Number(field.value)) : ''}
@@ -145,20 +156,15 @@ const MealPostAddMealDrawer = ({ onAddMeal }: MealPostAddMealDrawerProps) => {
             </div>
 
             <DrawerFooter>
-              <Button
-                type="button"
-                disabled={!canSubmit}
-                className="w-full typography-subTitle4"
-                onClick={form.handleSubmit(onSubmit)}
-              >
+              <Button type="submit" disabled={!canSubmit} className="w-full typography-subTitle4">
                 AI에게 분석 요청하기
               </Button>
             </DrawerFooter>
-          </div>
+          </form>
         )}
       </DrawerContent>
     </Drawer>
   );
 };
 
-export default MealPostAddMealDrawer;
+export default AddMealDrawer;

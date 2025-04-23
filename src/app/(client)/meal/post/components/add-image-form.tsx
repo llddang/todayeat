@@ -5,13 +5,13 @@ import { Button } from '@/components/ui/button';
 import { getUser } from '@/apis/user.api';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
-import AddImage from '@/app/(client)/meal/post/components/add-image';
+import AddImage from '@/app/(client)/meal/post/components/add-image-list';
 
-type MealPostAddImageFormProps = {
+type AddImageFormProps = {
   onLoadingChange: (isLoading: boolean) => void;
 };
 
-const MealPostAddImageForm = ({ onLoadingChange }: MealPostAddImageFormProps): JSX.Element => {
+const AddImageForm = ({ onLoadingChange }: AddImageFormProps): JSX.Element => {
   const [images, setImages] = useState<File[]>([]);
   const router = useRouter();
   const handleAnalyzeSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -59,4 +59,4 @@ const MealPostAddImageForm = ({ onLoadingChange }: MealPostAddImageFormProps): J
   );
 };
 
-export default MealPostAddImageForm;
+export default AddImageForm;

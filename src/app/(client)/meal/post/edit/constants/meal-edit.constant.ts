@@ -1,18 +1,8 @@
+
 export const MAX_NUMERIC_LENGTH = 4;
 export const MAX_MENU_NAME_LENGTH = 16;
+export const MAX_MEMO_LENGTH = 200;
 
-export const MEASUREMENT_UNIT = {
-  KCAL: {
-    label: '칼로리',
-    name: 'calories',
-    unit: 'kcal'
-  },
-  GRAM: {
-    label: '그램',
-    name: 'weight',
-    unit: 'g'
-  }
-} as const;
 
 export const MEAL_CATEGORY = [
   {
@@ -37,12 +27,7 @@ export const MEAL_CATEGORY = [
   }
 ] as const;
 
-export type MeasurementUnitValues = {
-  label: string;
-  name: string;
-  unit: string;
-};
 
-export type MeasurementUnitType = 'KCAL' | 'GRAM';
 
-export type MealCategoryType = (typeof MEAL_CATEGORY)[number]['value'];
+
+

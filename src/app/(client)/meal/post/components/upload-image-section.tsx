@@ -1,8 +1,8 @@
 'use client';
 import { Typography } from '@/components/ui/typography';
 import React, { useState } from 'react';
-import MealPostAddMealAiLoading from './meal-post-add-meal-ai-loading';
-import MealPostAddImageForm from './meal-post-add-image-form';
+import MealPostAddMealAiLoading from './add-meal-ai-loading';
+import AddImageForm from './add-image-form';
 import useRestoreAnalysisModal from '../hooks/use-restore-analysis-modal';
 import RestoreAnalysisModal from './restore-analysis-modal';
 
@@ -38,7 +38,7 @@ const UploadImageSection = ({ isRecorded }: UploadImageSectionProps): JSX.Elemen
         onApproveClickHandler={handleApproveClick}
         onCancelClickHandler={handleCancelClick}
       />
-      <MealPostAddImageForm onLoadingChange={setIsLoading} />
+      <AddImageForm onLoadingChange={setIsLoading} />
     </div>
   );
 };

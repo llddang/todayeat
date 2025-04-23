@@ -17,19 +17,19 @@ import MealImageCarousel from '../../../components/meal-images-carousel';
 import { Typography } from '@/components/ui/typography';
 import GlassBackground from '@/components/commons/glass-background';
 import TagSelectItem from '@/components/commons/tag-select-item';
-import MealEditCalendar from './meal-edit-calendar';
 import Textarea from '@/components/commons/textarea';
 import { Button } from '@/components/ui/button';
 import TimePicker, { TimeFields } from './time-picker';
-import MealPostAddMealDrawer from '../../components/meal-post-add-meal-drawer';
-import { MEAL_CATEGORY } from '../constants/meal-edit.constant';
+import AddMealDrawer from '../../components/add-meal-drawer';
+import { MAX_MEMO_LENGTH, MEAL_CATEGORY } from '../constants/meal-edit.constant';
 import MacronutrientBox from '@/components/commons/macronutrient-box';
 import { MacronutrientEnum } from '@/types/nutrition.type';
 import MacroNutrientPieChart from '@/components/commons/macronutrient-pie-chart';
+import EditCalendarDrawer from './edit-calendar-drawer';
 
 type EditResultSectionProps = {
   imageList: string[];
-  initialMealList: AiResponseDTO[];
+  initialMealList: Omit<AiResponseDTO, 'id'>[];
 };
 
 const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProps): JSX.Element => {
@@ -126,9 +126,8 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
     }
   };
 
-  const handleAddMeal = (newMeal: AiResponseDTO) => {
+  const handleAddMeal = (newMeal: Omit<AiResponseDTO, 'id'>) => {
     append(newMeal);
-    // mealFormMethods.setValue('mealList', [...mealFormMethods.getValues('mealList'), newMeal]);
   };
 
   const handleRemoveMeal = (index: number) => {
@@ -166,7 +165,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
               {mealCardList.map((meal, idx) => (
                 <EditCard key={meal.id} idx={idx} mealDetail={meal} onRemove={() => handleRemoveMeal(idx)} />
               ))}
-              <MealPostAddMealDrawer onAddMeal={handleAddMeal} />
+              <AddMealDrawer onAddMeal={handleAddMeal} />
             </section>
             <section className="my-10 flex w-full flex-col items-start justify-center gap-3">
               <Typography as="h3" variant="body1" className="pl-1">
@@ -192,7 +191,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
                   })}
                 </div>
                 <div className="flex w-full gap-2">
-                  <MealEditCalendar date={day} onDateChange={handleDayChange} />
+                  <EditCalendarDrawer date={day} onDateChange={handleDayChange} />
                   <TimePicker currentTime={date} onTimeChange={handleTimeChange} />
                 </div>
               </GlassBackground>
@@ -210,7 +209,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
                 <Textarea
                   {...mealFormMethods.register('memo')}
                   className="min-h-60 text-gray-500"
-                  maxLength={200}
+                  maxLength={MAX_MEMO_LENGTH}
                   placeholder="예시) 스트레스로 폭식했다, 기분 좋게 잘먹었다, 이 음식 먹고 속이 안 좋았다."
                 />
               </GlassBackground>
@@ -228,7 +227,6 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
 export default EditResultSection;
 
 const mealListSchema = z.object({
-  id: z.string(),
   userId: z.string(),
   menuName: z.string(),
   weight: z.coerce.number(),
@@ -271,7 +269,6 @@ const uploadMealImages = async (imageUrls: string[]): Promise<string[]> => {
 
   return storedImageUrls;
 };
-
 const getTimeFieldsFromDate = (date: Date = new Date()): TimeFields => {
   const hours = date.getHours();
   const minutes = date.getMinutes();
