@@ -42,7 +42,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
     resolver: zodResolver(mealEditFormSchema),
     defaultValues: {
       mealImages: imageList,
-        mealList: initialMealList,
+      mealList: initialMealList,
       date: {
         day: new Date(),
         meridiem,
@@ -85,7 +85,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
         return alert(' 데이터 형식이 올바르지 않습니다.');
       }
 
-      const { date, memo, mealCategory,  mealList, mealImages } = form;
+      const { date, memo, mealCategory, mealList, mealImages } = form;
       const ateAt = formatTimestamp(date);
       const storedImageUrls = await uploadMealImages(mealImages);
 
@@ -132,9 +132,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
             총 영양 정보
           </Typography>
           <div className="flex min-h-[13.125rem] w-full min-w-0 items-center justify-center gap-3 rounded-2xl bg-white/50 p-3 backdrop-blur-[50px]">
-            <div className="aspect-square h-[14.5625rem] flex-1">
-              <MacroNutrientPieChart data={totalNutrient} displayCalories={true} />
-            </div>
+            <MacroNutrientPieChart data={totalNutrient} displayCalories={true} className="w-[14.5625rem]" />
             <div className="flex w-[5.75rem] flex-col items-start justify-center gap-4 px-1">
               <MacronutrientBox variety={MacronutrientEnum.CARBOHYDRATE} value={totalNutrient.carbohydrate} />
               <MacronutrientBox variety={MacronutrientEnum.PROTEIN} value={totalNutrient.protein} />
