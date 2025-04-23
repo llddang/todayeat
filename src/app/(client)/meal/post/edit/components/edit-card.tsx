@@ -27,15 +27,11 @@ type EditCardProps = {
 const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
   const { control, register, watch, setValue, getValues } = useFormContext();
   const [isLoading, setIsLoading] = useState(false);
-  console.log(idx, 'idx');
   const menuName = watch(`mealList.${idx}.menuName`);
-  
+
   const weight = watch(`mealList.${idx}.weight`);
-  console.log('weight',weight)
   const menuDetail = watch(`mealList.${idx}`);
 
-  console.log('menuName', menuName);
-  console.log('weight', weight);
   const isChanged = useMemo(() => {
     const isMenuChanged = menuName !== mealDetail.menuName;
     const isWeightChanged = weight !== mealDetail.weight;
