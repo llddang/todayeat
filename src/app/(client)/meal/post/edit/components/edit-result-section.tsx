@@ -54,10 +54,13 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
     },
     mode: 'onBlur'
   });
-  const { fields: mealCardList, remove } = useFieldArray({
+  const {
+    fields: mealCardList,
+    remove,
+    append
+  } = useFieldArray({
     control: mealFormMethods.control,
-    name: 'mealList',
-    keyName: 'id'
+    name: 'mealList'
   });
   const day = mealFormMethods.getValues('date.day');
   const date = mealFormMethods.getValues('date');
@@ -124,7 +127,8 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
   };
 
   const handleAddMeal = (newMeal: AiResponseDTO) => {
-    mealFormMethods.setValue('mealList', [...mealFormMethods.getValues('mealList'), newMeal]);
+    append(newMeal);
+    // mealFormMethods.setValue('mealList', [...mealFormMethods.getValues('mealList'), newMeal]);
   };
 
   const handleRemoveMeal = (index: number) => {
