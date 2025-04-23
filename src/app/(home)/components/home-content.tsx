@@ -14,6 +14,7 @@ import CaloriesSummaryCard from './calories-summary-card';
 import MacroNutrientGroup from './macronutrient-group';
 import MealEmptyCard from './meal-empty-card';
 import MealCard from './meal-card';
+import ScrollbarContainer from './scrollbar-container';
 
 const HomeContent = () => {
   const { selectedDate } = useDashboard();
@@ -28,8 +29,8 @@ const HomeContent = () => {
   }, [selectedDate]);
 
   return (
-    <GlassBackground className="flex min-h-0 flex-1 flex-col gap-7 rounded-[2rem] pb-8 pt-6 xl:flex-row xl:gap-10 xl:p-6">
-      <div className="space-y-4 overflow-y-scroll xl:flex-1">
+    <GlassBackground className="flex min-h-0 flex-1 flex-col gap-7 rounded-[2rem] pb-8 pt-6 xl:flex-row xl:gap-8 xl:py-6 xl:pl-6 xl:pr-3">
+      <ScrollbarContainer className="overflow-y-scroll xl:flex-1 xl:pr-4" contentClassName="space-y-4">
         <AiFeedbackText nutritionData={nutrient} nutritionGoal={user.personalInfo} />
         {!user.personalInfo && (
           <CtaExampleFeedbackBanner
@@ -47,8 +48,8 @@ const HomeContent = () => {
           <CaloriesSummaryCard total={nutrient.calories} goal={user.personalInfo?.dailyCaloriesGoal || 0} />
           <MacroNutrientGroup total={nutrient} goal={user.personalInfo} />
         </div>
-      </div>
-      <section className="overflow-y-scroll xl:flex-1">
+      </ScrollbarContainer>
+      <ScrollbarContainer className="overflow-y-scroll xl:flex-1 xl:pr-4">
         <Typography as="h3" variant="subTitle2" className="mb-4 text-gray-900">
           식단 기록
         </Typography>
@@ -61,7 +62,7 @@ const HomeContent = () => {
             ))}
           </ul>
         )}
-      </section>
+      </ScrollbarContainer>
     </GlassBackground>
   );
 };
