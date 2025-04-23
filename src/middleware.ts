@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import SITE_MAP from './constants/site-map.constant';
 
-const PUBLIC_AUTH_PATHS = [SITE_MAP.SIGN_IN, SITE_MAP.SIGN_UP];
+const PUBLIC_AUTH_PATHS = [SITE_MAP.SIGN_IN, SITE_MAP.SIGN_UP, SITE_MAP.FIND_PASSWORD];
 const PROTECTED_PATHS = [SITE_MAP.MY_PAGE, SITE_MAP.SET_GOAL];
 
 const ALL_MANAGED_PATHS = [...PUBLIC_AUTH_PATHS, ...PROTECTED_PATHS];
