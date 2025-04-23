@@ -29,10 +29,10 @@ import MacroNutrientPieChart from '@/components/commons/macronutrient-pie-chart'
 
 type EditResultSectionProps = {
   imageList: string[];
-  mealList: AiResponseDTO[];
+  initialMealList: AiResponseDTO[];
 };
 
-const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX.Element => {
+const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProps): JSX.Element => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [totalNutrient, setTotalNutrient] = useState({ calories: 0, protein: 0, carbohydrate: 0, fat: 0 });
@@ -42,7 +42,7 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
     resolver: zodResolver(mealEditFormSchema),
     defaultValues: {
       mealImages: imageList,
-      mealList: mealList,
+        mealList: initialMealList,
       date: {
         day: new Date(),
         meridiem,
@@ -85,7 +85,7 @@ const EditResultSection = ({ imageList, mealList }: EditResultSectionProps): JSX
         return alert(' 데이터 형식이 올바르지 않습니다.');
       }
 
-      const { date, memo, mealCategory, mealList, mealImages } = form;
+      const { date, memo, mealCategory,  mealList, mealImages } = form;
       const ateAt = formatTimestamp(date);
       const storedImageUrls = await uploadMealImages(mealImages);
 

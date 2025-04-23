@@ -7,10 +7,12 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="temp-layout">
+    <div className="layout-container">
       <Header variant="backButton" />
-      <main className="pt-layout">{children}</main>
-      <Footer />
+      <div className="desktop-width mx-auto flex min-h-screen flex-col items-center justify-center pt-layout xl:pt-0">
+        <main className="w-full">{children}</main>
+        <Footer />
+      </div>
     </div>
   );
 };
