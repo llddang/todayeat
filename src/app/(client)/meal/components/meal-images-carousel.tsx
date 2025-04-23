@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/components/ui/carousel';
+import { isClient } from '@/utils/predicate.util';
 
 const MealImageCarousel = ({ imageList, pagination = true }: { imageList: string[]; pagination?: boolean }) => {
   const [api, setApi] = useState<CarouselApi>();
@@ -31,7 +32,7 @@ const MealImageCarousel = ({ imageList, pagination = true }: { imageList: string
     if (api) api.scrollTo(index);
   };
   // 페이지네이션이 사용 가능한 경우 - api 로드 완료 && 페이지네이션 사용 true && 이미지 1개 이상
-  const isPaginationOn = api && pagination && count > 1;
+  const isPaginationOn = isClient() && api && pagination && count > 1;
   return (
     <Carousel setApi={setApi} className="w-full overflow-hidden rounded-2xl">
       <CarouselContent className="ml-0 gap-4">

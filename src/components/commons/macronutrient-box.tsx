@@ -15,7 +15,7 @@ const MacronutrientBox = ({ variety, value }: { variety: MacronutrientEnumType; 
           beforeBgColor
         )}
       />
-      <div className="flex flex-1 flex-col items-start gap-1.5">
+      <div className="flex flex-1 flex-col items-start gap-0.5">
         <Typography as="span" variant="body3" className="text-gray-700">
           {label}
         </Typography>
