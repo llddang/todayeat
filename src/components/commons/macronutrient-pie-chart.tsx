@@ -6,6 +6,7 @@ import { MealDetailDTO } from '@/types/DTO/meal.dto';
 import { MealNutritionType } from '@/types/nutrition.type';
 import { Typography } from '../ui/typography';
 import { formatNumberWithComma } from '@/utils/format.util';
+import { cn } from '@/lib/shadcn';
 
 const chartConfig = {
   carbohydrate: {
@@ -25,9 +26,10 @@ const chartConfig = {
 type MacroNutrientPieChartProps = {
   data: MacronutrientData;
   displayCalories?: boolean;
+  className?: string;
 };
 
-const MacroNutrientPieChart = ({ data, displayCalories = false }: MacroNutrientPieChartProps) => {
+const MacroNutrientPieChart = ({ data, displayCalories = false, className }: MacroNutrientPieChartProps) => {
   const chartData: ChartData[] = Object.entries(data)
     .filter(([key]) => key !== 'calories')
     .map(([key, value]) => ({
@@ -37,7 +39,7 @@ const MacroNutrientPieChart = ({ data, displayCalories = false }: MacroNutrientP
 
   return (
     <div className="relative w-fit">
-      <ChartContainer config={chartConfig} className="aspect-square h-60">
+      <ChartContainer config={chartConfig} className={cn('aspect-square h-60', className)}>
         <PieChart>
           <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
           <Pie
