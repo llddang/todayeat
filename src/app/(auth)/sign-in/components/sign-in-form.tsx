@@ -81,7 +81,7 @@ const SignInForm = () => {
                 회원가입
               </Typography>
             </Link>
-            <Link href={SITE_MAP.FIND_PASSWORD}>
+            <Link href={SITE_MAP.RESET_PASSWORD}>
               <Typography variant="subTitle4" className="flex h-11 items-center justify-center px-6 text-gray-600">
                 비밀번호 찾기
               </Typography>
