@@ -76,7 +76,7 @@ const ScrollbarContainer = ({ children, className, contentClassName, ...props }:
   );
 
   const handleMouseMove = useCallback(
-    (e: MouseEvent) => {
+    (e: React.MouseEvent<HTMLDivElement>) => {
       if (!isDragging || !containerRef.current || !contentRef.current) return;
 
       const containerHeight = containerRef.current.clientHeight;
@@ -122,23 +122,15 @@ const ScrollbarContainer = ({ children, className, contentClassName, ...props }:
     };
   }, [calculateScrollbarMetrics]);
 
-  useEffect(() => {
-    if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-    } else {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    }
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [isDragging, handleMouseMove, handleMouseUp]);
-
   return (
-    <div ref={containerRef} className={cn('relative', className)} {...props}>
+    <div
+      ref={containerRef}
+      className={cn('relative', className)}
+      {...props}
+      onMouseMove={isDragging ? handleMouseMove : undefined}
+      onMouseUp={isDragging ? handleMouseUp : undefined}
+      onMouseLeave={isDragging ? handleMouseUp : undefined}
+    >
       <div
         ref={contentRef}
         className={cn('scrollbar-hidden h-full overflow-auto', contentClassName)}
