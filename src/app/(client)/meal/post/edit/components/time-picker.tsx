@@ -86,8 +86,6 @@ const TimePicker = ({ currentTime, onTimeChange }: TimePickerProps) => {
 
 export default TimePicker;
 
-export type TimeFields = Omit<z.infer<typeof dateSchema>, 'day'>;
-
 const hours = Array.from({ length: 13 }, (_, i) => String(i).padStart(2, '0'));
 const minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'));
 
@@ -96,3 +94,5 @@ const selections = {
   hours: hours,
   minutes: minutes
 };
+
+export type TimeFields = Omit<z.infer<typeof dateSchema>, 'day'>;

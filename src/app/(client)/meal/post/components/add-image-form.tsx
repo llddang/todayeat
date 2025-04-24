@@ -5,13 +5,13 @@ import { Button } from '@/components/ui/button';
 import { getUser } from '@/apis/user.api';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
-import AddImage from '@/app/(client)/meal/post/components/add-image';
+import AddImageList from '@/app/(client)/meal/post/components/add-image-list';
 
-type MealPostAddImageFormProps = {
+type AddImageFormProps = {
   onLoadingChange: (isLoading: boolean) => void;
 };
 
-const MealPostAddImageForm = ({ onLoadingChange }: MealPostAddImageFormProps): JSX.Element => {
+const AddImageForm = ({ onLoadingChange }: AddImageFormProps): JSX.Element => {
   const [images, setImages] = useState<File[]>([]);
   const router = useRouter();
   const handleAnalyzeSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -51,7 +51,7 @@ const MealPostAddImageForm = ({ onLoadingChange }: MealPostAddImageFormProps): J
 
   return (
     <form onSubmit={handleAnalyzeSubmit} className="flex w-full flex-col items-center justify-center gap-7">
-      <AddImage onImagesChange={setImages} />
+      <AddImageList onImagesChange={setImages} />
       <Button type="submit" variant="primary" disabled={!images.length}>
         사진 올리고 분석하기
       </Button>
@@ -59,4 +59,4 @@ const MealPostAddImageForm = ({ onLoadingChange }: MealPostAddImageFormProps): J
   );
 };
 
-export default MealPostAddImageForm;
+export default AddImageForm;
