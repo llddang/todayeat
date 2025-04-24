@@ -1,3 +1,5 @@
+'use client';
+import { isClient, isServer } from '@/utils/predicate.util';
 import { useEffect, useState } from 'react';
 
 const useIsMobile = () => {
@@ -18,4 +20,4 @@ const useIsMobile = () => {
 
 export default useIsMobile;
 
-const isMobile = () => window.innerWidth < 1280;
+const isMobile = () => isClient() && window.innerWidth < 1280;
