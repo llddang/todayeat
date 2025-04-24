@@ -73,6 +73,7 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps): JSX.Element => {
       alert('식사 정보가 수정되었습니다.');
       router.refresh();
     } catch (error) {
+      alert('식사 정보 수정에 실패했습니다.');
       console.error('Failed to update meal:', error);
     }
   };
@@ -85,7 +86,7 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps): JSX.Element => {
         <MealList mealDetails={mealDetails} />
         <form onSubmit={handleSubmit(onSubmit)} id="mealDetailForm" className="mt-4 flex flex-col gap-10">
           <section className="flex flex-col gap-3">
-            <Typography as="h3" variant="body1" className="pl-1">
+            <Typography as="span" variant="body1" className="pl-1">
               식사 시간
             </Typography>
             <GlassBackground className="min-h-auto flex w-full flex-col items-start gap-3 rounded-2xl border-none p-4">
@@ -110,7 +111,7 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps): JSX.Element => {
             </GlassBackground>
           </section>
           <section className="flex flex-col gap-3">
-            <Typography as="h3" variant="body1" className="pl-1">
+            <Typography as="span" variant="body1" className="pl-1">
               식사 일기
             </Typography>
             <GlassBackground className="min-h-auto flex w-full flex-col gap-3 rounded-2xl border-none">

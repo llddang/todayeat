@@ -11,7 +11,11 @@ const MealListCard = ({ mealDetail }: MealListCardProps) => {
   return (
     <div className="flex flex-col gap-2 rounded-2xl bg-white/50 p-3 backdrop-blur-[50px]">
       <div className="flex gap-4 py-1 pl-1 pr-2">
-        <Typography as="span" variant="body1" className="flex-1 text-ellipsis text-gray-900">
+        <Typography
+          as="span"
+          variant="body1"
+          className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-gray-900"
+        >
           {mealDetail.menuName}
         </Typography>
         <div className="flex items-center gap-1">

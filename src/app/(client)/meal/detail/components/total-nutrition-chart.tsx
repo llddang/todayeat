@@ -10,7 +10,7 @@ type TotalNutritionChartProps = {
 const TotalNutritionChart = ({ totalNutrition }: TotalNutritionChartProps) => {
   return (
     <div className="flex flex-col gap-3">
-      <Typography as="p" variant="body1" className="px-1">
+      <Typography as="span" variant="body1" className="px-1">
         총 영양 정보
       </Typography>
       <div className="flex min-h-[13.125rem] w-full min-w-0 items-center justify-center gap-3 rounded-2xl bg-white/50 p-3 backdrop-blur-[50px]">
