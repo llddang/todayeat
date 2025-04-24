@@ -1,12 +1,25 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import PUBLIC_ERROR_MESSAGE, { isPublicErrorMessage } from '@/constants/public-error-message.constant';
+import InformationModal from './information-modal';
+
+const defaultModalInfo = {
+  title: '',
+  description: ''
+};
 
 const ErrorHandler = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
+
+  const [modalInfo, setModalInfo] = useState(defaultModalInfo);
+
+  const handleClose = () => {
+    setModalInfo(defaultModalInfo);
+    router.replace(window.location.pathname);
+  };
 
   useEffect(() => {
     const errorCode = searchParams.get('error_code');
@@ -15,10 +28,9 @@ const ErrorHandler = () => {
 
     const errorConfig = PUBLIC_ERROR_MESSAGE[errorCode];
 
-    alert(errorConfig.message);
-    router.replace(window.location.pathname);
+    setModalInfo({ title: errorConfig.message, description: errorConfig.action });
   }, [searchParams, router]);
 
-  return null;
+  return <InformationModal open={!!modalInfo.title} onOpenChange={handleClose} {...modalInfo} />;
 };
 export default ErrorHandler;
