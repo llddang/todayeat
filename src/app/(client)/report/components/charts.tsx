@@ -1,14 +1,16 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import GlassBackground from '@/components/commons/glass-background';
 import MacroNutrientPieChart from '@/components/commons/macronutrient-pie-chart';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Typography } from '@/components/ui/typography';
-import { Bar, BarChart, Cell, ReferenceLine, XAxis, YAxis } from 'recharts';
-import { BarChartDataType, Unit } from '../types/report';
+import { BarChartDataType, Unit, UnitEnum } from '../types/report.type';
 import { useUserStore } from '@/store/user-store';
-import { useEffect, useState } from 'react';
 import { formatNumberWithComma } from '@/utils/format.util';
+import { UNIT_TEXT } from '../constants/unit.constant';
+import { Bar, BarChart, Cell, ReferenceLine, XAxis, YAxis } from 'recharts';
+import { cn } from '@/lib/shadcn';
 
 const Charts = ({ unit }: { unit: Unit }) => {
   const [barChart, setBarChart] = useState<BarChartDataType[]>([
@@ -23,6 +25,7 @@ const Charts = ({ unit }: { unit: Unit }) => {
   const { id: userId, personalInfo } = useUserStore((state) => state.user);
 
   useEffect(() => {
+    if (!userId) return;
     const fetchData = async () => {
       const res = await fetch('/api/report', {
         method: 'POST',
@@ -30,8 +33,6 @@ const Charts = ({ unit }: { unit: Unit }) => {
         headers: { 'Content-Type': 'application/json' }
       });
       const { barChart, total } = await res.json();
-      console.log('chart ===> ', barChart);
-      console.log('total ===> ', total);
       setBarChart(barChart);
       setTotal(total);
     };
@@ -43,7 +44,8 @@ const Charts = ({ unit }: { unit: Unit }) => {
     <>
       <GlassBackground className="min-h-full w-full rounded-2xl p-4">
         <Typography as="h2" variant="subTitle1">
-          이번 주는 저번 주보다 <br /> 250kcal 덜 먹었어요
+          {UNIT_TEXT[unit].current}
+          {UNIT_TEXT[unit].postposition} {UNIT_TEXT[unit].previous}보다 <br /> 250kcal 덜 먹었어요
         </Typography>
         <ChartContainer config={chartConfig} className="mt-4 min-h-full w-full">
           <BarChart data={barChart} barSize={32}>
@@ -51,8 +53,19 @@ const Charts = ({ unit }: { unit: Unit }) => {
               dataKey="label"
               axisLine={false}
               tickLine={false}
-              className="typography-caption2"
-              tick={{ fill: '#B1B1B1' }}
+              tick={({ x, y, payload }) => {
+                const isCurrent = UNIT_TEXT[unit].current === payload.value;
+                return (
+                  <text
+                    x={x}
+                    y={y + 12} // 위치 보정
+                    textAnchor="middle"
+                    className={cn('typography-caption2', isCurrent ? '!fill-gray-900' : '!fill-gray-500')}
+                  >
+                    {payload.value}
+                  </text>
+                );
+              }}
             />
             <YAxis hide />
             <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey="calories" />} />
@@ -77,7 +90,7 @@ const Charts = ({ unit }: { unit: Unit }) => {
         <div className="flex flex-col gap-3 rounded-xl bg-white p-4 text-gray-700">
           <div className="flex items-center justify-between">
             <Typography as="span" variant="body3">
-              이번 주 평균 섭취 칼로리
+              {UNIT_TEXT[unit].current} {unit !== UnitEnum.DAILY && '평균'} 섭취 칼로리
             </Typography>
             <div className="space-x-1">
               <Typography as="span" variant="subTitle4" className="text-gray-900">
