@@ -15,6 +15,7 @@ import {
 import { calculateNutritionAverage, calculateTotalNutrition } from '@/utils/nutrition-calculator.util';
 import { PERIOD_UNIT_TEXT } from '@/app/(client)/report/constants/unit.constant';
 import { getAllMyMealsByPeriod } from '@/apis/meal.api';
+import { MealNutrition } from '@/types/nutrition.type';
 
 const getDateRanges = (unit: PeriodUnit) => {
   const today = new Date();
@@ -82,7 +83,7 @@ export const POST = async (req: Request) => {
 
   const ranges = getDateRanges(unit);
 
-  let macroTotal = {
+  let macroTotal: MealNutrition = {
     calories: 0,
     carbohydrate: 0,
     protein: 0,
