@@ -15,7 +15,7 @@ import InformationModal from '@/components/commons/information-modal';
 const emailSchema = z.object({ email: formSchema.EMAIL_SCHEMA });
 type EmailFormType = z.infer<typeof emailSchema>;
 
-const StepEmail = () => {
+const StepVerifyingEmail = () => {
   const [isPending, setIsPending] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState<{ title: string; description: ReactNode }>({ title: '', description: '' });
@@ -94,4 +94,4 @@ const StepEmail = () => {
     </>
   );
 };
-export default StepEmail;
+export default StepVerifyingEmail;
