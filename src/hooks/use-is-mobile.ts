@@ -1,23 +1,25 @@
 'use client';
-import { isClient, isServer } from '@/utils/predicate.util';
+
 import { useEffect, useState } from 'react';
 
 const useIsMobile = () => {
-  const [windowSize, setWindowSize] = useState(isMobile());
+  const [isMobile, setIsMobile] = useState(true);
 
   useEffect(() => {
+    const checkIsMobile = () => window.innerWidth < 1280;
+
+    setIsMobile(checkIsMobile());
+
     const handleResize = () => {
-      setWindowSize(isMobile());
+      setIsMobile(checkIsMobile());
     };
 
-    handleResize();
     window.addEventListener('resize', handleResize);
+
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  return windowSize;
+  return isMobile;
 };
 
 export default useIsMobile;
-
-const isMobile = () => isClient() && window.innerWidth < 1280;
