@@ -27,21 +27,28 @@ const getDateRanges = (unit: Unit) => {
     let end: Date;
     let label: string;
 
-    if (unit === UnitEnum.DAILY) {
-      base = subDays(base, i);
-      start = startOfDay(base);
-      end = endOfDay(base);
-      label = format(base, 'M.dd');
-    } else if (unit === UnitEnum.WEEKLY) {
-      base = subWeeks(base, i);
-      start = startOfWeek(base, { weekStartsOn: 1 });
-      end = endOfWeek(base, { weekStartsOn: 1 });
-      label = `~${format(end, 'M.dd')}`;
-    } else {
-      base = subMonths(base, i);
-      start = startOfMonth(base);
-      end = endOfMonth(base);
-      label = format(base, 'yy.MM');
+    switch (unit) {
+      case UnitEnum.DAILY: {
+        base = subDays(base, i);
+        start = startOfDay(base);
+        end = endOfDay(base);
+        label = format(base, 'M.dd');
+        break;
+      }
+      case UnitEnum.WEEKLY: {
+        base = subWeeks(base, i);
+        start = startOfWeek(base, { weekStartsOn: 1 });
+        end = endOfWeek(base, { weekStartsOn: 1 });
+        label = `~${format(end, 'M.dd')}`;
+        break;
+      }
+      case UnitEnum.MONTHLY: {
+        base = subMonths(base, i);
+        start = startOfMonth(base);
+        end = endOfMonth(base);
+        label = format(base, 'yy.MM');
+        break;
+      }
     }
 
     result.push({ start, end, label });
@@ -52,6 +59,19 @@ const getDateRanges = (unit: Unit) => {
   }
 
   return result;
+};
+
+const isCurrentLabel = (unit: Unit, label: string): boolean => {
+  switch (unit) {
+    case UnitEnum.DAILY:
+      return label === UNIT_TEXT[UnitEnum.DAILY].current;
+    case UnitEnum.WEEKLY:
+      return label === UNIT_TEXT[UnitEnum.WEEKLY].current;
+    case UnitEnum.MONTHLY:
+      return label === UNIT_TEXT[UnitEnum.MONTHLY].current;
+    default:
+      return false;
+  }
 };
 
 export const POST = async (req: Request) => {
@@ -94,7 +114,7 @@ export const POST = async (req: Request) => {
       return {
         label,
         value,
-        fill: label === '이번 주' || label === '오늘' || label === '이번 달' ? '#FFE37E' : '#FFF5CC'
+        fill: isCurrentLabel(unit, label) ? '#FFE37E' : '#FFF5CC'
       };
     })
   );
