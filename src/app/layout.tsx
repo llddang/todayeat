@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     description: '먹기 전에 찰칵! 사진 한 장으로 내 식단을 똑똑하게 분석해주는 스마트 식단 관리 서비스',
     siteName: '투데잇',
     images: {
-      url: '/site-thumbnail.svg',
+      url: `${ENV.PROJECT_URL}/site-thumbnail.svg`,
       width: 1521,
       height: 1080,
       alt: '투데잇 서비스 설명 이미지'
