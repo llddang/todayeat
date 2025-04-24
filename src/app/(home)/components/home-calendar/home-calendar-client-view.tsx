@@ -55,6 +55,7 @@ const HomeCalendarClientView = ({ dailyMealCalories }: HomeCalendarClientViewPro
           <Responsive
             mobile={<DateSelectorMobile open={isOpen} onOpenChange={setIsOpen} />}
             pc={<DateSelectorPc open={isOpen} onOpenChange={setIsOpen} />}
+            mode="js"
           />
         </div>
         <TabsContent value="week">
