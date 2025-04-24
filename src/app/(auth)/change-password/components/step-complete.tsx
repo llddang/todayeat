@@ -2,6 +2,7 @@ import ButtonLink from '@/components/commons/button-link';
 import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
 
+// TODO: 디자인 완료되면 반영하기
 const StepComplete = () => {
   return (
     <div className="absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-9 px-4">
