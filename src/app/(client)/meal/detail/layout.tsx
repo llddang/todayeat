@@ -10,7 +10,7 @@ const Layout = ({
   return (
     <div className="layout-container">
       <Header variant="withProfile" />
-      <div className="py-layout">
+      <div className="mx-auto py-layout desktop-width">
         <main>{children}</main>
         <Footer />
       </div>
