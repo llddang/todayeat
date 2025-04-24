@@ -18,7 +18,6 @@ import Textarea from '@/components/commons/textarea';
 import { Button } from '@/components/ui/button';
 import { formatTimestamp } from '@/utils/format.util';
 import { updateMeal } from '@/apis/meal.api';
-import { useRouter } from 'next/navigation';
 import { MEAL_CATEGORY } from '../../constants/category.constant';
 import { useMemo } from 'react';
 
@@ -29,7 +28,6 @@ type MealDetailSectionProps = {
 const MealDetailSection = ({ meal }: MealDetailSectionProps): JSX.Element => {
   const { id, ateAt, mealCategory, memo, foodImages, mealDetails } = meal;
   const ateAtDate = useMemo(() => new Date(ateAt), [ateAt]);
-  const router = useRouter();
   const { register, handleSubmit, setValue, watch, getValues } = useForm<MealDetailFormData>({
     resolver: zodResolver(mealDetailFormSchema),
     defaultValues: {
@@ -71,7 +69,6 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps): JSX.Element => {
         ateAt: formatTimestamp(form.date)
       });
       alert('식사 정보가 수정되었습니다.');
-      router.refresh();
     } catch (error) {
       alert('식사 정보 수정에 실패했습니다.');
       console.error('Failed to update meal:', error);
