@@ -12,13 +12,14 @@ export const generateMetadata = async (): Promise<Metadata> => {
   if (!userId || !imageList || aiResponses.length === 0) {
     return {
       title: '등록된 식사정보가 없습니다 | 투데잇',
-      description: '식사 정보를 먼저 등록해주세요.'
+      description: '식사 정보를 먼저 등록해 주세요.'
     };
   }
 
   return {
     title: '음식 등록 | 투데잇',
-    description: '오늘 먹은 음식을 등록하고 기록해보세요.'
+    description: '오늘 먹은 음식을 등록하고 기록해 보세요.',
+    keywords: ['식단 기록', '음식 분석', 'AI 영양소 계산', '칼로리 기록']
   };
 };
 
