@@ -5,7 +5,7 @@ const AiLoaderLottie = dynamic(() => import('@/components/commons/ai-loader-lott
   ssr: false
 });
 
-const MealPostAddMealAiLoading = () => {
+const AddMealAiLoading = () => {
   return (
     <div className="flex flex-col items-center">
       <AiLoaderLottie />
@@ -20,4 +20,4 @@ const MealPostAddMealAiLoading = () => {
   );
 };
 
-export default MealPostAddMealAiLoading;
+export default AddMealAiLoading;

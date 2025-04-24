@@ -9,11 +9,11 @@ import PIC_LINE from '@/../public/icons/pic_line.svg';
 import CLOSE_LINE from '@/../public/icons/close_line.svg';
 import { getFileId } from '../../utils/file.util';
 
-type AddImageProps = {
+type AddImageListProps = {
   onImagesChange?: (files: File[]) => void;
 };
 
-const AddImage = ({ onImagesChange }: AddImageProps) => {
+const AddImageList = ({ onImagesChange }: AddImageListProps) => {
   const user = useUserStore((state) => state.user);
   const router = useRouter();
   const inputFileRef = useRef<HTMLInputElement>(null);
@@ -133,7 +133,7 @@ const AddImage = ({ onImagesChange }: AddImageProps) => {
   );
 };
 
-export default AddImage;
+export default AddImageList;
 
 type ImagePreview = {
   imageUrl: string;
