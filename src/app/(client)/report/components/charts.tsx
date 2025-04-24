@@ -75,7 +75,7 @@ const Charts = ({ unit }: { unit: Unit }) => {
                 );
               }}
             />
-            <YAxis hide />
+            <YAxis hide domain={[0, Math.max(personalInfo?.dailyCaloriesGoal ?? 0, ...barChart.map((d) => d.value))]} />
             <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey="calories" />} />
             <Bar dataKey="value" radius={[4, 4, 4, 4]}>
               {barChart.map((entry, index) => (
