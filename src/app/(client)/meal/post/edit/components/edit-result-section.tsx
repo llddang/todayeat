@@ -21,6 +21,7 @@ import MealEditCalendar from './meal-edit-calendar';
 import Textarea from '@/components/commons/textarea';
 import { Button } from '@/components/ui/button';
 import TimePicker, { TimeFields } from './time-picker';
+import { MEAL_CATEGORY } from '../../../constants/category.constant';
 
 type EditResultSectionProps = {
   imageList: string[];
@@ -36,7 +37,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
     resolver: zodResolver(mealEditFormSchema),
     defaultValues: {
       mealImages: imageList,
-        mealList: initialMealList,
+      mealList: initialMealList,
       date: {
         day: new Date(),
         meridiem,
@@ -213,7 +214,6 @@ const mealEditFormSchema = z.object({
 });
 
 type MealEditFormData = z.infer<typeof mealEditFormSchema>;
-export type MealEditFormDataType = z.infer<typeof mealEditFormSchema>;
 
 const getTimeFieldsFromDate = (): TimeFields => {
   const now = new Date();
@@ -226,26 +226,3 @@ const getTimeFieldsFromDate = (): TimeFields => {
     minutes: String(minutes).padStart(2, '0')
   };
 };
-
-const MEAL_CATEGORY = [
-  {
-    value: MealCategory.BREAKFAST,
-    label: '아침',
-    icon: 'before:bg-meal-category-breakfast'
-  },
-  {
-    value: MealCategory.LUNCH,
-    label: '점심',
-    icon: 'before:bg-meal-category-lunch'
-  },
-  {
-    value: MealCategory.DINNER,
-    label: '저녁',
-    icon: 'before:bg-meal-category-dinner'
-  },
-  {
-    value: MealCategory.SNACK,
-    label: '간식',
-    icon: 'before:bg-meal-category-snack'
-  }
-];
