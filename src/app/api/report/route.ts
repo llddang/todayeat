@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { BarChartDataType, PeriodUnit, PeriodUnitEnum } from '@/app/(client)/report/types/report.type';
+import { BarChartDataType, PeriodUnit, PeriodUnitEnum } from '@/app/(client)/report/types/chart.type';
 import {
   subWeeks,
   subDays,

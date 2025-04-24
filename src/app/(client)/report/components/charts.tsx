@@ -2,16 +2,17 @@
 
 import { useEffect, useState } from 'react';
 import GlassBackground from '@/components/commons/glass-background';
-import MacroNutrientPieChart from '@/components/commons/macronutrient-pie-chart';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Typography } from '@/components/ui/typography';
-import { BarChartDataType, PeriodUnit, PeriodUnitEnum } from '../types/report.type';
+import { BarChartDataType, PeriodUnit, PeriodUnitEnum } from '../types/chart.type';
 import { useUserStore } from '@/store/user-store';
 import { formatNumberWithComma } from '@/utils/format.util';
 import { PERIOD_UNIT_TEXT } from '../constants/unit.constant';
 import { Bar, BarChart, Cell, ReferenceLine, XAxis, YAxis } from 'recharts';
 import { cn } from '@/lib/shadcn';
 import { fetchReport } from '../apis/fetch-report.api';
+import MacronutrientPercentageReport from './macronutrient-percentage-report';
+import { MealNutrition } from '@/types/nutrition.type';
 
 const Charts = ({ unit }: { unit: PeriodUnit }) => {
   const [barChart, setBarChart] = useState<BarChartDataType[]>([
@@ -21,7 +22,7 @@ const Charts = ({ unit }: { unit: PeriodUnit }) => {
       fill: ''
     }
   ]);
-  const [total, setTotal] = useState({ calories: 0, carbohydrate: 0, protein: 0, fat: 0 });
+  const [total, setTotal] = useState<MealNutrition>({ calories: 0, carbohydrate: 0, protein: 0, fat: 0 });
 
   const { id: userId, personalInfo } = useUserStore((state) => state.user);
 
@@ -49,7 +50,7 @@ const Charts = ({ unit }: { unit: PeriodUnit }) => {
 
   return (
     <>
-      <GlassBackground className="min-h-full w-full rounded-2xl p-4">
+      <GlassBackground className="mb-4 min-h-full w-full rounded-2xl p-4">
         <Typography as="h2" variant="subTitle1">
           {PERIOD_UNIT_TEXT[unit].current}
           {PERIOD_UNIT_TEXT[unit].postposition} {PERIOD_UNIT_TEXT[unit].previous}보다 <br /> {absDiff}kcal{' '}
@@ -61,6 +62,7 @@ const Charts = ({ unit }: { unit: PeriodUnit }) => {
               dataKey="label"
               axisLine={false}
               tickLine={false}
+              interval={0}
               tick={({ x, y, payload }) => {
                 const isCurrent = PERIOD_UNIT_TEXT[unit].current === payload.value;
                 return (
@@ -78,7 +80,7 @@ const Charts = ({ unit }: { unit: PeriodUnit }) => {
             <YAxis hide domain={[0, Math.max(personalInfo?.dailyCaloriesGoal ?? 0, ...barChart.map((d) => d.value))]} />
             <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey="calories" />} />
             <Bar dataKey="value" radius={[4, 4, 4, 4]}>
-              {barChart.map((entry, index) => (
+              {barChart.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={barChart.length - 1 === index ? '#FFE37E' : '#FFF5CC'} />
               ))}
             </Bar>
@@ -115,7 +117,7 @@ const Charts = ({ unit }: { unit: PeriodUnit }) => {
             </Typography>
             <div className="space-x-1">
               <Typography as="span" variant="subTitle4" className="text-gray-900">
-                {personalInfo ? formatNumberWithComma(personalInfo.dailyCaloriesGoal) : NO_GOAL}
+                {personalInfo ? formatNumberWithComma(personalInfo.dailyCaloriesGoal) : 0}
               </Typography>
               <Typography as="span" variant="body3">
                 kcal
@@ -125,7 +127,7 @@ const Charts = ({ unit }: { unit: PeriodUnit }) => {
         </div>
       </GlassBackground>
       <GlassBackground className="min-h-full w-full rounded-2xl p-4">
-        <MacroNutrientPieChart data={total} />
+        <MacronutrientPercentageReport total={total} personalInfo={personalInfo} />
       </GlassBackground>
     </>
   );
@@ -139,5 +141,3 @@ const chartConfig = {
     color: '#FFF5CC'
   }
 } as const satisfies ChartConfig;
-
-const NO_GOAL = '미설정';

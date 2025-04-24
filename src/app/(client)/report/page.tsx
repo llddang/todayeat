@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Charts from './components/charts';
-import { PeriodUnitEnum } from './types/report.type';
+import { PeriodUnitEnum } from './types/chart.type';
 
 const Report = () => {
   return (
