@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getServerClient } from '@/lib/supabase/server';
+import { BarChartDataType, Unit, UnitEnum } from '@/app/(client)/report/types/report.type';
 import {
   subWeeks,
   subDays,
@@ -12,8 +13,9 @@ import {
   endOfMonth,
   format
 } from 'date-fns';
-
-type Unit = 'daily' | 'weekly' | 'monthly';
+import { calculateNutritionAverage, calculateTotalNutrition } from '@/utils/nutrition-calculator.util';
+import { snakeToCamelObject } from '@/utils/camelize.util';
+import { UNIT_TEXT } from '@/app/(client)/report/constants/unit.constant';
 
 const getDateRanges = (unit: Unit) => {
   const today = new Date();
@@ -25,12 +27,12 @@ const getDateRanges = (unit: Unit) => {
     let end: Date;
     let label: string;
 
-    if (unit === 'daily') {
+    if (unit === UnitEnum.DAILY) {
       base = subDays(base, i);
       start = startOfDay(base);
       end = endOfDay(base);
       label = format(base, 'M.dd');
-    } else if (unit === 'weekly') {
+    } else if (unit === UnitEnum.WEEKLY) {
       base = subWeeks(base, i);
       start = startOfWeek(base, { weekStartsOn: 1 });
       end = endOfWeek(base, { weekStartsOn: 1 });
@@ -39,14 +41,14 @@ const getDateRanges = (unit: Unit) => {
       base = subMonths(base, i);
       start = startOfMonth(base);
       end = endOfMonth(base);
-      label = format(base, 'yyyy.MM');
+      label = format(base, 'yy.MM');
     }
 
     result.push({ start, end, label });
   }
 
   if (result.length > 0) {
-    result[result.length - 1].label = unit === 'daily' ? '오늘' : unit === 'weekly' ? '이번 주' : '이번 달';
+    result[result.length - 1].label = UNIT_TEXT[unit].current;
   }
 
   return result;
@@ -70,10 +72,10 @@ export const POST = async (req: Request) => {
   };
 
   const chartData = await Promise.all(
-    ranges.map(async ({ start, end, label }, index) => {
+    ranges.map(async ({ start, end, label }, index): Promise<BarChartDataType> => {
       const { data, error } = await supabase
         .from('meals')
-        .select('meal_details(calories, carbohydrate, protein, fat)')
+        .select('*, meal_details(*)')
         .eq('user_id', userId)
         .gte('ate_at', start.toISOString())
         .lte('ate_at', end.toISOString());
@@ -83,27 +85,11 @@ export const POST = async (req: Request) => {
         return { label, value: 0, fill: '#FFF5CC' };
       }
 
-      const total = data.reduce(
-        (acc, meal) => {
-          meal.meal_details.forEach((d) => {
-            acc.calories += d.calories ?? 0;
-            acc.carbohydrate += d.carbohydrate ?? 0;
-            acc.protein += d.protein ?? 0;
-            acc.fat += d.fat ?? 0;
-          });
-          return acc;
-        },
-        { calories: 0, carbohydrate: 0, protein: 0, fat: 0 }
-      );
+      const { calories: value } = calculateNutritionAverage(snakeToCamelObject(data));
 
-      // 마지막 구간 (오늘 / 이번 주 / 이번 달)의 총합은 PieChart용
       if (index === ranges.length - 1) {
-        macroTotal = total;
+        macroTotal = calculateTotalNutrition(snakeToCamelObject(data));
       }
-
-      const divisor = unit === 'weekly' ? 7 : unit === 'monthly' ? end.getDate() : 1;
-
-      const value = Math.round(total.calories / divisor);
 
       return {
         label,
@@ -114,7 +100,7 @@ export const POST = async (req: Request) => {
   );
 
   return NextResponse.json({
-    chart: chartData,
+    barChart: chartData,
     total: macroTotal
   });
 };
