@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { isServer } from '@/utils/predicate.util';
@@ -98,14 +98,16 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
   };
 
   const currentStep = getInitialStep(stepInQueryParam, initialStep);
-  const [funnelData, setFunnelData] = useState<Partial<K[T]>>({});
+
+  const funnelDataRef = useRef<Partial<K[T]>>({});
+  let funnelData = funnelDataRef.current;
 
   useEffect(() => {
     if (isServer()) return;
 
     const funnelSessionData = getSessionStorageItem(sessionId, {} as K[T]);
 
-    setFunnelData(funnelSessionData);
+    funnelDataRef.current = funnelSessionData;
 
     if (!validateStep[currentStep](funnelSessionData)) {
       const newSearchParams = new URLSearchParams(searchParams.toString());
@@ -124,7 +126,7 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
 
   const clearFunnelData = () => {
     removeSessionStorageItem(sessionId);
-    setFunnelData({});
+    funnelDataRef.current = {};
   };
 
   const setStepImplementation = <NextStep extends T>(
@@ -141,7 +143,7 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
       return;
     }
 
-    setFunnelData(newData);
+    funnelDataRef.current = newData;
     setSessionStorageItem(sessionId, newData);
 
     const newSearchParams = new URLSearchParams(searchParams.toString());
