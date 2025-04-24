@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import ErrorHandler from '@/components/commons/error-handler';
 import './globals.css';
@@ -12,11 +12,27 @@ const wantedSans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Todayeat',
-  description: '사진을 찍기만 하면 음식을 자동으로 인식하고 영양 정보를 기록해주는 웹 애플리케이션.',
-  viewport: {
-    viewportFit: 'cover'
+  title: '투데잇 | todayeat',
+  description: '먹기 전에 찰칵! 사진 한 장으로 내 식단을 똑똑하게 분석해주는 스마트 식단 관리 서비스',
+  keywords: ['식단 기록', '영양 분석', 'AI 식단', '칼로리 계산', '투데잇'],
+  openGraph: {
+    type: 'website',
+    locale: 'ko_KR',
+    url: 'https://jiwooda.vercel.app/',
+    title: '투데잇 | todayeat',
+    description: '먹기 전에 찰칵! 사진 한 장으로 내 식단을 똑똑하게 분석해주는 스마트 식단 관리 서비스',
+    siteName: '투데잇',
+    images: {
+      url: '/site-thumbnail.svg',
+      width: 1521,
+      height: 1080,
+      alt: '투데잇 서비스 설명 이미지'
+    }
   }
+};
+
+export const viewport: Viewport = {
+  viewportFit: 'cover'
 };
 
 const RootLayout = ({
