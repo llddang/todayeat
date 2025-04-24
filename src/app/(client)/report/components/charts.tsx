@@ -40,12 +40,20 @@ const Charts = ({ unit }: { unit: Unit }) => {
     fetchData();
   }, [unit, userId]);
 
+  const current = barChart[barChart.length - 1]?.value ?? 0;
+  const previous = barChart[barChart.length - 2]?.value ?? 0;
+
+  const diff = current - previous;
+  const isMore = diff > 0;
+  const absDiff = Math.abs(diff);
+
   return (
     <>
       <GlassBackground className="min-h-full w-full rounded-2xl p-4">
         <Typography as="h2" variant="subTitle1">
           {UNIT_TEXT[unit].current}
-          {UNIT_TEXT[unit].postposition} {UNIT_TEXT[unit].previous}보다 <br /> 250kcal 덜 먹었어요
+          {UNIT_TEXT[unit].postposition} {UNIT_TEXT[unit].previous}보다 <br /> {absDiff}kcal {isMore ? '더' : '덜'}{' '}
+          먹었어요
         </Typography>
         <ChartContainer config={chartConfig} className="mt-4 min-h-full w-full">
           <BarChart data={barChart} barSize={32}>
