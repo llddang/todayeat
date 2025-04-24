@@ -65,11 +65,6 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps): JSX.Element => {
 
   const onSubmit = async (form: MealDetailFormData) => {
     try {
-      const formData = new FormData();
-      formData.append('mealCategory', form.mealCategory);
-      formData.append('memo', form.memo);
-      formData.append('ateAt', formatTimestamp(form.date));
-
       await updateMeal(id, {
         mealCategory: form.mealCategory,
         memo: form.memo,
