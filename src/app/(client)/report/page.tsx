@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import Weekly from './components/weekly';
+import Charts from './components/charts';
 
 const Report = () => {
   return (
@@ -16,13 +16,13 @@ const Report = () => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="daily" className="mt-4">
-        <Weekly />
+        <Charts unit="daily" />
       </TabsContent>
       <TabsContent value="weekly" className="mt-4">
-        <Weekly />
+        <Charts unit="weekly" />
       </TabsContent>
       <TabsContent value="monthly" className="mt-4">
-        <Weekly />
+        <Charts unit="monthly" />
       </TabsContent>
     </Tabs>
   );
