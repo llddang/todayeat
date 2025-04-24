@@ -13,13 +13,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Typography } from '@/components/ui/typography';
 import GlassBackground from '@/components/commons/glass-background';
 import TimePicker, { TimeFields } from '../../post/edit/components/time-picker';
-import MealEditCalendar from '../../post/edit/components/meal-edit-calendar';
 import Textarea from '@/components/commons/textarea';
 import { Button } from '@/components/ui/button';
 import { formatTimestamp } from '@/utils/format.util';
 import { updateMeal } from '@/apis/meal.api';
 import { MEAL_CATEGORY } from '../../constants/category.constant';
 import { useMemo } from 'react';
+import EditCalendarDrawer from '../../post/edit/components/edit-calendar-drawer';
 
 type MealDetailSectionProps = {
   meal: MealDTO;
@@ -102,7 +102,7 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps): JSX.Element => {
                 ))}
               </div>
               <div className="flex w-full gap-2">
-                <MealEditCalendar date={day} onDateChange={handleDayChange} />
+                <EditCalendarDrawer date={day} onDateChange={handleDayChange} />
                 <TimePicker currentTime={time} onTimeChange={handleTimeChange} />
               </div>
             </GlassBackground>
