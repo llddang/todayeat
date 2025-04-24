@@ -28,7 +28,7 @@ type MealDetailSectionProps = {
 const MealDetailSection = ({ meal }: MealDetailSectionProps): JSX.Element => {
   const { id, ateAt, mealCategory, memo, foodImages, mealDetails } = meal;
   const ateAtDate = useMemo(() => new Date(ateAt), [ateAt]);
-  const { register, handleSubmit, setValue, watch, getValues } = useForm<MealDetailFormData>({
+  const { register, handleSubmit, setValue, watch, getValues, reset } = useForm<MealDetailFormData>({
     resolver: zodResolver(mealDetailFormSchema),
     defaultValues: {
       mealCategory,
@@ -72,6 +72,7 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps): JSX.Element => {
     } catch (error) {
       alert('식사 정보 수정에 실패했습니다.');
       console.error('Failed to update meal:', error);
+      reset();
     }
   };
 
