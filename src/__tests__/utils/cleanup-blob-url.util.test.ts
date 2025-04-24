@@ -1,4 +1,4 @@
-import { cleanupBlobUrl } from '../cleanup-blob-url.util';
+import { cleanupBlobUrl } from '../../utils/cleanup-blob-url.util';
 
 describe('cleanupBlobUrl', () => {
   it('blob URL을 클린업해야 합니다', () => {
