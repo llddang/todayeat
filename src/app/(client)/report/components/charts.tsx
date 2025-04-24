@@ -11,6 +11,7 @@ import { formatNumberWithComma } from '@/utils/format.util';
 import { UNIT_TEXT } from '../constants/unit.constant';
 import { Bar, BarChart, Cell, ReferenceLine, XAxis, YAxis } from 'recharts';
 import { cn } from '@/lib/shadcn';
+import { fetchReport } from '../lib/fetch-report';
 
 const Charts = ({ unit }: { unit: Unit }) => {
   const [barChart, setBarChart] = useState<BarChartDataType[]>([
@@ -27,14 +28,13 @@ const Charts = ({ unit }: { unit: Unit }) => {
   useEffect(() => {
     if (!userId) return;
     const fetchData = async () => {
-      const res = await fetch('/api/report', {
-        method: 'POST',
-        body: JSON.stringify({ userId, unit }),
-        headers: { 'Content-Type': 'application/json' }
-      });
-      const { barChart, total } = await res.json();
-      setBarChart(barChart);
-      setTotal(total);
+      try {
+        const { barChart, total } = await fetchReport(userId, unit);
+        setBarChart(barChart);
+        setTotal(total);
+      } catch (error) {
+        console.error('리포트 불러오기 실패:', error);
+      }
     };
 
     fetchData();
