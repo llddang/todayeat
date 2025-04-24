@@ -37,8 +37,7 @@ const EditCalendarDrawer = ({ onDateChange }: EditCalendarDrawerProps) => {
           defaultMonth={date}
           formatters={{ formatCaption: formatDateToLocaleKR }}
         />
-        {/* TODO: temp-layout 풀기 */}
-        <div className="!mt-2 w-full pb-4 pt-2 temp-layout">
+        <div className="!mt-2 w-full pb-4 pt-2 layout-container">
           <Button onClick={handleSelectDate} className="w-full">
             날짜 선택 완료
           </Button>
