@@ -133,17 +133,6 @@ const Charts = ({ unit }: { unit: Unit }) => {
 
 export default Charts;
 
-// const data = [
-//   { label: '~2.23', value: 1600, fill: '#FFF5CC' },
-//   { label: '~3.2', value: 1200, fill: '#FFF5CC' },
-//   { label: '~3.9', value: 1300, fill: '#FFF5CC' },
-//   { label: '~3.16', value: 1700, fill: '#FFF5CC' },
-//   { label: '~3.23', value: 2000, fill: '#FFF5CC' },
-//   { label: '~3.30', value: 1800, fill: '#FFF5CC' },
-//   { label: '이번 주', value: 1780, fill: '#FFE37E' }
-// ];
-// const chartData = { carbohydrate: 500, protein: 200, fat: 300, calories: 1000 };
-
 const chartConfig = {
   calories: {
     label: '칼로리',
