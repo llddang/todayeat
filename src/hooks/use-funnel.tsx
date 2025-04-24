@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { isServer } from '@/utils/predicate.util';
@@ -98,14 +98,15 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
   };
 
   const currentStep = getInitialStep(stepInQueryParam, initialStep);
-  const [funnelData, setFunnelData] = useState<Partial<K[T]>>({});
+
+  const funnelDataRef = useRef<Partial<K[T]>>({});
 
   useEffect(() => {
     if (isServer()) return;
 
     const funnelSessionData = getSessionStorageItem(sessionId, {} as K[T]);
 
-    setFunnelData(funnelSessionData);
+    funnelDataRef.current = funnelSessionData;
 
     if (!validateStep[currentStep](funnelSessionData)) {
       const newSearchParams = new URLSearchParams(searchParams.toString());
@@ -124,7 +125,7 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
 
   const clearFunnelData = () => {
     removeSessionStorageItem(sessionId);
-    setFunnelData({});
+    funnelDataRef.current = {};
   };
 
   const setStepImplementation = <NextStep extends T>(
@@ -133,7 +134,7 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
   ): void => {
     if (currentStep === nextStep) return;
 
-    const newData = { ...funnelData, ...(currentStepData || {}) } as K[NextStep];
+    const newData = { ...funnelDataRef.current, ...(currentStepData || {}) } as K[NextStep];
 
     if (!validateStep[nextStep](newData)) {
       alert('비정상적인 접근입니다.');
@@ -141,7 +142,7 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
       return;
     }
 
-    setFunnelData(newData);
+    funnelDataRef.current = newData;
     setSessionStorageItem(sessionId, newData);
 
     const newSearchParams = new URLSearchParams(searchParams.toString());
@@ -156,7 +157,7 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
   };
 
   const Funnel = (props: FunnelComponentProps<K, T>) => {
-    return props[currentStep]({ setStep, data: funnelData as K[T], clearFunnelData });
+    return props[currentStep]({ setStep, data: funnelDataRef.current as K[T], clearFunnelData });
   };
 
   return { Funnel, currentStep };
