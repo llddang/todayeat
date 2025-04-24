@@ -1,28 +1,29 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Charts from './components/charts';
+import { UnitEnum } from './types/report.type';
 
 const Report = () => {
   return (
-    <Tabs defaultValue="weekly">
+    <Tabs defaultValue={UnitEnum.WEEKLY}>
       <TabsList className="flex w-full">
-        <TabsTrigger value="daily" className="flex-1">
+        <TabsTrigger value={UnitEnum.DAILY} className="flex-1">
           일간
         </TabsTrigger>
-        <TabsTrigger value="weekly" className="flex-1">
+        <TabsTrigger value={UnitEnum.WEEKLY} className="flex-1">
           주간
         </TabsTrigger>
-        <TabsTrigger value="monthly" className="flex-1">
+        <TabsTrigger value={UnitEnum.MONTHLY} className="flex-1">
           월간
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="daily" className="mt-4">
-        <Charts unit="daily" />
+      <TabsContent value={UnitEnum.DAILY} className="mt-4">
+        <Charts unit={UnitEnum.DAILY} />
       </TabsContent>
-      <TabsContent value="weekly" className="mt-4">
-        <Charts unit="weekly" />
+      <TabsContent value={UnitEnum.WEEKLY} className="mt-4">
+        <Charts unit={UnitEnum.WEEKLY} />
       </TabsContent>
-      <TabsContent value="monthly" className="mt-4">
-        <Charts unit="monthly" />
+      <TabsContent value={UnitEnum.MONTHLY} className="mt-4">
+        <Charts unit={UnitEnum.MONTHLY} />
       </TabsContent>
     </Tabs>
   );
