@@ -100,7 +100,6 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
   const currentStep = getInitialStep(stepInQueryParam, initialStep);
 
   const funnelDataRef = useRef<Partial<K[T]>>({});
-  let funnelData = funnelDataRef.current;
 
   useEffect(() => {
     if (isServer()) return;
@@ -135,7 +134,7 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
   ): void => {
     if (currentStep === nextStep) return;
 
-    const newData = { ...funnelData, ...(currentStepData || {}) } as K[NextStep];
+    const newData = { ...funnelDataRef.current, ...(currentStepData || {}) } as K[NextStep];
 
     if (!validateStep[nextStep](newData)) {
       alert('비정상적인 접근입니다.');
@@ -158,7 +157,7 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
   };
 
   const Funnel = (props: FunnelComponentProps<K, T>) => {
-    return props[currentStep]({ setStep, data: funnelData as K[T], clearFunnelData });
+    return props[currentStep]({ setStep, data: funnelDataRef.current as K[T], clearFunnelData });
   };
 
   return { Funnel, currentStep };
