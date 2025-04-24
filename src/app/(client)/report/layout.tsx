@@ -15,9 +15,9 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="temp-layout">
+    <div className="layout-container">
       <Header variant="withProfile" />
-      <div className="p-layout">
+      <div className="py-layout">
         <main>{children}</main>
         <Footer />
       </div>
