@@ -18,7 +18,14 @@ const ErrorHandler = () => {
 
   const handleClose = () => {
     setModalInfo(defaultModalInfo);
-    router.replace(window.location.pathname);
+
+    const currentParams = new URLSearchParams(window.location.search);
+    currentParams.delete('error_code');
+
+    const newSearch = currentParams.toString() ? `?${currentParams.toString()}` : '';
+    const newUrl = window.location.pathname + newSearch;
+
+    router.replace(newUrl, { scroll: false });
   };
 
   useEffect(() => {
