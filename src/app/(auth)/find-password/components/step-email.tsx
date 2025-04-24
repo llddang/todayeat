@@ -10,7 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import formSchema from '@/app/schemas/form-schema.schema';
 import { checkEmailExists, resetPasswordByEmail } from '@/apis/auth-server.api';
 import { Typography } from '@/components/ui/typography';
-import InformationModal from './information-modal';
+import InformationModal from '@/components/commons/information-modal';
 
 const emailSchema = z.object({ email: formSchema.EMAIL_SCHEMA });
 type EmailFormType = z.infer<typeof emailSchema>;

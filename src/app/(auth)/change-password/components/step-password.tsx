@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { redirect, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -8,24 +8,32 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { browserClient } from '@/lib/supabase/client';
-import { changePassword, signOut } from '@/apis/auth-server.api';
+import { changePassword } from '@/apis/auth-server.api';
 import formSchema from '@/app/schemas/form-schema.schema';
 import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
 import PUBLIC_ERROR_MESSAGE from '@/constants/public-error-message.constant';
+import InformationModal from '@/components/commons/information-modal';
 
 const passwordSchema = z.object({
   password: formSchema.PASSWORD_SCHEMA
 });
 type PasswordSchemaType = z.infer<typeof passwordSchema>;
 
+const defaultModalInfo = {
+  title: '',
+  description: ''
+};
+
 type StepPasswordProps = {
   nextStep: () => void;
 };
 const StepPassword = ({ nextStep }: StepPasswordProps) => {
   const [isPending, setIsPending] = useState(false);
-  const accessToken = useSearchParams().get('code');
+  const [modalInfo, setModalInfo] = useState<{ title: string; description: ReactNode }>(defaultModalInfo);
+
+  const params = useSearchParams();
+  const error = params.get('error');
 
   const form = useForm<PasswordSchemaType>({
     mode: 'onBlur',
@@ -33,7 +41,7 @@ const StepPassword = ({ nextStep }: StepPasswordProps) => {
     defaultValues: { password: '' }
   });
 
-  if (!accessToken) return redirect(`${SITE_MAP.HOME}?error_code=${PUBLIC_ERROR_MESSAGE.EXPIRED_EMAIL_TOKEN.code}`);
+  if (!!error) return redirect(`${SITE_MAP.HOME}/?error_code=${PUBLIC_ERROR_MESSAGE.EXPIRED_EMAIL_TOKEN.code}`);
 
   const password = form.getValues('password');
   const passwordState = form.getFieldState('password');
@@ -41,12 +49,12 @@ const StepPassword = ({ nextStep }: StepPasswordProps) => {
   const handleSubmit = async ({ password }: PasswordSchemaType) => {
     setIsPending(true);
 
-    await browserClient.auth.exchangeCodeForSession(accessToken);
     const { error: changePasswordError } = await changePassword(password);
-    await signOut();
+
+    if (changePasswordError)
+      setModalInfo({ title: changePasswordError.message, description: changePasswordError.action });
+    else nextStep();
     setIsPending(false);
-    if (changePasswordError) return alert(`${changePasswordError.action} ${changePasswordError.message}`);
-    nextStep();
   };
 
   return (
@@ -75,10 +83,11 @@ const StepPassword = ({ nextStep }: StepPasswordProps) => {
             )}
           />
           <Button type="submit" disabled={isPending || !password || passwordState.invalid} className="w-full">
-            완료
+            {isPending ? '비밀번호 변경 중...' : '완료'}
           </Button>
         </form>
       </Form>
+      <InformationModal open={!!modalInfo.title} onOpenChange={() => setModalInfo(defaultModalInfo)} {...modalInfo} />
     </>
   );
 };
