@@ -4,7 +4,6 @@ import { AiResponseDTO } from '@/types/DTO/ai_analysis.dto';
 import { MealCategory } from '@/types/meal-category.type';
 import { createMealWithDetails, deleteMealAnalysisDetail } from '@/apis/meal.api';
 import { uploadImage } from '@/apis/storage.api';
-import SITE_MAP from '@/constants/site-map.constant';
 import { formatTimestamp } from '@/utils/format.util';
 import { urlToFile } from '../../../utils/file.util';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -22,6 +21,7 @@ import Textarea from '@/components/commons/textarea';
 import { Button } from '@/components/ui/button';
 import TimePicker, { TimeFields } from './time-picker';
 import { MEAL_CATEGORY } from '../../../constants/category.constant';
+import SITE_MAP from '@/constants/site-map.constant';
 
 type EditResultSectionProps = {
   imageList: string[];
@@ -68,19 +68,28 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
     setIsLoading(true);
     try {
       if (!form) {
-        return alert(' 데이터 형식이 올바르지 않습니다.');
+        return alert('데이터 형식이 올바르지 않습니다.');
       }
 
       const { date, memo, mealCategory, mealList } = form;
       const ateAt = formatTimestamp(date);
       const storedImageUrls: string[] = [];
-      for (const file of files) {
-        const formData = new FormData();
-        formData.append('file', file);
-        const { data: fileUrl } = await uploadImage('meal', formData);
-        if (fileUrl) {
-          storedImageUrls.push(fileUrl);
+
+      try {
+        for (const file of files) {
+          const formData = new FormData();
+          formData.append('file', file);
+          const { data: fileUrl, error } = await uploadImage('meal', formData);
+          if (error) {
+            throw new Error('이미지 업로드에 실패했습니다.');
+          }
+          if (fileUrl) {
+            storedImageUrls.push(fileUrl);
+          }
         }
+      } catch (error) {
+        alert('이미지 업로드에 실패했습니다.');
+        console.error('이미지 업로드 중 오류 발생:', error);
       }
 
       const newMeals = {
@@ -89,24 +98,34 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
         mealCategory,
         memo
       };
-      const { mealDetails } = await createMealWithDetails(
-        newMeals,
-        mealList.map((meal) => ({
-          menuName: meal.menuName,
-          weight: meal.weight,
-          calories: meal.calories,
-          carbohydrate: meal.carbohydrate,
-          protein: meal.protein,
-          fat: meal.fat
-        }))
-      );
-      if (mealDetails) {
-        await deleteMealAnalysisDetail();
-        router.push(SITE_MAP.HOME);
+
+      try {
+        const meal = await createMealWithDetails(
+          newMeals,
+          mealList.map((meal) => ({
+            menuName: meal.menuName,
+            weight: meal.weight,
+            calories: meal.calories,
+            carbohydrate: meal.carbohydrate,
+            protein: meal.protein,
+            fat: meal.fat
+          }))
+        );
+
+        if (meal) {
+          try {
+            await deleteMealAnalysisDetail();
+            router.push(SITE_MAP.HOME);
+          } catch (error) {
+            console.error('분석 데이터 삭제 중 오류 발생:', error);
+          }
+        }
+      } catch (error) {
+        console.error('식사 정보 생성 중 오류 발생:', error);
       }
-    } catch (err) {
-      alert('식사 정보 등록에 실패했습니다. 잠시후 다시 시도해주세요');
-      console.error('식사 정보 등록에 실패했습니다.', err);
+    } catch (error) {
+      alert('식사 정보 등록에 실패했습니다. 잠시 후 다시 시도해주세요.');
+      console.error('식사 정보 등록 실패:', error);
       router.refresh();
     } finally {
       setIsLoading(false);
