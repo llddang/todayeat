@@ -11,7 +11,7 @@ import { formatNumberWithComma } from '@/utils/format.util';
 import { PERIOD_UNIT_TEXT } from '../constants/unit.constant';
 import { Bar, BarChart, Cell, ReferenceLine, XAxis, YAxis } from 'recharts';
 import { cn } from '@/lib/shadcn';
-import { fetchReport } from '../lib/fetch-report';
+import { fetchReport } from '../apis/fetch-report.api';
 
 const Charts = ({ unit }: { unit: PeriodUnit }) => {
   const [barChart, setBarChart] = useState<BarChartDataType[]>([
