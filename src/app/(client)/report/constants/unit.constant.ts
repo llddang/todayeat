@@ -1,17 +1,17 @@
-import { UnitEnum } from '../types/report.type';
+import { PeriodUnitEnum } from '../types/report.type';
 
-export const UNIT_TEXT = {
-  [UnitEnum.DAILY]: {
+export const PERIOD_UNIT_TEXT = {
+  [PeriodUnitEnum.DAILY]: {
     current: '오늘',
     previous: '어제',
     postposition: '은'
   },
-  [UnitEnum.WEEKLY]: {
+  [PeriodUnitEnum.WEEKLY]: {
     current: '이번 주',
     previous: '저번 주',
     postposition: '는'
   },
-  [UnitEnum.MONTHLY]: {
+  [PeriodUnitEnum.MONTHLY]: {
     current: '이번 달',
     previous: '저번 달',
     postposition: '은'

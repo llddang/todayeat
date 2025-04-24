@@ -5,15 +5,15 @@ import GlassBackground from '@/components/commons/glass-background';
 import MacroNutrientPieChart from '@/components/commons/macronutrient-pie-chart';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Typography } from '@/components/ui/typography';
-import { BarChartDataType, Unit, UnitEnum } from '../types/report.type';
+import { BarChartDataType, PeriodUnit, PeriodUnitEnum } from '../types/report.type';
 import { useUserStore } from '@/store/user-store';
 import { formatNumberWithComma } from '@/utils/format.util';
-import { UNIT_TEXT } from '../constants/unit.constant';
+import { PERIOD_UNIT_TEXT } from '../constants/unit.constant';
 import { Bar, BarChart, Cell, ReferenceLine, XAxis, YAxis } from 'recharts';
 import { cn } from '@/lib/shadcn';
 import { fetchReport } from '../lib/fetch-report';
 
-const Charts = ({ unit }: { unit: Unit }) => {
+const Charts = ({ unit }: { unit: PeriodUnit }) => {
   const [barChart, setBarChart] = useState<BarChartDataType[]>([
     {
       label: '',
@@ -51,9 +51,9 @@ const Charts = ({ unit }: { unit: Unit }) => {
     <>
       <GlassBackground className="min-h-full w-full rounded-2xl p-4">
         <Typography as="h2" variant="subTitle1">
-          {UNIT_TEXT[unit].current}
-          {UNIT_TEXT[unit].postposition} {UNIT_TEXT[unit].previous}보다 <br /> {absDiff}kcal {isMore ? '더' : '덜'}{' '}
-          먹었어요
+          {PERIOD_UNIT_TEXT[unit].current}
+          {PERIOD_UNIT_TEXT[unit].postposition} {PERIOD_UNIT_TEXT[unit].previous}보다 <br /> {absDiff}kcal{' '}
+          {isMore ? '더' : '덜'} 먹었어요
         </Typography>
         <ChartContainer config={chartConfig} className="mt-4 min-h-full w-full">
           <BarChart data={barChart} barSize={32}>
@@ -62,7 +62,7 @@ const Charts = ({ unit }: { unit: Unit }) => {
               axisLine={false}
               tickLine={false}
               tick={({ x, y, payload }) => {
-                const isCurrent = UNIT_TEXT[unit].current === payload.value;
+                const isCurrent = PERIOD_UNIT_TEXT[unit].current === payload.value;
                 return (
                   <text
                     x={x}
@@ -98,7 +98,7 @@ const Charts = ({ unit }: { unit: Unit }) => {
         <div className="flex flex-col gap-3 rounded-xl bg-white p-4 text-gray-700">
           <div className="flex items-center justify-between">
             <Typography as="span" variant="body3">
-              {UNIT_TEXT[unit].current} {unit !== UnitEnum.DAILY && '평균'} 섭취 칼로리
+              {PERIOD_UNIT_TEXT[unit].current} {unit !== PeriodUnitEnum.DAILY && '평균'} 섭취 칼로리
             </Typography>
             <div className="space-x-1">
               <Typography as="span" variant="subTitle4" className="text-gray-900">

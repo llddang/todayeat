@@ -1,6 +1,6 @@
 'use client';
 
-import { Unit } from '../types/report.type';
+import { PeriodUnit } from '../types/report.type';
 
 type FetchReportResponse = {
   barChart: {
@@ -16,7 +16,7 @@ type FetchReportResponse = {
   };
 };
 
-export const fetchReport = async (userId: string, unit: Unit): Promise<FetchReportResponse> => {
+export const fetchReport = async (userId: string, unit: PeriodUnit): Promise<FetchReportResponse> => {
   const res = await fetch('/api/report', {
     method: 'POST',
     body: JSON.stringify({ userId, unit }),

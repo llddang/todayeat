@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getServerClient } from '@/lib/supabase/server';
-import { BarChartDataType, Unit, UnitEnum } from '@/app/(client)/report/types/report.type';
+import { BarChartDataType, PeriodUnit, PeriodUnitEnum } from '@/app/(client)/report/types/report.type';
 import {
   subWeeks,
   subDays,
@@ -14,10 +13,10 @@ import {
   format
 } from 'date-fns';
 import { calculateNutritionAverage, calculateTotalNutrition } from '@/utils/nutrition-calculator.util';
-import { snakeToCamelObject } from '@/utils/camelize.util';
-import { UNIT_TEXT } from '@/app/(client)/report/constants/unit.constant';
+import { PERIOD_UNIT_TEXT } from '@/app/(client)/report/constants/unit.constant';
+import { getAllMyMealsByPeriod } from '@/apis/meal.api';
 
-const getDateRanges = (unit: Unit) => {
+const getDateRanges = (unit: PeriodUnit) => {
   const today = new Date();
   const result = [];
 
@@ -28,21 +27,21 @@ const getDateRanges = (unit: Unit) => {
     let label: string;
 
     switch (unit) {
-      case UnitEnum.DAILY: {
+      case PeriodUnitEnum.DAILY: {
         base = subDays(base, i);
         start = startOfDay(base);
         end = endOfDay(base);
         label = format(base, 'M.dd');
         break;
       }
-      case UnitEnum.WEEKLY: {
+      case PeriodUnitEnum.WEEKLY: {
         base = subWeeks(base, i);
         start = startOfWeek(base, { weekStartsOn: 1 });
         end = endOfWeek(base, { weekStartsOn: 1 });
         label = `~${format(end, 'M.dd')}`;
         break;
       }
-      case UnitEnum.MONTHLY: {
+      case PeriodUnitEnum.MONTHLY: {
         base = subMonths(base, i);
         start = startOfMonth(base);
         end = endOfMonth(base);
@@ -55,28 +54,27 @@ const getDateRanges = (unit: Unit) => {
   }
 
   if (result.length > 0) {
-    result[result.length - 1].label = UNIT_TEXT[unit].current;
+    result[result.length - 1].label = PERIOD_UNIT_TEXT[unit].current;
   }
 
   return result;
 };
 
-const isCurrentLabel = (unit: Unit, label: string): boolean => {
+const isCurrentLabel = (unit: PeriodUnit, label: string): boolean => {
   switch (unit) {
-    case UnitEnum.DAILY:
-      return label === UNIT_TEXT[UnitEnum.DAILY].current;
-    case UnitEnum.WEEKLY:
-      return label === UNIT_TEXT[UnitEnum.WEEKLY].current;
-    case UnitEnum.MONTHLY:
-      return label === UNIT_TEXT[UnitEnum.MONTHLY].current;
+    case PeriodUnitEnum.DAILY:
+      return label === PERIOD_UNIT_TEXT[PeriodUnitEnum.DAILY].current;
+    case PeriodUnitEnum.WEEKLY:
+      return label === PERIOD_UNIT_TEXT[PeriodUnitEnum.WEEKLY].current;
+    case PeriodUnitEnum.MONTHLY:
+      return label === PERIOD_UNIT_TEXT[PeriodUnitEnum.MONTHLY].current;
     default:
       return false;
   }
 };
 
 export const POST = async (req: Request) => {
-  const supabase = getServerClient();
-  const { userId, unit }: { userId: string; unit: Unit } = await req.json();
+  const { userId, unit }: { userId: string; unit: PeriodUnit } = await req.json();
 
   if (!userId || !unit) {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
@@ -93,29 +91,24 @@ export const POST = async (req: Request) => {
 
   const chartData = await Promise.all(
     ranges.map(async ({ start, end, label }, index): Promise<BarChartDataType> => {
-      const { data, error } = await supabase
-        .from('meals')
-        .select('*, meal_details(*)')
-        .eq('user_id', userId)
-        .gte('ate_at', start.toISOString())
-        .lte('ate_at', end.toISOString());
+      try {
+        const meals = await getAllMyMealsByPeriod(format(start, 'yyyy-MM-dd'), format(end, 'yyyy-MM-dd'));
 
-      if (error || !data) {
-        console.error('Supabase Error:', error);
+        const { calories: value } = calculateNutritionAverage(meals);
+
+        if (index === ranges.length - 1) {
+          macroTotal = calculateTotalNutrition(meals);
+        }
+
+        return {
+          label,
+          value,
+          fill: isCurrentLabel(unit, label) ? '#FFE37E' : '#FFF5CC'
+        };
+      } catch (error) {
+        console.error('데이터 불러오기 실패:', error);
         return { label, value: 0, fill: '#FFF5CC' };
       }
-
-      const { calories: value } = calculateNutritionAverage(snakeToCamelObject(data));
-
-      if (index === ranges.length - 1) {
-        macroTotal = calculateTotalNutrition(snakeToCamelObject(data));
-      }
-
-      return {
-        label,
-        value,
-        fill: isCurrentLabel(unit, label) ? '#FFE37E' : '#FFF5CC'
-      };
     })
   );
 
