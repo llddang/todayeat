@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { getUser } from '@/apis/user.api';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
-import AddImage from '@/app/(client)/meal/post/components/add-image-list';
+import AddImageList from '@/app/(client)/meal/post/components/add-image-list';
 
 type AddImageFormProps = {
   onLoadingChange: (isLoading: boolean) => void;
@@ -51,7 +51,7 @@ const AddImageForm = ({ onLoadingChange }: AddImageFormProps): JSX.Element => {
 
   return (
     <form onSubmit={handleAnalyzeSubmit} className="flex w-full flex-col items-center justify-center gap-7">
-      <AddImage onImagesChange={setImages} />
+      <AddImageList onImagesChange={setImages} />
       <Button type="submit" variant="primary" disabled={!images.length}>
         사진 올리고 분석하기
       </Button>

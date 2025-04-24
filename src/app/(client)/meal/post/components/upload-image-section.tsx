@@ -1,10 +1,10 @@
 'use client';
 import { Typography } from '@/components/ui/typography';
 import React, { useState } from 'react';
-import MealPostAddMealAiLoading from './add-meal-ai-loading';
 import AddImageForm from './add-image-form';
 import useRestoreAnalysisModal from '../hooks/use-restore-analysis-modal';
 import RestoreAnalysisModal from './restore-analysis-modal';
+import AddMealAiLoading from './add-meal-ai-loading';
 
 type UploadImageSectionProps = {
   isRecorded: boolean;
@@ -17,7 +17,7 @@ const UploadImageSection = ({ isRecorded }: UploadImageSectionProps): JSX.Elemen
   if (isLoading) {
     return (
       <div className="flex min-h-[calc(100vh-8.75rem)] items-center justify-center">
-        <MealPostAddMealAiLoading />
+        <AddMealAiLoading />
       </div>
     );
   }
