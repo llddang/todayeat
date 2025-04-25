@@ -22,7 +22,6 @@ import SITE_MAP from '@/constants/site-map.constant';
 import MacronutrientBox from '@/components/commons/macronutrient-box';
 import MacroNutrientPieChart from '@/components/commons/macronutrient-pie-chart';
 import { MacronutrientEnum } from '@/types/nutrition.type';
-import AddMealDrawer from '../../components/add-meal-drawer';
 import EditCalendarDrawer from './edit-calendar-drawer';
 import AddMealCardDrawer from './add-meal-card-drawer';
 import { MAX_MEMO_LENGTH } from '../constants/meal-edit.constant';
