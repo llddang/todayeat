@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/button';
 import { formatTimestamp } from '@/utils/format.util';
 import { updateMeal } from '@/apis/meal.api';
 import { MEAL_CATEGORY } from '../../constants/category.constant';
-import { useMemo } from 'react';
+import { ChangeEvent, useMemo } from 'react';
 import EditCalendarDrawer from '../../post/edit/components/edit-calendar-drawer';
 import MemoBox from './memo-box';
 
@@ -50,7 +50,7 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps): JSX.Element => {
 
   const handleDayChange = (day: Date) => setValue('date.day', day);
 
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCategoryChange = (e: ChangeEvent<HTMLInputElement>) => {
     const category = e.target.value as MealCategoryType;
     setValue('mealCategory', category);
   };
