@@ -1,13 +1,13 @@
 import GlassBackground from '@/components/commons/glass-background';
 import Textarea from '@/components/commons/textarea';
 import { Typography } from '@/components/ui/typography';
-import React, { TextareaHTMLAttributes } from 'react';
+import React, { TextareaHTMLAttributes, forwardRef } from 'react';
 
 type MemoBoxProps = Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'maxLength'> & {
   maxLength: number;
 };
 
-const MemoBox = ({ maxLength, ...props }: MemoBoxProps) => {
+const MemoBox = forwardRef<HTMLTextAreaElement, MemoBoxProps>(({ maxLength, ...props }, ref) => {
   return (
     <section className="flex flex-col gap-3">
       <Typography as="span" variant="body1" className="pl-1">
@@ -21,6 +21,7 @@ const MemoBox = ({ maxLength, ...props }: MemoBoxProps) => {
         </div>
         <Textarea
           {...props}
+          ref={ref}
           className="min-h-60 text-gray-500"
           maxLength={maxLength}
           placeholder="예시) 스트레스로 폭식했다, 기분 좋게 잘먹었다, 이 음식 먹고 속이 안 좋았다."
@@ -28,6 +29,8 @@ const MemoBox = ({ maxLength, ...props }: MemoBoxProps) => {
       </GlassBackground>
     </section>
   );
-};
+});
+
+MemoBox.displayName = 'MemoBox';
 
 export default MemoBox;
