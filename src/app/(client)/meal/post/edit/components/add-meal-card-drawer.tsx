@@ -14,8 +14,8 @@ import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
 import { parseGeminiResponse } from '@/lib/gemini';
 import { AiResponseDTO } from '@/types/DTO/ai_analysis.dto';
 import { formatNumberWithComma } from '@/utils/format.util';
-import { parseNumber } from '../edit/utils/meal-edit.util';
-import { MAX_MENU_NAME_LENGTH, MAX_NUMERIC_LENGTH } from '../edit/constants/meal-edit.constant';
+import { MAX_MENU_NAME_LENGTH, MAX_NUMERIC_LENGTH } from '../constants/meal-edit.constant';
+import { parseNumber } from '../utils/meal-edit.util';
 
 type FoodFormValues = {
   menuName: string;

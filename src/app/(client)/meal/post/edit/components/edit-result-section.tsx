@@ -25,7 +25,7 @@ import MacronutrientBox from '@/components/commons/macronutrient-box';
 import { MacronutrientEnum } from '@/types/nutrition.type';
 import MacroNutrientPieChart from '@/components/commons/macronutrient-pie-chart';
 import EditCalendarDrawer from './edit-calendar-drawer';
-import AddMealCardDrawer from '../../components/add-meal-card-drawer';
+import AddMealCardDrawer from './add-meal-card-drawer';
 
 type EditResultSectionProps = {
   imageList: string[];
