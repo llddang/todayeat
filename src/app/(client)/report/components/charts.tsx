@@ -5,14 +5,15 @@ import GlassBackground from '@/components/commons/glass-background';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Typography } from '@/components/ui/typography';
 import { BarChartDataType, PeriodUnit, PeriodUnitEnum } from '../types/chart.type';
+import { MealNutrition } from '@/types/nutrition.type';
 import { useUserStore } from '@/store/user-store';
 import { formatNumberWithComma } from '@/utils/format.util';
 import { PERIOD_UNIT_TEXT } from '../constants/unit.constant';
 import { Bar, BarChart, Cell, ReferenceLine, XAxis, YAxis } from 'recharts';
-import { cn } from '@/lib/shadcn';
 import { fetchReport } from '../apis/fetch-report.api';
 import MacronutrientPercentageReport from './macronutrient-percentage-report';
-import { MealNutrition } from '@/types/nutrition.type';
+import MacronutrientAmountReport from './macronutrient-amount-report';
+import { cn } from '@/lib/shadcn';
 
 const Charts = ({ unit }: { unit: PeriodUnit }) => {
   const [barChart, setBarChart] = useState<BarChartDataType[]>([
@@ -126,8 +127,11 @@ const Charts = ({ unit }: { unit: PeriodUnit }) => {
           </div>
         </div>
       </GlassBackground>
-      <GlassBackground className="min-h-full w-full rounded-2xl p-4">
+      <GlassBackground className="flex min-h-full w-full flex-col gap-4 rounded-2xl p-4">
         <MacronutrientPercentageReport unit={unit} total={total} personalInfo={personalInfo} />
+        <MacronutrientAmountReport unit={unit} variety="CARBOHYDRATE" total={total} personalInfo={personalInfo} />
+        <MacronutrientAmountReport unit={unit} variety="PROTEIN" total={total} personalInfo={personalInfo} />
+        <MacronutrientAmountReport unit={unit} variety="FAT" total={total} personalInfo={personalInfo} />
       </GlassBackground>
     </>
   );
