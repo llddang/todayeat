@@ -42,6 +42,7 @@ const AddImageForm = ({ onLoadingChange }: AddImageFormProps): JSX.Element => {
       router.replace(SITE_MAP.MEAL_POST_EDIT);
     } catch (err) {
       console.error(err);
+      onLoadingChange(false);
       return alert('분석중 오류가 발생했습니다. ');
     }
   };
