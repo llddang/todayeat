@@ -62,6 +62,7 @@ const AddMealDrawer = () => {
       const parsedResult = parseGeminiResponse(generatedTextResult);
       if (parsedResult.length === 0) {
         alert('AI 분석에 실패하였습니다. 메뉴명이 옳바른지 확인해주세요.');
+        setIsAnalyzing(false);
         return;
       }
       const aiResult = parsedResult[0];
