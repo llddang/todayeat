@@ -79,9 +79,6 @@ const AddMealDrawer = () => {
       console.error('에러 발생:', err);
       setIsAnalyzing(false);
       alert('AI 분석 중 문제가 발생했어요. 다시 시도해 주세요.');
-    } finally {
-      form.reset();
-      setIsAnalyzing(false);
     }
   };
 
