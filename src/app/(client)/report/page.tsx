@@ -1,22 +1,31 @@
-'use client';
-import { Typography } from '@/components/ui/typography';
-import dynamic from 'next/dynamic';
-
-const AiLoaderLottie = dynamic(() => import('@/components/commons/ai-loader-lottie'), {
-  ssr: false
-});
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import Charts from './components/charts';
+import { PeriodUnitEnum } from './types/report.type';
 
 const Report = () => {
   return (
-    <div className="relative flex h-[calc(100vh-14rem)] w-full items-center">
-      <div className="flex w-full flex-col items-center gap-2 text-center">
-        <AiLoaderLottie />
-        <Typography>
-          리포트 페이지는 <br />
-          추후 개발될 예정이에요!
-        </Typography>
-      </div>
-    </div>
+    <Tabs defaultValue={PeriodUnitEnum.WEEKLY}>
+      <TabsList className="flex w-full">
+        <TabsTrigger value={PeriodUnitEnum.DAILY} className="flex-1">
+          일간
+        </TabsTrigger>
+        <TabsTrigger value={PeriodUnitEnum.WEEKLY} className="flex-1">
+          주간
+        </TabsTrigger>
+        <TabsTrigger value={PeriodUnitEnum.MONTHLY} className="flex-1">
+          월간
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value={PeriodUnitEnum.DAILY} className="mt-4">
+        <Charts unit={PeriodUnitEnum.DAILY} />
+      </TabsContent>
+      <TabsContent value={PeriodUnitEnum.WEEKLY} className="mt-4">
+        <Charts unit={PeriodUnitEnum.WEEKLY} />
+      </TabsContent>
+      <TabsContent value={PeriodUnitEnum.MONTHLY} className="mt-4">
+        <Charts unit={PeriodUnitEnum.MONTHLY} />
+      </TabsContent>
+    </Tabs>
   );
 };
 
