@@ -43,7 +43,7 @@ const AddImageForm = ({ onLoadingChange }: AddImageFormProps): JSX.Element => {
     } catch (err) {
       console.error(err);
       return alert('분석중 오류가 발생했습니다. ');
-    } 
+    }
   };
 
   return (

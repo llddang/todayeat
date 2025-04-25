@@ -1,8 +1,6 @@
-
 export const MAX_NUMERIC_LENGTH = 4;
 export const MAX_MENU_NAME_LENGTH = 16;
 export const MAX_MEMO_LENGTH = 200;
-
 
 export const MEAL_CATEGORY = [
   {
@@ -26,8 +24,3 @@ export const MEAL_CATEGORY = [
     icon: 'before:bg-meal-category-snack'
   }
 ] as const;
-
-
-
-
-
