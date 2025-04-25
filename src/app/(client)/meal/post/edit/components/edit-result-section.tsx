@@ -20,12 +20,12 @@ import TagSelectItem from '@/components/commons/tag-select-item';
 import Textarea from '@/components/commons/textarea';
 import { Button } from '@/components/ui/button';
 import TimePicker, { TimeFields } from './time-picker';
-import AddMealDrawer from '../../components/add-meal-drawer';
 import { MAX_MEMO_LENGTH, MEAL_CATEGORY } from '../constants/meal-edit.constant';
 import MacronutrientBox from '@/components/commons/macronutrient-box';
 import { MacronutrientEnum } from '@/types/nutrition.type';
 import MacroNutrientPieChart from '@/components/commons/macronutrient-pie-chart';
 import EditCalendarDrawer from './edit-calendar-drawer';
+import AddMealCardDrawer from '../../components/add-meal-card-drawer';
 
 type EditResultSectionProps = {
   imageList: string[];
@@ -168,7 +168,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
               {mealCardList.map((meal, idx) => (
                 <EditCard key={meal.id} idx={idx} mealDetail={meal} onRemove={() => handleRemoveMeal(idx)} />
               ))}
-              <AddMealDrawer onAddMeal={handleAddMeal} />
+              <AddMealCardDrawer onAddMeal={handleAddMeal} />
             </section>
             <section className="my-10 flex w-full flex-col items-start justify-center gap-3">
               <Typography as="h3" variant="body1" className="pl-1">

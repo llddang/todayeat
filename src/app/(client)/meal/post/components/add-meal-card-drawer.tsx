@@ -22,11 +22,11 @@ type FoodFormValues = {
   weight: string;
 };
 
-type AddMealDrawerProps = {
+type AddMealCardDrawerProps = {
   onAddMeal: (meal: Omit<AiResponseDTO, 'id'>) => void;
 };
 
-const AddMealDrawer = ({ onAddMeal }: AddMealDrawerProps) => {
+const AddMealCardDrawer = ({ onAddMeal }: AddMealCardDrawerProps) => {
   const user = useUserStore((state) => state.user);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -172,4 +172,4 @@ const AddMealDrawer = ({ onAddMeal }: AddMealDrawerProps) => {
   );
 };
 
-export default AddMealDrawer;
+export default AddMealCardDrawer;
