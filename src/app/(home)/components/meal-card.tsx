@@ -6,6 +6,8 @@ import { Typography } from '@/components/ui/typography';
 import { cn } from '@/lib/shadcn';
 import MacronutrientGroup from '@/components/commons/macronutrient-group';
 import { formatTimeToHHMM, formatTimeWithMeridiem } from '@/utils/format.util';
+import Link from 'next/link';
+import SITE_MAP from '@/constants/site-map.constant';
 
 type MealCardProps = {
   meal: MealDTO;
@@ -31,8 +33,10 @@ const MealCard = ({ meal }: MealCardProps) => {
           {formatTimeToHHMM(new Date(meal.ateAt))}
         </Typography>
       </div>
-      {/* TODO : Link 태그로 변경 & 식사 상세 페이지로 이동하게끔!! */}
-      <div className="flex w-full flex-1 flex-col gap-4 overflow-hidden rounded-2xl bg-white p-4">
+      <Link
+        href={`${SITE_MAP.MEAL_DETAIL}/${meal.id}`}
+        className="flex w-full flex-1 flex-col gap-4 overflow-hidden rounded-2xl bg-white p-4"
+      >
         <div className="flex items-center justify-between">
           <div>
             <Typography variant="body3" className="text-gray-700">
@@ -75,7 +79,7 @@ const MealCard = ({ meal }: MealCardProps) => {
             </Typography>
           </div>
         )}
-      </div>
+      </Link>
     </li>
   );
 };
