@@ -21,4 +21,4 @@ export const MEAL_CATEGORY = [
     label: '간식',
     icon: 'before:bg-meal-category-snack'
   }
-];
+] as const;
