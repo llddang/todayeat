@@ -5,6 +5,7 @@ import AddImageForm from './add-image-form';
 import useRestoreAnalysisModal from '../hooks/use-restore-analysis-modal';
 import RestoreAnalysisModal from './restore-analysis-modal';
 import AddMealAiLoading from './add-meal-ai-loading';
+import AddMealDrawer from './add-meal-drawer';
 
 type UploadImageSectionProps = {
   isRecorded: boolean;
@@ -38,7 +39,10 @@ const UploadImageSection = ({ isRecorded }: UploadImageSectionProps): JSX.Elemen
         onApproveClickHandler={handleApproveClick}
         onCancelClickHandler={handleCancelClick}
       />
-      <AddImageForm onLoadingChange={setIsLoading} />
+      <div className="flex w-full flex-col items-center justify-center gap-2">
+        <AddImageForm onLoadingChange={setIsLoading} />
+        <AddMealDrawer />
+      </div>
     </div>
   );
 };
