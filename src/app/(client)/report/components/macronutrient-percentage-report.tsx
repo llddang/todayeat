@@ -1,13 +1,13 @@
 import MacroNutrientPieChart from '@/components/commons/macronutrient-pie-chart';
 import React from 'react';
 import MacronutrientPercentageBox from './macronutrient-percentage-box';
-import { MacronutrientEnum, MealNutrition } from '@/types/nutrition.type';
+import { MacronutrientEnum, MacronutrientEnumType, MealNutrition } from '@/types/nutrition.type';
 import { getPercentage } from '@/utils/nutrition-calculator.util';
 import { NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
 import { UserPersonalInfoDTO } from '@/types/DTO/user.dto';
 import { Typography } from '@/components/ui/typography';
 import CtaExampleFeedbackBanner from '@/components/commons/cta-example-feedback-banner';
-import { NutrientKey, NutrientRatio } from '../types/nutrition.type';
+import { NutrientRatio } from '../types/nutrition.type';
 import { calculateMaxDiffNutrient, makeFeedbackMessage } from '../utils/nutrition-diff';
 import { PeriodUnit } from '../types/chart.type';
 
@@ -20,15 +20,15 @@ type MacronutrientPercentageReportProps = {
 const MacronutrientPercentageReport = ({ unit, total, personalInfo }: MacronutrientPercentageReportProps) => {
   const totalMacronutrient = total.carbohydrate + total.protein + total.fat;
   const nutrientRatio: NutrientRatio = {
-    carbohydrate: {
+    CARBOHYDRATE: {
       consumed: getPercentage(total.carbohydrate, totalMacronutrient),
       goal: personalInfo ? NUTRITION_PURPOSE_OPTIONS[personalInfo.purpose].ratio.carbohydrate * 100 : 0
     },
-    protein: {
+    PROTEIN: {
       consumed: getPercentage(total.protein, totalMacronutrient),
       goal: personalInfo ? NUTRITION_PURPOSE_OPTIONS[personalInfo.purpose].ratio.protein * 100 : 0
     },
-    fat: {
+    FAT: {
       consumed: getPercentage(total.fat, totalMacronutrient),
       goal: personalInfo ? NUTRITION_PURPOSE_OPTIONS[personalInfo.purpose].ratio.fat * 100 : 0
     }
@@ -36,13 +36,13 @@ const MacronutrientPercentageReport = ({ unit, total, personalInfo }: Macronutri
 
   const { key, diff } = calculateMaxDiffNutrient(nutrientRatio);
 
-  const nutrientMap: Record<NutrientKey, string> = {
-    carbohydrate: '탄수화물',
-    protein: '단백질',
-    fat: '지방'
+  const nutrientMap: Record<MacronutrientEnumType, string> = {
+    CARBOHYDRATE: '탄수화물',
+    PROTEIN: '단백질',
+    FAT: '지방'
   };
 
-  const [beforeBreak, afterBreak] = makeFeedbackMessage(unit, nutrientMap[key as NutrientKey], diff);
+  const [beforeBreak, afterBreak] = makeFeedbackMessage(unit, nutrientMap[key as MacronutrientEnumType], diff);
 
   return (
     <div className="flex flex-col">
@@ -64,18 +64,18 @@ const MacronutrientPercentageReport = ({ unit, total, personalInfo }: Macronutri
         <div className="m-auto flex flex-col gap-4">
           <MacronutrientPercentageBox
             variety={MacronutrientEnum.CARBOHYDRATE}
-            value={nutrientRatio.carbohydrate.consumed}
-            goal={nutrientRatio.carbohydrate.goal}
+            value={nutrientRatio.CARBOHYDRATE.consumed}
+            goal={nutrientRatio.CARBOHYDRATE.goal}
           />
           <MacronutrientPercentageBox
             variety={MacronutrientEnum.PROTEIN}
-            value={nutrientRatio.protein.consumed}
-            goal={nutrientRatio.protein.goal}
+            value={nutrientRatio.PROTEIN.consumed}
+            goal={nutrientRatio.PROTEIN.goal}
           />
           <MacronutrientPercentageBox
             variety={MacronutrientEnum.FAT}
-            value={nutrientRatio.fat.consumed}
-            goal={nutrientRatio.fat.goal}
+            value={nutrientRatio.FAT.consumed}
+            goal={nutrientRatio.FAT.goal}
           />
         </div>
       </div>

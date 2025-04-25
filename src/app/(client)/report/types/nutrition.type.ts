@@ -1,7 +1,5 @@
 export type NutrientRatio = {
-  carbohydrate: { consumed: number; goal: number };
-  protein: { consumed: number; goal: number };
-  fat: { consumed: number; goal: number };
+  CARBOHYDRATE: { consumed: number; goal: number };
+  PROTEIN: { consumed: number; goal: number };
+  FAT: { consumed: number; goal: number };
 };
-
-export type NutrientKey = keyof NutrientRatio;
