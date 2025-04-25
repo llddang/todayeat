@@ -29,8 +29,7 @@ const AddMealDrawer = () => {
   const form = useForm<FoodFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      menuName: '',
-      weight: 0
+      menuName: ''
     }
   });
 
