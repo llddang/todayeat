@@ -1,7 +1,7 @@
 import { Typography } from '@/components/ui/typography';
-import { MACRONUTRIENT_OPTIONS } from '@/constants/nutrition.constant';
-import { cn } from '@/lib/shadcn';
+import { AMOUNT_CHART_OPTIONS } from '../constants/chart.constant';
 import { MacronutrientEnumType } from '@/types/nutrition.type';
+import { cn } from '@/lib/shadcn';
 
 const MacronutrientPercentageBox = ({
   variety,
@@ -12,7 +12,7 @@ const MacronutrientPercentageBox = ({
   value: number;
   goal: number;
 }) => {
-  const { label, beforeBgColor } = MACRONUTRIENT_OPTIONS[variety];
+  const { label, beforeBgColor } = AMOUNT_CHART_OPTIONS[variety];
 
   return (
     <div className="flex flex-1 gap-1.5">
