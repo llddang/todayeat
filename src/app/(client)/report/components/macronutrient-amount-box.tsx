@@ -26,7 +26,11 @@ const MacronutrientAmountBox = ({
       />
       <div className="flex flex-1 flex-col items-start gap-0.5">
         <Typography as="span" variant="body3" className="text-gray-700">
-          {PERIOD_UNIT_TEXT[unit].current} {variety === 'GOAL' ? '목표량' : '섭취량'}
+          {variety === 'GOAL'
+            ? '1일 목표량'
+            : unit === 'DAILY'
+              ? `${PERIOD_UNIT_TEXT[unit].current} 섭취량`
+              : `${PERIOD_UNIT_TEXT[unit].current} 평균 섭취량`}
         </Typography>
         <Typography as="span" variant="subTitle4" className="text-gray-900">
           {value}g
