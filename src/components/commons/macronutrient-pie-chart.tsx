@@ -46,7 +46,6 @@ const MacroNutrientPieChart = ({ data, displayCalories = false, className }: Mac
     return (
       <ChartContainer config={chartConfig} className={cn('aspect-square h-60', className)}>
         <PieChart>
-          <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
           <Pie
             data={defaultChartData}
             dataKey="amount"
