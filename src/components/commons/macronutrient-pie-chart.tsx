@@ -37,6 +37,34 @@ const MacroNutrientPieChart = ({ data, displayCalories = false, className }: Mac
       amount: value
     }));
 
+  if (chartData.every((d) => d.amount === 0)) {
+    const defaultChartData: ChartData[] = [
+      { macronutrient: 'carbohydrate', amount: 1 },
+      { macronutrient: 'protein', amount: 1 },
+      { macronutrient: 'fat', amount: 1 }
+    ];
+    return (
+      <ChartContainer config={chartConfig} className={cn('aspect-square h-60', className)}>
+        <PieChart>
+          <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+          <Pie
+            data={defaultChartData}
+            dataKey="amount"
+            nameKey="macronutrient"
+            innerRadius={64}
+            startAngle={90}
+            endAngle={450}
+          >
+            {defaultChartData.map((entry: ChartData) => {
+              const macronutrient = entry.macronutrient;
+              return <Cell key={macronutrient} fill={chartConfig[macronutrient].color} fillOpacity={0.3} />;
+            })}
+          </Pie>
+        </PieChart>
+      </ChartContainer>
+    );
+  }
+
   return (
     <div className="relative w-fit">
       <ChartContainer config={chartConfig} className={cn('aspect-square h-60', className)}>
