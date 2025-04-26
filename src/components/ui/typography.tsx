@@ -7,6 +7,7 @@ const typographyVariants = cva('', {
     variant: {
       title1: 'typography-title1',
       title2: 'typography-title2',
+      title3: 'typography-title3',
       subTitle1: 'typography-subTitle1',
       subTitle2: 'typography-subTitle2',
       subTitle3: 'typography-subTitle3',

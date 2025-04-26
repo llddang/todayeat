@@ -265,6 +265,12 @@ const config: Config = {
           fontWeight: '650',
           letterSpacing: '-0.02em'
         },
+        '.typography-title3': {
+          fontSize: '1.25rem',
+          lineHeight: '136%',
+          fontWeight: '650',
+          letterSpacing: '-0.02em'
+        },
         '.typography-subTitle1': {
           fontSize: '1.125rem',
           lineHeight: '140%',
