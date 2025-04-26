@@ -10,6 +10,8 @@ import MacronutrientPercentageReport from './macronutrient-percentage-report';
 import MacronutrientAmountReport from './macronutrient-amount-report';
 import CaloriesAmountReport from './calories-amount-report';
 
+const initailNutritionValue = { calories: 0, carbohydrate: 0, protein: 0, fat: 0 };
+
 const Charts = ({ unit }: { unit: PeriodUnit }) => {
   const [barChart, setBarChart] = useState<BarChartDataType[]>([
     {
@@ -18,8 +20,8 @@ const Charts = ({ unit }: { unit: PeriodUnit }) => {
       fill: ''
     }
   ]);
-  const [total, setTotal] = useState<MealNutrition>({ calories: 0, carbohydrate: 0, protein: 0, fat: 0 });
-  const [average, setAverage] = useState<MealNutrition>({ calories: 0, carbohydrate: 0, protein: 0, fat: 0 });
+  const [total, setTotal] = useState<MealNutrition>(initailNutritionValue);
+  const [average, setAverage] = useState<MealNutrition>(initailNutritionValue);
 
   const { id: userId, personalInfo } = useUserStore((state) => state.user);
 
