@@ -50,7 +50,7 @@ const MacronutrientPercentageReport = ({ unit, total, average, personalInfo }: M
     }
   };
 
-  const { key, consumed, goal } = calculateMaxDiffNutrient(nutrientAverage);
+  const { key = 'CARBOHYDRATE' as MacronutrientEnumType, consumed, goal } = calculateMaxDiffNutrient(nutrientAverage);
 
   const nutrientMap: Record<MacronutrientEnumType, string> = {
     CARBOHYDRATE: '탄수화물',
