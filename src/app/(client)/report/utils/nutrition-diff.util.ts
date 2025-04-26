@@ -24,27 +24,21 @@ export const calculateMaxDiffNutrient = (nutrients: NutrientRatio) => {
 };
 
 export const makeFeedbackMessage = (unit: PeriodUnit, nutrient: string, consumed: number, goal: number) => {
-  const isOver = consumed > goal;
-  const diffPercentage = Math.abs(getPercentage(consumed, goal));
+  const percentage = getPercentage(consumed, goal);
 
-  if (isOver) {
+  if (percentage <= 50) {
     return [
       `${PERIOD_UNIT_TEXT[unit].current}${PERIOD_UNIT_TEXT[unit].postposition} ${nutrient}을`,
-      '목표보다 많이 먹었어요'
+      '더 먹을 수 있어요'
     ];
-  }
-
-  if (diffPercentage <= 50) {
-    return [
-      `${PERIOD_UNIT_TEXT[unit].current}${PERIOD_UNIT_TEXT[unit].postposition} ${nutrient} 섭취에`,
-      '아직 여유가 있어요'
-    ];
-  } else if (diffPercentage <= 80) {
+  } else if (percentage <= 80) {
     return [
       `${PERIOD_UNIT_TEXT[unit].current}${PERIOD_UNIT_TEXT[unit].postposition} ${nutrient} 섭취가`,
       '목표에 가까워요'
     ];
-  } else {
+  } else if (percentage <= 110) {
     return [`${PERIOD_UNIT_TEXT[unit].current}${PERIOD_UNIT_TEXT[unit].postposition} ${nutrient}을`, '충분히 챙겼어요'];
+  } else {
+    return [`${PERIOD_UNIT_TEXT[unit].current}${PERIOD_UNIT_TEXT[unit].postposition} ${nutrient}이`, '살짝 많았어요'];
   }
 };
