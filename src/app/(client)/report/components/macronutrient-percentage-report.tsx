@@ -9,6 +9,7 @@ import { UserPersonalInfoDTO } from '@/types/DTO/user.dto';
 import { MacronutrientEnum, MacronutrientEnumType, MealNutrition } from '@/types/nutrition.type';
 import { NutrientRatio as MacronutrientComparison } from '../types/nutrition.type';
 import { PeriodUnit } from '../types/chart.type';
+import { AMOUNT_CHART_OPTIONS } from '../constants/chart.constant';
 
 type MacronutrientPercentageReportProps = {
   unit: PeriodUnit;
@@ -51,15 +52,9 @@ const MacronutrientPercentageReport = ({ unit, total, average, personalInfo }: M
 
   const { key = 'CARBOHYDRATE' as MacronutrientEnumType, consumed, goal } = calculateMaxDiffNutrient(nutrientAverage);
 
-  const nutrientMap: Record<MacronutrientEnumType, string> = {
-    CARBOHYDRATE: '탄수화물',
-    PROTEIN: '단백질',
-    FAT: '지방'
-  };
-
   const [beforeBreak, afterBreak] = makeFeedbackMessage(
     unit,
-    nutrientMap[key as MacronutrientEnumType],
+    AMOUNT_CHART_OPTIONS[key as MacronutrientEnumType].label,
     consumed,
     goal
   );
