@@ -16,6 +16,7 @@ import { calculateNutritionAverage, calculateTotalNutrition } from '@/utils/nutr
 import { PERIOD_UNIT_TEXT } from '@/app/(client)/report/constants/unit.constant';
 import { getAllMyMealsByPeriod } from '@/apis/meal.api';
 import { MealNutrition } from '@/types/nutrition.type';
+import { INITIAL_NUTRITION_VALUE } from '@/app/(client)/report/constants/chart.constant';
 
 const getDateRanges = (unit: PeriodUnit) => {
   const today = new Date();
@@ -83,19 +84,8 @@ export const POST = async (req: Request) => {
 
   const ranges = getDateRanges(unit);
 
-  let macroTotal: MealNutrition = {
-    calories: 0,
-    carbohydrate: 0,
-    protein: 0,
-    fat: 0
-  };
-
-  let macroAverage: MealNutrition = {
-    calories: 0,
-    carbohydrate: 0,
-    protein: 0,
-    fat: 0
-  };
+  let macroTotal: MealNutrition = INITIAL_NUTRITION_VALUE;
+  let macroAverage: MealNutrition = INITIAL_NUTRITION_VALUE;
 
   const chartData = await Promise.all(
     ranges.map(async ({ start, end, label }, index): Promise<BarChartDataType> => {

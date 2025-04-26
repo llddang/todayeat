@@ -35,3 +35,5 @@ export const MACRONUTRIENT_GOAL_MAP = {
   PROTEIN: 'dailyProteinGoal',
   FAT: 'dailyFatGoal'
 } as const;
+
+export const INITIAL_NUTRITION_VALUE = { calories: 0, carbohydrate: 0, protein: 0, fat: 0 };
