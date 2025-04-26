@@ -9,10 +9,11 @@ import {} from '@/types/DTO/meal.dto';
 import { AiResponseDTO } from '@/types/DTO/ai_analysis.dto';
 import dynamic from 'next/dynamic';
 import { Input } from '@/components/ui/input';
-import { formatNumberWithComma } from '@/utils/format.util';
 import { parseGeminiResponse } from '@/lib/gemini';
 import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
 import { Typography } from '@/components/ui/typography';
+import { formatNumberWithComma } from '@/utils/format.util';
+import { MAX_MENU_NAME_LENGTH, MAX_NUMERIC_LENGTH } from '../constants/meal-edit.constant';
 
 const AiLoaderWithoutBg = dynamic(() => import('./ai-loader-without-bg'), {
   ssr: false
@@ -21,16 +22,17 @@ const AiLoaderWithoutBg = dynamic(() => import('./ai-loader-without-bg'), {
 type EditCardProps = {
   mealDetail: AiResponseDTO;
   idx: number;
-  onRemove: (idx: number) => void;
+  onRemove: () => void;
 };
 
 const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
   const { control, register, watch, setValue, getValues } = useFormContext();
   const [isLoading, setIsLoading] = useState(false);
-
   const menuName = watch(`mealList.${idx}.menuName`);
+
   const weight = watch(`mealList.${idx}.weight`);
   const menuDetail = watch(`mealList.${idx}`);
+
   const isChanged = useMemo(() => {
     const isMenuChanged = menuName !== mealDetail.menuName;
     const isWeightChanged = weight !== mealDetail.weight;
@@ -58,7 +60,7 @@ const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
   const handleDelete = async () => {
     const isConfirm = window.confirm('정말 삭제하시겠습니까?');
     if (isConfirm) {
-      onRemove(idx);
+      onRemove();
     }
   };
 
@@ -82,16 +84,18 @@ const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
             <Controller
               control={control}
               name={`mealList.${idx}.weight`}
-              defaultValue={mealDetail.weight}
-              render={({ field: { value, onChange, ...rest } }) => (
+              render={({ field }) => (
                 <Input
-                  {...rest}
+                  {...field}
                   type="text"
                   inputMode="numeric"
                   maxLength={MAX_NUMERIC_LENGTH}
                   measure={MEASUREMENT_UNIT['GRAM'].unit}
-                  value={value !== undefined ? formatNumberWithComma(value) : ''}
-                  onChange={(e) => onChange(parseNumber(e.target.value))}
+                  value={field.value ? formatNumberWithComma(field.value) : ''}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9]/g, '');
+                    field.onChange(value ? Number(value) : undefined);
+                  }}
                   className="flex-1"
                 />
               )}
@@ -99,16 +103,18 @@ const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
             <Controller
               control={control}
               name={`mealList.${idx}.calories`}
-              defaultValue={mealDetail.calories}
-              render={({ field: { value, onChange, ...rest } }) => (
+              render={({ field }) => (
                 <Input
-                  {...rest}
+                  {...field}
                   type="text"
                   inputMode="numeric"
                   measure={MEASUREMENT_UNIT['KCAL'].unit}
                   maxLength={MAX_NUMERIC_LENGTH}
-                  value={value !== undefined ? formatNumberWithComma(value) : ''}
-                  onChange={(e) => onChange(parseNumber(e.target.value))}
+                  value={field.value ? formatNumberWithComma(field.value) : ''}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9]/g, '');
+                    field.onChange(value ? Number(value) : undefined);
+                  }}
                   className="flex-1"
                 />
               )}
@@ -137,11 +143,14 @@ const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
   );
 };
 
-export default EditCard;
+type MeasurementUnit = 'KCAL' | 'GRAM';
+type MeasurementUnitValues = {
+  label: string;
+  name: string;
+  unit: string;
+};
 
-const MAX_NUMERIC_LENGTH = 4;
-const MAX_MENU_NAME_LENGTH = 16;
-const MEASUREMENT_UNIT: Record<MeasurementUnitType, MeasurementUnitValues> = {
+const MEASUREMENT_UNIT: Record<MeasurementUnit, MeasurementUnitValues> = {
   KCAL: {
     label: '칼로리',
     name: 'calories',
@@ -154,14 +163,4 @@ const MEASUREMENT_UNIT: Record<MeasurementUnitType, MeasurementUnitValues> = {
   }
 } as const;
 
-type MeasurementUnitValues = {
-  label: string;
-  name: string;
-  unit: string;
-};
-
-type MeasurementUnitType = 'KCAL' | 'GRAM';
-
-const parseNumber = (value: string) => {
-  return Number(value.replace(/,/g, ''));
-};
+export default EditCard;

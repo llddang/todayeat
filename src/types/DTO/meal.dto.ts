@@ -20,7 +20,6 @@ export type MealDTO = {
   ateAt: string;
   mealCategory: MealCategoryType;
   memo: string | null;
-  menuCount: number;
   mealDetails: MealDetailDTO[];
 };
 export type MealOverviewDTO = Omit<MealDTO, 'mealDetails'>;

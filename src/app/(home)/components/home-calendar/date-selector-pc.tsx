@@ -31,7 +31,7 @@ const DateSelectorPc = ({ open, onOpenChange }: DateSelectorPcProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogOverlay className="bg-transparent" />
-      <DialogContent className="shadow-modal absolute top-full z-layout w-[24.5rem] rounded-3xl bg-white p-5">
+      <DialogContent className="absolute top-full z-layout w-[24.5rem] rounded-3xl bg-white p-5 shadow-modal">
         <div className="sr-only">
           <Typography as="h3">날짜 선택</Typography>
           <Typography>섭취 정보를 조회할 날짜를 선택하세요.</Typography>
@@ -46,7 +46,7 @@ const DateSelectorPc = ({ open, onOpenChange }: DateSelectorPcProps) => {
           formatters={{ formatCaption: formatDateToLocaleKR }}
           classNames={{ month: 'space-y-3' }}
         />
-        <div className="temp-layout !mt-2 w-full py-2">
+        <div className="!mt-2 w-full py-2 layout-container">
           <Button onClick={handleSelectDate} className="w-full">
             날짜 선택 완료
           </Button>

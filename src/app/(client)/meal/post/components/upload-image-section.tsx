@@ -1,10 +1,11 @@
 'use client';
 import { Typography } from '@/components/ui/typography';
 import React, { useState } from 'react';
-import MealPostAddMealAiLoading from './meal-post-add-meal-ai-loading';
-import MealPostAddImageForm from './meal-post-add-image-form';
+import AddImageForm from './add-image-form';
 import useRestoreAnalysisModal from '../hooks/use-restore-analysis-modal';
 import RestoreAnalysisModal from './restore-analysis-modal';
+import AddMealAiLoading from './add-meal-ai-loading';
+import AddMealDrawer from './add-meal-drawer';
 
 type UploadImageSectionProps = {
   isRecorded: boolean;
@@ -17,7 +18,7 @@ const UploadImageSection = ({ isRecorded }: UploadImageSectionProps): JSX.Elemen
   if (isLoading) {
     return (
       <div className="flex min-h-[calc(100vh-8.75rem)] items-center justify-center xl:min-h-[calc(100vh-4.725rem)]">
-        <MealPostAddMealAiLoading />
+        <AddMealAiLoading />
       </div>
     );
   }
@@ -38,7 +39,10 @@ const UploadImageSection = ({ isRecorded }: UploadImageSectionProps): JSX.Elemen
         onApproveClickHandler={handleApproveClick}
         onCancelClickHandler={handleCancelClick}
       />
-      <MealPostAddImageForm onLoadingChange={setIsLoading} />
+      <div className="flex w-full flex-col items-center justify-center gap-2">
+        <AddImageForm onLoadingChange={setIsLoading} />
+        <AddMealDrawer />
+      </div>
     </div>
   );
 };

@@ -3,12 +3,16 @@
 import { usePathname } from 'next/navigation';
 import GlobalNavigationBarItem from './item';
 import SITE_MAP from '@/constants/site-map.constant';
+import { HTMLAttributes } from 'react';
+import { cn } from '@/lib/shadcn';
 
 const HOME = 'home';
 const REPORT = 'report';
 const POST = 'post';
 
-const GlobalNavigationBar = () => {
+type GlobalNavigationBarProps = HTMLAttributes<HTMLElement>;
+
+const GlobalNavigationBar = ({ className, ...props }: GlobalNavigationBarProps) => {
   const pathname = usePathname();
 
   const currentPage = pathname.startsWith(SITE_MAP.MEAL_POST)
@@ -18,9 +22,15 @@ const GlobalNavigationBar = () => {
       : HOME;
 
   return (
-    <nav className="temp-layout fixed bottom-4 left-4 right-4 rounded-[6.25rem] bg-gray-200/[0.64] p-2 backdrop-blur-[30px]">
-      <ul className="flex gap-2">
-        <li className="flex-1">
+    <nav
+      className={cn(
+        'fixed bottom-4 left-4 right-4 rounded-[6.25rem] bg-gray-200/[0.64] p-2 backdrop-blur-[30px] layout-container xl:hidden',
+        className
+      )}
+      {...props}
+    >
+      <ul className="grid grid-cols-3 gap-2">
+        <li>
           <GlobalNavigationBarItem
             href={SITE_MAP.HOME}
             label="홈"
@@ -28,7 +38,7 @@ const GlobalNavigationBar = () => {
             active={currentPage === HOME}
           />
         </li>
-        <li className="flex-1">
+        <li>
           <GlobalNavigationBarItem
             href={SITE_MAP.MEAL_POST}
             label="식사 기록"
@@ -36,7 +46,7 @@ const GlobalNavigationBar = () => {
             active={currentPage === POST}
           />
         </li>
-        <li className="flex-1">
+        <li>
           <GlobalNavigationBarItem
             href={SITE_MAP.REPORT}
             label="리포트"
