@@ -2,7 +2,7 @@ import { Typography } from '@/components/ui/typography';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { PERIOD_UNIT_TEXT } from '../constants/unit.constant';
 import { Bar, BarChart, Cell, ReferenceLine, XAxis, YAxis } from 'recharts';
-import { calculateDiffCalories } from '../utils/nutrition-diff.util';
+import { calculateDiffCalories, makePeriodMessage } from '../utils/nutrition-diff.util';
 import { formatNumberWithComma } from '@/utils/format.util';
 import { BarChartDataType, PeriodUnit, PeriodUnitEnum } from '../types/chart.type';
 import { MealNutrition } from '@/types/nutrition.type';
@@ -18,13 +18,13 @@ type CaloriesAmountReportProps = {
 
 const CaloriesAmountReport = ({ total, unit, barChart, personalInfo }: CaloriesAmountReportProps) => {
   const { isMore, absDiff } = calculateDiffCalories(barChart);
+  const periodMessage = makePeriodMessage(unit);
   return (
     <>
       <Typography as="h2" variant="subTitle1">
         {total.calories ? (
           <>
-            {PERIOD_UNIT_TEXT[unit].current} {PERIOD_UNIT_TEXT[unit].postposition} {PERIOD_UNIT_TEXT[unit].previous}
-            보다
+            {periodMessage}
             <br />
             {formatNumberWithComma(absDiff)}kcal {isMore ? '더' : '덜'} 먹었어요
           </>
