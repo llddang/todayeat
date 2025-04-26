@@ -90,6 +90,13 @@ export const POST = async (req: Request) => {
     fat: 0
   };
 
+  let macroAverage: MealNutrition = {
+    calories: 0,
+    carbohydrate: 0,
+    protein: 0,
+    fat: 0
+  };
+
   const chartData = await Promise.all(
     ranges.map(async ({ start, end, label }, index): Promise<BarChartDataType> => {
       try {
@@ -99,6 +106,7 @@ export const POST = async (req: Request) => {
 
         if (index === ranges.length - 1) {
           macroTotal = calculateTotalNutrition(meals);
+          macroAverage = calculateNutritionAverage(meals);
         }
 
         return {
@@ -115,7 +123,8 @@ export const POST = async (req: Request) => {
 
   return NextResponse.json({
     barChart: chartData,
-    total: macroTotal
+    total: macroTotal,
+    average: macroAverage
   });
 };
 
