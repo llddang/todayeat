@@ -83,7 +83,7 @@ const CaloriesAmountReport = ({ total, unit, barChart, personalInfo }: CaloriesA
           </Typography>
           <div className="space-x-1">
             <Typography as="span" variant="subTitle4" className="text-gray-900">
-              {formatNumberWithComma(barChart[barChart.length - 1].value)}
+              {formatNumberWithComma(barChart.at(-1)?.value ?? 0)}
             </Typography>
             <Typography as="span" variant="body3">
               kcal
