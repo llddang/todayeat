@@ -25,7 +25,7 @@ export const calculateDiffCalories = (barChart: BarChartDataType[]): { isMore: b
  * 탄수화물, 단백질, 지방 중 목표 대비 섭취 차이가 가장 큰 영양소를 계산합니다.
  *
  * @param {MealNutrition} average - 평균 섭취량
- * @param {UserPersonalInfoDTO | null} personalInfo - 개인 목표 정보
+ * @param {UserPersonalInfoDTO | null} personalInfo - 목표 정보
  * @returns {{ key: string; diff: number; consumed: number; goal: number }} 차이가 가장 큰 영양소 정보
  */
 export const calculateMaxDiffNutrient = (
