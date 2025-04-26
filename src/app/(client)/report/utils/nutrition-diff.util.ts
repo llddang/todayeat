@@ -2,6 +2,8 @@ import { getPercentage } from '@/utils/nutrition-calculator.util';
 import { PERIOD_UNIT_TEXT } from '../constants/unit.constant';
 import { BarChartDataType, PeriodUnit } from '../types/chart.type';
 import { MacronutrientComparison } from '../types/nutrition.type';
+import { MealNutrition } from '@/types/nutrition.type';
+import { UserPersonalInfoDTO } from '@/types/DTO/user.dto';
 
 /**
  * 현재 주기의 섭취 칼로리와 이전 주기의 섭취 칼로리를 비교하여 차이를 계산합니다.
@@ -22,18 +24,34 @@ export const calculateDiffCalories = (barChart: BarChartDataType[]): { isMore: b
 /**
  * 탄수화물, 단백질, 지방 중 목표 대비 섭취 차이가 가장 큰 영양소를 계산합니다.
  *
- * @param {MacronutrientComparison} nutrients - 각 영양소별 섭취량과 목표량을 담은 객체
+ * @param {MealNutrition} average - 평균 섭취량
+ * @param {UserPersonalInfoDTO | null} personalInfo - 개인 목표 정보
  * @returns {{ key: string; diff: number; consumed: number; goal: number }} 차이가 가장 큰 영양소 정보
  */
 export const calculateMaxDiffNutrient = (
-  nutrients: MacronutrientComparison
+  average: MealNutrition,
+  personalInfo: UserPersonalInfoDTO | null
 ): {
   key: string;
   diff: number;
   consumed: number;
   goal: number;
 } => {
-  const sorted = Object.entries(nutrients)
+  const nutrientAverage: MacronutrientComparison = {
+    CARBOHYDRATE: {
+      consumed: average.carbohydrate,
+      goal: personalInfo ? personalInfo.dailyCarbohydrateGoal : 0
+    },
+    PROTEIN: {
+      consumed: average.protein,
+      goal: personalInfo ? personalInfo.dailyProteinGoal : 0
+    },
+    FAT: {
+      consumed: average.fat,
+      goal: personalInfo ? personalInfo.dailyFatGoal : 0
+    }
+  };
+  const sorted = Object.entries(nutrientAverage)
     .map(([key, { consumed, goal }]) => {
       const diff = consumed - goal;
       return { key, diff, consumed, goal };

@@ -35,22 +35,11 @@ const MacronutrientPercentageReport = ({ unit, total, average, personalInfo }: M
     }
   };
 
-  const nutrientAverage: MacronutrientComparison = {
-    CARBOHYDRATE: {
-      consumed: average.carbohydrate,
-      goal: personalInfo ? personalInfo.dailyCarbohydrateGoal : 0
-    },
-    PROTEIN: {
-      consumed: average.protein,
-      goal: personalInfo ? personalInfo.dailyProteinGoal : 0
-    },
-    FAT: {
-      consumed: average.fat,
-      goal: personalInfo ? personalInfo.dailyFatGoal : 0
-    }
-  };
-
-  const { key = 'CARBOHYDRATE' as MacronutrientEnumType, consumed, goal } = calculateMaxDiffNutrient(nutrientAverage);
+  const {
+    key = 'CARBOHYDRATE' as MacronutrientEnumType,
+    consumed,
+    goal
+  } = calculateMaxDiffNutrient(average, personalInfo);
 
   const [beforeBreak, afterBreak] = makeFeedbackMessage(
     unit,
