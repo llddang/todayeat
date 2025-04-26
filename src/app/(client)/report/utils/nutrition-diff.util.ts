@@ -1,7 +1,17 @@
 import { getPercentage } from '@/utils/nutrition-calculator.util';
 import { PERIOD_UNIT_TEXT } from '../constants/unit.constant';
-import { PeriodUnit } from '../types/chart.type';
+import { BarChartDataType, PeriodUnit } from '../types/chart.type';
 import { NutrientRatio } from '../types/nutrition.type';
+
+export const calculateDiffCalories = (barChart: BarChartDataType[]) => {
+  const current = barChart[barChart.length - 1]?.value ?? 0;
+  const previous = barChart[barChart.length - 2]?.value ?? 0;
+
+  const diff = current - previous;
+  const isMore = diff > 0;
+  const absDiff = Math.abs(diff);
+  return { isMore, absDiff };
+};
 
 export const calculateMaxDiffNutrient = (nutrients: NutrientRatio) => {
   const sorted = Object.entries(nutrients)
