@@ -39,9 +39,8 @@ const AddMealDrawer = () => {
     setIsAnalyzing(true);
 
     if (!data.menuName) {
-      alert('메뉴명을 입력해주세요.');
       setIsAnalyzing(false);
-      return;
+      return alert('메뉴명을 입력해주세요.');
     }
 
     try {
@@ -49,9 +48,9 @@ const AddMealDrawer = () => {
       if (error) {
         throw new Error('AI 요청 실패하였습니다. 로그인 상태를 확인해주세요.');
       }
-      console.log(data);
     } catch (err) {
-      console.error('AI 요청 실패하였습니다. 로그인 상태를 확인해주세요.', err);
+      setIsAnalyzing(false);
+      return alert(err);
     }
     try {
       const generatedTextResult = await generateCaloriesAnalysisByText(
@@ -60,9 +59,9 @@ const AddMealDrawer = () => {
       );
       const parsedResult = parseGeminiResponse(generatedTextResult);
       if (parsedResult.length === 0) {
-        alert('AI 분석에 실패하였습니다. 메뉴명이 올바른지 확인해주세요.');
         setIsAnalyzing(false);
-        return;
+        // TODO: 분석 실패시 문구 수정 및 유저 확인용 모달 추가
+        return alert('AI 분석에 실패하였습니다. 메뉴명이 올바른지 확인해주세요.');
       }
       const aiResult = parsedResult[0];
       const newMeal = {
