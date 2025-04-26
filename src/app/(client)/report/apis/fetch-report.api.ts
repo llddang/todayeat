@@ -14,6 +14,12 @@ type FetchReportResponse = {
     protein: number;
     fat: number;
   };
+  average: {
+    calories: number;
+    carbohydrate: number;
+    protein: number;
+    fat: number;
+  };
 };
 
 export const fetchReport = async (userId: string, unit: PeriodUnit): Promise<FetchReportResponse> => {

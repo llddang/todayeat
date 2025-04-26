@@ -24,6 +24,7 @@ const Charts = ({ unit }: { unit: PeriodUnit }) => {
     }
   ]);
   const [total, setTotal] = useState<MealNutrition>({ calories: 0, carbohydrate: 0, protein: 0, fat: 0 });
+  const [average, setAverage] = useState<MealNutrition>({ calories: 0, carbohydrate: 0, protein: 0, fat: 0 });
 
   const { id: userId, personalInfo } = useUserStore((state) => state.user);
 
@@ -31,9 +32,10 @@ const Charts = ({ unit }: { unit: PeriodUnit }) => {
     if (!userId) return;
     const fetchData = async () => {
       try {
-        const { barChart, total } = await fetchReport(userId, unit);
+        const { barChart, total, average } = await fetchReport(userId, unit);
         setBarChart(barChart);
         setTotal(total);
+        setAverage(average);
       } catch (error) {
         console.error('리포트 불러오기 실패:', error);
       }
@@ -53,9 +55,20 @@ const Charts = ({ unit }: { unit: PeriodUnit }) => {
     <>
       <GlassBackground className="mb-4 min-h-full w-full rounded-2xl p-4">
         <Typography as="h2" variant="subTitle1">
-          {PERIOD_UNIT_TEXT[unit].current}
-          {PERIOD_UNIT_TEXT[unit].postposition} {PERIOD_UNIT_TEXT[unit].previous}보다 <br /> {absDiff}kcal{' '}
-          {isMore ? '더' : '덜'} 먹었어요
+          {total.calories ? (
+            <>
+              {PERIOD_UNIT_TEXT[unit].current} {PERIOD_UNIT_TEXT[unit].postposition} {PERIOD_UNIT_TEXT[unit].previous}
+              보다
+              <br />
+              {absDiff}kcal {isMore ? '더' : '덜'} 먹었어요
+            </>
+          ) : (
+            <>
+              식사를 기록하면
+              <br />
+              섭취량을 분석할 수 있어요
+            </>
+          )}
         </Typography>
         <ChartContainer config={chartConfig} className="mt-4 min-h-full w-full">
           <BarChart data={barChart} barSize={32}>
@@ -129,9 +142,9 @@ const Charts = ({ unit }: { unit: PeriodUnit }) => {
       </GlassBackground>
       <GlassBackground className="flex min-h-full w-full flex-col gap-4 rounded-2xl p-4">
         <MacronutrientPercentageReport unit={unit} total={total} personalInfo={personalInfo} />
-        <MacronutrientAmountReport unit={unit} variety="CARBOHYDRATE" total={total} personalInfo={personalInfo} />
-        <MacronutrientAmountReport unit={unit} variety="PROTEIN" total={total} personalInfo={personalInfo} />
-        <MacronutrientAmountReport unit={unit} variety="FAT" total={total} personalInfo={personalInfo} />
+        <MacronutrientAmountReport unit={unit} variety="CARBOHYDRATE" average={average} personalInfo={personalInfo} />
+        <MacronutrientAmountReport unit={unit} variety="PROTEIN" average={average} personalInfo={personalInfo} />
+        <MacronutrientAmountReport unit={unit} variety="FAT" average={average} personalInfo={personalInfo} />
       </GlassBackground>
     </>
   );
