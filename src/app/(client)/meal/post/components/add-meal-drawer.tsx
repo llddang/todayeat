@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { FormControl, FormField, FormItem, FormLabel, Form } from '@/components/ui/form';
@@ -12,7 +14,7 @@ import { parseGeminiResponse } from '@/lib/gemini';
 import { Typography } from '@/components/ui/typography';
 import IconButton from '@/components/commons/icon-button';
 import AddMealAiLoading from './add-meal-ai-loading';
-import * as z from 'zod';
+import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createAiRequestByText, createFoodAnalysisRequestDetail } from '@/apis/analysis-request.api';
 import { useRouter } from 'next/navigation';
