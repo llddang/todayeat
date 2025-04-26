@@ -1,12 +1,14 @@
 /**
- * 숫자의 천 단위마다 콤마(,)를 붙이는 함수입니다.
+ * 숫자나 숫자 문자열의 천 단위마다 콤마(,)를 붙이는 함수입니다.
+ * 문자열 입력의 경우 내부 콤마를 제거하고 숫자로 변환한 후 포맷팅합니다.
  *
  * @function formatNumberWithComma
- * @param {number} number - 변환할 숫자
- * @returns {string} 천 단위마다 콤마(,)가 포함된 문자열
+ * @param {number | string} number - 변환할 숫자 또는 숫자 문자열 (예: 123456789 또는 "10,00,000")
+ * @returns {string} 천 단위마다 콤마(,)가 포함된 문자열 (예: "123,456,789" 또는 "1,000,000")
  */
-export const formatNumberWithComma = (number: number): string => {
-  return number.toLocaleString('ko-KR');
+export const formatNumberWithComma = (number: number | string): string => {
+  const numericValue = typeof number === 'string' ? Number(number.replace(/,/g, '')) : number;
+  return numericValue.toLocaleString('ko-KR');
 };
 
 /**
@@ -16,7 +18,7 @@ export const formatNumberWithComma = (number: number): string => {
  * @param {Date} date - 변환할 날짜 객체
  * @returns {string} 'YYYY년 MM월' 형식의 문자열
  */
-export const formatDateToLocaleKR = (date: Date) => {
+export const formatDateToLocaleKR = (date: Date): string => {
   return `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
 };
 
@@ -47,9 +49,7 @@ export const formatDateWithDash = (date: Date): string => {
  * @param datetime.meridiem - '오전' 또는 '오후'
  * @param datetime.hours - 시(hour), 문자열 형태 ('01' ~ '12')
  * @param datetime.minutes - 분(minute), 문자열 형태 ('00' ~ '59')
- * @returns 포맷된 timestamp 문자열 ('YYYY-MM-DD HH:mm:ss')
- *
-
+ * @returns ISO 8601 형식의 timestamp 문자열 ('YYYY-MM-DDThh:mm:ss.000Z')
  */
 export const formatTimestamp = (datetime: {
   day: Date;
@@ -79,7 +79,7 @@ export const formatTimestamp = (datetime: {
  * @param {Date} date - 변환할 날짜 객체
  * @returns {string} '오전' 또는 '오후' 문자열
  */
-export const formatTimeWithMeridiem = (date: Date) => {
+export const formatTimeWithMeridiem = (date: Date): string => {
   return date.getHours() < 12 ? '오전' : '오후';
 };
 
@@ -90,7 +90,7 @@ export const formatTimeWithMeridiem = (date: Date) => {
  * @param {Date} date - 변환할 날짜 객체
  * @returns {string} 'HH:MM' 형식의 시간 문자열
  */
-export const formatTimeToHHMM = (date: Date) => {
+export const formatTimeToHHMM = (date: Date): string => {
   const hours = String(date.getHours()).padStart(2, '0');
   const minutes = String(date.getMinutes()).padStart(2, '0');
   return `${hours}:${minutes}`;

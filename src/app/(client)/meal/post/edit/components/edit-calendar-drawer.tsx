@@ -6,11 +6,11 @@ import { useState } from 'react';
 import { Typography } from '@/components/ui/typography';
 import { formatDateToLocaleKR } from '@/utils/format.util';
 
-type MealEditCalendarProps = {
+type EditCalendarDrawerProps = {
   date: Date;
   onDateChange: (date: Date) => void;
 };
-const MealEditCalendar = ({ onDateChange }: MealEditCalendarProps) => {
+const EditCalendarDrawer = ({ onDateChange }: EditCalendarDrawerProps) => {
   const [date, setDate] = useState<Date>(new Date());
   const [isOpen, setIsOpen] = useState(false);
 
@@ -37,8 +37,7 @@ const MealEditCalendar = ({ onDateChange }: MealEditCalendarProps) => {
           defaultMonth={date}
           formatters={{ formatCaption: formatDateToLocaleKR }}
         />
-        {/* TODO: temp-layout 풀기 */}
-        <div className="!mt-2 w-full pb-4 pt-2 temp-layout">
+        <div className="!mt-2 w-full pb-4 pt-2 layout-container">
           <Button onClick={handleSelectDate} className="w-full">
             날짜 선택 완료
           </Button>
@@ -47,4 +46,4 @@ const MealEditCalendar = ({ onDateChange }: MealEditCalendarProps) => {
     </Drawer>
   );
 };
-export default MealEditCalendar;
+export default EditCalendarDrawer;
