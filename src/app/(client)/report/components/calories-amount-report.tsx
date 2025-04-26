@@ -26,7 +26,7 @@ const CaloriesAmountReport = ({ total, unit, barChart, personalInfo }: CaloriesA
             {PERIOD_UNIT_TEXT[unit].current} {PERIOD_UNIT_TEXT[unit].postposition} {PERIOD_UNIT_TEXT[unit].previous}
             보다
             <br />
-            {absDiff}kcal {isMore ? '더' : '덜'} 먹었어요
+            {formatNumberWithComma(absDiff)}kcal {isMore ? '더' : '덜'} 먹었어요
           </>
         ) : (
           <>
