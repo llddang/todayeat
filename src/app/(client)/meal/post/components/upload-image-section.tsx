@@ -1,10 +1,11 @@
 'use client';
 import { Typography } from '@/components/ui/typography';
 import React, { useState } from 'react';
-import MealPostAddMealAiLoading from '@/app/(client)/meal/post/components/meal-post-add-meal-ai-loading';
-import MealPostAddImageForm from '@/app/(client)/meal/post/components/meal-post-add-image-form';
-import useRestoreAnalysisModal from '../hooks/use-restore-analys-modal';
+import AddImageForm from './add-image-form';
+import useRestoreAnalysisModal from '../hooks/use-restore-analysis-modal';
 import RestoreAnalysisModal from './restore-analysis-modal';
+import AddMealAiLoading from './add-meal-ai-loading';
+import AddMealDrawer from './add-meal-drawer';
 
 type UploadImageSectionProps = {
   isRecorded: boolean;
@@ -16,14 +17,14 @@ const UploadImageSection = ({ isRecorded }: UploadImageSectionProps): JSX.Elemen
 
   if (isLoading) {
     return (
-      <div className="flex min-h-[calc(100vh-60px)] items-center justify-center">
-        <MealPostAddMealAiLoading />
+      <div className="flex min-h-[calc(100vh-8.75rem)] items-center justify-center">
+        <AddMealAiLoading />
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col items-center gap-7 px-4 py-8">
+    <div className="flex w-full flex-col items-center gap-7 px-4 py-8">
       <div className="flex flex-col items-center justify-center gap-2">
         <Typography variant="title2" as="p">
           오늘의 식사를 간편하게 남겨보세요!
@@ -38,7 +39,10 @@ const UploadImageSection = ({ isRecorded }: UploadImageSectionProps): JSX.Elemen
         onApproveClickHandler={handleApproveClick}
         onCancelClickHandler={handleCancelClick}
       />
-      <MealPostAddImageForm onLoadingChange={setIsLoading} />
+      <div className="flex w-full flex-col items-center justify-center gap-2">
+        <AddImageForm onLoadingChange={setIsLoading} />
+        <AddMealDrawer />
+      </div>
     </div>
   );
 };

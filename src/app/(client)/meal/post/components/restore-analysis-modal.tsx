@@ -16,7 +16,12 @@ type RestoreAnalysisModalProps = {
   onApproveClickHandler: () => void;
   onCancelClickHandler: () => void;
 };
-const RestoreAnalysisModal = ({ open, onOpenChange, onApproveClickHandler, onCancelClickHandler }: RestoreAnalysisModalProps) => {
+const RestoreAnalysisModal = ({
+  open,
+  onOpenChange,
+  onApproveClickHandler,
+  onCancelClickHandler
+}: RestoreAnalysisModalProps) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
@@ -25,7 +30,7 @@ const RestoreAnalysisModal = ({ open, onOpenChange, onApproveClickHandler, onCan
 
           <AlertDialogDescription>등록하던 정보가 있습니다. 사용하시겠습니까?</AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="flex flex-col gap-2">
           <Button variant="primary" onClick={onApproveClickHandler}>
             예
           </Button>

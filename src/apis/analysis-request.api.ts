@@ -9,6 +9,7 @@ import {
 } from '@/types/DTO/ai_analysis.dto';
 import { PostgrestError } from '@supabase/supabase-js';
 import { getAuth } from '@/apis/auth-server.api';
+import { getUser } from './user.api';
 
 export const getFoodImagesById = async (
   userId: string
@@ -19,7 +20,7 @@ export const getFoodImagesById = async (
 
   return { data: snakeToCamelObject(data), error };
 };
-
+ 
 export const createAiRequest = async (
   userId: string,
   imageUrls: string[]
@@ -39,6 +40,16 @@ export const createAiRequest = async (
   return { error };
 };
 
+export const createAiRequestByText = async () => {
+  const supabase = getServerClient();
+  const { id } = await getUser();
+
+  const { error } = await supabase.from('ai_requests').upsert({
+    user_id: id
+  });
+
+  return { error };
+};
 export const getAiResponses = async (): Promise<AiResponseDTO[]> => {
   const supabase = getServerClient();
   const { id } = await getAuth();

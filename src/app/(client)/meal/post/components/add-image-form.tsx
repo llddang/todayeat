@@ -5,13 +5,13 @@ import { Button } from '@/components/ui/button';
 import { getUser } from '@/apis/user.api';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
-import AddImage from '@/app/(client)/meal/post/components/add-image';
+import AddImageList from '@/app/(client)/meal/post/components/add-image-list';
 
-type MealPostAddImageFormProps = {
+type AddImageFormProps = {
   onLoadingChange: (isLoading: boolean) => void;
 };
 
-const MealPostAddImageForm = ({ onLoadingChange }: MealPostAddImageFormProps): JSX.Element => {
+const AddImageForm = ({ onLoadingChange }: AddImageFormProps): JSX.Element => {
   const [images, setImages] = useState<File[]>([]);
   const router = useRouter();
   const handleAnalyzeSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -39,19 +39,17 @@ const MealPostAddImageForm = ({ onLoadingChange }: MealPostAddImageFormProps): J
       if (!res.ok) {
         throw new Error('분석에 실패하였습니다. 잠시후 다시 시도해주세요');
       }
-
       router.replace(SITE_MAP.MEAL_POST_EDIT);
     } catch (err) {
       console.error(err);
-      return alert('분석중 오류가 발생했습니다. ');
-    } finally {
       onLoadingChange(false);
+      return alert('분석중 오류가 발생했습니다. ');
     }
   };
 
   return (
     <form onSubmit={handleAnalyzeSubmit} className="flex w-full flex-col items-center justify-center gap-7">
-      <AddImage onImagesChange={setImages} />
+      <AddImageList onImagesChange={setImages} />
       <Button type="submit" variant="primary" disabled={!images.length}>
         사진 올리고 분석하기
       </Button>
@@ -59,4 +57,4 @@ const MealPostAddImageForm = ({ onLoadingChange }: MealPostAddImageFormProps): J
   );
 };
 
-export default MealPostAddImageForm;
+export default AddImageForm;

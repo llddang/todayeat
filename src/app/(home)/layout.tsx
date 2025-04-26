@@ -8,12 +8,10 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="temp-layout">
+    <div className="py-layout layout-container xl:pb-0 xl:pt-20">
       <Header variant="withProfile" />
-      <div className="py-layout">
-        <main>{children}</main>
-        <Footer />
-      </div>
+      <main className="mx-auto max-w-[73.75rem] xl:mb-5 xl:flex xl:max-h-[calc(100vh-11rem)] xl:gap-5">{children}</main>
+      <Footer />
       <GlobalNavigationBar />
     </div>
   );
