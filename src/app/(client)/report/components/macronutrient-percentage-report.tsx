@@ -7,19 +7,20 @@ import { NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.consta
 import { UserPersonalInfoDTO } from '@/types/DTO/user.dto';
 import { Typography } from '@/components/ui/typography';
 import CtaExampleFeedbackBanner from '@/components/commons/cta-example-feedback-banner';
-import { NutrientRatio } from '../types/nutrition.type';
+import { NutrientRatio as MacronutrientComparison } from '../types/nutrition.type';
 import { calculateMaxDiffNutrient, makeFeedbackMessage } from '../utils/nutrition-diff.util';
 import { PeriodUnit } from '../types/chart.type';
 
 type MacronutrientPercentageReportProps = {
   unit: PeriodUnit;
   total: MealNutrition;
+  average: MealNutrition;
   personalInfo: UserPersonalInfoDTO | null;
 };
 
-const MacronutrientPercentageReport = ({ unit, total, personalInfo }: MacronutrientPercentageReportProps) => {
+const MacronutrientPercentageReport = ({ unit, total, average, personalInfo }: MacronutrientPercentageReportProps) => {
   const totalMacronutrient = total.carbohydrate + total.protein + total.fat;
-  const nutrientRatio: NutrientRatio = {
+  const nutrientRatio: MacronutrientComparison = {
     CARBOHYDRATE: {
       consumed: getPercentage(total.carbohydrate, totalMacronutrient),
       goal: personalInfo ? NUTRITION_PURPOSE_OPTIONS[personalInfo.purpose].ratio.carbohydrate * 100 : 0
@@ -34,7 +35,22 @@ const MacronutrientPercentageReport = ({ unit, total, personalInfo }: Macronutri
     }
   };
 
-  const { key, diff } = calculateMaxDiffNutrient(nutrientRatio);
+  const nutrientAverage: MacronutrientComparison = {
+    CARBOHYDRATE: {
+      consumed: average.carbohydrate,
+      goal: personalInfo ? personalInfo.dailyCarbohydrateGoal : 0
+    },
+    PROTEIN: {
+      consumed: average.protein,
+      goal: personalInfo ? personalInfo.dailyProteinGoal : 0
+    },
+    FAT: {
+      consumed: average.fat,
+      goal: personalInfo ? personalInfo.dailyFatGoal : 0
+    }
+  };
+
+  const { key, diff } = calculateMaxDiffNutrient(nutrientAverage);
 
   const nutrientMap: Record<MacronutrientEnumType, string> = {
     CARBOHYDRATE: '탄수화물',

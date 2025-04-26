@@ -141,7 +141,7 @@ const Charts = ({ unit }: { unit: PeriodUnit }) => {
         </div>
       </GlassBackground>
       <GlassBackground className="flex min-h-full w-full flex-col gap-4 rounded-2xl p-4">
-        <MacronutrientPercentageReport unit={unit} total={total} personalInfo={personalInfo} />
+        <MacronutrientPercentageReport unit={unit} total={total} average={average} personalInfo={personalInfo} />
         <MacronutrientAmountReport unit={unit} variety="CARBOHYDRATE" average={average} personalInfo={personalInfo} />
         <MacronutrientAmountReport unit={unit} variety="PROTEIN" average={average} personalInfo={personalInfo} />
         <MacronutrientAmountReport unit={unit} variety="FAT" average={average} personalInfo={personalInfo} />
