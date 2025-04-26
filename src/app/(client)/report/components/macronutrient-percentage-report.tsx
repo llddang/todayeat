@@ -1,14 +1,13 @@
 import MacroNutrientPieChart from '@/components/commons/macronutrient-pie-chart';
-import React from 'react';
+import CtaExampleFeedbackBanner from '@/components/commons/cta-example-feedback-banner';
+import { Typography } from '@/components/ui/typography';
 import MacronutrientPercentageBox from './macronutrient-percentage-box';
-import { MacronutrientEnum, MacronutrientEnumType, MealNutrition } from '@/types/nutrition.type';
 import { getPercentage } from '@/utils/nutrition-calculator.util';
+import { calculateMaxDiffNutrient, makeFeedbackMessage } from '../utils/nutrition-diff.util';
 import { NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
 import { UserPersonalInfoDTO } from '@/types/DTO/user.dto';
-import { Typography } from '@/components/ui/typography';
-import CtaExampleFeedbackBanner from '@/components/commons/cta-example-feedback-banner';
+import { MacronutrientEnum, MacronutrientEnumType, MealNutrition } from '@/types/nutrition.type';
 import { NutrientRatio as MacronutrientComparison } from '../types/nutrition.type';
-import { calculateMaxDiffNutrient, makeFeedbackMessage } from '../utils/nutrition-diff.util';
 import { PeriodUnit } from '../types/chart.type';
 
 type MacronutrientPercentageReportProps = {
