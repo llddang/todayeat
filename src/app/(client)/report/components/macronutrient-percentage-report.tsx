@@ -58,7 +58,12 @@ const MacronutrientPercentageReport = ({ unit, total, average, personalInfo }: M
     FAT: '지방'
   };
 
-  const [beforeBreak, afterBreak] = makeFeedbackMessage(unit, nutrientMap[key as MacronutrientEnumType], diff);
+  const [beforeBreak, afterBreak] = makeFeedbackMessage(
+    unit,
+    nutrientMap[key as MacronutrientEnumType],
+    diff,
+    nutrientAverage[key as MacronutrientEnumType].goal
+  );
 
   return (
     <div className="flex flex-col">

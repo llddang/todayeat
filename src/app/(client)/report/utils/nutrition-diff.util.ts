@@ -1,3 +1,4 @@
+import { getPercentage } from '@/utils/nutrition-calculator.util';
 import { PERIOD_UNIT_TEXT } from '../constants/unit.constant';
 import { PeriodUnit } from '../types/chart.type';
 import { NutrientRatio } from '../types/nutrition.type';
@@ -12,13 +13,28 @@ export const calculateMaxDiffNutrient = (nutrients: NutrientRatio) => {
   return sorted[0];
 };
 
-export const makeFeedbackMessage = (unit: PeriodUnit, nutrient: string, diff: number) => {
+export const makeFeedbackMessage = (unit: PeriodUnit, nutrient: string, diff: number, goal: number) => {
   const isOver = diff > 0;
-  const intensity = Math.abs(diff) < 15 ? '다소 ' : '많이 ';
-  const direction = isOver ? '과다했어요' : '부족했어요';
+  const diffPercentage = Math.abs(getPercentage(diff, goal));
 
-  return [
-    `${PERIOD_UNIT_TEXT[unit].current}${PERIOD_UNIT_TEXT[unit].postposition} ${nutrient}이`,
-    `목표보다 ${intensity} ${direction}`
-  ];
+  if (isOver) {
+    return [
+      `${PERIOD_UNIT_TEXT[unit].current}${PERIOD_UNIT_TEXT[unit].postposition} ${nutrient}을`,
+      '목표보다 많이 먹었어요'
+    ];
+  }
+
+  if (diffPercentage > 50) {
+    return [
+      `${PERIOD_UNIT_TEXT[unit].current}${PERIOD_UNIT_TEXT[unit].postposition} ${nutrient} 섭취에`,
+      '아직 여유가 있어요'
+    ];
+  } else if (diffPercentage > 20) {
+    return [
+      `${PERIOD_UNIT_TEXT[unit].current}${PERIOD_UNIT_TEXT[unit].postposition} ${nutrient} 섭취가`,
+      '목표에 가까워요'
+    ];
+  } else {
+    return [`${PERIOD_UNIT_TEXT[unit].current}${PERIOD_UNIT_TEXT[unit].postposition} ${nutrient}을`, '충분히 챙겼어요'];
+  }
 };
