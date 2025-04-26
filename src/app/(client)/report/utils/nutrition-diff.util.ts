@@ -4,8 +4,8 @@ import { BarChartDataType, PeriodUnit } from '../types/chart.type';
 import { NutrientRatio } from '../types/nutrition.type';
 
 export const calculateDiffCalories = (barChart: BarChartDataType[]) => {
-  const current = barChart[barChart.length - 1]?.value ?? 0;
-  const previous = barChart[barChart.length - 2]?.value ?? 0;
+  const current = barChart.at(-1)?.value ?? 0;
+  const previous = barChart.at(-2)?.value ?? 0;
 
   const diff = current - previous;
   const isMore = diff > 0;
