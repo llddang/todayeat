@@ -22,8 +22,8 @@ import SITE_MAP from '@/constants/site-map.constant';
 import MacronutrientBox from '@/components/commons/macronutrient-box';
 import MacroNutrientPieChart from '@/components/commons/macronutrient-pie-chart';
 import { MacronutrientEnum } from '@/types/nutrition.type';
-import AddMealDrawer from '../../components/add-meal-drawer';
 import EditCalendarDrawer from './edit-calendar-drawer';
+import AddMealCardDrawer from './add-meal-card-drawer';
 import { MAX_MEMO_LENGTH } from '../constants/meal-edit.constant';
 import { MEAL_CATEGORY } from '../../../constants/category.constant';
 import MemoBox from '../../../detail/components/memo-box';
@@ -179,7 +179,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
               {mealCardList.map((meal, idx) => (
                 <EditCard key={meal.id} idx={idx} mealDetail={meal} onRemove={() => handleRemoveMeal(idx)} />
               ))}
-              <AddMealDrawer onAddMeal={handleAddMeal} />
+              <AddMealCardDrawer onAddMeal={handleAddMeal} />
             </section>
             <section className="my-10 flex w-full flex-col items-start justify-center gap-3">
               <Typography as="h3" variant="body1" className="pl-1">

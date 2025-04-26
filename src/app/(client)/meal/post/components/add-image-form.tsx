@@ -39,13 +39,11 @@ const AddImageForm = ({ onLoadingChange }: AddImageFormProps): JSX.Element => {
       if (!res.ok) {
         throw new Error('분석에 실패하였습니다. 잠시후 다시 시도해주세요');
       }
-
       router.replace(SITE_MAP.MEAL_POST_EDIT);
     } catch (err) {
       console.error(err);
-      return alert('분석중 오류가 발생했습니다. ');
-    } finally {
       onLoadingChange(false);
+      return alert('분석중 오류가 발생했습니다. ');
     }
   };
 
