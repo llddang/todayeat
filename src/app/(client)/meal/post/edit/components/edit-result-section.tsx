@@ -4,7 +4,6 @@ import { AiResponseDTO } from '@/types/DTO/ai_analysis.dto';
 import { MealCategory } from '@/types/meal-category.type';
 import { createMealWithDetails, deleteMealAnalysisDetail } from '@/apis/meal.api';
 import { uploadImage } from '@/apis/storage.api';
-import SITE_MAP from '@/constants/site-map.constant';
 import { formatTimestamp } from '@/utils/format.util';
 import { urlToFile } from '../../../utils/file.util';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -17,15 +16,17 @@ import MealImageCarousel from '../../../components/meal-images-carousel';
 import { Typography } from '@/components/ui/typography';
 import GlassBackground from '@/components/commons/glass-background';
 import TagSelectItem from '@/components/commons/tag-select-item';
-import Textarea from '@/components/commons/textarea';
 import { Button } from '@/components/ui/button';
 import TimePicker, { TimeFields } from './time-picker';
-import AddMealDrawer from '../../components/add-meal-drawer';
-import { MAX_MEMO_LENGTH, MEAL_CATEGORY } from '../constants/meal-edit.constant';
+import SITE_MAP from '@/constants/site-map.constant';
 import MacronutrientBox from '@/components/commons/macronutrient-box';
-import { MacronutrientEnum } from '@/types/nutrition.type';
 import MacroNutrientPieChart from '@/components/commons/macronutrient-pie-chart';
+import { MacronutrientEnum } from '@/types/nutrition.type';
 import EditCalendarDrawer from './edit-calendar-drawer';
+import AddMealCardDrawer from './add-meal-card-drawer';
+import { MAX_MEMO_LENGTH } from '../constants/meal-edit.constant';
+import { MEAL_CATEGORY } from '../../../constants/category.constant';
+import MemoBox from '../../../detail/components/memo-box';
 
 type EditResultSectionProps = {
   imageList: string[];
@@ -89,7 +90,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
     setIsLoading(true);
     try {
       if (!form) {
-        return alert(' 데이터 형식이 올바르지 않습니다.');
+        return alert('데이터 형식이 올바르지 않습니다.');
       }
 
       const { date, memo, mealCategory, mealList, mealImages } = form;
@@ -102,24 +103,34 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
         mealCategory,
         memo
       };
-      const { mealDetails } = await createMealWithDetails(
-        newMeals,
-        mealList.map((meal) => ({
-          menuName: meal.menuName,
-          weight: meal.weight,
-          calories: meal.calories,
-          carbohydrate: meal.carbohydrate,
-          protein: meal.protein,
-          fat: meal.fat
-        }))
-      );
-      if (mealDetails) {
-        await deleteMealAnalysisDetail();
-        router.push(SITE_MAP.HOME);
+
+      try {
+        const meal = await createMealWithDetails(
+          newMeals,
+          mealList.map((meal) => ({
+            menuName: meal.menuName,
+            weight: meal.weight,
+            calories: meal.calories,
+            carbohydrate: meal.carbohydrate,
+            protein: meal.protein,
+            fat: meal.fat
+          }))
+        );
+
+        if (meal) {
+          try {
+            await deleteMealAnalysisDetail();
+            router.push(SITE_MAP.HOME);
+          } catch (error) {
+            console.error('분석 데이터 삭제 중 오류 발생:', error);
+          }
+        }
+      } catch (error) {
+        console.error('식사 정보 생성 중 오류 발생:', error);
       }
-    } catch (err) {
-      alert('식사 정보 등록에 실패했습니다. 잠시후 다시 시도해주세요');
-      console.error('식사 정보 등록에 실패했습니다.', err);
+    } catch (error) {
+      alert('식사 정보 등록에 실패했습니다. 잠시 후 다시 시도해주세요.');
+      console.error('식사 정보 등록 실패:', error);
       router.refresh();
     } finally {
       setIsLoading(false);
@@ -168,7 +179,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
               {mealCardList.map((meal, idx) => (
                 <EditCard key={meal.id} idx={idx} mealDetail={meal} onRemove={() => handleRemoveMeal(idx)} />
               ))}
-              <AddMealDrawer onAddMeal={handleAddMeal} />
+              <AddMealCardDrawer onAddMeal={handleAddMeal} />
             </section>
             <section className="my-10 flex w-full flex-col items-start justify-center gap-3">
               <Typography as="h3" variant="body1" className="pl-1">
@@ -195,24 +206,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
                 </div>
               </GlassBackground>
             </section>
-            <section className="space-y-3">
-              <Typography as="h3" variant="body1" className="pl-1">
-                식사 일기
-              </Typography>
-              <GlassBackground className="min-h-auto flex w-full flex-col gap-3 rounded-2xl border-none">
-                <div className="flex items-start justify-between gap-[0.38rem] before:mt-[0.13rem] before:block before:aspect-square before:w-[1.125rem] before:bg-edit-4-icon before:bg-contain before:content-['']">
-                  <Typography as="span" variant="subTitle3" className="flex-1 !font-medium text-gray-600">
-                    음식을 먹을 때 어떤 기분이었는지 간단하게 적어주세요. 식습관을 돌아보는데 큰 도움이 돼요!
-                  </Typography>
-                </div>
-                <Textarea
-                  {...mealFormMethods.register('memo')}
-                  className="min-h-60 text-gray-500"
-                  maxLength={MAX_MEMO_LENGTH}
-                  placeholder="예시) 스트레스로 폭식했다, 기분 좋게 잘먹었다, 이 음식 먹고 속이 안 좋았다."
-                />
-              </GlassBackground>
-            </section>
+            <MemoBox maxLength={MAX_MEMO_LENGTH} {...mealFormMethods.register('memo')} />
             <Button type="submit" className="mt-3 w-full" disabled={isLoading}>
               제출하기
             </Button>
@@ -251,7 +245,6 @@ const mealEditFormSchema = z.object({
 });
 
 type MealEditFormData = z.infer<typeof mealEditFormSchema>;
-export type MealEditFormDataType = z.infer<typeof mealEditFormSchema>;
 
 const uploadMealImages = async (imageUrls: string[]): Promise<string[]> => {
   const files = await Promise.all(imageUrls.map((url, idx) => urlToFile(url, idx)));

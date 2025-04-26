@@ -5,14 +5,16 @@ import EditResultSection from './components/edit-result-section';
 
 const MealPostEditPage = async (): Promise<JSX.Element> => {
   const { id: userId } = await getUser();
-  const { data: imageList } = await getFoodImagesById(userId);
+  const { data: initialImageList } = await getFoodImagesById(userId);
   const aiResponses = await getAiResponses();
+  const imageList = initialImageList?.imageUrls || [];
 
-  if (!userId || !imageList || aiResponses.length === 0) {
+  if (!userId || aiResponses.length === 0) {
+    alert('등록 중인 식사가 없습니다.');
     redirect('/meal/post');
   }
 
-  return <EditResultSection imageList={imageList.imageUrls} initialMealList={aiResponses} />;
+  return <EditResultSection imageList={imageList} initialMealList={aiResponses} />;
 };
 
 export default MealPostEditPage;
