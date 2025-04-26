@@ -7,7 +7,7 @@ import { calculateMaxDiffNutrient, makeFeedbackMessage } from '../utils/nutritio
 import { NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
 import { UserPersonalInfoDTO } from '@/types/DTO/user.dto';
 import { MacronutrientEnum, MacronutrientEnumType, MealNutrition } from '@/types/nutrition.type';
-import { NutrientRatio as MacronutrientComparison } from '../types/nutrition.type';
+import { MacronutrientComparison } from '../types/nutrition.type';
 import { PeriodUnit } from '../types/chart.type';
 import { AMOUNT_CHART_OPTIONS } from '../constants/chart.constant';
 

@@ -1,7 +1,7 @@
 import { getPercentage } from '@/utils/nutrition-calculator.util';
 import { PERIOD_UNIT_TEXT } from '../constants/unit.constant';
 import { BarChartDataType, PeriodUnit } from '../types/chart.type';
-import { NutrientRatio } from '../types/nutrition.type';
+import { MacronutrientComparison } from '../types/nutrition.type';
 
 /**
  * 현재 주기의 섭취 칼로리와 이전 주기의 섭취 칼로리를 비교하여 차이를 계산합니다.
@@ -24,11 +24,11 @@ export const calculateDiffCalories = (barChart: BarChartDataType[]): { isMore: b
  * 탄수화물, 단백질, 지방 중 목표 대비 섭취 차이가 가장 큰 영양소를 계산합니다.
  *
  * @function calculateMaxDiffNutrient
- * @param {NutrientRatio} nutrients - 각 영양소별 섭취량과 목표량을 담은 객체
+ * @param {MacronutrientComparison} nutrients - 각 영양소별 섭취량과 목표량을 담은 객체
  * @returns {{ key: string; diff: number; consumed: number; goal: number }} 차이가 가장 큰 영양소 정보
  */
 export const calculateMaxDiffNutrient = (
-  nutrients: NutrientRatio
+  nutrients: MacronutrientComparison
 ): {
   key: string;
   diff: number;
