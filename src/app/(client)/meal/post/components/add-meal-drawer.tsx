@@ -48,36 +48,25 @@ const AddMealDrawer = () => {
       if (error) {
         throw new Error('AI 요청 실패하였습니다. 로그인 상태를 확인해주세요.');
       }
-    } catch (err) {
-      setIsAnalyzing(false);
-      return alert(err);
-    }
-    try {
+
       const generatedTextResult = await generateCaloriesAnalysisByText(
         data.menuName,
         data.weight ? Number(data.weight) : 0
       );
-      const parsedResult = parseGeminiResponse(generatedTextResult);
-      if (parsedResult.length === 0) {
-        setIsAnalyzing(false);
+      const [parsedResult] = parseGeminiResponse(generatedTextResult);
+      if (!parsedResult) {
         // TODO: 분석 실패시 문구 수정 및 유저 확인용 모달 추가
-        return alert('AI 분석에 실패하였습니다. 메뉴명이 올바른지 확인해주세요.');
+        throw new Error('죄송합니다 AI 분석에 실패하였습니다. 다시 시도 해주세요');
       }
-      const aiResult = parsedResult[0];
       const newMeal = {
-        menuName: data.menuName,
-        weight: aiResult.weight,
-        calories: aiResult.calories,
-        carbohydrate: aiResult.carbohydrate,
-        protein: aiResult.protein,
-        fat: aiResult.fat
+        ...parsedResult,
+        menuName: data.menuName
       };
       await createFoodAnalysisRequestDetail(newMeal);
       router.push('/meal/post/edit');
     } catch (err) {
-      console.error('에러 발생:', err);
       setIsAnalyzing(false);
-      alert('AI 분석 중 문제가 발생했어요. 다시 시도해 주세요.');
+      alert(err);
     }
   };
 
