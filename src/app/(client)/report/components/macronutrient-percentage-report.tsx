@@ -77,9 +77,11 @@ const MacronutrientPercentageReport = ({ unit, total, average, personalInfo }: M
           }
         />
       )}
-      <Typography as="h2" variant="subTitle1">
-        {beforeBreak} <br /> {afterBreak}
-      </Typography>
+      {personalInfo && total.calories > 0 && (
+        <Typography as="h2" variant="subTitle1">
+          {beforeBreak} <br /> {afterBreak}
+        </Typography>
+      )}
       <div className="flex">
         <MacroNutrientPieChart data={total} />
         <div className="m-auto flex flex-col gap-4">
