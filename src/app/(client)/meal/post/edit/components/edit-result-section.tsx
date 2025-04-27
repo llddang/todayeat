@@ -27,6 +27,8 @@ import AddMealCardDrawer from './add-meal-card-drawer';
 import { MAX_MEMO_LENGTH } from '../constants/meal-edit.constant';
 import { MEAL_CATEGORY } from '../../../constants/category.constant';
 import MemoBox from '../../../detail/components/memo-box';
+import Responsive from '@/components/commons/responsive';
+import EditCalendarPc from './edit-calendar-pc';
 
 type EditResultSectionProps = {
   imageList: string[];
@@ -201,7 +203,11 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
                   ))}
                 </div>
                 <div className="flex w-full gap-2">
-                  <EditCalendarDrawer date={day} onDateChange={handleDayChange} />
+                  <Responsive
+                    pc={<EditCalendarPc date={day} onDateChange={handleDayChange} />}
+                    mobile={<EditCalendarDrawer date={day} onDateChange={handleDayChange} />}
+                  />
+                  {/* <EditCalendarDrawer date={day} onDateChange={handleDayChange} /> */}
                   <TimePicker currentTime={date} onTimeChange={handleTimeChange} />
                 </div>
               </GlassBackground>
