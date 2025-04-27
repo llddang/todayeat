@@ -7,7 +7,6 @@ import { MealNutritionType } from '@/types/nutrition.type';
 import { Typography } from '../ui/typography';
 import { formatNumberWithComma } from '@/utils/format.util';
 import { cn } from '@/lib/shadcn';
-import useIsMobile from '@/hooks/use-is-mobile';
 
 const chartConfig = {
   carbohydrate: {
@@ -27,13 +26,16 @@ const chartConfig = {
 type MacroNutrientPieChartProps = {
   data: MacronutrientData;
   displayCalories?: boolean;
+  innerRadius?: number;
   className?: string;
 };
 
-const MacroNutrientPieChart = ({ data, displayCalories = false, className }: MacroNutrientPieChartProps) => {
-  const isMobile = useIsMobile();
-  const innerRadius = isMobile ? 64 : 85;
-
+const MacroNutrientPieChart = ({
+  data,
+  displayCalories = false,
+  innerRadius,
+  className
+}: MacroNutrientPieChartProps) => {
   const chartData: ChartData[] = Object.entries(data)
     .filter(([key]) => key !== 'calories')
     .map(([key, value]) => ({
