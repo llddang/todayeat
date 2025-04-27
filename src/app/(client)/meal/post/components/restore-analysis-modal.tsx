@@ -24,7 +24,7 @@ const RestoreAnalysisModal = ({
 }: RestoreAnalysisModalProps) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="absolute left-1/2 top-1/2 z-[50] min-w-[22.06rem] -translate-x-1/2 -translate-y-1/2 gap-1 rounded-2xl bg-white p-6 backdrop-blur-[50px] xl:max-w-[25rem]">
+      <AlertDialogContent className="z-modal absolute left-1/2 top-1/2 min-w-[22.06rem] -translate-x-1/2 -translate-y-1/2 gap-1 rounded-2xl bg-white p-6 backdrop-blur-[50px] xl:max-w-[25rem]">
         <AlertDialogHeader>
           <AlertDialogTitle>이전 정보 발견</AlertDialogTitle>
 

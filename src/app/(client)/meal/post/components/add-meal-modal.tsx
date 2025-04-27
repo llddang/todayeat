@@ -6,7 +6,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/
 import { Input } from '@/components/ui/input';
 import { Typography } from '@/components/ui/typography';
 import { Dialog, DialogClose, DialogContent, DialogOverlay, DialogTitle, DialogTrigger } from '@radix-ui/react-dialog';
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { MAX_MENU_NAME_LENGTH, MAX_NUMERIC_LENGTH } from '../edit/constants/meal-edit.constant';
 import { formatNumberWithComma } from '@/utils/format.util';
@@ -81,8 +80,8 @@ const AddMealModal = ({ onLoadingChange }: AddMealModalProps) => {
       <DialogTrigger asChild>
         <Button variant="ghost">사진 없이 분석하기</Button>
       </DialogTrigger>
-      <DialogOverlay className="fixed inset-0 z-[50] flex items-center justify-center bg-black/80">
-        <DialogContent className="absolute left-1/2 top-1/2 z-[50] w-[25rem] -translate-x-1/2 -translate-y-1/2 gap-1 rounded-2xl bg-white p-6 backdrop-blur-[50px]">
+      <DialogOverlay className="z-modal fixed inset-0 flex items-center justify-center bg-black/80">
+        <DialogContent className="z-modal absolute left-1/2 top-1/2 w-[25rem] -translate-x-1/2 -translate-y-1/2 gap-1 rounded-2xl bg-white p-6 backdrop-blur-[50px]">
           <div className="flex items-center justify-between gap-4 pl-1">
             <DialogTitle className="flex-1">
               <Typography as="span" variant="title3" className="text-gray-800">
