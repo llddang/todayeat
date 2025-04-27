@@ -48,11 +48,11 @@ const StepVerifyingEmail = () => {
         setModalInfo({
           title: '이메일을 보냈어요!',
           content: (
-            <>
+            <Typography variant="body2" className="text-gray-700">
               입력하신 이메일로 비밀번호 재설정 메일을 보냈어요.
               <br />
               메일을 확인하고 비밀번호를 변경하세요.
-            </>
+            </Typography>
           )
         });
       setIsModalOpen(true);

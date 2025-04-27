@@ -50,7 +50,7 @@ const Modal = ({
                 (isValidElement(content) ? (
                   content
                 ) : (
-                  <Typography as="span" variant="body2" className="text-gray-700">
+                  <Typography variant="body2" className="text-gray-700">
                     {content}
                   </Typography>
                 ))}
