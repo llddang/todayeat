@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerOverlay, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
+import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { FormControl, FormField, FormItem, FormLabel, Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { MAX_MENU_NAME_LENGTH, MAX_NUMERIC_LENGTH } from '../edit/constants/meal-edit.constant';
@@ -79,81 +79,79 @@ const AddMealDrawer = () => {
       <DrawerTrigger asChild>
         <Button variant="ghost">사진 없이 분석하기</Button>
       </DrawerTrigger>
-      <DrawerOverlay className="fixed inset-0 z-[50] flex items-center justify-center bg-black/80">
-        <DrawerContent>
-          <div className="flex flex-col gap-2 rounded-t-[2rem] bg-white backdrop-blur-[50px]">
-            <div className="flex items-center justify-between gap-4 pl-1">
-              <DrawerTitle className="flex-1 text-left typography-subTitle2">
-                <Typography as="span" variant="subTitle2" className="text-gray-800">
-                  사진 없이 분석하기
-                </Typography>
-              </DrawerTitle>
-              <DrawerClose className="" asChild>
-                <IconButton icon="before:bg-close-line-icon" alt="닫기 버튼" />
-              </DrawerClose>
-            </div>
-            <Typography as="span" variant="body2" className="text-gray-700">
-              음식 이름을 입력하면 AI가 <br /> 칼로리와 영양 정보를 분석해 드려요!
-            </Typography>
-            {isAnalyzing ? (
-              <AddMealAiLoading />
-            ) : (
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
-                  <div className="flex flex-col gap-4">
-                    <FormField
-                      control={form.control}
-                      name="menuName"
-                      render={({ field }) => (
-                        <FormItem className="space-y-4">
-                          <FormLabel className="text-gray-900">먹은 음식</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="예시) 김치찌개, 닭가슴살, 크림파스타"
-                              type="text"
-                              maxLength={MAX_MENU_NAME_LENGTH}
-                              {...field}
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="weight"
-                      render={({ field }) => (
-                        <FormItem className="space-y-2">
-                          <FormLabel className="text-gray-900">먹은 양 (선택)</FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              type="text"
-                              inputMode="numeric"
-                              maxLength={MAX_NUMERIC_LENGTH}
-                              measure="g"
-                              placeholder="숫자를 입력할 수 있어요"
-                              value={field.value ? formatNumberWithComma(Number(field.value)) : ''}
-                              onChange={(e) => {
-                                field.onChange(parseNumber(e.target.value));
-                              }}
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <DrawerFooter>
-                    <Button type="submit" className="w-full typography-subTitle4" disabled={!isSubmit}>
-                      분석 시작하기
-                    </Button>
-                  </DrawerFooter>
-                </form>
-              </Form>
-            )}
+      <DrawerContent>
+        <div className="flex flex-col gap-2 rounded-t-[2rem] bg-white backdrop-blur-[50px]">
+          <div className="flex items-center justify-between gap-4 pl-1">
+            <DrawerTitle className="flex-1 text-left typography-subTitle2">
+              <Typography as="span" variant="subTitle2" className="text-gray-800">
+                사진 없이 분석하기
+              </Typography>
+            </DrawerTitle>
+            <DrawerClose className="" asChild>
+              <IconButton icon="before:bg-close-line-icon" alt="닫기 버튼" />
+            </DrawerClose>
           </div>
-        </DrawerContent>
-      </DrawerOverlay>
+          <Typography as="span" variant="body2" className="text-gray-700">
+            음식 이름을 입력하면 AI가 <br /> 칼로리와 영양 정보를 분석해 드려요!
+          </Typography>
+          {isAnalyzing ? (
+            <AddMealAiLoading />
+          ) : (
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+                <div className="flex flex-col gap-4">
+                  <FormField
+                    control={form.control}
+                    name="menuName"
+                    render={({ field }) => (
+                      <FormItem className="space-y-4">
+                        <FormLabel className="text-gray-900">먹은 음식</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="예시) 김치찌개, 닭가슴살, 크림파스타"
+                            type="text"
+                            maxLength={MAX_MENU_NAME_LENGTH}
+                            {...field}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="weight"
+                    render={({ field }) => (
+                      <FormItem className="space-y-2">
+                        <FormLabel className="text-gray-900">먹은 양 (선택)</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type="text"
+                            inputMode="numeric"
+                            maxLength={MAX_NUMERIC_LENGTH}
+                            measure="g"
+                            placeholder="숫자를 입력할 수 있어요"
+                            value={field.value ? formatNumberWithComma(Number(field.value)) : ''}
+                            onChange={(e) => {
+                              field.onChange(parseNumber(e.target.value));
+                            }}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <DrawerFooter>
+                  <Button type="submit" className="w-full typography-subTitle4" disabled={!isSubmit}>
+                    분석 시작하기
+                  </Button>
+                </DrawerFooter>
+              </form>
+            </Form>
+          )}
+        </div>
+      </DrawerContent>
     </Drawer>
   );
 };
