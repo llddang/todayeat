@@ -10,6 +10,8 @@ import { MacronutrientEnum, MacronutrientEnumType, MealNutrition } from '@/types
 import { MacronutrientComparison } from '../types/nutrition.type';
 import { PeriodUnit } from '../types/chart.type';
 import { AMOUNT_CHART_OPTIONS } from '../constants/chart.constant';
+import useIsMobile from '@/hooks/use-is-mobile';
+import { cn } from '@/lib/shadcn';
 
 type MacronutrientPercentageReportProps = {
   unit: PeriodUnit;
@@ -19,6 +21,8 @@ type MacronutrientPercentageReportProps = {
 };
 
 const MacronutrientPercentageReport = ({ unit, total, average, personalInfo }: MacronutrientPercentageReportProps) => {
+  const isMobile = useIsMobile();
+
   const totalMacronutrient = total.carbohydrate + total.protein + total.fat;
   const nutrientRatio: MacronutrientComparison = {
     CARBOHYDRATE: {
@@ -65,9 +69,13 @@ const MacronutrientPercentageReport = ({ unit, total, average, personalInfo }: M
           {beforeBreak} <br /> {afterBreak}
         </Typography>
       )}
-      <div className="flex xl:m-auto xl:flex-col">
-        <MacroNutrientPieChart data={total} className="xl:h-80 xl:w-80" />
-        <div className="m-auto flex flex-col gap-4 xl:m-0 xl:px-10">
+      <div className="flex xl:w-full xl:flex-col xl:items-center xl:gap-6">
+        <MacroNutrientPieChart
+          data={total}
+          innerRadius={isMobile ? 56 : personalInfo ? 80 : 53}
+          className={cn(personalInfo ? 'xl:h-[18.75rem]' : 'xl:h-[12.5rem]', 'h-[13.1875rem]')}
+        />
+        <div className="m-auto flex flex-col gap-4 xl:w-full xl:px-10">
           <MacronutrientPercentageBox
             variety={MacronutrientEnum.CARBOHYDRATE}
             value={nutrientRatio.CARBOHYDRATE.consumed}

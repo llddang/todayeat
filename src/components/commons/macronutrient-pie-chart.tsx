@@ -56,7 +56,7 @@ const MacroNutrientPieChart = ({
             data={defaultChartData}
             dataKey="amount"
             nameKey="macronutrient"
-            innerRadius={innerRadius}
+            innerRadius={innerRadius ?? 64}
             startAngle={90}
             endAngle={450}
           >
@@ -79,7 +79,7 @@ const MacroNutrientPieChart = ({
             data={chartData}
             dataKey="amount"
             nameKey="macronutrient"
-            innerRadius={innerRadius}
+            innerRadius={innerRadius ?? 64}
             startAngle={90}
             endAngle={450}
           >
