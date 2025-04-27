@@ -1,19 +1,21 @@
 'use client';
 
 import { ReactNode, useState } from 'react';
-import { redirect, useSearchParams } from 'next/navigation';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { changePassword } from '@/apis/auth-server.api';
+import { changePassword, signIn } from '@/apis/auth-server.api';
 import formSchema from '@/app/schemas/form-schema.schema';
 import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
 import PUBLIC_ERROR_MESSAGE from '@/constants/public-error-message.constant';
 import InformationModal from '@/components/commons/information-modal';
+import { StepNewPasswordType } from '../types/funnel-type';
+import { useUserStore } from '@/store/user-store';
 
 const passwordSchema = z.object({
   password: formSchema.PASSWORD_SCHEMA
@@ -25,12 +27,18 @@ const defaultModalInfo = {
   description: ''
 };
 
-type StepPasswordProps = {
+type StepNewPasswordProps = {
+  data: StepNewPasswordType;
   nextStep: () => void;
 };
-const StepPassword = ({ nextStep }: StepPasswordProps) => {
+const StepNewPassword = ({ data, nextStep }: StepNewPasswordProps) => {
   const [isPending, setIsPending] = useState(false);
-  const [modalInfo, setModalInfo] = useState<{ title: string; description: ReactNode }>(defaultModalInfo);
+  const [modalInfo, setModalInfo] = useState<{ title: string; description: ReactNode; onConfirm?: () => void }>(
+    defaultModalInfo
+  );
+
+  const user = useUserStore((state) => state.user);
+  const router = useRouter();
 
   const params = useSearchParams();
   const error = params.get('error');
@@ -49,12 +57,30 @@ const StepPassword = ({ nextStep }: StepPasswordProps) => {
   const handleSubmit = async ({ password }: PasswordSchemaType) => {
     setIsPending(true);
 
-    const { error: changePasswordError } = await changePassword(password);
+    try {
+      const { error: checkCurrentPasswordError } = await signIn(user.email, data.currentPassword);
+      if (checkCurrentPasswordError) {
+        console.log('error');
+        return setModalInfo({
+          title: '비정상적인 접근입니다.',
+          description: '기존 비밀번호와 동일하지 않습니다.',
+          onConfirm: () => router.push(SITE_MAP.CHANGE_PASSWORD)
+        });
+      }
 
-    if (changePasswordError)
-      setModalInfo({ title: changePasswordError.message, description: changePasswordError.action });
-    else nextStep();
-    setIsPending(false);
+      const { error: changePasswordError } = await changePassword(password);
+      if (changePasswordError)
+        setModalInfo({ title: changePasswordError.message, description: changePasswordError.action });
+      else nextStep();
+    } catch (e) {
+      console.error(e);
+      setModalInfo({
+        title: '예상하지 못한 오류가 발생했습니다.',
+        description: '잠시 후 다시 시도해주세요.'
+      });
+    } finally {
+      setIsPending(false);
+    }
   };
 
   return (
@@ -74,7 +100,7 @@ const StepPassword = ({ nextStep }: StepPasswordProps) => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="sr-only">비밀번호</FormLabel>
+                <FormLabel className="sr-only">새로운 비밀번호</FormLabel>
                 <FormControl>
                   <Input type="password" {...field} />
                 </FormControl>
@@ -83,7 +109,7 @@ const StepPassword = ({ nextStep }: StepPasswordProps) => {
             )}
           />
           <Button type="submit" disabled={isPending || !password || passwordState.invalid} className="w-full">
-            {isPending ? '비밀번호 변경 중...' : '완료'}
+            {isPending ? '비밀번호 변경 중' : '비밀번호 수정'}
           </Button>
         </form>
       </Form>
@@ -91,4 +117,4 @@ const StepPassword = ({ nextStep }: StepPasswordProps) => {
     </>
   );
 };
-export default StepPassword;
+export default StepNewPassword;
