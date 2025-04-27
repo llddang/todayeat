@@ -10,7 +10,6 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import formSchema from '@/app/schemas/form-schema.schema';
-import { UserDTO } from '@/types/DTO/user.dto';
 import { cleanupBlobUrl } from '@/utils/cleanup-blob-url.util';
 import IconButton from '@/components/commons/icon-button';
 import { Typography } from '@/components/ui/typography';
@@ -26,23 +25,22 @@ const editProfileFormSchema = z.object({
 type FormValues = z.infer<typeof editProfileFormSchema>;
 
 type EditProfileProps = {
-  userInfo: UserDTO;
   setOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const EditProfile = ({ userInfo, setOpen }: EditProfileProps) => {
-  const setUser = useUserStore((state) => state.setUser);
+const EditProfile = ({ setOpen }: EditProfileProps) => {
+  const { user, setUser } = useUserStore();
 
   const [profileState, setProfileState] = useState({
     isUploading: false,
-    profilePreviewUrl: userInfo?.profileImage || null
+    profilePreviewUrl: user?.profileImage || null
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(editProfileFormSchema),
     defaultValues: {
-      nickname: userInfo.nickname || '',
+      nickname: user.nickname || '',
       newProfileImage: null
     }
   });
@@ -91,7 +89,7 @@ const EditProfile = ({ userInfo, setOpen }: EditProfileProps) => {
       }
     }
 
-    if (formData.nickname === userInfo.nickname && profilePreviewUrl === userInfo.profileImage) {
+    if (formData.nickname === user.nickname && profilePreviewUrl === user.profileImage) {
       alert('변경된 정보가 없습니다.');
       return setIsUploading(false);
     }
