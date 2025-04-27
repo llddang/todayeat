@@ -1,3 +1,5 @@
+import { MacronutrientEnumType } from '@/types/nutrition.type';
+
 export const PeriodUnitEnum = {
   DAILY: 'DAILY',
   WEEKLY: 'WEEKLY',
@@ -11,3 +13,5 @@ export type BarChartDataType = {
   value: number;
   fill: string;
 };
+
+export type AmountBarChartType = MacronutrientEnumType | 'GOAL';

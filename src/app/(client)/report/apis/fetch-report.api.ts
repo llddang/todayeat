@@ -1,6 +1,6 @@
 'use client';
 
-import { PeriodUnit } from '../types/report.type';
+import { PeriodUnit } from '../types/chart.type';
 
 type FetchReportResponse = {
   barChart: {
@@ -9,6 +9,12 @@ type FetchReportResponse = {
     fill: string;
   }[];
   total: {
+    calories: number;
+    carbohydrate: number;
+    protein: number;
+    fat: number;
+  };
+  average: {
     calories: number;
     carbohydrate: number;
     protein: number;

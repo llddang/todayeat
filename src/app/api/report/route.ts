@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { BarChartDataType, PeriodUnit, PeriodUnitEnum } from '@/app/(client)/report/types/report.type';
+import { BarChartDataType, PeriodUnit, PeriodUnitEnum } from '@/app/(client)/report/types/chart.type';
 import {
   subWeeks,
   subDays,
@@ -15,6 +15,8 @@ import {
 import { calculateNutritionAverage, calculateTotalNutrition } from '@/utils/nutrition-calculator.util';
 import { PERIOD_UNIT_TEXT } from '@/app/(client)/report/constants/unit.constant';
 import { getAllMyMealsByPeriod } from '@/apis/meal.api';
+import { MealNutrition } from '@/types/nutrition.type';
+import { INITIAL_NUTRITION_VALUE } from '@/app/(client)/report/constants/chart.constant';
 
 const getDateRanges = (unit: PeriodUnit) => {
   const today = new Date();
@@ -82,12 +84,8 @@ export const POST = async (req: Request) => {
 
   const ranges = getDateRanges(unit);
 
-  let macroTotal = {
-    calories: 0,
-    carbohydrate: 0,
-    protein: 0,
-    fat: 0
-  };
+  let macroTotal: MealNutrition = INITIAL_NUTRITION_VALUE;
+  let macroAverage: MealNutrition = INITIAL_NUTRITION_VALUE;
 
   const chartData = await Promise.all(
     ranges.map(async ({ start, end, label }, index): Promise<BarChartDataType> => {
@@ -98,6 +96,7 @@ export const POST = async (req: Request) => {
 
         if (index === ranges.length - 1) {
           macroTotal = calculateTotalNutrition(meals);
+          macroAverage = calculateNutritionAverage(meals);
         }
 
         return {
@@ -114,7 +113,8 @@ export const POST = async (req: Request) => {
 
   return NextResponse.json({
     barChart: chartData,
-    total: macroTotal
+    total: macroTotal,
+    average: macroAverage
   });
 };
 
