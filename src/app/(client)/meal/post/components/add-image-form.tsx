@@ -9,9 +9,10 @@ import AddImageList from '@/app/(client)/meal/post/components/add-image-list';
 
 type AddImageFormProps = {
   onLoadingChange: (isLoading: boolean) => void;
+  onOpenRetryErrorModalChange: (open: boolean) => void;
 };
 
-const AddImageForm = ({ onLoadingChange }: AddImageFormProps): JSX.Element => {
+const AddImageForm = ({ onLoadingChange, onOpenRetryErrorModalChange }: AddImageFormProps): JSX.Element => {
   const [images, setImages] = useState<File[]>([]);
   const router = useRouter();
   const handleAnalyzeSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -37,13 +38,15 @@ const AddImageForm = ({ onLoadingChange }: AddImageFormProps): JSX.Element => {
       });
 
       if (!res.ok) {
-        throw new Error('분석에 실패하였습니다. 잠시후 다시 시도해주세요');
+        onLoadingChange(false);
+        onOpenRetryErrorModalChange(true);
+        return;
       }
       router.replace(SITE_MAP.MEAL_POST_EDIT);
     } catch (err) {
       console.error(err);
       onLoadingChange(false);
-      return alert('분석중 오류가 발생했습니다. ');
+      return onOpenRetryErrorModalChange(true);
     }
   };
 

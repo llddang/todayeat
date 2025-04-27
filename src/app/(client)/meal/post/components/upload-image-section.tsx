@@ -8,6 +8,7 @@ import AddMealAiLoading from './add-meal-ai-loading';
 import AddMealDrawer from './add-meal-drawer';
 import AddMealModal from './add-meal-modal';
 import Responsive from '@/components/commons/responsive';
+import RetryErrorModal from './retry-error-modal';
 
 type UploadImageSectionProps = {
   isRecorded: boolean;
@@ -16,7 +17,7 @@ type UploadImageSectionProps = {
 const UploadImageSection = ({ isRecorded }: UploadImageSectionProps): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showModal, setShowModal, handleApproveClick, handleCancelClick } = useRestoreAnalysisModal(isRecorded);
-
+  const [isError, setIsError] = useState<boolean>(false);
   if (isLoading) {
     return (
       <div className="flex min-h-[calc(100vh-8.75rem)] items-center justify-center xl:min-h-[calc(100vh-4.725rem)]">
@@ -37,7 +38,7 @@ const UploadImageSection = ({ isRecorded }: UploadImageSectionProps): JSX.Elemen
       </div>
 
       <div className="flex w-full flex-col items-center justify-center gap-2">
-        <AddImageForm onLoadingChange={setIsLoading} />
+        <AddImageForm onLoadingChange={setIsLoading} onOpenRetryErrorModalChange={setIsError} />
         <Responsive mobile={<AddMealDrawer />} pc={<AddMealModal onLoadingChange={setIsLoading} />} />
       </div>
       <RestoreAnalysisModal
@@ -46,6 +47,7 @@ const UploadImageSection = ({ isRecorded }: UploadImageSectionProps): JSX.Elemen
         onApproveClickHandler={handleApproveClick}
         onCancelClickHandler={handleCancelClick}
       />
+      <RetryErrorModal open={isError} onOpenRetryErrorModalChange={setIsError} />
     </div>
   );
 };
