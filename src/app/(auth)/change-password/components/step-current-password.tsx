@@ -64,7 +64,7 @@ const StepCurrentPassword = ({ nextStep }: StepCurrentPasswordProps) => {
   return (
     <>
       <div className="mb-6 flex flex-col gap-2">
-        <Typography as="h3" variant="title2" className="text-gray-900">
+        <Typography as="h3" variant="title3" className="text-gray-900">
           현재 비밀번호를 입력해 주세요
         </Typography>
         <Typography as="span" variant="body2" className="text-gray-600">

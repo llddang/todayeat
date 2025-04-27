@@ -51,7 +51,7 @@ const Modal = ({
         >
           <div className="space-y-3 pl-1 text-left">
             <AlertDialogTitle asChild>
-              <Typography as="h3" variant="title2" className="text-gray-900">
+              <Typography as="h3" variant="title3" className="text-gray-900">
                 {title}
               </Typography>
             </AlertDialogTitle>
