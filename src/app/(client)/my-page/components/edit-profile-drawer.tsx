@@ -11,9 +11,8 @@ import {
 } from '@/components/ui/drawer';
 import { Typography } from '@/components/ui/typography';
 import EditProfile from './edit-profile';
-import { UserDTO } from '@/types/DTO/user.dto';
 
-const EditProfileDrawer = ({ userInfo }: { userInfo: UserDTO }) => {
+const EditProfileDrawer = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -28,30 +27,28 @@ const EditProfileDrawer = ({ userInfo }: { userInfo: UserDTO }) => {
           <span className="sr-only">프로필 수정하기</span>
         </span>
       </DrawerTrigger>
-      {open && (
-        <DrawerContent className="rounded-t-[2rem] px-5 pt-4">
-          <div className="relative">
-            <DrawerHeader className="p-0 text-left">
-              <DrawerTitle className="py-[0.56rem] pl-1">
-                <Typography as="span" variant="subTitle2" className="py-0">
-                  프로필 수정
-                </Typography>
-              </DrawerTitle>
-              <DrawerDescription className="sr-only">
-                여기에서 프로필을 수정하세요. 완료되면 저장 버튼을 클릭하세요.
-              </DrawerDescription>
-            </DrawerHeader>
-            <EditProfile userInfo={userInfo} setOpen={setOpen} />
-            <DrawerFooter>
-              <DrawerClose className="absolute right-0 top-0">
-                <span className="before:block before:h-10 before:w-10 before:bg-close-line-gray-550-icon before:content-['']">
-                  <span className="sr-only">닫기</span>
-                </span>
-              </DrawerClose>
-            </DrawerFooter>
-          </div>
-        </DrawerContent>
-      )}
+      <DrawerContent className="rounded-t-[2rem] px-5 pt-4">
+        <div className="relative">
+          <DrawerHeader className="p-0 text-left">
+            <DrawerTitle className="py-[0.56rem] pl-1">
+              <Typography as="span" variant="subTitle2" className="py-0">
+                프로필 수정
+              </Typography>
+            </DrawerTitle>
+            <DrawerDescription className="sr-only">
+              여기에서 프로필을 수정하세요. 완료되면 저장 버튼을 클릭하세요.
+            </DrawerDescription>
+          </DrawerHeader>
+          <EditProfile setOpen={setOpen} />
+          <DrawerFooter>
+            <DrawerClose className="absolute right-0 top-0">
+              <span className="before:block before:h-10 before:w-10 before:bg-close-line-gray-550-icon before:content-['']">
+                <span className="sr-only">닫기</span>
+              </span>
+            </DrawerClose>
+          </DrawerFooter>
+        </div>
+      </DrawerContent>
     </Drawer>
   );
 };
