@@ -33,7 +33,7 @@ const StepHeight = ({ userName, nextStep }: StepHeightProps) => {
   return (
     <>
       <div>
-        <Typography as="h3" variant="title2" className="mb-2">
+        <Typography as="h3" variant="title3" className="mb-2">
           {userName}님의 <br /> 키를 알려주세요
         </Typography>
         <Typography as="span" variant="body2" className="text-gray-600">

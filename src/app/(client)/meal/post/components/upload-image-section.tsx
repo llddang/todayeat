@@ -29,7 +29,7 @@ const UploadImageSection = ({ isRecorded }: UploadImageSectionProps): JSX.Elemen
   return (
     <div className="flex flex-col items-center gap-7 px-4 py-8">
       <div className="flex flex-col items-center justify-center gap-2">
-        <Typography variant="title2" as="p">
+        <Typography variant="title3" as="p">
           오늘의 식사를 간편하게 남겨보세요!
         </Typography>
         <Typography className="text-center">
