@@ -1,23 +1,25 @@
 'use client';
-import { Typography } from '@/components/ui/typography';
-import dynamic from 'next/dynamic';
 
-const AiLoaderLottie = dynamic(() => import('@/components/commons/ai-loader-lottie'), {
-  ssr: false
-});
+import { useSearchParams } from 'next/navigation';
+import { cn } from '@/lib/shadcn';
+import GlassBackground from '@/components/commons/glass-background';
+import FindPasswordFunnel from './components/find-password-funnel';
+import { FindPasswordFunnelStep } from './types/funnel-type';
 
-const Report = () => {
-  return (
-    <div className="relative flex h-[calc(100vh-14rem)] w-full items-center">
-      <div className="flex w-full flex-col items-center gap-2 text-center">
-        <AiLoaderLottie />
-        <Typography>
-          비밀번호 찾기 페이지는 <br />
-          추후 개발될 예정이에요!
-        </Typography>
-      </div>
-    </div>
-  );
+const FindPasswordPage = () => {
+  const params = useSearchParams();
+  const currentStep = (params.get('step') || 'step1') as FindPasswordFunnelStep;
+
+  const isInStep = currentStep !== 'complete';
+
+  if (isInStep) {
+    return (
+      <GlassBackground className={cn('px-5 pb-6 pt-7', 'desktop-width xl:h-fit xl:min-h-0 xl:rounded-[2rem] xl:p-10')}>
+        <FindPasswordFunnel />
+      </GlassBackground>
+    );
+  }
+
+  return <FindPasswordFunnel />;
 };
-
-export default Report;
+export default FindPasswordPage;

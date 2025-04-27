@@ -25,7 +25,7 @@ const SettingCard = () => {
       <ul className="mt-2 text-gray-800">
         <li>
           <Link
-            href={SITE_MAP.FIND_PASSWORD}
+            href={SITE_MAP.CHANGE_PASSWORD}
             className="flex w-full cursor-pointer items-center justify-between px-1 py-[0.56rem] after:block after:aspect-square after:w-5 after:bg-right-line-gray-600-icon after:bg-contain after:bg-no-repeat after:content-['']"
           >
             <Typography as="span" variant="body1" className="block w-full">

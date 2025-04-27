@@ -1,23 +1,28 @@
 'use client';
-import { Typography } from '@/components/ui/typography';
-import dynamic from 'next/dynamic';
 
-const AiLoaderLottie = dynamic(() => import('@/components/commons/ai-loader-lottie'), {
-  ssr: false
-});
+import { useSearchParams } from 'next/navigation';
+import GlassBackground from '@/components/commons/glass-background';
+import { ChangePasswordFunnelStep } from './types/funnel-type';
+import ChangePasswordFunnel from './components/change-password-funnel';
 
-const Report = () => {
+const ResetPasswordPage = () => {
+  const params = useSearchParams();
+  const currentStep = (params.get('step') || 'step1') as ChangePasswordFunnelStep;
+
+  const isInStep = currentStep !== 'complete';
+
+  if (isInStep) {
+    return (
+      <GlassBackground className="px-5 pb-6 pt-7 xl:min-h-0 xl:rounded-[2rem] xl:p-10">
+        <ChangePasswordFunnel />
+      </GlassBackground>
+    );
+  }
+
   return (
-    <div className="relative flex h-[calc(100vh-14rem)] w-full items-center">
-      <div className="flex w-full flex-col items-center gap-2 text-center">
-        <AiLoaderLottie />
-        <Typography>
-          비밀번호 변경 페이지는 <br />
-          추후 개발될 예정이에요!
-        </Typography>
-      </div>
+    <div className="flex flex-col gap-9 px-4">
+      <ChangePasswordFunnel />
     </div>
   );
 };
-
-export default Report;
+export default ResetPasswordPage;
