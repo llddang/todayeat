@@ -10,7 +10,7 @@ type StepCompleteProps = {
 const StepComplete = ({ userName }: StepCompleteProps) => {
   return (
     <div className="absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-3 before:mb-5 before:h-20 before:w-20 before:bg-complete-confetti before:bg-contain before:content-['']">
-      <Typography as="h3" variant="title2">
+      <Typography as="h3" variant="title3">
         목표 설정이 완료됐어요!
       </Typography>
       <Typography as="p" variant="body2" className="text-center text-gray-700">

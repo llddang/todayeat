@@ -146,7 +146,8 @@ const config: Config = {
       },
       zIndex: {
         background: '-10',
-        layout: '10'
+        layout: '10',
+        modal: '50'
       },
       padding: {
         layout: '4rem'
@@ -260,6 +261,12 @@ const config: Config = {
           letterSpacing: '-0.02em'
         },
         '.typography-title2': {
+          fontSize: '1.875rem',
+          lineHeight: '136%',
+          fontWeight: '650',
+          letterSpacing: '-0.02em'
+        },
+        '.typography-title3': {
           fontSize: '1.25rem',
           lineHeight: '136%',
           fontWeight: '650',

@@ -25,7 +25,7 @@ const StepGender = ({ userName, nextStep }: StepGenderProps) => {
     <form onSubmit={handleSubmit}>
       <fieldset>
         <legend>
-          <Typography as="h3" variant="title2" className="mb-2">
+          <Typography as="h3" variant="title3" className="mb-2">
             {userName}님의 <br /> 성별을 알려주세요
           </Typography>
           <Typography as="span" variant="body2" className="text-gray-600">

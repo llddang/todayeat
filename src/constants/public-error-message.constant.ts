@@ -1,11 +1,13 @@
 const PUBLIC_ERROR_MESSAGE = {
   UNAUTHENTICATED: {
     code: 'UNAUTHENTICATED',
-    message: '로그인이 필요한 서비스입니다. 로그인 후 이용해주세요.'
+    message: '로그인이 필요한 서비스입니다.',
+    action: '로그인 후 이용해주세요.'
   },
   EXPIRED_EMAIL_TOKEN: {
     code: 'EXPIRED_EMAIL_TOKEN',
-    message: '이용했거나 만료된 url 입니다. 메일을 재발송해주세요'
+    message: '해당 주소는 이미 사용되었거나 만료되었습니다.',
+    action: '메일을 재발송해주세요.'
   }
 } as const;
 export default PUBLIC_ERROR_MESSAGE;
