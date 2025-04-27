@@ -59,14 +59,18 @@ const StepNewPassword = ({ data, nextStep }: StepNewPasswordProps) => {
 
     try {
       const { error: checkCurrentPasswordError } = await signIn(user.email, data.currentPassword);
-      if (checkCurrentPasswordError) {
-        console.log('error');
+      if (checkCurrentPasswordError)
         return setModalInfo({
           title: '비정상적인 접근입니다.',
           description: '기존 비밀번호와 동일하지 않습니다.',
           onConfirm: () => router.push(SITE_MAP.CHANGE_PASSWORD)
         });
-      }
+
+      if (password === data.currentPassword)
+        return form.setError('password', {
+          type: 'manual',
+          message: '새 비밀번호는 현재 비밀번호와 달라야 합니다.'
+        });
 
       const { error: changePasswordError } = await changePassword(password);
       if (changePasswordError)
