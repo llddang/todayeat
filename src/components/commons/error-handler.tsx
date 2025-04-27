@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import PUBLIC_ERROR_MESSAGE, { isPublicErrorMessage } from '@/constants/public-error-message.constant';
-import InformationModal from './information-modal';
+import Modal from './modal';
 
 const defaultModalInfo = {
   title: '',
@@ -38,6 +38,6 @@ const ErrorHandler = () => {
     setModalInfo({ title: errorConfig.message, description: errorConfig.action });
   }, [searchParams, router]);
 
-  return <InformationModal open={!!modalInfo.title} onOpenChange={handleClose} {...modalInfo} />;
+  return <Modal open={!!modalInfo.title} onOpenChange={handleClose} {...modalInfo} />;
 };
 export default ErrorHandler;

@@ -13,7 +13,7 @@ import formSchema from '@/app/schemas/form-schema.schema';
 import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
 import PUBLIC_ERROR_MESSAGE from '@/constants/public-error-message.constant';
-import InformationModal from '@/components/commons/information-modal';
+import Modal from '@/components/commons/modal';
 
 const passwordSchema = z.object({
   password: formSchema.PASSWORD_SCHEMA
@@ -87,7 +87,7 @@ const StepPassword = ({ nextStep }: StepPasswordProps) => {
           </Button>
         </form>
       </Form>
-      <InformationModal open={!!modalInfo.title} onOpenChange={() => setModalInfo(defaultModalInfo)} {...modalInfo} />
+      <Modal open={!!modalInfo.title} onOpenChange={() => setModalInfo(defaultModalInfo)} {...modalInfo} />
     </>
   );
 };

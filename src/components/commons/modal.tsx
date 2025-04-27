@@ -18,7 +18,7 @@ type InformationModalProps = {
   onConfirm?: () => void;
 };
 
-const InformationModal = ({ title, description, open, onOpenChange, onConfirm }: InformationModalProps) => {
+const Modal = ({ title, description, open, onOpenChange, onConfirm }: InformationModalProps) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogPortal>
@@ -53,4 +53,4 @@ const InformationModal = ({ title, description, open, onOpenChange, onConfirm }:
     </AlertDialog>
   );
 };
-export default InformationModal;
+export default Modal;

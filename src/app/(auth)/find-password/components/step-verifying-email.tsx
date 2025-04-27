@@ -10,7 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import formSchema from '@/app/schemas/form-schema.schema';
 import { checkEmailExists, resetPasswordByEmail } from '@/apis/auth-server.api';
 import { Typography } from '@/components/ui/typography';
-import InformationModal from '@/components/commons/information-modal';
+import Modal from '@/components/commons/modal';
 
 const emailSchema = z.object({ email: formSchema.EMAIL_SCHEMA });
 type EmailFormType = z.infer<typeof emailSchema>;
@@ -90,7 +90,7 @@ const StepVerifyingEmail = () => {
           </Button>
         </form>
       </Form>
-      <InformationModal open={isModalOpen} onOpenChange={setIsModalOpen} {...modalInfo} />
+      <Modal open={isModalOpen} onOpenChange={setIsModalOpen} {...modalInfo} />
     </>
   );
 };
