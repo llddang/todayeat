@@ -4,8 +4,8 @@ import type { NextRequest } from 'next/server';
 import SITE_MAP from './constants/site-map.constant';
 import PUBLIC_ERROR_MESSAGE from './constants/public-error-message.constant';
 
-const PUBLIC_AUTH_PATHS = [SITE_MAP.SIGN_IN, SITE_MAP.SIGN_UP, SITE_MAP.FIND_PASSWORD];
-const PROTECTED_PATHS = [SITE_MAP.MY_PAGE, SITE_MAP.SET_GOAL];
+const PUBLIC_AUTH_PATHS = [SITE_MAP.SIGN_IN, SITE_MAP.SIGN_UP];
+const PROTECTED_PATHS = [SITE_MAP.MY_PAGE, SITE_MAP.SET_GOAL, SITE_MAP.CHANGE_PASSWORD];
 
 const ALL_MANAGED_PATHS = [...PUBLIC_AUTH_PATHS, ...PROTECTED_PATHS];
 
