@@ -146,7 +146,8 @@ const config: Config = {
       },
       zIndex: {
         background: '-10',
-        layout: '10'
+        layout: '10',
+        modal: '50'
       },
       padding: {
         layout: '4rem'
