@@ -17,7 +17,7 @@ const SignUpPage = () => {
   const isInStep = currentStep !== 'complete';
 
   const currentOrder = Number(currentStep.replace(/step/, ''));
-  const progressPercent = Math.min(getPercentage(currentOrder, SIGN_UP_LAST_STEP), 100);
+  const progressPercent = getPercentage(currentOrder, SIGN_UP_LAST_STEP);
 
   const content = (
     <>
