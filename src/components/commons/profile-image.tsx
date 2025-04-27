@@ -2,6 +2,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import DEFAULT_PROFILE from '@/../public/illustrations/default-profile.svg';
 import Image from 'next/image';
 import { cn } from '@/lib/shadcn';
+import { useEffect, useState } from 'react';
 
 const profileImageVariants = cva('relative overflow-hidden rounded-full', {
   variants: {
@@ -22,8 +23,27 @@ type ProfileImageProps = VariantProps<typeof profileImageVariants> & {
   setIsImageLoading?: (isLoading: boolean) => void;
 };
 
-const ProfileImage = ({ src, size, isImageLoading, setIsImageLoading }: ProfileImageProps) => {
+const ProfileImage = ({
+  src,
+  size,
+  isImageLoading: externalIsLoading,
+  setIsImageLoading: externalSetIsLoading
+}: ProfileImageProps) => {
+  const [internalIsLoading, setInternalIsLoading] = useState(true);
+  const isControlled = externalIsLoading !== undefined && externalSetIsLoading !== undefined;
+  const isImageLoading = isControlled ? externalIsLoading : internalIsLoading;
+  const setIsImageLoading = isControlled ? externalSetIsLoading : setInternalIsLoading;
+
   const imageUrl = src || DEFAULT_PROFILE;
+
+  useEffect(() => {
+    setIsImageLoading(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [src]);
+
+  const handleImageLoad = () => {
+    setIsImageLoading(false);
+  };
 
   return (
     <div className={profileImageVariants({ size })}>
@@ -35,7 +55,7 @@ const ProfileImage = ({ src, size, isImageLoading, setIsImageLoading }: ProfileI
         sizes="20vw"
         priority
         key={imageUrl}
-        onLoad={() => setIsImageLoading?.(false)}
+        onLoad={handleImageLoad}
       />
     </div>
   );
