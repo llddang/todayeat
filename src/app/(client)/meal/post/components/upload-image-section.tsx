@@ -29,10 +29,10 @@ const UploadImageSection = ({ isRecorded }: UploadImageSectionProps): JSX.Elemen
   return (
     <div className="flex flex-col items-center gap-7 px-4 py-8">
       <div className="flex flex-col items-center justify-center gap-2">
-        <Typography variant="title3" as="p">
+        <Typography variant="title3" as="span">
           오늘의 식사를 간편하게 남겨보세요!
         </Typography>
-        <Typography className="text-center">
+        <Typography className="text-center text-gray-700" variant="body3" as="span">
           음식 사진을 올리면 AI가 <br /> 음식 종류와 영양소를 분석해 드려요
         </Typography>
       </div>
