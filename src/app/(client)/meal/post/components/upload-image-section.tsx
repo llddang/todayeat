@@ -35,19 +35,17 @@ const UploadImageSection = ({ isRecorded }: UploadImageSectionProps): JSX.Elemen
           음식 사진을 올리면 AI가 <br /> 음식 종류와 영양소를 분석해 드려요
         </Typography>
       </div>
+
+      <div className="flex w-full flex-col items-center justify-center gap-2">
+        <AddImageForm onLoadingChange={setIsLoading} />
+        <Responsive mobile={<AddMealDrawer />} pc={<AddMealModal onLoadingChange={setIsLoading} />} />
+      </div>
       <RestoreAnalysisModal
         open={showModal}
         onOpenChange={setShowModal}
         onApproveClickHandler={handleApproveClick}
         onCancelClickHandler={handleCancelClick}
       />
-      <div className="flex w-full flex-col items-center justify-center gap-2">
-        <AddImageForm onLoadingChange={setIsLoading} />
-        <Responsive
-          mobile={<AddMealDrawer />}
-          pc={<AddMealModal onLoadingChange={setIsLoading} />}
-        />
-      </div>
     </div>
   );
 };
