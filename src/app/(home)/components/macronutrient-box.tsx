@@ -9,7 +9,7 @@ type MacronutrientBoxProps = {
 };
 
 const MacronutrientBox = ({ variety, value, goal }: MacronutrientBoxProps) => {
-  const percent = Math.min(getPercentage(value, goal), 100);
+  const percent = getPercentage(value, goal);
   const barColor = MACRONUTRIENT_OPTIONS[variety].color || 'bg-gray-300';
   const label = MACRONUTRIENT_OPTIONS[variety].label;
 
