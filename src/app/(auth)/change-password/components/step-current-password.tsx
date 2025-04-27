@@ -40,8 +40,6 @@ const StepCurrentPassword = ({ nextStep }: StepCurrentPasswordProps) => {
 
   if (!!error) return redirect(`${SITE_MAP.HOME}/?error_code=${PUBLIC_ERROR_MESSAGE.EXPIRED_EMAIL_TOKEN.code}`);
 
-  const password = form.getValues('password');
-
   const handleInputBlur = async (e: FocusEvent<HTMLInputElement>) => {
     const password = e.target.value;
     if (!password || passwordVerified) return;
@@ -99,11 +97,7 @@ const StepCurrentPassword = ({ nextStep }: StepCurrentPasswordProps) => {
               </FormItem>
             )}
           />
-          <Button
-            type="submit"
-            disabled={isCheckingPassword || !password || !form.formState.isValid}
-            className="w-full"
-          >
+          <Button type="submit" disabled={!passwordVerified} className="w-full">
             {isCheckingPassword ? '비밀번호 검증 중' : '다음'}
           </Button>
         </form>
