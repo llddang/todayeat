@@ -82,75 +82,81 @@ const AddMealModal = ({ onLoadingChange }: AddMealModalProps) => {
       <DialogTrigger asChild>
         <Button variant="ghost">사진 없이 분석하기</Button>
       </DialogTrigger>
-      <DialogOverlay className="bg-transparent" />
-      <DialogContent className="absolute left-1/2 top-1/2 z-layout w-[25rem] -translate-x-1/2 -translate-y-1/2 gap-1 rounded-2xl bg-white p-6 backdrop-blur-[50px]">
-        <div className="flex items-center justify-between gap-4 pl-1">
-          <DialogTitle className="flex-1">
-            <Typography as="span" variant="title3" className="text-gray-800">
-              사진 없이 분석하기
+      <DialogOverlay className="fixed inset-0 z-[50] flex items-center justify-center bg-black/80">
+        <DialogContent className="absolute left-1/2 top-1/2 z-[50] w-[25rem] -translate-x-1/2 -translate-y-1/2 gap-1 rounded-2xl bg-white p-6 backdrop-blur-[50px]">
+          <div className="flex items-center justify-between gap-4 pl-1">
+            <DialogTitle className="flex-1">
+              <Typography as="span" variant="title3" className="text-gray-800">
+                사진 없이 분석하기
+              </Typography>
+            </DialogTitle>
+            <DialogClose className="" asChild>
+              <IconButton icon="before:bg-close-line-icon" alt="닫기 버튼" />
+            </DialogClose>
+          </div>
+          <div className="flex flex-col gap-6">
+            <Typography as="span" variant="body2" className="text-gray-700">
+              음식 이름을 입력하면 AI가
+              <br />
+              칼로리와 영양 정보를 분석해 드려요!
             </Typography>
-          </DialogTitle>
-          <DialogClose className="" asChild>
-            <IconButton icon="before:bg-close-line-icon" alt="닫기 버튼" />
-          </DialogClose>
-        </div>
-        <div className="flex flex-col gap-6">
-          <Typography as="span" variant="body2" className="text-gray-700">
-            음식 이름을 입력하면 AI가
-            <br />
-            칼로리와 영양 정보를 분석해 드려요!
-          </Typography>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} id="AddMealModalForm">
-              <div className="flex flex-col gap-4">
-                <FormField
-                  control={form.control}
-                  name="menuName"
-                  render={({ field }) => (
-                    <FormItem className="space-y-2">
-                      <FormLabel className="text-gray-900">먹은 음식</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="예시) 김치찌개, 닭가슴살, 크림파스타"
-                          type="text"
-                          maxLength={MAX_MENU_NAME_LENGTH}
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="weight"
-                  render={({ field }) => (
-                    <FormItem className="space-y-2">
-                      <FormLabel className="text-gray-900">먹은 양 (선택)</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="text"
-                          inputMode="numeric"
-                          maxLength={MAX_NUMERIC_LENGTH}
-                          measure="g"
-                          placeholder="숫자를 입력할 수 있어요"
-                          value={field.value ? formatNumberWithComma(Number(field.value)) : ''}
-                          onChange={(e) => {
-                            field.onChange(parseNumber(e.target.value));
-                          }}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </form>
-            <Button type="submit" className="w-full typography-subTitle4" disabled={!isSubmit} form="AddMealModalForm">
-              분석 시작하기
-            </Button>
-          </Form>
-        </div>
-      </DialogContent>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} id="AddMealModalForm">
+                <div className="flex flex-col gap-4">
+                  <FormField
+                    control={form.control}
+                    name="menuName"
+                    render={({ field }) => (
+                      <FormItem className="space-y-2">
+                        <FormLabel className="text-gray-900">먹은 음식</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="예시) 김치찌개, 닭가슴살, 크림파스타"
+                            type="text"
+                            maxLength={MAX_MENU_NAME_LENGTH}
+                            {...field}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="weight"
+                    render={({ field }) => (
+                      <FormItem className="space-y-2">
+                        <FormLabel className="text-gray-900">먹은 양 (선택)</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type="text"
+                            inputMode="numeric"
+                            maxLength={MAX_NUMERIC_LENGTH}
+                            measure="g"
+                            placeholder="숫자를 입력할 수 있어요"
+                            value={field.value ? formatNumberWithComma(Number(field.value)) : ''}
+                            onChange={(e) => {
+                              field.onChange(parseNumber(e.target.value));
+                            }}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </form>
+              <Button
+                type="submit"
+                className="w-full typography-subTitle4"
+                disabled={!isSubmit}
+                form="AddMealModalForm"
+              >
+                분석 시작하기
+              </Button>
+            </Form>
+          </div>
+        </DialogContent>
+      </DialogOverlay>
     </Dialog>
   );
 };

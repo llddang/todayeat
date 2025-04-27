@@ -17,8 +17,8 @@ const RetryErrorModal = ({ open, onOpenRetryErrorModalChange }: RetryErrorModalP
 
   return (
     <Dialog open={open} onOpenChange={onOpenRetryErrorModalChange}>
-      <DialogOverlay className="fixed inset-0 z-layout flex items-center justify-center bg-black/50">
-        <DialogContent className="absolute left-1/2 top-1/2 z-[20] flex w-[22.0625rem] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-6 rounded-2xl bg-white p-6">
+      <DialogOverlay className="fixed inset-0 z-[50] flex items-center justify-center bg-black/80">
+        <DialogContent className="absolute left-1/2 top-1/2 z-[50] flex w-[22.0625rem] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-6 rounded-2xl bg-white p-6">
           <div className="flex w-full flex-col items-start gap-3 pl-1">
             <DialogTitle className="flex w-full items-start gap-2">
               <Typography as="span" variant="title3">
