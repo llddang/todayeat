@@ -54,7 +54,6 @@ const AddMealModal = ({ onLoadingChange }: AddMealModalProps) => {
       );
       const [parsedResult] = parseGeminiResponse(generatedTextResult);
       if (!parsedResult) {
-        // TODO: 분석 실패시 문구 수정 및 유저 확인용 모달 추가
         throw new Error(ERROR_MESSAGES.AI_ANALYSIS_FAILED);
       }
       const newMeal = {

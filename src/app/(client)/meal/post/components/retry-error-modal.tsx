@@ -30,17 +30,17 @@ const RetryErrorModal = ({ open, onOpenRetryErrorModalChange }: RetryErrorModalP
                 이런 사진은 AI가 인식하기 어려워 할 수 있어요
               </Typography>
               <div className="flex w-full flex-col items-start gap-3 rounded-xl bg-gray-100 p-5">
-                <div className="before:bg-illust-failed-img-1 flex items-center gap-2 before:block before:h-6 before:w-6 before:bg-contain before:bg-center before:bg-no-repeat before:content-['']">
+                <div className="flex items-center gap-2 before:block before:h-6 before:w-6 before:bg-illust-failed-img-1 before:bg-contain before:bg-center before:bg-no-repeat before:content-['']">
                   <Typography as="span" variant="body2" className="text-gray-700">
                     너무 가까이 찍은 사진
                   </Typography>
                 </div>
-                <div className="before:bg-illust-failed-img-2 flex items-center gap-2 before:block before:h-6 before:w-6 before:bg-contain before:bg-center before:bg-no-repeat before:content-['']">
+                <div className="flex items-center gap-2 before:block before:h-6 before:w-6 before:bg-illust-failed-img-2 before:bg-contain before:bg-center before:bg-no-repeat before:content-['']">
                   <Typography as="span" variant="body2" className="text-gray-700">
                     음식보다 배경이 중심인 사진
                   </Typography>
                 </div>
-                <div className="before:bg-illust-failed-img-3 flex items-center gap-2 before:block before:h-6 before:w-6 before:bg-contain before:bg-center before:bg-no-repeat before:content-['']">
+                <div className="flex items-center gap-2 before:block before:h-6 before:w-6 before:bg-illust-failed-img-3 before:bg-contain before:bg-center before:bg-no-repeat before:content-['']">
                   <Typography as="span" variant="body2" className="text-gray-700">
                     빛 반사가 심한 사진
                   </Typography>
