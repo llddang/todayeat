@@ -185,7 +185,10 @@ const config: Config = {
         'edit-4-icon': 'url(/icons/edit-4-line.svg)',
         'default-profile': 'url(/illustrations/default_profile.svg)',
         'back-line-icon': 'url(/icons/back_line.svg)',
-        'add-line-icon': 'url(/icons/add_line.svg)'
+        'add-line-icon': 'url(/icons/add_line.svg)',
+        'illust-failed-img-1': 'url(/illustrations/illust-failed-img-1.svg)',
+        'illust-failed-img-2': 'url(/illustrations/illust-failed-img-2.svg)',
+        'illust-failed-img-3': 'url(/illustrations/illust-failed-img-3.svg)'
       },
       letterSpacing: {
         snug: '-0.0175rem'
