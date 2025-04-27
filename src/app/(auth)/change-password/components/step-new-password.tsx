@@ -24,7 +24,7 @@ type PasswordSchemaType = z.infer<typeof passwordSchema>;
 
 const defaultModalInfo = {
   title: '',
-  description: ''
+  content: ''
 };
 
 type StepNewPasswordProps = {
@@ -33,7 +33,7 @@ type StepNewPasswordProps = {
 };
 const StepNewPassword = ({ data, nextStep }: StepNewPasswordProps) => {
   const [isPending, setIsPending] = useState(false);
-  const [modalInfo, setModalInfo] = useState<{ title: string; description: ReactNode; onConfirm?: () => void }>(
+  const [modalInfo, setModalInfo] = useState<{ title: string; content: ReactNode; onClose?: () => void }>(
     defaultModalInfo
   );
 
@@ -62,8 +62,8 @@ const StepNewPassword = ({ data, nextStep }: StepNewPasswordProps) => {
       if (checkCurrentPasswordError)
         return setModalInfo({
           title: '비정상적인 접근입니다.',
-          description: '기존 비밀번호와 동일하지 않습니다.',
-          onConfirm: () => router.push(SITE_MAP.CHANGE_PASSWORD)
+          content: '기존 비밀번호와 동일하지 않습니다.',
+          onClose: () => router.push(SITE_MAP.CHANGE_PASSWORD)
         });
 
       if (password === data.currentPassword)
@@ -74,13 +74,13 @@ const StepNewPassword = ({ data, nextStep }: StepNewPasswordProps) => {
 
       const { error: changePasswordError } = await changePassword(password);
       if (changePasswordError)
-        setModalInfo({ title: changePasswordError.message, description: changePasswordError.action });
+        setModalInfo({ title: changePasswordError.message, content: changePasswordError.action });
       else nextStep();
     } catch (e) {
       console.error(e);
       setModalInfo({
         title: '예상하지 못한 오류가 발생했습니다.',
-        description: '잠시 후 다시 시도해주세요.'
+        content: '잠시 후 다시 시도해주세요.'
       });
     } finally {
       setIsPending(false);

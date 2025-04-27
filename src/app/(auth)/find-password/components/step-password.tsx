@@ -22,7 +22,7 @@ type PasswordSchemaType = z.infer<typeof passwordSchema>;
 
 const defaultModalInfo = {
   title: '',
-  description: ''
+  content: ''
 };
 
 type StepPasswordProps = {
@@ -30,7 +30,7 @@ type StepPasswordProps = {
 };
 const StepPassword = ({ nextStep }: StepPasswordProps) => {
   const [isPending, setIsPending] = useState(false);
-  const [modalInfo, setModalInfo] = useState<{ title: string; description: ReactNode }>(defaultModalInfo);
+  const [modalInfo, setModalInfo] = useState<{ title: string; content: ReactNode }>(defaultModalInfo);
 
   const params = useSearchParams();
   const error = params.get('error');
@@ -51,8 +51,7 @@ const StepPassword = ({ nextStep }: StepPasswordProps) => {
 
     const { error: changePasswordError } = await changePassword(password);
 
-    if (changePasswordError)
-      setModalInfo({ title: changePasswordError.message, description: changePasswordError.action });
+    if (changePasswordError) setModalInfo({ title: changePasswordError.message, content: changePasswordError.action });
     else nextStep();
     setIsPending(false);
   };

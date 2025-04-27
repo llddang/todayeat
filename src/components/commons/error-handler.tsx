@@ -7,7 +7,7 @@ import Modal from './modal';
 
 const defaultModalInfo = {
   title: '',
-  description: ''
+  content: ''
 };
 
 const ErrorHandler = () => {
@@ -35,7 +35,7 @@ const ErrorHandler = () => {
 
     const errorConfig = PUBLIC_ERROR_MESSAGE[errorCode];
 
-    setModalInfo({ title: errorConfig.message, description: errorConfig.action });
+    setModalInfo({ title: errorConfig.message, content: errorConfig.action });
   }, [searchParams, router]);
 
   return <Modal open={!!modalInfo.title} onOpenChange={handleClose} {...modalInfo} />;

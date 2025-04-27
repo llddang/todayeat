@@ -18,7 +18,7 @@ type EmailFormType = z.infer<typeof emailSchema>;
 const StepVerifyingEmail = () => {
   const [isPending, setIsPending] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalInfo, setModalInfo] = useState<{ title: string; description: ReactNode }>({ title: '', description: '' });
+  const [modalInfo, setModalInfo] = useState<{ title: string; content: ReactNode }>({ title: '', content: '' });
 
   const form = useForm<EmailFormType>({
     mode: 'onBlur',
@@ -42,12 +42,12 @@ const StepVerifyingEmail = () => {
       if (error)
         setModalInfo({
           title: error.action,
-          description: error.message
+          content: error.message
         });
       else
         setModalInfo({
           title: '이메일을 보냈어요!',
-          description: (
+          content: (
             <>
               입력하신 이메일로 비밀번호 재설정 메일을 보냈어요.
               <br />
