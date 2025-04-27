@@ -96,7 +96,7 @@ const StepEmail = ({ data, nextStep }: StepEmailProps) => {
             )}
           />
           <Button type="submit" disabled={!emailVerified || emailState.invalid} className="w-full">
-            {isCheckingEmail ? '이메일 중복 검증중' : '다음'}
+            {isCheckingEmail ? '이메일 중복 검증 중' : '다음'}
           </Button>
         </form>
       </Form>
