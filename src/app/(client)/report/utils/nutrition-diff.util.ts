@@ -70,7 +70,7 @@ export const calculateMaxDiffNutrient = (
  * @returns {string[]} 피드백 메시지 (두 줄로 구성)
  */
 export const makeFeedbackMessage = (unit: PeriodUnit, nutrient: string, consumed: number, goal: number): string[] => {
-  const percentage = getPercentage(consumed, goal);
+  const percentage = getPercentage(consumed, goal, false);
   const periodMessage = makePeriodMessage(unit, false);
 
   if (percentage <= 50) {

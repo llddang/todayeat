@@ -170,11 +170,14 @@ export const calculateNutritionAverage = (meals: MealDTO[]): MealNutrition => {
  * @function getPercentage
  * @param {number} value - 실제 값
  * @param {number} base - 기준값 (0일 경우 0% 반환)
+ * @param {boolean} isLimited - 최대 100% 제한 여부
  * @returns {number} 기준 대비 백분율 (정수, 소수점 없음)
  */
-export const getPercentage = (value: number, base: number): number => {
+export const getPercentage = (value: number, base: number, isLimited: boolean = true): number => {
   if (!base) return 0;
-  return Math.round((value / base) * 100);
+
+  const percentage = Math.round((value / base) * 100);
+  return isLimited ? Math.min(percentage, 100) : percentage;
 };
 
 /**
