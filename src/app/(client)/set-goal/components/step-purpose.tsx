@@ -26,7 +26,7 @@ const StepPurpose = ({ userName, nextStep }: StepPurposeProps) => {
     <form onSubmit={handleSubmit}>
       <fieldset>
         <legend>
-          <Typography as="h3" variant={'title2'} className="mb-2">
+          <Typography as="h3" variant="title3" className="mb-2">
             {userName}님은 <br /> 어떤 목표를 가지고 계신가요?
           </Typography>
           <Typography as="span" variant={'body2'} className="text-gray-600">
