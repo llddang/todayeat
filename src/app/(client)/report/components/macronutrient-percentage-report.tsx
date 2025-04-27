@@ -72,7 +72,7 @@ const MacronutrientPercentageReport = ({ unit, total, average, personalInfo }: M
       <div className="flex xl:w-full xl:flex-col xl:items-center xl:gap-6">
         <MacroNutrientPieChart
           data={total}
-          innerRadius={isMobile ? 56 : personalInfo ? 80 : 53}
+          innerRadius={isMobile ? MOBILE_INNER_RADIUS : personalInfo ? PC_INNER_RADIUS_LARGE : PC_INNER_RADIUS_SMALL}
           className={cn(personalInfo ? 'xl:h-[18.75rem]' : 'xl:h-[12.5rem]', 'h-[13.1875rem]')}
         />
         <div className="m-auto flex flex-col gap-4 xl:w-full xl:px-10">
@@ -98,3 +98,7 @@ const MacronutrientPercentageReport = ({ unit, total, average, personalInfo }: M
 };
 
 export default MacronutrientPercentageReport;
+
+const MOBILE_INNER_RADIUS = 56;
+const PC_INNER_RADIUS_LARGE = 80;
+const PC_INNER_RADIUS_SMALL = 53;
