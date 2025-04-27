@@ -98,7 +98,7 @@ const StepCurrentPassword = ({ nextStep }: StepCurrentPasswordProps) => {
             )}
           />
           <Button type="submit" disabled={!passwordVerified} className="w-full">
-            {isCheckingPassword ? '비밀번호 검증 중' : '다음'}
+            {isCheckingPassword ? '비밀번호 검증중' : '다음'}
           </Button>
         </form>
       </Form>

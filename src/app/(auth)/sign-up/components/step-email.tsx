@@ -91,14 +91,12 @@ const StepEmail = ({ data, nextStep }: StepEmailProps) => {
                     disabled={isCheckingEmail}
                   />
                 </FormControl>
-                {/* TODO: 디자이너님께 검수받기. */}
-                {isCheckingEmail && <FormDescription>이메일 중복 검사하고 있어요</FormDescription>}
                 <FormMessage />
               </FormItem>
             )}
           />
           <Button type="submit" disabled={!emailVerified || emailState.invalid} className="w-full">
-            다음
+            {isCheckingEmail ? '이메일 중복 검증중' : '다음'}
           </Button>
         </form>
       </Form>
