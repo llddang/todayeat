@@ -60,7 +60,7 @@ const StepEmail = ({ data, nextStep }: StepEmailProps) => {
   return (
     <>
       <div className="flex flex-col gap-2">
-        <Typography as="h3" variant="title2" className="text-gray-900">
+        <Typography as="h3" variant="title3" className="text-gray-900">
           아이디를 입력해 주세요
         </Typography>
         <Typography as="span" variant="body2" className="text-gray-600">

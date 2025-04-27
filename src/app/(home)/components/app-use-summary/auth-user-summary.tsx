@@ -28,7 +28,7 @@ const AuthUserSummary = ({ allMealCount, thisMonthMealCount }: AuthUserSummaryPr
         'before:bg-career-illustration before:bg-contain before:bg-center before:bg-no-repeat'
       )}
     >
-      <Typography variant="title2" className="text-gray-800">
+      <Typography variant="title3" className="text-gray-800">
         안녕하세요, {user.nickname}님!
       </Typography>
       <div className="space-y-1">

@@ -114,7 +114,7 @@ const StepCalculate = ({ nextStep, userName, data }: StepCalculateProps) => {
   return (
     <>
       <div>
-        <Typography as="h3" variant="title2" className="mb-2 xl:mt-2">
+        <Typography as="h3" variant="title3" className="mb-2 xl:mt-2">
           {userName}님의 <br /> 목표에 맞춰 계산했어요!
         </Typography>
         <Typography as="span" variant="body2" className="text-gray-600">

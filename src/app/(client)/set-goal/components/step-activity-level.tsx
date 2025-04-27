@@ -25,7 +25,7 @@ const StepActivityLevel = ({ userName, nextStep }: StepActivityLevelProps) => {
     <form onSubmit={handleSubmit}>
       <fieldset>
         <legend>
-          <Typography as="h3" variant="title2" className="mb-2">
+          <Typography as="h3" variant="title3" className="mb-2">
             {userName}님의 <br />
             평소 활동량은 어떤 편인가요?
           </Typography>
