@@ -8,7 +8,7 @@ type CalorieSummaryCardProps = {
 };
 
 const CaloriesSummaryCard = ({ total, goal }: CalorieSummaryCardProps) => {
-  const percentage = Math.min(getPercentage(total, goal), 100);
+  const percentage = getPercentage(total, goal);
   const offset = CIRCUMFERENCE - (CIRCUMFERENCE * percentage) / 100;
 
   const handleFeedbackMessage = () => {
