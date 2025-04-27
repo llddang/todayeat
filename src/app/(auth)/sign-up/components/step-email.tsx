@@ -1,5 +1,5 @@
 import { Typography } from '@/components/ui/typography';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
@@ -91,14 +91,12 @@ const StepEmail = ({ data, nextStep }: StepEmailProps) => {
                     disabled={isCheckingEmail}
                   />
                 </FormControl>
-                {/* TODO: 디자이너님께 검수받기. */}
-                {isCheckingEmail && <FormDescription>이메일 중복 검사하고 있어요</FormDescription>}
                 <FormMessage />
               </FormItem>
             )}
           />
           <Button type="submit" disabled={!emailVerified || emailState.invalid} className="w-full">
-            다음
+            {isCheckingEmail ? '이메일 중복 검증 중' : '다음'}
           </Button>
         </form>
       </Form>

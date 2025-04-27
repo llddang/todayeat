@@ -87,7 +87,6 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
-
 @layer utilities {
   .scrollbar-hidden {
     -ms-overflow-style: none;

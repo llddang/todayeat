@@ -3,7 +3,6 @@ const SITE_MAP = {
   SIGN_IN: '/sign-in',
   SIGN_UP: '/sign-up',
   FIND_PASSWORD: '/find-password',
-  UPDATE_PASSWORD: '/update-password',
   CHANGE_PASSWORD: '/change-password',
   MEAL_POST: '/meal/post',
   MY_PAGE: '/my-page',
