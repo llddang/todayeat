@@ -4,8 +4,8 @@ import { PeriodUnitEnum } from './types/chart.type';
 
 const Report = () => {
   return (
-    <Tabs defaultValue={PeriodUnitEnum.WEEKLY}>
-      <TabsList className="flex w-full">
+    <Tabs defaultValue={PeriodUnitEnum.WEEKLY} className="mt-2">
+      <TabsList className="flex w-full xl:mx-auto xl:w-44">
         <TabsTrigger value={PeriodUnitEnum.DAILY} className="flex-1">
           일간
         </TabsTrigger>

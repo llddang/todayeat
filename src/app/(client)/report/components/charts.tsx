@@ -41,17 +41,19 @@ const Charts = ({ unit }: { unit: PeriodUnit }) => {
   }, [unit, userId]);
 
   return (
-    <>
-      <GlassBackground className="mb-4 min-h-full w-full rounded-2xl p-4">
+    <div className="xl:flex xl:gap-4">
+      <GlassBackground className="mb-4 min-h-full w-full rounded-2xl p-4 xl:w-[25rem] xl:self-start">
         <CaloriesAmountReport total={total} unit={unit} barChart={barChart} personalInfo={personalInfo} />
       </GlassBackground>
-      <GlassBackground className="flex min-h-full w-full flex-col gap-4 rounded-2xl p-4">
+      <GlassBackground className="flex min-h-full w-full flex-col gap-4 rounded-2xl p-4 xl:flex-1 xl:flex-row">
         <MacronutrientPercentageReport unit={unit} total={total} average={average} personalInfo={personalInfo} />
-        <MacronutrientAmountReport unit={unit} variety="CARBOHYDRATE" average={average} personalInfo={personalInfo} />
-        <MacronutrientAmountReport unit={unit} variety="PROTEIN" average={average} personalInfo={personalInfo} />
-        <MacronutrientAmountReport unit={unit} variety="FAT" average={average} personalInfo={personalInfo} />
+        <div className="flex flex-1 flex-col gap-4 xl:justify-center">
+          <MacronutrientAmountReport unit={unit} variety="CARBOHYDRATE" average={average} personalInfo={personalInfo} />
+          <MacronutrientAmountReport unit={unit} variety="PROTEIN" average={average} personalInfo={personalInfo} />
+          <MacronutrientAmountReport unit={unit} variety="FAT" average={average} personalInfo={personalInfo} />
+        </div>
       </GlassBackground>
-    </>
+    </div>
   );
 };
 

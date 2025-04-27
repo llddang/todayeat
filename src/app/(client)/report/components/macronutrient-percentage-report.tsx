@@ -49,7 +49,7 @@ const MacronutrientPercentageReport = ({ unit, total, average, personalInfo }: M
   );
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col xl:flex-1">
       {!personalInfo && (
         <CtaExampleFeedbackBanner
           title="건강 목표가 아직 설정되지 않았어요"
@@ -65,9 +65,9 @@ const MacronutrientPercentageReport = ({ unit, total, average, personalInfo }: M
           {beforeBreak} <br /> {afterBreak}
         </Typography>
       )}
-      <div className="flex">
-        <MacroNutrientPieChart data={total} />
-        <div className="m-auto flex flex-col gap-4">
+      <div className="flex xl:m-auto xl:flex-col">
+        <MacroNutrientPieChart data={total} className="xl:h-80 xl:w-80" />
+        <div className="m-auto flex flex-col gap-4 xl:m-0 xl:px-10">
           <MacronutrientPercentageBox
             variety={MacronutrientEnum.CARBOHYDRATE}
             value={nutrientRatio.CARBOHYDRATE.consumed}

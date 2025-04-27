@@ -23,8 +23,8 @@ const MacronutrientPercentageBox = ({
           beforeBgColor
         )}
       />
-      <div className="flex flex-1 flex-col items-start gap-0.5">
-        <Typography as="span" variant="body3" className="text-gray-700">
+      <div className="flex flex-1 flex-col items-start gap-0.5 xl:flex-row xl:justify-between">
+        <Typography as="span" variant="body3" className="text-gray-700 xl:typography-body2">
           {label}
         </Typography>
         <div className="flex gap-1">

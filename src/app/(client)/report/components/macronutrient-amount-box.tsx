@@ -32,7 +32,7 @@ const MacronutrientAmountBox = ({
               ? `${PERIOD_UNIT_TEXT[unit].current} 섭취량`
               : `${PERIOD_UNIT_TEXT[unit].current} 평균 섭취량`}
         </Typography>
-        <Typography as="span" variant="subTitle4" className="text-gray-900">
+        <Typography as="span" variant="subTitle4" className="text-gray-900 xl:typography-subTitle2">
           {value}g
         </Typography>
       </div>
