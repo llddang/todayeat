@@ -37,7 +37,7 @@ const MealImageCarousel = ({ imageList, pagination = true }: { imageList: string
 
   if (imageList.length === 0) return null;
   return (
-    <Carousel setApi={setApi} className="w-full overflow-hidden rounded-2xl">
+    <Carousel setApi={setApi} className="w-full overflow-hidden rounded-2xl xl:aspect-square xl:w-[22.5rem]">
       <CarouselContent className="ml-0 gap-4">
         {imageList.map((imageUrl, index) => (
           <CarouselItem key={imageUrl} className="relative aspect-square w-full overflow-hidden rounded-2xl pl-0">
