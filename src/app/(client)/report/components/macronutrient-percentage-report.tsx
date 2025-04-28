@@ -1,4 +1,4 @@
-import MacroNutrientPieChart from '@/components/commons/macronutrient-pie-chart';
+import MacronutrientPieChart from '@/components/commons/macronutrient-pie-chart';
 import CtaExampleFeedbackBanner from '@/components/commons/cta-example-feedback-banner';
 import { Typography } from '@/components/ui/typography';
 import MacronutrientPercentageBox from './macronutrient-percentage-box';
@@ -82,7 +82,7 @@ const MacronutrientPercentageReport = ({
         </Typography>
       )}
       <div className="flex xl:w-full xl:flex-col xl:items-center xl:gap-6">
-        <MacroNutrientPieChart
+        <MacronutrientPieChart
           data={total}
           innerRadius={isMobile ? MOBILE_INNER_RADIUS : personalInfo ? PC_INNER_RADIUS_LARGE : PC_INNER_RADIUS_SMALL}
           className={cn(personalInfo ? 'xl:h-[18.75rem]' : 'xl:h-[12.5rem]', 'h-[13.1875rem]')}

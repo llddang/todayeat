@@ -20,7 +20,7 @@ import { Button } from '@/components/ui/button';
 import TimePicker, { TimeFields } from './time-picker';
 import SITE_MAP from '@/constants/site-map.constant';
 import MacronutrientBox from '@/components/commons/macronutrient-box';
-import MacroNutrientPieChart from '@/components/commons/macronutrient-pie-chart';
+import MacronutrientPieChart from '@/components/commons/macronutrient-pie-chart';
 import { MacronutrientEnum } from '@/types/nutrition.type';
 import EditCalendarDrawer from './edit-calendar-drawer';
 import AddMealCardDrawer from './add-meal-card-drawer';
@@ -159,7 +159,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
             총 영양 정보
           </Typography>
           <div className="flex min-h-[13.125rem] w-full min-w-0 items-center justify-center gap-3 rounded-2xl bg-white/50 p-3 backdrop-blur-[50px]">
-            <MacroNutrientPieChart data={totalNutrient} displayCalories={true} className="w-[14.5625rem]" />
+            <MacronutrientPieChart data={totalNutrient} displayCalories={true} className="w-[14.5625rem]" />
             <div className="flex w-[5.75rem] flex-col items-start justify-center gap-4 px-1">
               <MacronutrientBox variety={MacronutrientEnum.CARBOHYDRATE} value={totalNutrient.carbohydrate} />
               <MacronutrientBox variety={MacronutrientEnum.PROTEIN} value={totalNutrient.protein} />
