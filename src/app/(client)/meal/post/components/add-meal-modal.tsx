@@ -73,12 +73,12 @@ const AddMealModal = ({ onLoadingChange, onModalOpenChange, onModalInfoChange }:
       await createFoodAnalysisRequestDetail(newMeal);
       router.push('/meal/post/edit');
     } catch (err) {
+      onLoadingChange(false);
       if (err instanceof Error) {
         onModalInfoChange({
           title: ERROR_MESSAGES.SERVICE_ERROR.title,
           content: ERROR_MESSAGES.SERVICE_ERROR.content
         });
-        onLoadingChange(false);
         return onModalOpenChange(true);
       }
     }
