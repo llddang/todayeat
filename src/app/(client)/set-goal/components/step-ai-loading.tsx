@@ -14,7 +14,7 @@ const StepAiLoading = ({ nextStep }: StepAiLoadingProps) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       nextStep();
-    }, 3000);
+    }, 2000);
     return () => {
       clearTimeout(timeout);
     };
