@@ -21,6 +21,7 @@ const Charts = ({ unit }: { unit: PeriodUnit }) => {
   ]);
   const [total, setTotal] = useState<MealNutrition>(INITIAL_NUTRITION_VALUE);
   const [average, setAverage] = useState<MealNutrition>(INITIAL_NUTRITION_VALUE);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { id: userId, personalInfo } = useUserStore((state) => state.user);
 
@@ -34,6 +35,8 @@ const Charts = ({ unit }: { unit: PeriodUnit }) => {
         setAverage(average);
       } catch (error) {
         console.error('리포트 불러오기 실패:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -43,14 +46,44 @@ const Charts = ({ unit }: { unit: PeriodUnit }) => {
   return (
     <div className="xl:flex xl:gap-4 xl:px-[3.12rem]">
       <GlassBackground className="mb-4 min-h-full w-full rounded-2xl p-4 xl:w-[25rem] xl:self-start">
-        <CaloriesAmountReport total={total} unit={unit} barChart={barChart} personalInfo={personalInfo} />
+        <CaloriesAmountReport
+          total={total}
+          unit={unit}
+          barChart={barChart}
+          personalInfo={personalInfo}
+          isLoading={isLoading}
+        />
       </GlassBackground>
       <GlassBackground className="flex min-h-full w-full flex-col gap-4 rounded-2xl p-4 xl:flex-1 xl:flex-row">
-        <MacronutrientPercentageReport unit={unit} total={total} average={average} personalInfo={personalInfo} />
+        <MacronutrientPercentageReport
+          unit={unit}
+          total={total}
+          average={average}
+          personalInfo={personalInfo}
+          isLoading={isLoading}
+        />
         <div className="flex flex-1 flex-col gap-2">
-          <MacronutrientAmountReport unit={unit} variety="CARBOHYDRATE" average={average} personalInfo={personalInfo} />
-          <MacronutrientAmountReport unit={unit} variety="PROTEIN" average={average} personalInfo={personalInfo} />
-          <MacronutrientAmountReport unit={unit} variety="FAT" average={average} personalInfo={personalInfo} />
+          <MacronutrientAmountReport
+            unit={unit}
+            variety="CARBOHYDRATE"
+            average={average}
+            personalInfo={personalInfo}
+            isLoading={isLoading}
+          />
+          <MacronutrientAmountReport
+            unit={unit}
+            variety="PROTEIN"
+            average={average}
+            personalInfo={personalInfo}
+            isLoading={isLoading}
+          />
+          <MacronutrientAmountReport
+            unit={unit}
+            variety="FAT"
+            average={average}
+            personalInfo={personalInfo}
+            isLoading={isLoading}
+          />
         </div>
       </GlassBackground>
     </div>

@@ -4,15 +4,14 @@ import { PERIOD_UNIT_TEXT } from '../constants/unit.constant';
 import { AMOUNT_CHART_OPTIONS } from '../constants/chart.constant';
 import { cn } from '@/lib/shadcn';
 
-const MacronutrientAmountBox = ({
-  unit,
-  variety,
-  value
-}: {
+type MacronutrientAmountBoxProps = {
   unit: PeriodUnit;
   variety: AmountBarChartType;
   value: number;
-}) => {
+  isLoading?: boolean;
+};
+
+const MacronutrientAmountBox = ({ unit, variety, value, isLoading }: MacronutrientAmountBoxProps) => {
   const { beforeBgColor } = AMOUNT_CHART_OPTIONS[variety];
 
   return (
@@ -33,7 +32,7 @@ const MacronutrientAmountBox = ({
               : `${PERIOD_UNIT_TEXT[unit].current} 평균 섭취량`}
         </Typography>
         <Typography as="span" variant="subTitle4" className="text-gray-900 xl:typography-subTitle2">
-          {value}g
+          {!isLoading ? value : '- '}g
         </Typography>
       </div>
     </div>

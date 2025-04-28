@@ -7,6 +7,7 @@ import { formatNumberWithComma } from '@/utils/format.util';
 import { BarChartDataType, PeriodUnit, PeriodUnitEnum } from '../types/chart.type';
 import { MealNutrition } from '@/types/nutrition.type';
 import { UserPersonalInfoDTO } from '@/types/DTO/user.dto';
+import MessageSkeleton from './message-skeleton';
 import { cn } from '@/lib/shadcn';
 
 type CaloriesAmountReportProps = {
@@ -14,28 +15,33 @@ type CaloriesAmountReportProps = {
   unit: PeriodUnit;
   barChart: BarChartDataType[];
   personalInfo: UserPersonalInfoDTO | null;
+  isLoading: boolean;
 };
 
-const CaloriesAmountReport = ({ total, unit, barChart, personalInfo }: CaloriesAmountReportProps) => {
+const CaloriesAmountReport = ({ total, unit, barChart, personalInfo, isLoading }: CaloriesAmountReportProps) => {
   const { isMore, absDiff } = calculateDiffCalories(barChart);
   const periodMessage = makePeriodMessage(unit);
   return (
     <div>
-      <Typography as="h2" variant="subTitle1">
-        {total.calories ? (
-          <>
-            {periodMessage}
-            <br />
-            {formatNumberWithComma(absDiff)}kcal {isMore ? '더' : '덜'} 먹었어요
-          </>
-        ) : (
-          <>
-            식사를 기록하면
-            <br />
-            섭취량을 분석할 수 있어요
-          </>
-        )}
-      </Typography>
+      {isLoading ? (
+        <MessageSkeleton />
+      ) : (
+        <Typography as="h2" variant="subTitle1">
+          {total.calories ? (
+            <>
+              {periodMessage}
+              <br />
+              {formatNumberWithComma(absDiff)}kcal {isMore ? '더' : '덜'} 먹었어요
+            </>
+          ) : (
+            <>
+              식사를 기록하면
+              <br />
+              섭취량을 분석할 수 있어요
+            </>
+          )}
+        </Typography>
+      )}
       <ChartContainer config={chartConfig} className="mt-4 min-h-full w-full">
         <BarChart data={barChart} barSize={32}>
           <XAxis
@@ -63,13 +69,16 @@ const CaloriesAmountReport = ({ total, unit, barChart, personalInfo }: CaloriesA
           <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey="calories" />} />
           <Bar dataKey="value" radius={[4, 4, 4, 4]}>
             {barChart.map((_, index) => (
-              <Cell key={`cell-${index}`} fill={barChart.length - 1 === index ? '#FFE37E' : '#FFF5CC'} />
+              <Cell
+                key={`cell-${index}`}
+                fill={barChart.length - 1 === index ? 'var(--bar-current)' : 'var(--bar-previous)'}
+              />
             ))}
           </Bar>
           {personalInfo && (
             <ReferenceLine
               y={personalInfo.dailyCaloriesGoal}
-              stroke="#FFB800"
+              stroke="var(--reference-line)"
               strokeDasharray="8 8"
               strokeWidth="2"
               strokeLinecap="round"
@@ -85,7 +94,7 @@ const CaloriesAmountReport = ({ total, unit, barChart, personalInfo }: CaloriesA
           </Typography>
           <div className="space-x-1">
             <Typography as="span" variant="subTitle4" className="text-gray-900">
-              {formatNumberWithComma(barChart.at(-1)?.value ?? 0)}
+              {!isLoading ? formatNumberWithComma(barChart.at(-1)?.value ?? '0') : '-'}
             </Typography>
             <Typography as="span" variant="body3">
               kcal
@@ -114,7 +123,6 @@ export default CaloriesAmountReport;
 
 const chartConfig = {
   calories: {
-    label: '칼로리',
-    color: '#FFF5CC'
+    label: '칼로리'
   }
 } as const satisfies ChartConfig;
