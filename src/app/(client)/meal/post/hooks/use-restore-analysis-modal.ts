@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { deleteMealAnalysisDetail } from '@/apis/meal.api';
+import { deleteAnalysisData } from '@/apis/analysis-request.api';
 import SITE_MAP from '@/constants/site-map.constant';
 
 const useRestoreAnalysisModal = (isRecorded: boolean = false) => {
@@ -19,7 +19,7 @@ const useRestoreAnalysisModal = (isRecorded: boolean = false) => {
 
   const handleCancelClick = async () => {
     try {
-      await deleteMealAnalysisDetail();
+      await deleteAnalysisData();
       setShowModal(false);
     } catch (error) {
       console.error('임시 데이터 삭제 중 오류 발생:', error);

@@ -13,7 +13,6 @@ import {
   MealOverviewSnakeCaseDTO,
   MealSnakeCaseDTO
 } from '@/types/DTO/meal.dto';
-import { getUser } from './user.api';
 import { endOfMonth, startOfMonth } from 'date-fns';
 
 /**
@@ -157,21 +156,6 @@ export const deleteMeal = async (mealId: string) => {
   const supabase = getServerClient();
   const { error } = await supabase.from('meals').delete().eq('id', mealId);
   if (error) throw error;
-};
-
-// TODO: deleteMealAnalysisDetail 함수 analysis-request.api.ts로 위치 이동 & 함수 주석 수정
-/**
- * 분석시 저장한 상세 식사 데이터를 데이터베이스에서 삭제합니다.
- *
- * @param {string}  id 로그인한 유저 id
- * @throws {Error} 데이터베이스 오류 발생 시 에러를 던집니다
- */
-export const deleteMealAnalysisDetail = async () => {
-  const supabase = getServerClient();
-  const { id } = await getUser();
-  const { error: requestsError } = await supabase.from('ai_requests').delete().eq('user_id', id);
-  const { error: requestsDetailError } = await supabase.from('ai_responses').delete().eq('user_id', id);
-  if (requestsDetailError || requestsError) throw new Error('등록된 식사정보 삭제에 실패하였습니다. ');
 };
 
 /**

@@ -2,7 +2,7 @@
 
 import { AiResponseDTO } from '@/types/DTO/ai_analysis.dto';
 import { MealCategory } from '@/types/meal-category.type';
-import { createMealWithDetails, deleteMealAnalysisDetail } from '@/apis/meal.api';
+import { createMealWithDetails } from '@/apis/meal.api';
 import { uploadImage } from '@/apis/storage.api';
 import { formatTimestamp } from '@/utils/format.util';
 import { urlToFile } from '../../../utils/file.util';
@@ -27,6 +27,7 @@ import AddMealCardDrawer from './add-meal-card-drawer';
 import { MAX_MEMO_LENGTH } from '../constants/meal-edit.constant';
 import { MEAL_CATEGORY } from '../../../constants/category.constant';
 import MemoBox from '../../../detail/components/memo-box';
+import { deleteAnalysisData } from '@/apis/analysis-request.api';
 
 type EditResultSectionProps = {
   imageList: string[];
@@ -119,7 +120,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
 
         if (meal) {
           try {
-            await deleteMealAnalysisDetail();
+            await deleteAnalysisData();
             router.push(SITE_MAP.HOME);
           } catch (error) {
             console.error('분석 데이터 삭제 중 오류 발생:', error);
