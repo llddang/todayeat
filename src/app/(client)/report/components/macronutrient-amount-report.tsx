@@ -12,9 +12,16 @@ type MacronutrientAmountReportProps = {
   average: MealNutrition;
   personalInfo: UserPersonalInfoDTO | null;
   unit: PeriodUnit;
+  isLoading: boolean;
 };
 
-const MacronutrientAmountReport = ({ variety, average, personalInfo, unit }: MacronutrientAmountReportProps) => {
+const MacronutrientAmountReport = ({
+  variety,
+  average,
+  personalInfo,
+  unit,
+  isLoading
+}: MacronutrientAmountReportProps) => {
   const { label, color } = MACRONUTRIENT_OPTIONS[variety];
 
   const consumeAmount = average[MACRONUTRIENT_MAP[variety]];
@@ -34,7 +41,7 @@ const MacronutrientAmountReport = ({ variety, average, personalInfo, unit }: Mac
         </div>
       )}
       <div className="flex items-center justify-between">
-        <MacronutrientAmountBox unit={unit} variety={variety} value={consumeAmount} />
+        <MacronutrientAmountBox unit={unit} variety={variety} value={consumeAmount} isLoading={isLoading} />
         <MacronutrientAmountBox unit={unit} variety="GOAL" value={goalAmount} />
       </div>
     </div>
