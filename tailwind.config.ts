@@ -186,7 +186,11 @@ const config: Config = {
         'edit-4-icon': 'url(/icons/edit-4-line.svg)',
         'default-profile': 'url(/illustrations/default_profile.svg)',
         'back-line-icon': 'url(/icons/back_line.svg)',
-        'add-line-icon': 'url(/icons/add_line.svg)'
+        'add-line-icon': 'url(/icons/add_line.svg)',
+        'onboarding-recommend-1': 'url(/illustrations/onboarding-recommend-img-1.svg)',
+        'onboarding-recommend-2': 'url(/illustrations/onboarding-recommend-img-2.svg)',
+        'onboarding-recommend-3': 'url(/illustrations/onboarding-recommend-img-3.svg)',
+        'onboarding-bg': 'url(/images/onboarding-bg.png)'
       },
       letterSpacing: {
         snug: '-0.0175rem'
@@ -245,8 +249,14 @@ const config: Config = {
             #FDFDFD
           `
         },
+        '.bg-gradient-onboarding': {
+          background: `linear-gradient(180deg, #FBF6FE 16%, rgba(255, 255, 255, 0.00) 20%)`
+        },
         '.bg-gradient-radial-purple': {
           background: `radial-gradient(72.84% 72.84% at 50% 27.16%, rgba(255, 210, 214, 0.20) 0%, rgba(227, 192, 250, 0.20) 100%), #fff`
+        },
+        '.bg-gradient-radial-purple-2': {
+          background: `radial-gradient(72.84% 72.84% at 50% 27.16%, rgba(255, 210, 214, 0.08) 0%, rgba(227, 192, 250, 0.08) 100%), #fff`
         },
         '.bg-button-gradient': {
           background: `linear-gradient(149deg, rgba(255, 210, 214, 0.32) 4.14%, rgba(209, 149, 248, 0.32) 109.45%), #FFF`
