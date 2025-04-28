@@ -1,14 +1,6 @@
 'use client';
 
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle
-} from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
+import Modal from '@/components/commons/modal';
 
 type RestoreAnalysisModalProps = {
   open: boolean;
@@ -23,23 +15,16 @@ const RestoreAnalysisModal = ({
   onCancelClickHandler
 }: RestoreAnalysisModalProps) => {
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="z-modal absolute left-1/2 top-1/2 min-w-[22.06rem] -translate-x-1/2 -translate-y-1/2 gap-1 rounded-2xl bg-white p-6 backdrop-blur-[50px] xl:max-w-[25rem]">
-        <AlertDialogHeader>
-          <AlertDialogTitle>이전 정보 발견</AlertDialogTitle>
-
-          <AlertDialogDescription>등록하던 정보가 있습니다. 사용하시겠습니까?</AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter className="flex flex-col gap-2">
-          <Button variant="primary" onClick={onApproveClickHandler}>
-            예
-          </Button>
-          <Button variant="secondary" onClick={onCancelClickHandler}>
-            아니요
-          </Button>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <Modal
+      title="이전 정보 발견"
+      content="등록하던 정보가 있습니다. 사용하시겠습니까?"
+      open={open}
+      onOpenChange={onOpenChange}
+      confirmText="예"
+      onConfirm={onApproveClickHandler}
+      closeText="아니요"
+      onClose={onCancelClickHandler}
+    />
   );
 };
 
