@@ -1,47 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import GlassBackground from '@/components/commons/glass-background';
-import { BarChartDataType, PeriodUnit } from '../types/chart.type';
-import { MealNutrition } from '@/types/nutrition.type';
 import { useUserStore } from '@/store/user-store';
-import { fetchReport } from '../apis/fetch-report.api';
 import MacronutrientPercentageReport from './macronutrient-percentage-report';
 import MacronutrientAmountReport from './macronutrient-amount-report';
 import CaloriesAmountReport from './calories-amount-report';
-import { INITIAL_NUTRITION_VALUE } from '../constants/chart.constant';
+import { useFetchReport } from '../hooks/use-fetch-report';
+import { PeriodUnit } from '../types/chart.type';
 
 const Charts = ({ unit }: { unit: PeriodUnit }) => {
-  const [barChart, setBarChart] = useState<BarChartDataType[]>([
-    {
-      label: '',
-      value: 0,
-      fill: ''
-    }
-  ]);
-  const [total, setTotal] = useState<MealNutrition>(INITIAL_NUTRITION_VALUE);
-  const [average, setAverage] = useState<MealNutrition>(INITIAL_NUTRITION_VALUE);
-  const [isLoading, setIsLoading] = useState(true);
-
   const { id: userId, personalInfo } = useUserStore((state) => state.user);
-
-  useEffect(() => {
-    if (!userId) return;
-    const fetchData = async () => {
-      try {
-        const { barChart, total, average } = await fetchReport(userId, unit);
-        setBarChart(barChart);
-        setTotal(total);
-        setAverage(average);
-      } catch (error) {
-        console.error('리포트 불러오기 실패:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [unit, userId]);
+  const { barChart, total, average, isLoading } = useFetchReport(userId, unit);
 
   return (
     <div className="xl:flex xl:gap-4 xl:px-[3.12rem]">
