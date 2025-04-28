@@ -18,7 +18,7 @@ const Layout = ({
     <div className="layout-container">
       <Header variant="withProfile" />
       <div className="py-layout">
-        <main className="mx-auto desktop-width">{children}</main>
+        <main className="mx-auto flex justify-center layout-container">{children}</main>
         <Footer />
       </div>
       <GlobalNavigationBar />
