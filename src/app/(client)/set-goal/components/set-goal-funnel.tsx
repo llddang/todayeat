@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect } from 'react';
+import { Suspense } from 'react';
 import { z } from 'zod';
 import useFunnel from '@/hooks/use-funnel';
 import { ActivityLevelType, GenderType, PurposeType } from '@/types/user-personal-info.type';
@@ -24,9 +24,43 @@ import {
   StepWeightType
 } from '../types/funnel.type';
 import { userPhysicalProfileSchema } from '../schemas/user-physical-profile.schema';
+import useScrollToTop from '../hooks/use-scroll-to-top';
 
-type SetGoalFunnelProps = {
-  userName: string;
+const SetGoalFunnel = () => {
+  const { Funnel } = useFunnel<validateStep, FunnelStep>('step1', validateFn, 'session-key');
+  useScrollToTop();
+
+  return (
+    <Suspense>
+      <Funnel
+        step1={({ setStep }) => <PurposeStep nextStep={(purpose: PurposeType) => setStep('step2', { purpose })} />}
+        step2={({ setStep }) => <GenderStep nextStep={(gender: GenderType) => setStep('step3', { gender })} />}
+        step3={({ setStep }) => <AgeStep nextStep={(age: number) => setStep('step4', { age })} />}
+        step4={({ setStep }) => <HeightStep nextStep={(height: number) => setStep('step5', { height })} />}
+        step5={({ setStep }) => <WeightStep nextStep={(weight: number) => setStep('step6', { weight })} />}
+        step6={({ setStep }) => (
+          <ActivityLevelStep nextStep={(data: ActivityLevelType) => setStep('step7', { activityLevel: data })} />
+        )}
+        step7={({ setStep }) => <StepAiLoading nextStep={() => setStep('step8')} />}
+        step8={({ setStep, data }) => <CalculateStep data={data} nextStep={setStep} />}
+        complete={() => <Complete />}
+      />
+    </Suspense>
+  );
+};
+
+export default SetGoalFunnel;
+
+type validateStep = {
+  step1: StepPurposeType;
+  step2: StepGenderType;
+  step3: StepAgeType;
+  step4: StepHeightType;
+  step5: StepWeightType;
+  step6: StepActivityLevelType;
+  step7: StepCompleteType;
+  step8: StepCompleteType;
+  complete: StepCompleteType;
 };
 
 const validateStep = {
@@ -41,68 +75,14 @@ const validateStep = {
   complete: userPhysicalProfileSchema
 };
 
-const SetGoalFunnel = ({ userName }: SetGoalFunnelProps) => {
-  const { Funnel, currentStep } = useFunnel<
-    {
-      step1: StepPurposeType;
-      step2: StepGenderType;
-      step3: StepAgeType;
-      step4: StepHeightType;
-      step5: StepWeightType;
-      step6: StepActivityLevelType;
-      step7: StepCompleteType;
-      step8: StepCompleteType;
-      complete: StepCompleteType;
-    },
-    FunnelStep
-  >(
-    'step1',
-    {
-      step1: () => true,
-      step2: (data) => validateStep.step2.safeParse(data).success,
-      step3: (data) => validateStep.step3.safeParse(data).success,
-      step4: (data) => validateStep.step4.safeParse(data).success,
-      step5: (data) => validateStep.step5.safeParse(data).success,
-      step6: (data) => validateStep.step6.safeParse(data).success,
-      step7: (data) => validateStep.step7.safeParse(data).success,
-      step8: () => true,
-      complete: (data) => validateStep.complete.safeParse(data).success
-    },
-    'session-key'
-  );
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [currentStep]);
-
-  return (
-    <Suspense>
-      <Funnel
-        step1={({ setStep }) => (
-          <PurposeStep userName={userName} nextStep={(purpose: PurposeType) => setStep('step2', { purpose })} />
-        )}
-        step2={({ setStep }) => (
-          <GenderStep userName={userName} nextStep={(gender: GenderType) => setStep('step3', { gender })} />
-        )}
-        step3={({ setStep }) => <AgeStep userName={userName} nextStep={(age: number) => setStep('step4', { age })} />}
-        step4={({ setStep }) => (
-          <HeightStep userName={userName} nextStep={(height: number) => setStep('step5', { height })} />
-        )}
-        step5={({ setStep }) => (
-          <WeightStep userName={userName} nextStep={(weight: number) => setStep('step6', { weight })} />
-        )}
-        step6={({ setStep }) => (
-          <ActivityLevelStep
-            userName={userName}
-            nextStep={(data: ActivityLevelType) => setStep('step7', { activityLevel: data })}
-          />
-        )}
-        step7={({ setStep }) => <StepAiLoading nextStep={() => setStep('step8')} />}
-        step8={({ setStep, data }) => <CalculateStep userName={userName} data={data} nextStep={setStep} />}
-        complete={() => <Complete userName={userName} />}
-      />
-    </Suspense>
-  );
+const validateFn = {
+  step1: () => true,
+  step2: (data: StepPurposeType) => validateStep.step2.safeParse(data).success,
+  step3: (data: StepGenderType) => validateStep.step3.safeParse(data).success,
+  step4: (data: StepAgeType) => validateStep.step4.safeParse(data).success,
+  step5: (data: StepHeightType) => validateStep.step5.safeParse(data).success,
+  step6: (data: StepWeightType) => validateStep.step6.safeParse(data).success,
+  step7: (data: StepActivityLevelType) => validateStep.step7.safeParse(data).success,
+  step8: () => true,
+  complete: (data: StepCompleteType) => validateStep.complete.safeParse(data).success
 };
-
-export default SetGoalFunnel;

@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import formSchema from '@/app/schemas/form-schema.schema';
 import { NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
 import { getUser, updateUserPersonalInfo } from '@/apis/user.api';
-import { calculateDailyNutrition, calculateDailyNutritionGoal, getPercentage } from '@/utils/nutrition-calculator.util';
+import { calculateDailyNutrition } from '@/utils/nutrition-calculator.util';
 import { Typography } from '@/components/ui/typography';
 import { ControllerRenderProps, useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
@@ -16,11 +16,10 @@ import { useUserStore } from '@/store/user-store';
 import MacronutrientBox from './macronutrient-box';
 import { StepCompleteType } from '../types/funnel.type';
 import { formatNumberWithComma } from '@/utils/format.util';
-import { userPhysicalProfileSchema } from '../schemas/user-physical-profile.schema';
-import useIsClient from '@/hooks/use-is-client';
+import { useClientCalculation } from '../hooks/use-client-calculation';
+import calculateMacronutrientData from '../utils/calculate-macronutrient-data.ts';
 
 type StepCalculateProps = {
-  userName: string;
   nextStep: (data: string) => void;
   data: StepCompleteType;
 };
@@ -36,24 +35,11 @@ const caloriesFormSchema = z.object({
 
 type FormValues = z.infer<typeof caloriesFormSchema>;
 
-const StepCalculate = ({ nextStep, userName, data }: StepCalculateProps) => {
+const StepCalculate = ({ nextStep, data }: StepCalculateProps) => {
+  const userName = useUserStore((state) => state.user?.nickname);
   const setUser = useUserStore((state) => state.setUser);
-  const isClient = useIsClient();
 
-  let userPersonalGoal = {
-    dailyCaloriesGoal: 0,
-    dailyCarbohydrateGoal: 0,
-    dailyProteinGoal: 0,
-    dailyFatGoal: 0
-  };
-
-  if (isClient) {
-    const parseResult = userPhysicalProfileSchema.safeParse(data);
-    if (parseResult.success) {
-      userPersonalGoal = calculateDailyNutritionGoal(parseResult.data);
-    }
-  }
-
+  const userPersonalGoal = useClientCalculation(data);
   const [userPersonalInfos, setUserPersonalInfos] = useState({
     ...data,
     ...userPersonalGoal
@@ -66,23 +52,7 @@ const StepCalculate = ({ nextStep, userName, data }: StepCalculateProps) => {
     }
   });
 
-  const totalMacros =
-    userPersonalInfos.dailyCarbohydrateGoal + userPersonalInfos.dailyProteinGoal + userPersonalInfos.dailyFatGoal;
-
-  const macronutrientData = {
-    carbohydrate: {
-      grams: userPersonalInfos.dailyCarbohydrateGoal,
-      percentage: getPercentage(userPersonalInfos.dailyCarbohydrateGoal, totalMacros)
-    },
-    protein: {
-      grams: userPersonalInfos.dailyProteinGoal,
-      percentage: getPercentage(userPersonalInfos.dailyProteinGoal, totalMacros)
-    },
-    fat: {
-      grams: userPersonalInfos.dailyFatGoal,
-      percentage: getPercentage(userPersonalInfos.dailyFatGoal, totalMacros)
-    }
-  };
+  const macronutrientData = calculateMacronutrientData(userPersonalInfos);
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

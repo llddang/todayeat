@@ -65,7 +65,6 @@ type FunnelComponentProps<K extends Record<string, unknown>, T extends Extract<k
  */
 type UseFunnelReturnType<K extends Record<string, unknown>, T extends Extract<keyof K, string>> = {
   Funnel: (props: FunnelComponentProps<K, T>) => JSX.Element;
-  currentStep: T;
 };
 
 /**
@@ -163,7 +162,7 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
     return props[currentStep]({ setStep, data: funnelDataRef.current as K[T], clearFunnelData });
   };
 
-  return { Funnel, currentStep };
+  return { Funnel };
 };
 
 export default useFunnel;
