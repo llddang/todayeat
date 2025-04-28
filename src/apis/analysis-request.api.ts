@@ -75,9 +75,8 @@ export const createAiResponses = async (
 
 export const createAiResponse = async (food: CreateAiPartialResponseDTO): Promise<AiResponseDTO> => {
   const supabase = getServerClient();
-  const foodSnakeCase = camelToSnakeObject(food);
 
-  const { data, error } = await supabase.from('ai_responses').insert(foodSnakeCase).select().single();
+  const { data, error } = await supabase.from('ai_responses').insert(camelToSnakeObject(food)).select().single();
 
   if (error) throw error;
 
