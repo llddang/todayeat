@@ -56,7 +56,7 @@ const FirstSection = ({ setCookie }: { setCookie: () => void }) => {
           </Typography>
         </div>
         <div className="relative mt-8 aspect-[3/2] w-full xl:mt-0 xl:w-[38rem]">
-          <Image src="/images/onboarding-problem.png" alt="식단 기록의 불편함을 표현한 이미지" fill />
+          <Image src="/images/onboarding-problem.png" alt="식단 기록의 불편함을 표현한 이미지" fill sizes="80vw" />
         </div>
       </section>
     </>
