@@ -250,7 +250,7 @@ const config: Config = {
           `
         },
         '.bg-gradient-onboarding': {
-          background: `linear-gradient(180deg, #FBF6FE 10%, rgba(255, 255, 255, 0.00) 15%)`
+          background: `linear-gradient(180deg, #FBF6FE 16%, rgba(255, 255, 255, 0.00) 20%)`
         },
         '.bg-gradient-radial-purple': {
           background: `radial-gradient(72.84% 72.84% at 50% 27.16%, rgba(255, 210, 214, 0.20) 0%, rgba(227, 192, 250, 0.20) 100%), #fff`
