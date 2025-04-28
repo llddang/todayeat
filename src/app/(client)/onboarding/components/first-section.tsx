@@ -38,7 +38,7 @@ const FirstSection = ({ setCookie }: { setCookie: () => void }) => {
         </Button>
       </form>
       <div className="relative ml-8 mt-7 h-[15.875rem] w-[23.375rem] overflow-x-hidden">
-        <Image src="/images/onboarding-todayeat-img.png" alt="hero-image" fill />
+        <Image src="/images/onboarding-todayeat-img.png" alt="투데잇 앱을 통한 음식 분석 예시 화면" fill />
       </div>
       <section className="mt-[3.37rem] w-full px-4 py-8 text-left">
         <Typography variant="title3" as="h3">
@@ -50,7 +50,7 @@ const FirstSection = ({ setCookie }: { setCookie: () => void }) => {
           <br /> 기록을 포기하고, 식단을 포기한 적 있나요?
         </Typography>
         <div className="relative mt-8 aspect-[3/2] w-full">
-          <Image src="/images/onboarding-problem.png" alt="problem-image" fill />
+          <Image src="/images/onboarding-problem.png" alt="식단 기록의 불편함을 표현한 이미지" fill />
         </div>
       </section>
     </>

@@ -20,7 +20,7 @@ const IntroduceList = ({ order, description, image }: IntroduceListProps) => {
       </div>
       <div className="relative mt-4 aspect-[2/2.5] w-full p-4">
         <div className="relative h-full w-full">
-          <Image src={image} fill alt="식사 기록 화면 미리보기" />
+          <Image src={image} fill alt={`식사 기록 화면 미리보기 ${order}`} />
         </div>
       </div>
     </li>
