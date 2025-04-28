@@ -86,7 +86,7 @@ const AddMealCardDrawer = ({ onAddMeal }: AddMealCardDrawerProps) => {
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
-        <div className="flex cursor-pointer flex-col items-center gap-3 rounded-2xl bg-white px-4 py-5">
+        <div className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl bg-white px-4 py-5 xl:min-h-[16.125rem]">
           <IconButton
             size="md"
             icon="before:bg-add-line-icon"
