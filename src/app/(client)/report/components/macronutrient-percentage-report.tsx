@@ -61,9 +61,7 @@ const MacronutrientPercentageReport = ({
   );
 
   return isLoading ? (
-    <div className="flex flex-col gap-10 xl:flex-1">
-      <PieChartSkeleton />
-    </div>
+    <PieChartSkeleton />
   ) : (
     <div className="flex flex-col xl:flex-1">
       {!personalInfo && (
