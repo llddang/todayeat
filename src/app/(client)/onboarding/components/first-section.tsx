@@ -15,7 +15,7 @@ const FirstSection = ({ setCookie }: { setCookie: () => void }) => {
   const handleClickCtaButton = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setCookie();
-    if (!!user.id) {
+    if (user.id) {
       router.push(SITE_MAP.HOME);
     } else {
       router.push(SITE_MAP.SIGN_IN);
