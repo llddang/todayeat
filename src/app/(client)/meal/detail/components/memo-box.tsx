@@ -9,11 +9,11 @@ type MemoBoxProps = Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'maxLength
 
 const MemoBox = forwardRef<HTMLTextAreaElement, MemoBoxProps>(({ maxLength, ...props }, ref) => {
   return (
-    <section className="flex flex-col gap-3">
+    <section className="relative z-0 flex flex-col gap-3">
       <Typography as="span" variant="body1" className="pl-1">
         식사 일기
       </Typography>
-      <GlassBackground className="min-h-auto z-background flex w-full flex-col gap-3 rounded-2xl border-none">
+      <GlassBackground className="min-h-auto flex w-full flex-col gap-3 rounded-2xl border-none">
         <>
           <div className="flex items-start justify-between gap-[0.38rem] before:mt-[0.13rem] before:block before:aspect-square before:w-[1.125rem] before:bg-edit-4-icon before:bg-contain before:content-['']">
             <Typography as="span" variant="subTitle3" className="flex-1 !font-medium text-gray-600">
