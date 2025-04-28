@@ -12,12 +12,12 @@ import { ControllerRenderProps, useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { isClient } from '@/utils/predicate.util';
 import { useUserStore } from '@/store/user-store';
 import MacronutrientBox from './macronutrient-box';
 import { StepCompleteType } from '../types/funnel.type';
 import { formatNumberWithComma } from '@/utils/format.util';
 import { userPhysicalProfileSchema } from '../schemas/user-physical-profile.schema';
+import useIsClient from '@/hooks/use-is-client';
 
 type StepCalculateProps = {
   userName: string;
@@ -38,6 +38,7 @@ type FormValues = z.infer<typeof caloriesFormSchema>;
 
 const StepCalculate = ({ nextStep, userName, data }: StepCalculateProps) => {
   const setUser = useUserStore((state) => state.setUser);
+  const isClient = useIsClient();
 
   let userPersonalGoal = {
     dailyCaloriesGoal: 0,
@@ -46,7 +47,7 @@ const StepCalculate = ({ nextStep, userName, data }: StepCalculateProps) => {
     dailyFatGoal: 0
   };
 
-  if (isClient()) {
+  if (isClient) {
     const parseResult = userPhysicalProfileSchema.safeParse(data);
     if (parseResult.success) {
       userPersonalGoal = calculateDailyNutritionGoal(parseResult.data);
