@@ -16,7 +16,7 @@ const WithProfile = () => {
       <Link href={SITE_MAP.HOME}>
         <Image src={LOGO} alt="투데잇 로고" />
       </Link>
-      <Link href={SITE_MAP.MY_PAGE}>
+      <Link href={user.id ? SITE_MAP.MY_PAGE : SITE_MAP.SIGN_IN}>
         <ProfileImage src={profileImage} size="sm" />
       </Link>
     </>
