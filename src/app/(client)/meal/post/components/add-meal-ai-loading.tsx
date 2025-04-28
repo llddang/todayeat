@@ -10,7 +10,7 @@ const AddMealAiLoading = () => {
     <div className="flex w-full flex-col items-center gap-5 px-4">
       <AiLoaderLottie />
       <div className="flex flex-col items-center">
-        <Typography as="span" variant="title2">
+        <Typography as="span" variant="title3">
           AI가 음식 정보를 분석 중이에요!
         </Typography>
         <Typography as="p" variant="body2" className="pt-2 text-center text-gray-700">
