@@ -20,7 +20,7 @@ const CaloriesAmountReport = ({ total, unit, barChart, personalInfo }: CaloriesA
   const { isMore, absDiff } = calculateDiffCalories(barChart);
   const periodMessage = makePeriodMessage(unit);
   return (
-    <>
+    <div>
       <Typography as="h2" variant="subTitle1">
         {total.calories ? (
           <>
@@ -50,7 +50,9 @@ const CaloriesAmountReport = ({ total, unit, barChart, personalInfo }: CaloriesA
                   x={x}
                   y={y + 12} // 위치 보정
                   textAnchor="middle"
-                  className={cn('typography-caption2', isCurrent ? '!fill-gray-900' : '!fill-gray-500')}
+                  className={cn(
+                    isCurrent ? '!fill-gray-900 typography-caption3' : '!fill-gray-500 typography-caption2'
+                  )}
                 >
                   {payload.value}
                 </text>
@@ -104,7 +106,7 @@ const CaloriesAmountReport = ({ total, unit, barChart, personalInfo }: CaloriesA
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
