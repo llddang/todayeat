@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, MouseEvent, useState, useSyncExternalStore } from 'react';
+import { ChangeEvent, MouseEvent, useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import formSchema from '@/app/schemas/form-schema.schema';
@@ -12,7 +12,6 @@ import { ControllerRenderProps, useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { isClient } from '@/utils/predicate.util';
 import { useUserStore } from '@/store/user-store';
 import MacronutrientBox from './macronutrient-box';
 import { StepCompleteType } from '../types/funnel.type';

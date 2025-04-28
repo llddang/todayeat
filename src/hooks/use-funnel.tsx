@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import { useEffect, useRef, useSyncExternalStore } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { isClient, isServer } from '@/utils/predicate.util';
 import { getSessionStorageItem, removeSessionStorageItem, setSessionStorageItem } from '@/utils/session-storage.util';
 import useIsClient from './use-is-client';
 
