@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import EditCard from './edit-card';
 import MealImageCarousel from '../../../components/meal-images-carousel';
 import { Typography } from '@/components/ui/typography';
@@ -29,7 +29,7 @@ import { MEAL_CATEGORY } from '../../../constants/category.constant';
 import MemoBox from '../../../detail/components/memo-box';
 import Responsive from '@/components/commons/responsive';
 import EditCalendarPc from './edit-calendar-pc';
-
+import TimePickerPc from './time-picker-pc';
 type EditResultSectionProps = {
   imageList: string[];
   initialMealList: Omit<AiResponseDTO, 'id'>[];
@@ -38,8 +38,6 @@ type EditResultSectionProps = {
 const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProps): JSX.Element => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [totalNutrient, setTotalNutrient] = useState({ calories: 0, protein: 0, carbohydrate: 0, fat: 0 });
-  const { meridiem, hours, minutes } = getTimeFieldsFromDate();
 
   const mealFormMethods = useForm({
     resolver: zodResolver(mealEditFormSchema),
@@ -48,9 +46,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
       mealList: initialMealList,
       date: {
         day: new Date(),
-        meridiem,
-        hours,
-        minutes
+        ...getTimeFieldsFromDate()
       },
       mealCategory: MealCategory.BREAKFAST,
       memo: ''
@@ -68,18 +64,15 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
   const day = mealFormMethods.getValues('date.day');
   const date = mealFormMethods.getValues('date');
 
-  useEffect(() => {
-    const sumTotalNutrient = mealCardList.reduce(
-      (acc, meal) => ({
-        calories: acc.calories + meal.calories,
-        carbohydrate: acc.carbohydrate + meal.carbohydrate,
-        protein: acc.protein + meal.protein,
-        fat: acc.fat + meal.fat
-      }),
-      { calories: 0, protein: 0, carbohydrate: 0, fat: 0 }
-    );
-    setTotalNutrient(sumTotalNutrient);
-  }, [mealCardList]);
+  const totalNutrient = mealCardList.reduce(
+    (acc, meal) => ({
+      calories: acc.calories + meal.calories,
+      carbohydrate: acc.carbohydrate + meal.carbohydrate,
+      protein: acc.protein + meal.protein,
+      fat: acc.fat + meal.fat
+    }),
+    { calories: 0, protein: 0, carbohydrate: 0, fat: 0 }
+  );
 
   const handleDayChange = (day: Date) => mealFormMethods.setValue('date.day', day);
   const handleTimeChange = (time: TimeFields) => {
@@ -107,17 +100,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
       };
 
       try {
-        const meal = await createMealWithDetails(
-          newMeals,
-          mealList.map((meal) => ({
-            menuName: meal.menuName,
-            weight: meal.weight,
-            calories: meal.calories,
-            carbohydrate: meal.carbohydrate,
-            protein: meal.protein,
-            fat: meal.fat
-          }))
-        );
+        const meal = await createMealWithDetails(newMeals, mealList);
 
         if (meal) {
           try {
@@ -153,14 +136,14 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
   const selectedMealCategory = mealFormMethods.watch('mealCategory');
 
   return (
-    <div className="flex flex-col gap-6 px-4 pb-4 pt-2">
+    <div className="flex w-full flex-col gap-6 px-4 pb-4 pt-2 desktop-width xl:w-full xl:flex-row xl:gap-5 xl:px-[3.125rem]">
       <MealImageCarousel imageList={imageList} />
-      <div className="flex flex-col gap-10">
-        <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-10 xl:flex-1">
+        <div className="flex flex-col gap-3 xl:min-h-[13.125rem]">
           <Typography as="p" variant="body1" className="px-1">
             총 영양 정보
           </Typography>
-          <div className="flex min-h-[13.125rem] w-full min-w-0 items-center justify-center gap-3 rounded-2xl bg-white/50 p-3 backdrop-blur-[50px]">
+          <div className="min-w-auto flex min-h-[13.125rem] w-full items-center justify-center gap-3 rounded-2xl bg-white/50 p-3 backdrop-blur-[50px] xl:p-0">
             <MacroNutrientPieChart data={totalNutrient} displayCalories={true} className="w-[14.5625rem]" />
             <div className="flex w-[5.75rem] flex-col items-start justify-center gap-4 px-1">
               <MacronutrientBox variety={MacronutrientEnum.CARBOHYDRATE} value={totalNutrient.carbohydrate} />
@@ -178,17 +161,19 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
                   {mealCardList.length}
                 </Typography>
               </Typography>
-              {mealCardList.map((meal, idx) => (
-                <EditCard key={meal.id} idx={idx} mealDetail={meal} onRemove={() => handleRemoveMeal(idx)} />
-              ))}
-              <AddMealCardDrawer onAddMeal={handleAddMeal} />
+              <div className="flex grid-cols-2 flex-col xl:grid xl:gap-3">
+                {mealCardList.map((meal, idx) => (
+                  <EditCard key={meal.id} idx={idx} mealDetail={meal} onRemove={() => handleRemoveMeal(idx)} />
+                ))}
+                <AddMealCardDrawer onAddMeal={handleAddMeal} />
+              </div>
             </section>
             <section className="my-10 flex w-full flex-col items-start justify-center gap-3">
               <Typography as="h3" variant="body1" className="pl-1">
                 식사 시간
               </Typography>
               <GlassBackground className="min-h-auto flex w-full flex-col items-start gap-3 rounded-2xl border-none p-4">
-                <div className="scrollbar-hidden flex w-full items-start justify-between gap-2 overflow-x-auto">
+                <div className="scrollbar-hidden flex w-full items-start gap-2 overflow-x-auto">
                   {MEAL_CATEGORY.map((option) => (
                     <TagSelectItem
                       key={option.value}
@@ -206,9 +191,13 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
                   <Responsive
                     pc={<EditCalendarPc date={day} onDateChange={handleDayChange} />}
                     mobile={<EditCalendarDrawer date={day} onDateChange={handleDayChange} />}
+                    mode="js"
                   />
-                  {/* <EditCalendarDrawer date={day} onDateChange={handleDayChange} /> */}
-                  <TimePicker currentTime={date} onTimeChange={handleTimeChange} />
+                  <Responsive
+                    pc={<TimePickerPc currentTime={date} onTimeChange={handleTimeChange} />}
+                    mobile={<TimePicker currentTime={date} onTimeChange={handleTimeChange} />}
+                    mode="js"
+                  />
                 </div>
               </GlassBackground>
             </section>
