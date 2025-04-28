@@ -6,6 +6,7 @@ import DayLabel from './day-label';
 import HomeCalendarWeekItem from './home-calendar-week-item';
 import HomeCalendarMonthItem from './home-calendar-month-item';
 import { DailyMealCalories } from '@/types/nutrition.type';
+import { getMyDailyCaloriesGoal } from '@/apis/user.api';
 
 type HomeCalendarServerViewProps = {
   dailyMealCalories: DailyMealCalories;
@@ -14,6 +15,7 @@ const HomeCalendarServerView = async ({ dailyMealCalories }: HomeCalendarServerV
   const today = new Date();
   const week = calculateWeekDates(today);
   const month = calculateMonthDates(today);
+  const dailyCaloriesGoal = await getMyDailyCaloriesGoal();
 
   return (
     <div className="space-y-5 px-4 py-7 pt-2 xl:max-w-[23.75rem] xl:space-y-2">
@@ -34,11 +36,21 @@ const HomeCalendarServerView = async ({ dailyMealCalories }: HomeCalendarServerV
       </Tabs>
       <div className="block space-y-3 xl:hidden">
         <DayLabel />
-        <HomeCalendarWeekItem selectedDate={today} week={week} dailyMealCalories={dailyMealCalories} />
+        <HomeCalendarWeekItem
+          selectedDate={today}
+          week={week}
+          dailyMealCalories={dailyMealCalories}
+          dailyCaloriesGoal={dailyCaloriesGoal}
+        />
       </div>
       <div className="hidden space-y-3 xl:block">
         <DayLabel />
-        <HomeCalendarMonthItem selectedDate={today} month={month} dailyMealCalories={dailyMealCalories} />
+        <HomeCalendarMonthItem
+          selectedDate={today}
+          month={month}
+          dailyMealCalories={dailyMealCalories}
+          dailyCaloriesGoal={dailyCaloriesGoal}
+        />
       </div>
     </div>
   );

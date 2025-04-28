@@ -17,6 +17,7 @@ import { getUser } from './user.api';
 import { endOfMonth, startOfMonth } from 'date-fns';
 import { revalidatePath } from 'next/cache';
 import SITE_MAP from '@/constants/site-map.constant';
+import { DailyMealCalories } from '@/types/nutrition.type';
 
 /**
  * 특정 기간 내의 사용자 식사 기록을 모든 상세 정보와 함께 조회한다.
@@ -195,30 +196,20 @@ export const deleteMealAnalysisDetail = async () => {
  * @returns {Promise<Record<string, { calories: number; caloriesGoal: number }>>} 사용자의 식사 칼로리 양
  * @throws Supabase 쿼리 실행 중 오류가 발생한 경우 Error
  */
-export const getAllMyDailyCalories = async (
-  startDate: Date,
-  endDate: Date
-): Promise<Record<string, { calories: number; caloriesGoal: number }>> => {
+export const getAllMyDailyCalories = async (startDate: Date, endDate: Date): Promise<DailyMealCalories> => {
   const supabase = getServerClient();
 
-  const res: Record<string, { calories: number; caloriesGoal: number }> = {};
+  const res: DailyMealCalories = {};
   const firstDate = new Date(startDate);
   firstDate.setHours(0, 0, 0, 0);
   const lastDate = new Date(endDate);
   lastDate.setHours(23, 59, 59, 999);
   const currentDate = new Date(firstDate);
+
   while (currentDate <= lastDate) {
-    res[formatDateWithDash(currentDate)] = { calories: 0, caloriesGoal: 0 };
+    res[formatDateWithDash(currentDate)] = 0;
     currentDate.setDate(currentDate.getDate() + 1);
   }
-
-  const { data: userData, error: userError } = await supabase
-    .from('user_personal_infos')
-    .select('daily_calories_goal')
-    .single();
-
-  if (userError && userError.code === 'PGRST116') return res;
-  if (userError) throw userError;
 
   const { data: mealData, error: mealError }: { data: MealSnakeCaseDTO[]; error: null } | { data: null; error: Error } =
     await supabase
@@ -230,11 +221,10 @@ export const getAllMyDailyCalories = async (
 
   if (mealError) throw mealError;
 
-  const mealCalories = mealData.reduce<Record<string, { calories: number; caloriesGoal: number }>>((acc, meal) => {
+  const mealCalories = mealData.reduce<DailyMealCalories>((acc, meal) => {
     const caloriesSum = meal.meal_details.reduce((sum, mealDetail) => sum + mealDetail.calories, 0);
     const ateAt = formatDateWithDash(new Date(meal.ate_at));
-    acc[ateAt].calories += caloriesSum;
-    acc[ateAt].caloriesGoal = userData.daily_calories_goal;
+    acc[ateAt] += caloriesSum;
     return acc;
   }, res);
 

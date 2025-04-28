@@ -7,6 +7,9 @@ import { useState } from 'react';
 import ScrollbarContainer from './scrollbar-container';
 import Modal from '@/components/commons/modal';
 import { deleteMeals } from '@/apis/meal.api';
+import { useCalendar } from '../contexts/calendar.context';
+import { useDashboard } from '../contexts/dashboard.context';
+import { formatDateWithDash } from '@/utils/format.util';
 
 type MealCardContainerProps = {
   meals: MealDTO[];
@@ -17,6 +20,9 @@ const MealCardContainer = ({ meals, onMealsChange }: MealCardContainerProps) => 
   const [isConfirmModalOpen, setConfirmIsModalOpen] = useState(false);
   const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
   const [willDeleteId, setWillDeleteId] = useState<string[]>([]);
+
+  const { selectedDate } = useDashboard();
+  const { setDailyMealCalories } = useCalendar();
 
   const filteredMeals = meals.filter((meal) => !willDeleteId.includes(meal.id));
 
@@ -35,6 +41,8 @@ const MealCardContainer = ({ meals, onMealsChange }: MealCardContainerProps) => 
     try {
       await deleteMeals(willDeleteId);
       onMealsChange(filteredMeals);
+      const calories = filteredMeals.flatMap((meal) => meal.mealDetails).reduce((acc, meal) => acc + meal.calories, 0);
+      setDailyMealCalories({ [formatDateWithDash(selectedDate)]: calories });
     } catch {
       setIsAlertModalOpen(true);
     }
