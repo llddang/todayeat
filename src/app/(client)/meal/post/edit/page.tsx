@@ -3,7 +3,7 @@ import { getAiResponses, getFoodImagesById } from '@/apis/analysis-request.api';
 import { getUser } from '@/apis/user.api';
 import EditResultSection from './components/edit-result-section';
 
-const MealPostEditPage = async (): Promise<JSX.Element> => {
+const MealPostEditPage = async ()=> {
   const { id: userId } = await getUser();
   const { data: initialImageList } = await getFoodImagesById(userId);
   const aiResponses = await getAiResponses();

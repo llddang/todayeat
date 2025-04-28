@@ -33,7 +33,7 @@ type EditResultSectionProps = {
   initialMealList: Omit<AiResponseDTO, 'id'>[];
 };
 
-const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProps): JSX.Element => {
+const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [totalNutrient, setTotalNutrient] = useState({ calories: 0, protein: 0, carbohydrate: 0, fat: 0 });

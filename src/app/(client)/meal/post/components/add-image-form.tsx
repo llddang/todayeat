@@ -12,7 +12,7 @@ type AddImageFormProps = {
   onOpenRetryErrorModalChange: (open: boolean) => void;
 };
 
-const AddImageForm = ({ onLoadingChange, onOpenRetryErrorModalChange }: AddImageFormProps): JSX.Element => {
+const AddImageForm = ({ onLoadingChange, onOpenRetryErrorModalChange }: AddImageFormProps) => {
   const [images, setImages] = useState<File[]>([]);
   const router = useRouter();
   const handleAnalyzeSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {

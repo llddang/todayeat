@@ -1,7 +1,7 @@
 import { getAiResponses } from '@/apis/analysis-request.api';
 import UploadImageSection from './components/upload-image-section';
 
-const MealPostPage = async (): Promise<JSX.Element> => {
+const MealPostPage = async () => {
   const data = await getAiResponses();
   const isRecorded = !!data && data.length > 0;
   return <UploadImageSection isRecorded={isRecorded} />;

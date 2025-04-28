@@ -14,7 +14,7 @@ type UploadImageSectionProps = {
   isRecorded: boolean;
 };
 
-const UploadImageSection = ({ isRecorded }: UploadImageSectionProps): JSX.Element => {
+const UploadImageSection = ({ isRecorded }: UploadImageSectionProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showModal, setShowModal, handleApproveClick, handleCancelClick } = useRestoreAnalysisModal(isRecorded);
   const [isError, setIsError] = useState<boolean>(false);

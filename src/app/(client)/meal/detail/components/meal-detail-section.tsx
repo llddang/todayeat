@@ -25,7 +25,7 @@ type MealDetailSectionProps = {
   meal: MealDTO;
 };
 
-const MealDetailSection = ({ meal }: MealDetailSectionProps): JSX.Element => {
+const MealDetailSection = ({ meal }: MealDetailSectionProps) => {
   const { id, ateAt, mealCategory, memo, foodImages, mealDetails } = meal;
   const ateAtDate = useMemo(() => new Date(ateAt), [ateAt]);
   const { register, handleSubmit, setValue, watch, getValues, reset } = useForm<MealDetailFormData>({
