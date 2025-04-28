@@ -4,12 +4,13 @@ import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
 import { ActivityLevelType } from '@/types/user-personal-info.type';
 import { GOAL_OPTIONS } from '../constants/funnel.constant';
+import { useUserStore } from '@/store/user-store';
 
 type StepActivityLevelProps = {
-  userName: string;
   nextStep: (data: ActivityLevelType) => void;
 };
-const StepActivityLevel = ({ userName, nextStep }: StepActivityLevelProps) => {
+const StepActivityLevel = ({ nextStep }: StepActivityLevelProps) => {
+  const { nickname: userName } = useUserStore((state) => state.user);
   const [selectedOption, setSelectedOption] = useState<ActivityLevelType | null>(null);
 
   const handleSelectOption = (e: React.ChangeEvent<HTMLInputElement>) => {

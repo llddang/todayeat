@@ -6,9 +6,9 @@ import formSchema from '@/app/schemas/form-schema.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useUserStore } from '@/store/user-store';
 
 type StepWeightProps = {
-  userName: string;
   nextStep: (data: number) => void;
 };
 
@@ -18,7 +18,8 @@ const weightFormSchema = z.object({
 
 type FormValues = z.infer<typeof weightFormSchema>;
 
-const StepWeight = ({ userName, nextStep }: StepWeightProps) => {
+const StepWeight = ({ nextStep }: StepWeightProps) => {
+  const { nickname: userName } = useUserStore((state) => state.user);
   const form = useForm<FormValues>({
     resolver: zodResolver(weightFormSchema),
     defaultValues: {
