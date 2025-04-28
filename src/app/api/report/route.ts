@@ -102,11 +102,11 @@ export const POST = async (req: Request) => {
         return {
           label,
           value,
-          fill: isCurrentLabel(unit, label) ? '#FFE37E' : '#FFF5CC'
+          fill: isCurrentLabel(unit, label) ? 'var(--bar-current)' : 'var(--bar-previous)'
         };
       } catch (error) {
         console.error('데이터 불러오기 실패:', error);
-        return { label, value: 0, fill: '#FFF5CC' };
+        return { label, value: 0, fill: 'var(--bar-previous)' };
       }
     })
   );
