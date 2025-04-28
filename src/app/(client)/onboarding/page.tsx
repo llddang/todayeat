@@ -4,6 +4,7 @@ import SecondSection from './components/second-section';
 import ThirdSection from './components/third-section';
 import CtaCard from './components/cta-card';
 
+const EXPIRED_COOKIE_ONE_YEAR = 60 * 60 * 24 * 365;
 const setOnboardedCookie = async () => {
   'use server';
   const cookieStore = cookies();
@@ -28,5 +29,3 @@ const OnboardingPage = () => {
 };
 
 export default OnboardingPage;
-
-const EXPIRED_COOKIE_ONE_YEAR = 60 * 60 * 24 * 365;
