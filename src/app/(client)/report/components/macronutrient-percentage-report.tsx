@@ -12,7 +12,6 @@ import { PeriodUnit } from '../types/chart.type';
 import { AMOUNT_CHART_OPTIONS } from '../constants/chart.constant';
 import useIsMobile from '@/hooks/use-is-mobile';
 import PieChartSkeleton from './pie-chart-skeleton';
-import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/shadcn';
 
 type MacronutrientPercentageReportProps = {
@@ -63,7 +62,6 @@ const MacronutrientPercentageReport = ({
 
   return isLoading ? (
     <div className="flex flex-col gap-10 xl:flex-1">
-      {!personalInfo && <Skeleton className="h-28 w-full" />}
       <PieChartSkeleton />
     </div>
   ) : (
