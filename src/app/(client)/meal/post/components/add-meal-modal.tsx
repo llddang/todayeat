@@ -2,7 +2,7 @@
 
 import IconButton from '@/components/commons/icon-button';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Typography } from '@/components/ui/typography';
 import { Dialog, DialogClose, DialogContent, DialogOverlay, DialogTitle, DialogTrigger } from '@radix-ui/react-dialog';
@@ -33,8 +33,6 @@ const AddMealModal = ({ onLoadingChange, onModalOpenChange, onModalInfoChange }:
       weight: 0
     }
   });
-
-  const isSubmit = form.watch('menuName')?.trim().length > 0;
 
   const onSubmit = async (data: FoodFormValues) => {
     onLoadingChange(true);
@@ -126,6 +124,7 @@ const AddMealModal = ({ onLoadingChange, onModalOpenChange, onModalInfoChange }:
                             {...field}
                           />
                         </FormControl>
+                        <FormMessage />
                       </FormItem>
                     )}
                   />
@@ -157,7 +156,7 @@ const AddMealModal = ({ onLoadingChange, onModalOpenChange, onModalInfoChange }:
               <Button
                 type="submit"
                 className="w-full typography-subTitle4"
-                disabled={!isSubmit}
+                disabled={!form.formState.isValid}
                 form="AddMealModalForm"
               >
                 분석 시작하기
