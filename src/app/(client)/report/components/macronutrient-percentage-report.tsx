@@ -60,9 +60,11 @@ const MacronutrientPercentageReport = ({
     goal
   );
 
-  return isLoading ? (
-    <PieChartSkeleton />
-  ) : (
+  if (isLoading) {
+    return <PieChartSkeleton />;
+  }
+
+  return (
     <div className="flex flex-col xl:flex-1">
       {!personalInfo && (
         <CtaExampleFeedbackBanner
