@@ -26,10 +26,16 @@ const chartConfig = {
 type MacroNutrientPieChartProps = {
   data: MacronutrientData;
   displayCalories?: boolean;
+  innerRadius?: number;
   className?: string;
 };
 
-const MacroNutrientPieChart = ({ data, displayCalories = false, className }: MacroNutrientPieChartProps) => {
+const MacroNutrientPieChart = ({
+  data,
+  displayCalories = false,
+  innerRadius,
+  className
+}: MacroNutrientPieChartProps) => {
   const chartData: ChartData[] = Object.entries(data)
     .filter(([key]) => key !== 'calories')
     .map(([key, value]) => ({
@@ -50,7 +56,7 @@ const MacroNutrientPieChart = ({ data, displayCalories = false, className }: Mac
             data={defaultChartData}
             dataKey="amount"
             nameKey="macronutrient"
-            innerRadius={64}
+            innerRadius={innerRadius ?? 64}
             startAngle={90}
             endAngle={450}
           >
@@ -73,7 +79,7 @@ const MacroNutrientPieChart = ({ data, displayCalories = false, className }: Mac
             data={chartData}
             dataKey="amount"
             nameKey="macronutrient"
-            innerRadius={64}
+            innerRadius={innerRadius ?? 64}
             startAngle={90}
             endAngle={450}
           >

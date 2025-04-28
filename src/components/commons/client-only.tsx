@@ -1,11 +1,6 @@
 'use client';
-import { useSyncExternalStore, ReactNode } from 'react';
-
-const clientStore = {
-  subscribe: () => () => {},
-  getClientSnapshot: () => true,
-  getServerSnapshot: () => false
-};
+import useIsClient from '@/hooks/use-is-client';
+import { ReactNode } from 'react';
 
 /**
  * ClientOnly 컴포넌트
@@ -17,11 +12,7 @@ type ClientOnlyProps = {
   fallback: ReactNode;
 };
 const ClientOnly = ({ children, fallback }: ClientOnlyProps) => {
-  const isClient = useSyncExternalStore(
-    clientStore.subscribe,
-    clientStore.getClientSnapshot,
-    clientStore.getServerSnapshot
-  );
+  const isClient = useIsClient();
 
   if (!isClient) {
     return fallback;

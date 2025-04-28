@@ -20,7 +20,7 @@ const MyPage = async () => {
             description="1일 목표 칼로리를 설정하고 식사를 기록하면 1일 권장 섭취량과 나에게 딱 맞는 식단 피드백을 받을 수 있어요!"
           />
         )}
-        <UserGoalCard userInfo={userInfo} />
+        <UserGoalCard userInfo={userInfo.personalInfo} />
         <UserPhysicalInfoCard userInfo={userInfo} />
         <SettingCard />
       </GlassBackground>

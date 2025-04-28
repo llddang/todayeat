@@ -15,12 +15,10 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="layout-container">
+    <div className="py-layout layout-container xl:pb-0 xl:pt-20">
       <Header variant="withProfile" />
-      <div className="py-layout">
-        <main>{children}</main>
-        <Footer />
-      </div>
+      <main>{children}</main>
+      <Footer />
       <GlobalNavigationBar />
     </div>
   );
