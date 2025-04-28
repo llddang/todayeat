@@ -10,18 +10,21 @@ import { useForm } from 'react-hook-form';
 import { MAX_MENU_NAME_LENGTH, MAX_NUMERIC_LENGTH } from '../edit/constants/meal-edit.constant';
 import { formatNumberWithComma } from '@/utils/format.util';
 import { parseNumber } from '../edit/utils/meal-edit.util';
-import { z } from 'zod';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createAiRequestByText, createFoodAnalysisRequestDetail } from '@/apis/analysis-request.api';
 import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
 import { parseGeminiResponse } from '@/lib/gemini';
+import { ERROR_MESSAGES } from '../constants/analysis-error.constant';
+import { FoodFormValues, formSchema } from '../schemas/add-meal.schema';
 
 type AddMealModalProps = {
+  onModalOpenChange: (isModalOpen: boolean) => void;
+  onModalInfoChange: (modalInfo: { title: string; content: string }) => void;
   onLoadingChange: (isLoading: boolean) => void;
 };
 
-const AddMealModal = ({ onLoadingChange }: AddMealModalProps) => {
+const AddMealModal = ({ onLoadingChange, onModalOpenChange, onModalInfoChange }: AddMealModalProps) => {
   const router = useRouter();
   const form = useForm<FoodFormValues>({
     resolver: zodResolver(formSchema),
@@ -44,7 +47,12 @@ const AddMealModal = ({ onLoadingChange }: AddMealModalProps) => {
     try {
       const { error } = await createAiRequestByText();
       if (error) {
-        throw new Error(ERROR_MESSAGES.LOGIN_REQUIRED);
+        onModalInfoChange({
+          title: ERROR_MESSAGES.LOGIN_REQUIRED.title,
+          content: ERROR_MESSAGES.LOGIN_REQUIRED.content
+        });
+        onLoadingChange(false);
+        return onModalOpenChange(true);
       }
 
       const generatedTextResult = await generateCaloriesAnalysisByText(
@@ -53,7 +61,12 @@ const AddMealModal = ({ onLoadingChange }: AddMealModalProps) => {
       );
       const [parsedResult] = parseGeminiResponse(generatedTextResult);
       if (!parsedResult) {
-        throw new Error(ERROR_MESSAGES.AI_ANALYSIS_FAILED);
+        onModalInfoChange({
+          title: ERROR_MESSAGES.AI_ANALYSIS_FAILED.title,
+          content: ERROR_MESSAGES.AI_ANALYSIS_FAILED.content
+        });
+        onLoadingChange(false);
+        return onModalOpenChange(true);
       }
       const newMeal = {
         ...parsedResult,
@@ -62,16 +75,14 @@ const AddMealModal = ({ onLoadingChange }: AddMealModalProps) => {
       await createFoodAnalysisRequestDetail(newMeal);
       router.push('/meal/post/edit');
     } catch (err) {
-      onLoadingChange(false);
       if (err instanceof Error) {
-        if (err.message === ERROR_MESSAGES.LOGIN_REQUIRED) {
-          return alert(err.message);
-        }
-        if (err.message === ERROR_MESSAGES.AI_ANALYSIS_FAILED) {
-          return alert(err.message);
-        }
+        onModalInfoChange({
+          title: ERROR_MESSAGES.SERVICE_ERROR.title,
+          content: ERROR_MESSAGES.SERVICE_ERROR.content
+        });
+        onLoadingChange(false);
+        return onModalOpenChange(true);
       }
-      return alert(ERROR_MESSAGES.SERVICE_ERROR);
     }
   };
 
@@ -80,8 +91,8 @@ const AddMealModal = ({ onLoadingChange }: AddMealModalProps) => {
       <DialogTrigger asChild>
         <Button variant="ghost">사진 없이 분석하기</Button>
       </DialogTrigger>
-      <DialogOverlay className="z-modal fixed inset-0 flex items-center justify-center bg-black/80">
-        <DialogContent className="z-modal absolute left-1/2 top-1/2 w-[25rem] -translate-x-1/2 -translate-y-1/2 gap-1 rounded-2xl bg-white p-6 backdrop-blur-[50px]">
+      <DialogOverlay className="fixed inset-0 z-modal flex items-center justify-center bg-black/80">
+        <DialogContent className="absolute left-1/2 top-1/2 z-modal w-[25rem] -translate-x-1/2 -translate-y-1/2 gap-1 rounded-2xl bg-white p-6 backdrop-blur-[50px]">
           <div className="flex items-center justify-between gap-4 pl-1">
             <DialogTitle className="flex-1">
               <Typography as="span" variant="title3" className="text-gray-800">
@@ -160,16 +171,3 @@ const AddMealModal = ({ onLoadingChange }: AddMealModalProps) => {
 };
 
 export default AddMealModal;
-
-const ERROR_MESSAGES = {
-  LOGIN_REQUIRED: 'AI 요청 실패하였습니다. 로그인 상태를 확인해주세요.',
-  AI_ANALYSIS_FAILED: 'AI 분석에 실패하였습니다. 메뉴명이 올바른지 확인해주세요.',
-  SERVICE_ERROR: '서비스에 일시적인 문제가 발생했습니다. 잠시 후 다시 시도해주세요.'
-} as const;
-
-const formSchema = z.object({
-  menuName: z.string().min(1, '메뉴명을 입력해주세요'),
-  weight: z.coerce.number().optional()
-});
-
-type FoodFormValues = z.infer<typeof formSchema>;

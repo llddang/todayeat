@@ -9,6 +9,7 @@ import AddMealDrawer from './add-meal-drawer';
 import AddMealModal from './add-meal-modal';
 import Responsive from '@/components/commons/responsive';
 import RetryErrorModal from './retry-error-modal';
+import Modal from '@/components/commons/modal';
 
 type UploadImageSectionProps = {
   isRecorded: boolean;
@@ -18,6 +19,11 @@ const UploadImageSection = ({ isRecorded }: UploadImageSectionProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showModal, setShowModal, handleApproveClick, handleCancelClick } = useRestoreAnalysisModal(isRecorded);
   const [isError, setIsError] = useState<boolean>(false);
+  const [modalInfo, setModalInfo] = useState<{ title: string; content: string }>({
+    title: '',
+    content: ''
+  });
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   if (isLoading) {
     return (
       <div className="flex min-h-[calc(100vh-8.75rem)] items-center justify-center xl:min-h-[calc(100vh-4.725rem)]">
@@ -39,7 +45,16 @@ const UploadImageSection = ({ isRecorded }: UploadImageSectionProps) => {
 
       <div className="flex w-full flex-col items-center justify-center gap-2">
         <AddImageForm onLoadingChange={setIsLoading} onOpenRetryErrorModalChange={setIsError} />
-        <Responsive mobile={<AddMealDrawer />} pc={<AddMealModal onLoadingChange={setIsLoading} />} />
+        <Responsive
+          mobile={<AddMealDrawer />}
+          pc={
+            <AddMealModal
+              onLoadingChange={setIsLoading}
+              onModalOpenChange={setIsModalOpen}
+              onModalInfoChange={setModalInfo}
+            />
+          }
+        />
       </div>
       <RestoreAnalysisModal
         open={showModal}
@@ -48,6 +63,7 @@ const UploadImageSection = ({ isRecorded }: UploadImageSectionProps) => {
         onCancelClickHandler={handleCancelClick}
       />
       <RetryErrorModal open={isError} onOpenRetryErrorModalChange={setIsError} />
+      <Modal title={modalInfo.title} content={modalInfo.content} open={isModalOpen} onOpenChange={setIsModalOpen} />
     </div>
   );
 };
