@@ -83,31 +83,10 @@ export const createAiResponse = async (food: CreateAiPartialResponseDTO): Promis
   return snakeToCamelObject(data);
 };
 
-// TODO: camelToSnakeObject 함수를 통해 깔끔하게 관리하기!
-export const updateCaloriesAnalysisResult = async ({
-  id,
-  userId,
-  menuName,
-  weight,
-  calories,
-  carbohydrate,
-  protein,
-  fat
-}: AiResponseDTO): Promise<{ error: PostgrestError | null }> => {
+export const updateCaloriesAnalysisResult = async (food: AiResponseDTO): Promise<{ error: PostgrestError | null }> => {
   const supabase = getServerClient();
-
-  const { error } = await supabase
-    .from('ai_responses')
-    .update({
-      user_id: userId,
-      menu_name: menuName,
-      weight,
-      calories,
-      carbohydrate,
-      protein,
-      fat
-    })
-    .eq('id', id);
+  const { id } = food;
+  const { error } = await supabase.from('ai_responses').update(camelToSnakeObject(food)).eq('id', id);
 
   return { error };
 };
