@@ -2,12 +2,10 @@ import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
 import Link from 'next/link';
+import { useUserStore } from '@/store/user-store';
 
-type StepCompleteProps = {
-  userName: string;
-};
-
-const StepComplete = ({ userName }: StepCompleteProps) => {
+const StepComplete = () => {
+  const { nickname: userName } = useUserStore((state) => state.user);
   return (
     <div className="absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-3 before:mb-5 before:h-20 before:w-20 before:bg-complete-confetti before:bg-contain before:content-['']">
       <Typography as="h3" variant="title3">

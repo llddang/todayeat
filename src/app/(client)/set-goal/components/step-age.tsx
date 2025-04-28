@@ -6,9 +6,9 @@ import formSchema from '@/app/schemas/form-schema.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useUserStore } from '@/store/user-store';
 
 type StepAgeProps = {
-  userName: string;
   nextStep: (data: number) => void;
 };
 
@@ -18,7 +18,8 @@ const ageFormSchema = z.object({
 
 type FormValues = z.infer<typeof ageFormSchema>;
 
-const StepAge = ({ userName, nextStep }: StepAgeProps) => {
+const StepAge = ({ nextStep }: StepAgeProps) => {
+  const { nickname: userName } = useUserStore((state) => state.user);
   const form = useForm<FormValues>({
     resolver: zodResolver(ageFormSchema),
     defaultValues: {
