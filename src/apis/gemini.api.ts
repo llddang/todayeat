@@ -3,7 +3,7 @@ import { ImageContent } from '@/types/gemini.type';
 
 export const generateFoodAnalysisByImage = async (imageParts: ImageContent[]): Promise<string> => {
   const model = getGenerativeAI().getGenerativeModel({
-    model: 'gemini-2.0-flash'
+    model: 'gemini-1.5-pro'
   });
 
   const result = await model.generateContent([...imageParts, FOOD_IMAGE_ANALYSIS_PROMPT]);
