@@ -1,5 +1,5 @@
 import { Typography } from '@/components/ui/typography';
-import RecommedList from './recommed-list';
+import RecommendList from './recommend-list';
 
 const ThirdSection = () => {
   return (
@@ -9,7 +9,7 @@ const ThirdSection = () => {
         투데잇을 추천해요
       </Typography>
       <ul className="mt-8">
-        <RecommedList
+        <RecommendList
           title={
             <>
               식단은 중요하다는 걸 알지만, <br />
@@ -24,7 +24,7 @@ const ThirdSection = () => {
           }
           image="bg-onboarding-recommend-1"
         />
-        <RecommedList
+        <RecommendList
           title={
             <>
               내가 잘 먹고 있는 건지 <br />
@@ -39,7 +39,7 @@ const ThirdSection = () => {
           }
           image="bg-onboarding-recommend-2"
         />
-        <RecommedList
+        <RecommendList
           title={
             <>
               다이어트나 운동 중인데, <br />
