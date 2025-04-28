@@ -37,11 +37,6 @@ const AddMealModal = ({ onLoadingChange, onModalOpenChange, onModalInfoChange }:
   const onSubmit = async (data: FoodFormValues) => {
     onLoadingChange(true);
 
-    if (!data.menuName) {
-      onLoadingChange(false);
-      return alert('메뉴명을 입력해주세요.');
-    }
-
     try {
       const { error } = await createAiRequestByText();
       if (error) {
