@@ -7,7 +7,7 @@ import { useUserStore } from '@/store/user-store';
 import SITE_MAP from '@/constants/site-map.constant';
 import { FormEvent } from 'react';
 
-const CtaCard = ({ setCookie }: { setCookie: () => void }) => {
+const CtaCard = ({ setCookie }: { setCookie: () => Promise<void> }) => {
   const user = useUserStore((state) => state.user);
   const router = useRouter();
 

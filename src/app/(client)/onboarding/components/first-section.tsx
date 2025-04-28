@@ -8,7 +8,7 @@ import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
 import { useUserStore } from '@/store/user-store';
 
-const FirstSection = ({ setCookie }: { setCookie: () => void }) => {
+const FirstSection = ({ setCookie }: { setCookie: () => Promise<void> }) => {
   const user = useUserStore((state) => state.user);
   const router = useRouter();
 
@@ -56,7 +56,7 @@ const FirstSection = ({ setCookie }: { setCookie: () => void }) => {
           </Typography>
         </div>
         <div className="relative mt-8 aspect-[3/2] w-full xl:mt-0 xl:w-[38rem]">
-          <Image src="/images/onboarding-problem.png" alt="식단 기록의 불편함을 표현한 이미지" fill sizes="80vw" />
+          <Image src="/images/onboarding-problem.png" alt="식단 기록 과정의 불편함을 나타낸 화면" fill sizes="80vw" />
         </div>
       </section>
     </>
