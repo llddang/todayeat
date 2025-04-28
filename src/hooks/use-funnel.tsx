@@ -4,8 +4,8 @@
 import { useEffect, useRef } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { isServer } from '@/utils/predicate.util';
 import { getSessionStorageItem, removeSessionStorageItem, setSessionStorageItem } from '@/utils/session-storage.util';
+import useIsClient from './use-is-client';
 
 const FUNNEL_QUERY_PARAM = 'step';
 const DEFAULT_SESSION_ID = 'todayeat-funnel-data';
@@ -101,12 +101,15 @@ const useFunnel = <K extends Record<string, unknown>, T extends Extract<keyof K,
 
   const funnelDataRef = useRef<Partial<K[T]>>({});
 
-  useEffect(() => {
-    if (isServer()) return;
+  const isClient = useIsClient();
 
+  if (isClient) {
     const funnelSessionData = getSessionStorageItem(sessionId, {} as K[T]);
-
     funnelDataRef.current = funnelSessionData;
+  }
+
+  useEffect(() => {
+    const funnelSessionData = getSessionStorageItem(sessionId, {} as K[T]);
 
     if (!validateStep[currentStep](funnelSessionData)) {
       const newSearchParams = new URLSearchParams(searchParams.toString());
