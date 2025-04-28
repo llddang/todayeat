@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import EditCard from './edit-card';
 import MealImageCarousel from '../../../components/meal-images-carousel';
 import { Typography } from '@/components/ui/typography';
@@ -33,37 +33,39 @@ import TimePickerPc from './time-picker-pc';
 import AddMealCardPc from './add-meal-card-pc';
 import Modal from '@/components/commons/modal';
 import { ERROR_MESSAGES } from '../constants/error-message.constant';
+import { CreateMealDTO } from '@/types/DTO/meal.dto';
+
 type EditResultSectionProps = {
   imageList: string[];
   initialMealList: Omit<AiResponseDTO, 'id'>[];
 };
 
+type ErrorMessage = {
+  title: string;
+  description: string;
+};
+
 const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProps): JSX.Element => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalInfo, setModalInfo] = useState<{
-    title: string;
-    description: string;
-  }>({
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalInfo, setModalInfo] = useState<{ title: string; description: string }>({
     title: '',
     description: ''
   });
 
-  const mealFormMethods = useForm({
+  const mealFormMethods = useForm<MealEditFormData>({
     resolver: zodResolver(mealEditFormSchema),
     defaultValues: {
       mealImages: imageList,
       mealList: initialMealList,
-      date: {
-        day: new Date(),
-        ...getTimeFieldsFromDate()
-      },
+      date: { day: new Date(), ...getTimeFieldsFromDate() },
       mealCategory: MealCategory.BREAKFAST,
       memo: ''
     },
     mode: 'onBlur'
   });
+
   const {
     fields: mealCardList,
     remove,
@@ -72,8 +74,6 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
     control: mealFormMethods.control,
     name: 'mealList'
   });
-  const day = mealFormMethods.getValues('date.day');
-  const date = mealFormMethods.getValues('date');
 
   const totalNutrient = mealCardList.reduce(
     (acc, meal) => ({
@@ -85,6 +85,9 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
     { calories: 0, protein: 0, carbohydrate: 0, fat: 0 }
   );
 
+  const handleAddMeal = useCallback((newMeal: Omit<AiResponseDTO, 'id'>) => append(newMeal), [append]);
+  const handleRemoveMeal = useCallback((index: number) => remove(index), [remove]);
+
   const handleDayChange = (day: Date) => mealFormMethods.setValue('date.day', day);
   const handleTimeChange = (time: TimeFields) => {
     mealFormMethods.setValue('date.meridiem', time.meridiem);
@@ -94,62 +97,35 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
 
   const onSubmit = async (form: MealEditFormData) => {
     setIsLoading(true);
+    console.log(form);
     try {
-      if (!form) {
-        setModalInfo(ERROR_MESSAGES.INVALID_DATA);
-        return setIsModalOpen(true);
-      }
-
       const { date, memo, mealCategory, mealList, mealImages } = form;
       const ateAt = formatTimestamp(date);
+
       const storedImageUrls = await uploadMealImages(mealImages);
+      const newMeals = { foodImages: storedImageUrls, ateAt, mealCategory, memo };
 
-      const newMeals = {
-        foodImages: storedImageUrls,
-        ateAt,
-        mealCategory,
-        memo
-      };
+      const meal = await createMeal(newMeals, mealList);
+      if (!meal) handleError(ERROR_MESSAGES.MEAL_POST_FAILED);
 
-      try {
-        const meal = await createMealWithDetails(newMeals, mealList);
-
-        if (meal) {
-          try {
-            await deleteMealAnalysisDetail();
-            router.push(SITE_MAP.HOME);
-          } catch (error) {
-            setModalInfo(ERROR_MESSAGES.MEAL_DELETE_FAILED);
-            console.error('분석 데이터 삭제 중 오류 발생:', error);
-            return setIsModalOpen(true);
-          }
-        }
-      } catch (error) {
-        setModalInfo(ERROR_MESSAGES.MEAL_POST_FAILED);
-        console.error('식사 정보 생성 중 오류 발생:', error);
-        return setIsModalOpen(true);
-      }
+      await deleteAnalysis();
+      router.push(SITE_MAP.HOME);
     } catch (error) {
-      setModalInfo(ERROR_MESSAGES.MEAL_POST_FAILED);
-      console.error('식사 정보 등록 실패:', error);
-      return setIsModalOpen(true);
+      const isKnownError = typeof error === 'object' && error !== null && 'title' in error && 'description' in error;
+      error = isKnownError ? error : ERROR_MESSAGES.AI_ANALYSIS_FAILED_DEFAULT;
+
+      setModalInfo(error as ErrorMessage);
+
+      setIsModalOpen(true);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleAddMeal = (newMeal: Omit<AiResponseDTO, 'id'>) => {
-    append(newMeal);
-  };
-
-  const handleRemoveMeal = (index: number) => {
-    remove(index);
-    const currentValues = mealFormMethods.getValues();
-    mealFormMethods.reset(currentValues);
-  };
-
   const mealCategoryField = mealFormMethods.register('mealCategory');
   const selectedMealCategory = mealFormMethods.watch('mealCategory');
+  const day = mealFormMethods.getValues('date.day');
+  const date = mealFormMethods.getValues('date');
 
   return (
     <div className="flex w-full flex-col gap-6 px-4 pb-4 pt-2 desktop-width xl:w-full xl:flex-row xl:gap-5 xl:px-[3.125rem]">
@@ -168,6 +144,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
             </div>
           </div>
         </div>
+
         <FormProvider {...mealFormMethods}>
           <form onSubmit={mealFormMethods.handleSubmit(onSubmit)}>
             <section className="flex flex-col gap-3">
@@ -200,11 +177,12 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
                 />
               </div>
             </section>
+
             <section className="my-10 flex w-full flex-col items-start justify-center gap-3">
               <Typography as="h3" variant="body1" className="pl-1">
                 식사 시간
               </Typography>
-              <GlassBackground className="min-h-auto flex w-full flex-col items-start gap-3 rounded-2xl border-none p-4">
+              <GlassBackground className="flex w-full flex-col items-start gap-3 rounded-2xl border-none p-4">
                 <div className="scrollbar-hidden flex w-full items-start gap-2 overflow-x-auto">
                   {MEAL_CATEGORY.map((option) => (
                     <TagSelectItem
@@ -234,12 +212,14 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
               </GlassBackground>
             </section>
             <MemoBox maxLength={MAX_MEMO_LENGTH} {...mealFormMethods.register('memo')} />
+
             <Button type="submit" className="mt-3 w-full" disabled={isLoading}>
               제출하기
             </Button>
           </form>
         </FormProvider>
       </div>
+
       <Modal open={isModalOpen} onOpenChange={setIsModalOpen} title={modalInfo.title} content={modalInfo.description} />
     </div>
   );
@@ -257,7 +237,7 @@ const mealListSchema = z.object({
   fat: z.coerce.number()
 });
 
-export const dateSchema = z.object({
+const dateSchema = z.object({
   day: z.date(),
   meridiem: z.enum(['오전', '오후']),
   hours: z.string(),
@@ -271,24 +251,51 @@ const mealEditFormSchema = z.object({
   mealCategory: z.nativeEnum(MealCategory),
   memo: z.string()
 });
-
 type MealEditFormData = z.infer<typeof mealEditFormSchema>;
+const handleError = (errorMessage: { title: string; description: string }) => {
+  throw errorMessage;
+};
 
 const uploadMealImages = async (imageUrls: string[]): Promise<string[]> => {
   const files = await Promise.all(imageUrls.map((url, idx) => urlToFile(url, idx)));
   const storedImageUrls: string[] = [];
 
   for (const file of files) {
-    const formData = new FormData();
-    formData.append('file', file);
-    const { data: fileUrl } = await uploadImage('meal', formData);
-    if (fileUrl) {
-      storedImageUrls.push(fileUrl);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      const { data: fileUrl } = await uploadImage('meal', formData);
+      if (fileUrl) {
+        storedImageUrls.push(fileUrl);
+      } else {
+        handleError(ERROR_MESSAGES.AI_ANALYSIS_FAILED);
+      }
+    } catch (error) {
+      console.error('이미지 업로드 중 오류:', error);
+      handleError(ERROR_MESSAGES.AI_ANALYSIS_FAILED_DEFAULT);
     }
   }
-
   return storedImageUrls;
 };
+
+const createMeal = async (newMeals: CreateMealDTO, mealList: Omit<AiResponseDTO, 'id'>[]) => {
+  try {
+    return await createMealWithDetails(newMeals, mealList);
+  } catch (error) {
+    console.error('식사 생성 중 오류:', error);
+    handleError(ERROR_MESSAGES.MEAL_POST_FAILED);
+  }
+};
+
+const deleteAnalysis = async () => {
+  try {
+    await deleteMealAnalysisDetail();
+  } catch (error) {
+    console.error('분석 데이터 삭제 중 오류:', error);
+    handleError(ERROR_MESSAGES.MEAL_DELETE_FAILED);
+  }
+};
+
 const getTimeFieldsFromDate = (date: Date = new Date()): TimeFields => {
   const hours = date.getHours();
   const minutes = date.getMinutes();
@@ -296,9 +303,5 @@ const getTimeFieldsFromDate = (date: Date = new Date()): TimeFields => {
   const formattedHours = String(hours % 12 || 12).padStart(2, '0');
   const formattedMinutes = String(minutes).padStart(2, '0');
 
-  return {
-    meridiem,
-    hours: formattedHours,
-    minutes: formattedMinutes
-  };
+  return { meridiem, hours: formattedHours, minutes: formattedMinutes };
 };
