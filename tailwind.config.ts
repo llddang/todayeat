@@ -179,6 +179,7 @@ const config: Config = {
         'chart-line-icon': 'url(/icons/chart_line.svg)',
         'edit-info-icon': "url('/icons/edit-line.svg')",
         'add-info-icon': "url('/icons/add-line-white.svg')",
+        'close-button-icon': "url('/icons/close-button.svg')",
         'close-line-gray-550-icon': "url('/icons/close-line-gray-550.svg')",
         'kakao-logo': 'url(/kakao-logo.svg)',
         'google-logo': 'url(/google-logo.svg)',
