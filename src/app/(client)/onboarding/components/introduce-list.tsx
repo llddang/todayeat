@@ -9,7 +9,7 @@ type IntroduceListProps = {
 
 const IntroduceList = ({ order, description, image }: IntroduceListProps) => {
   return (
-    <li className="bg-gradient-radial-purple-2 rounded-2xl px-6 py-6">
+    <li className="rounded-2xl px-6 py-6 bg-gradient-radial-purple-2 xl:flex-1">
       <div className="flex gap-2">
         <Typography as="span" variant="subTitle1" className="text-purple-200">
           {order}

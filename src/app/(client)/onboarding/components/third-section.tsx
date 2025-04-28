@@ -3,12 +3,12 @@ import RecommendList from './recommend-list';
 
 const ThirdSection = () => {
   return (
-    <section className="w-full px-4 py-8 text-left">
-      <Typography as="h3" variant="title3">
+    <section className="w-full px-4 py-8 text-left xl:px-0 xl:py-[3.75rem]">
+      <Typography as="h3" variant="title3" className="xl:typography-title2">
         이런 분들께 <br />
         투데잇을 추천해요
       </Typography>
-      <ul className="mt-8">
+      <ul className="mt-8 xl:mt-10 xl:flex xl:gap-6">
         <RecommendList
           title={
             <>

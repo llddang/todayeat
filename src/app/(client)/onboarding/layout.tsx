@@ -17,7 +17,7 @@ const Layout = ({
   return (
     <div className="bg-white layout-container">
       <Header variant="withProfile" />
-      <div className="bg-gradient-onboarding mx-auto pb-36 pt-layout xl:pt-20">
+      <div className="mx-auto pb-36 pt-layout bg-gradient-onboarding xl:p-20">
         <Suspense>{children}</Suspense>
         <Footer />
         <GlobalNavigationBar />

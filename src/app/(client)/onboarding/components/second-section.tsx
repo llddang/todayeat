@@ -6,15 +6,15 @@ import PostImage3 from '@/../public/images/onboarding-meal-post-3.png';
 
 const SecondSection = () => {
   return (
-    <section className="w-full px-4 py-8 text-left">
-      <Typography as="h3" variant="title3">
+    <section className="w-full px-4 py-8 text-left xl:px-0 xl:py-[3.75rem]">
+      <Typography as="h3" variant="title3" className="xl:typography-title2">
         오늘의 식사를 <br />
         <span className="bg-gradient-to-r from-red-300 from-[0%] to-purple-200 to-[91%] bg-clip-text text-transparent">
           투데잇
         </span>
         이 분석해 드릴게요!
       </Typography>
-      <ol className="mt-8 space-y-4">
+      <ol className="mt-8 space-y-4 xl:flex xl:gap-4 xl:space-y-0">
         <IntroduceList
           order="01"
           description={

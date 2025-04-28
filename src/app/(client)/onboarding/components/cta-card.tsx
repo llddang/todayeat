@@ -22,8 +22,8 @@ const CtaCard = ({ setCookie }: { setCookie: () => void }) => {
   };
 
   return (
-    <section className="px-4 pt-10">
-      <div className="h-full w-full rounded-2xl px-4 py-8 bg-gradient-radial-purple">
+    <section className="px-4 pt-10 xl:px-0 xl:pt-[3.75rem]">
+      <div className="h-full w-full rounded-2xl px-4 py-8 bg-gradient-radial-purple xl:py-10">
         <Typography as="h3" variant="title3">
           오늘 어떤 음식을 먹었나요?
         </Typography>
