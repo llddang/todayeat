@@ -90,7 +90,7 @@ export const POST = async (req: Request) => {
   const chartData = await Promise.all(
     ranges.map(async ({ start, end, label }, index): Promise<BarChartDataType> => {
       try {
-        const meals = await getAllMyMealsByPeriod(format(start, 'yyyy-MM-dd'), format(end, 'yyyy-MM-dd'));
+        const meals = await getAllMyMealsByPeriod(start, end);
 
         const { calories: value } = calculateNutritionAverage(meals);
 

@@ -15,6 +15,8 @@ import {
 } from '@/types/DTO/meal.dto';
 import { getUser } from './user.api';
 import { endOfMonth, startOfMonth } from 'date-fns';
+import { revalidatePath } from 'next/cache';
+import SITE_MAP from '@/constants/site-map.constant';
 
 /**
  * 특정 기간 내의 사용자 식사 기록을 모든 상세 정보와 함께 조회한다.
@@ -24,17 +26,19 @@ import { endOfMonth, startOfMonth } from 'date-fns';
  * @returns {MealDTO[]} 사용자의 식사 정보 배열 (MealDTO[])
  * @throws Supabase 쿼리 실행 중 오류가 발생한 경우 Error
  */
-export const getAllMyMealsByPeriod = async (startDate: string, endDate: string): Promise<MealDTO[]> => {
+export const getAllMyMealsByPeriod = async (startDate: Date, endDate: Date): Promise<MealDTO[]> => {
   const supabase = getServerClient();
 
-  const startDateTime = `${startDate}T00:00:00Z`;
-  const endDateTime = `${endDate}T23:59:59.999Z`;
+  const firstDate = new Date(startDate);
+  firstDate.setHours(0, 0, 0, 0);
+  const lastDate = new Date(endDate);
+  lastDate.setHours(23, 59, 59, 999);
 
   const { data, error } = await supabase
     .from('meals')
     .select(` *, meal_details (*) `)
-    .gte('ate_at', startDateTime)
-    .lte('ate_at', endDateTime)
+    .gte('ate_at', firstDate.toISOString())
+    .lte('ate_at', lastDate.toISOString())
     .order('ate_at', { ascending: false });
   if (error) throw error;
 
@@ -44,19 +48,26 @@ export const getAllMyMealsByPeriod = async (startDate: string, endDate: string):
 /**
  * 특정 날의 사용자 식사 기록을 모든 상세 정보와 함께 조회한다.
  *
- * @param {string} date - 조회 날짜 ex) 2023-10-15
+ * @param {Date} date - 조회 날짜 ex) 2023-10-15
  * @returns {MealDTO[]} 사용자의 식사 정보 배열 (MealDTO[])
  * @throws Supabase 쿼리 실행 중 오류가 발생한 경우 Error
  */
-export const getMyMealByDate = async (date: string): Promise<MealDTO[]> => {
+export const getMyMealByDate = async (date: Date): Promise<MealDTO[]> => {
   const supabase = getServerClient();
+
+  const startDate = new Date(date);
+  startDate.setHours(0, 0, 0, 0);
+
+  const endDate = new Date(date);
+  endDate.setHours(23, 59, 59, 999);
 
   const { data, error } = await supabase
     .from('meals')
-    .select(` *, meal_details (*) `)
-    .gte('ate_at', `${date}T00:00:00Z`)
-    .lt('ate_at', `${date}T24:00:00Z`)
+    .select(`*, meal_details(*)`)
+    .gte('ate_at', startDate.toISOString())
+    .lt('ate_at', endDate.toISOString())
     .order('ate_at', { ascending: true });
+
   if (error) throw error;
 
   return snakeToCamelObject<MealSnakeCaseDTO[]>(data);
@@ -150,12 +161,14 @@ export const updateMeal = async (mealId: string, meal: Partial<CreateMealDTO>): 
 /**
  * 특정 식사 데이터를 데이터베이스에 삭제합니다.
  *
- * @param {string} mealId - 삭제할 식사 정보의 ID
+ * @param {string[]} mealIds - 삭제할 식사 정보의 ID
  * @throws {Error} 데이터베이스 오류 발생 시 에러를 던집니다
  */
-export const deleteMeal = async (mealId: string) => {
+export const deleteMeals = async (mealIds: string[]) => {
+  if (mealIds.length === 0) return;
+
   const supabase = getServerClient();
-  const { error } = await supabase.from('meals').delete().eq('id', mealId);
+  const { error } = await supabase.from('meals').delete().in('id', mealIds);
   if (error) throw error;
 };
 
@@ -189,8 +202,11 @@ export const getAllMyDailyCalories = async (
   const supabase = getServerClient();
 
   const res: Record<string, { calories: number; caloriesGoal: number }> = {};
-  const currentDate = new Date(startDate);
+  const firstDate = new Date(startDate);
+  firstDate.setHours(0, 0, 0, 0);
   const lastDate = new Date(endDate);
+  lastDate.setHours(23, 59, 59, 999);
+  const currentDate = new Date(firstDate);
   while (currentDate <= lastDate) {
     res[formatDateWithDash(currentDate)] = { calories: 0, caloriesGoal: 0 };
     currentDate.setDate(currentDate.getDate() + 1);
@@ -204,15 +220,12 @@ export const getAllMyDailyCalories = async (
   if (userError && userError.code === 'PGRST116') return res;
   if (userError) throw userError;
 
-  const startDateTime = `${formatDateWithDash(startDate)}T00:00:00Z`;
-  const endDateTime = `${formatDateWithDash(endDate)}T23:59:59.999Z`;
-
   const { data: mealData, error: mealError }: { data: MealSnakeCaseDTO[]; error: null } | { data: null; error: Error } =
     await supabase
       .from('meals')
       .select(` *, meal_details (*) `)
-      .gte('ate_at', startDateTime)
-      .lte('ate_at', endDateTime)
+      .gte('ate_at', firstDate.toISOString())
+      .lte('ate_at', lastDate.toISOString())
       .order('ate_at', { ascending: false });
 
   if (mealError) throw mealError;
