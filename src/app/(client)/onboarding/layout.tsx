@@ -6,7 +6,8 @@ import GlobalNavigationBar from '@/components/layouts/global-navigation-bar';
 
 export const metadata: Metadata = {
   title: '온보딩 | 투데잇',
-  description: '수정 필요'
+  description:
+    '투데잇의 주요 기능과 AI 분석 서비스를 빠르게 확인해보시고, 투데잇과 함께 식단 기록을 쉽고 간편하게 시작해보세요.'
 };
 
 const Layout = ({
