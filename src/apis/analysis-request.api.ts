@@ -20,7 +20,7 @@ export const getFoodImagesById = async (
 
   return { data: snakeToCamelObject(data), error };
 };
- 
+
 export const createAiRequest = async (
   userId: string,
   imageUrls: string[]
@@ -59,7 +59,7 @@ export const getAiResponses = async (): Promise<AiResponseDTO[]> => {
   return snakeToCamelObject(data);
 };
 
-export const createFoodAnalysisRequestDetails = async (
+export const createAiResponses = async (
   insertPayload: CreateAiFullResponseDTO[]
 ): Promise<{
   error: PostgrestError | null;
@@ -73,9 +73,8 @@ export const createFoodAnalysisRequestDetails = async (
   return { error };
 };
 
-export const createFoodAnalysisRequestDetail = async (food: CreateAiPartialResponseDTO): Promise<AiResponseDTO> => {
+export const createAiResponse = async (food: CreateAiPartialResponseDTO): Promise<AiResponseDTO> => {
   const supabase = getServerClient();
-
   const foodSnakeCase = camelToSnakeObject(food);
 
   const { data, error } = await supabase.from('ai_responses').insert(foodSnakeCase).select().single();

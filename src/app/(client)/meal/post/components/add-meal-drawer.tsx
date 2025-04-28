@@ -14,7 +14,7 @@ import IconButton from '@/components/commons/icon-button';
 import AddMealAiLoading from './add-meal-ai-loading';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createAiRequestByText, createFoodAnalysisRequestDetail } from '@/apis/analysis-request.api';
+import { createAiRequestByText, createAiResponse } from '@/apis/analysis-request.api';
 import { useRouter } from 'next/navigation';
 
 const AddMealDrawer = () => {
@@ -56,7 +56,7 @@ const AddMealDrawer = () => {
         ...parsedResult,
         menuName: data.menuName
       };
-      await createFoodAnalysisRequestDetail(newMeal);
+      await createAiResponse(newMeal);
       router.push('/meal/post/edit');
     } catch (err) {
       setIsAnalyzing(false);
