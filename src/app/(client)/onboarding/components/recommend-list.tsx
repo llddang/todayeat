@@ -8,10 +8,9 @@ type RecommedListProps = {
 
 const RecommedList = ({ title, description, image }: RecommedListProps) => {
   return (
-    <li className="relative flex gap-3 p-2 xl:flex-1">
-      <div
-        className={`h-[3.75rem] w-[3.75rem] flex-shrink-0 rounded-[0.875rem] bg-gray-75 bg-[length:2rem_2rem] bg-center bg-no-repeat ${image}`}
-      ></div>
+    <li
+      className={`relative flex gap-3 p-2 before:block before:h-[3.75rem] before:w-[3.75rem] before:rounded-[0.875rem] before:bg-gray-75 before:bg-[length:2rem_2rem] before:bg-center before:bg-no-repeat before:content-[''] xl:flex-1 ${image}`}
+    >
       <div className="flex flex-col gap-2">
         <Typography as="span" variant="subTitle1" className="my-[0.3rem]">
           {title}

@@ -22,7 +22,7 @@ const ThirdSection = () => {
               기록이 쉬우니까 꾸준히 할 수 있어요
             </>
           }
-          image="bg-onboarding-recommend-1"
+          image="before:bg-onboarding-recommend-1"
         />
         <RecommendList
           title={
@@ -37,7 +37,7 @@ const ThirdSection = () => {
               영양소에 맞게 잘 먹고 있는지 확인할 수 있어요
             </>
           }
-          image="bg-onboarding-recommend-2"
+          image="before:bg-onboarding-recommend-2"
         />
         <RecommendList
           title={
@@ -52,7 +52,7 @@ const ThirdSection = () => {
               피드백을 받고 다음 식사를 설계할 수 있어요
             </>
           }
-          image="bg-onboarding-recommend-3"
+          image="before:bg-onboarding-recommend-3"
         />
       </ul>
     </section>
