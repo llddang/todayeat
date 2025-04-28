@@ -5,19 +5,17 @@ import Image from 'next/image';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SupabaseBucket } from '@/types/supabase-bucket.type';
 import { getUser, updateUser } from '@/apis/user.api';
-import { uploadImage } from '@/apis/storage.api';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import formSchema from '@/app/schemas/form-schema.schema';
-import { UserDTO } from '@/types/DTO/user.dto';
 import { cleanupBlobUrl } from '@/utils/cleanup-blob-url.util';
 import IconButton from '@/components/commons/icon-button';
 import { Typography } from '@/components/ui/typography';
 import DefaultProfile from '@/../public/illustrations/default-profile.svg';
 import { useUserStore } from '@/store/user-store';
+import { uploadProfileImage } from '../utils/upload-profile-image';
 
 const editProfileFormSchema = z.object({
   nickname: formSchema.NICKNAME_SCHEMA,
@@ -27,23 +25,22 @@ const editProfileFormSchema = z.object({
 type FormValues = z.infer<typeof editProfileFormSchema>;
 
 type EditProfileProps = {
-  userInfo: UserDTO;
   setOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const EditProfile = ({ userInfo, setOpen }: EditProfileProps): JSX.Element => {
-  const setUser = useUserStore((state) => state.setUser);
+const EditProfile = ({ setOpen }: EditProfileProps) => {
+  const { user, setUser } = useUserStore();
 
   const [profileState, setProfileState] = useState({
     isUploading: false,
-    profilePreviewUrl: userInfo?.profileImage || null
+    profilePreviewUrl: user?.profileImage || null
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(editProfileFormSchema),
     defaultValues: {
-      nickname: userInfo.nickname || '',
+      nickname: user.nickname || '',
       newProfileImage: null
     }
   });
@@ -73,49 +70,40 @@ const EditProfile = ({ userInfo, setOpen }: EditProfileProps): JSX.Element => {
     setIsUploading(true);
 
     const newProfileImageFile = form.getValues('newProfileImage');
-    let imageUrl = profileState.profilePreviewUrl;
+    let { profilePreviewUrl } = profileState;
 
     if (newProfileImageFile) {
-      const uploadResult = await handleProfileImageUpload(newProfileImageFile);
-      if (!uploadResult) {
-        setIsUploading(false);
+      try {
+        const uploadResult = await uploadProfileImage(newProfileImageFile);
+        profilePreviewUrl = uploadResult;
+      } catch (error) {
+        if (error && typeof error === 'object' && 'message' in error) {
+          alert(error.message);
+        } else {
+          alert('알 수 없는 오류가 발생했습니다.');
+        }
+        console.error(error);
         return;
+      } finally {
+        setIsUploading(false);
       }
-      imageUrl = uploadResult;
     }
 
-    if (formData.nickname === userInfo.nickname && imageUrl === userInfo.profileImage) {
+    if (formData.nickname === user.nickname && profilePreviewUrl === user.profileImage) {
       alert('변경된 정보가 없습니다.');
-      setIsUploading(false);
-      return;
+      return setIsUploading(false);
     }
 
     await updateUser({
       nickname: formData.nickname,
-      profileImage: imageUrl
+      profileImage: profilePreviewUrl
     });
 
-    handleProfileUpdateSuccess(formData.nickname, imageUrl);
-    setIsUploading(false);
+    handleProfileUpdateSuccess(formData.nickname, profilePreviewUrl);
   };
 
   const setIsUploading = (isUploading: boolean): void => {
     setProfileState((prev) => ({ ...prev, isUploading }));
-  };
-
-  const handleProfileImageUpload = async (imageFile: File): Promise<string | null> => {
-    const uploadForm = new FormData();
-    uploadForm.append('file', imageFile);
-
-    const result = await uploadImage(SupabaseBucket.PROFILE_IMAGES, uploadForm);
-
-    if (result.error) {
-      alert(`${result.error.message} ${result.error.action}`);
-      setIsUploading(false);
-      return null;
-    }
-
-    return result.data;
   };
 
   const handleProfileUpdateSuccess = async (nickname: string, newImageUrl: string | null) => {

@@ -3,48 +3,18 @@ import ButtonLink from '@/components/commons/button-link';
 import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
 import { NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
-import { getPercentage } from '@/utils/nutrition-calculator.util';
-import { UserDTO } from '@/types/DTO/user.dto';
+import { UserPersonalInfoDTO } from '@/types/DTO/user.dto';
 import MacronutrientCard from './macronutrient-card';
 import { formatNumberWithComma } from '@/utils/format.util';
+import { calculateMacronutrientRatio } from '../utils/calculate-macronutrient-ratio';
 
 type UserGoalCardProps = {
-  userInfo: UserDTO;
-};
-
-const NUTRITION_PURPOSE_OPTIONS_IN_PROFILE = {
-  ...NUTRITION_PURPOSE_OPTIONS,
-  NOT_SET: {
-    name: '미설정',
-    factor: 0,
-    ratio: {
-      carbohydrate: 0,
-      protein: 0,
-      fat: 0
-    }
-  }
+  userInfo: UserPersonalInfoDTO | null;
 };
 
 const UserGoalCard = ({ userInfo }: UserGoalCardProps) => {
-  const {
-    purpose = 'NOT_SET',
-    dailyCaloriesGoal = 0,
-    dailyProteinGoal = 0,
-    dailyCarbohydrateGoal = 0,
-    dailyFatGoal = 0
-  } = userInfo.personalInfo ?? {};
-
-  const calculateMacroRatio = () => {
-    const total = dailyCarbohydrateGoal + dailyProteinGoal + dailyFatGoal;
-
-    if (total === 0) return '0 : 0 : 0';
-
-    const carbRatio = getPercentage(dailyCarbohydrateGoal, total);
-    const proteinRatio = getPercentage(dailyProteinGoal, total);
-    const fatRatio = getPercentage(dailyFatGoal, total);
-
-    return `${carbRatio} : ${proteinRatio} : ${fatRatio}`;
-  };
+  const { purpose, dailyCaloriesGoal, dailyProteinGoal, dailyCarbohydrateGoal, dailyFatGoal } =
+    userInfo ?? defaultUserInfo;
 
   return (
     <div className="flex flex-col rounded-2xl bg-white px-4 py-3">
@@ -58,9 +28,15 @@ const UserGoalCard = ({ userInfo }: UserGoalCardProps) => {
       </div>
       <div className="pt-3">
         <ul className="flex flex-col gap-2">
-          <UserInfoList title="건강 목표" description={NUTRITION_PURPOSE_OPTIONS_IN_PROFILE[purpose].name} />
+          <UserInfoList
+            title="건강 목표"
+            description={NUTRITION_PURPOSE_OPTIONS_IN_PROFILE[purpose as NutritionPurposeKey].name}
+          />
           <UserInfoList title="1일 목표 칼로리" description={`${formatNumberWithComma(dailyCaloriesGoal)} kcal`} />
-          <UserInfoList title="목표 기준 탄단지 비율" description={calculateMacroRatio()} />
+          <UserInfoList
+            title="목표 기준 탄단지 비율"
+            description={calculateMacronutrientRatio(dailyCarbohydrateGoal, dailyProteinGoal, dailyFatGoal)}
+          />
         </ul>
         <MacronutrientCard
           dailyProteinGoal={dailyProteinGoal}
@@ -73,3 +49,26 @@ const UserGoalCard = ({ userInfo }: UserGoalCardProps) => {
 };
 
 export default UserGoalCard;
+
+const defaultUserInfo = {
+  purpose: 'NOT_SET',
+  dailyCaloriesGoal: 0,
+  dailyProteinGoal: 0,
+  dailyCarbohydrateGoal: 0,
+  dailyFatGoal: 0
+};
+
+type NutritionPurposeKey = keyof typeof NUTRITION_PURPOSE_OPTIONS | 'NOT_SET';
+
+const NUTRITION_PURPOSE_OPTIONS_IN_PROFILE = {
+  ...NUTRITION_PURPOSE_OPTIONS,
+  NOT_SET: {
+    name: '미설정',
+    factor: 0,
+    ratio: {
+      carbohydrate: 0,
+      protein: 0,
+      fat: 0
+    }
+  }
+};
