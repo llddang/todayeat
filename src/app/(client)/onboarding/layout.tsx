@@ -6,8 +6,7 @@ import GlobalNavigationBar from '@/components/layouts/global-navigation-bar';
 
 export const metadata: Metadata = {
   title: '온보딩 | 투데잇',
-  description: '수정 필요',
-  robots: 'noindex'
+  description: '수정 필요'
 };
 
 const Layout = ({
