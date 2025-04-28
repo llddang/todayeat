@@ -37,6 +37,10 @@ export type UserSignInDTO = Pick<UserDTO, 'email'> & { password: string };
 
 export type UpdateUserDTO = Omit<UserDTO, 'id' | 'createdAt' | 'email'>;
 export type UpdateUserPersonalInfoDTO = Omit<UserPersonalInfoDTO, 'id' | 'userId'>;
+export type UpdateUserPersonalGoalDTO = Pick<
+  UserPersonalInfoDTO,
+  'dailyCaloriesGoal' | 'dailyCarbohydrateGoal' | 'dailyProteinGoal' | 'dailyFatGoal'
+>;
 
 export type SupabaseAuthDTO = {
   user: User | null;
