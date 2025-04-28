@@ -51,11 +51,9 @@ export const signIn = async (email: string, password: string): Promise<ErrorResp
  * @throws {AuthError} supabase에서 전송하는 에러
  * @returns {SupabaseAuthDTO} 슈퍼베이스의 유저, 세션 정보
  */
-export const SignInAnonymously = async (): Promise<ErrorResponse<SupabaseAuthDTO>> => {
+export const signInAnonymously = async (): Promise<ErrorResponse<SupabaseAuthDTO>> => {
   const supabase = getServerClient();
   const { data, error } = await supabase.auth.signInAnonymously();
-
-  console.log(error);
 
   if (error) return { data: null, error: categoriesError(error) };
   return { data, error };
