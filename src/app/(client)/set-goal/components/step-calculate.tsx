@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, MouseEvent, useState } from 'react';
+import { ChangeEvent, MouseEvent, useState, useSyncExternalStore } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import formSchema from '@/app/schemas/form-schema.schema';
@@ -18,6 +18,7 @@ import MacronutrientBox from './macronutrient-box';
 import { StepCompleteType } from '../types/funnel.type';
 import { formatNumberWithComma } from '@/utils/format.util';
 import { userPhysicalProfileSchema } from '../schemas/user-physical-profile.schema';
+import useIsClient from '@/hooks/use-is-client';
 
 type StepCalculateProps = {
   userName: string;
@@ -38,6 +39,7 @@ type FormValues = z.infer<typeof caloriesFormSchema>;
 
 const StepCalculate = ({ nextStep, userName, data }: StepCalculateProps) => {
   const setUser = useUserStore((state) => state.setUser);
+  const isClient = useIsClient();
 
   let userPersonalGoal = {
     dailyCaloriesGoal: 0,
@@ -46,7 +48,7 @@ const StepCalculate = ({ nextStep, userName, data }: StepCalculateProps) => {
     dailyFatGoal: 0
   };
 
-  if (isClient()) {
+  if (isClient) {
     const parseResult = userPhysicalProfileSchema.safeParse(data);
     if (parseResult.success) {
       userPersonalGoal = calculateDailyNutritionGoal(parseResult.data);
