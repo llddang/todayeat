@@ -30,6 +30,9 @@ import MemoBox from '../../../detail/components/memo-box';
 import Responsive from '@/components/commons/responsive';
 import EditCalendarPc from './edit-calendar-pc';
 import TimePickerPc from './time-picker-pc';
+import AddMealCardPc from './add-meal-card-pc';
+import Modal from '@/components/commons/modal';
+import { ERROR_MESSAGES } from '../constants/error-message.constant';
 type EditResultSectionProps = {
   imageList: string[];
   initialMealList: Omit<AiResponseDTO, 'id'>[];
@@ -38,6 +41,14 @@ type EditResultSectionProps = {
 const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProps): JSX.Element => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalInfo, setModalInfo] = useState<{
+    title: string;
+    description: string;
+  }>({
+    title: '',
+    description: ''
+  });
 
   const mealFormMethods = useForm({
     resolver: zodResolver(mealEditFormSchema),
@@ -85,7 +96,8 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
     setIsLoading(true);
     try {
       if (!form) {
-        return alert('데이터 형식이 올바르지 않습니다.');
+        setModalInfo(ERROR_MESSAGES.INVALID_DATA);
+        return setIsModalOpen(true);
       }
 
       const { date, memo, mealCategory, mealList, mealImages } = form;
@@ -107,16 +119,20 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
             await deleteMealAnalysisDetail();
             router.push(SITE_MAP.HOME);
           } catch (error) {
+            setModalInfo(ERROR_MESSAGES.MEAL_DELETE_FAILED);
             console.error('분석 데이터 삭제 중 오류 발생:', error);
+            return setIsModalOpen(true);
           }
         }
       } catch (error) {
+        setModalInfo(ERROR_MESSAGES.MEAL_POST_FAILED);
         console.error('식사 정보 생성 중 오류 발생:', error);
+        return setIsModalOpen(true);
       }
     } catch (error) {
-      alert('식사 정보 등록에 실패했습니다. 잠시 후 다시 시도해주세요.');
+      setModalInfo(ERROR_MESSAGES.MEAL_POST_FAILED);
       console.error('식사 정보 등록 실패:', error);
-      router.refresh();
+      return setIsModalOpen(true);
     } finally {
       setIsLoading(false);
     }
@@ -165,7 +181,23 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
                 {mealCardList.map((meal, idx) => (
                   <EditCard key={meal.id} idx={idx} mealDetail={meal} onRemove={() => handleRemoveMeal(idx)} />
                 ))}
-                <AddMealCardDrawer onAddMeal={handleAddMeal} />
+                <Responsive
+                  pc={
+                    <AddMealCardPc
+                      onAddMeal={handleAddMeal}
+                      onOpenModalChange={setIsModalOpen}
+                      onModalInfoChange={setModalInfo}
+                    />
+                  }
+                  mobile={
+                    <AddMealCardDrawer
+                      onAddMeal={handleAddMeal}
+                      onOpenModalChange={setIsModalOpen}
+                      onModalInfoChange={setModalInfo}
+                    />
+                  }
+                  mode="js"
+                />
               </div>
             </section>
             <section className="my-10 flex w-full flex-col items-start justify-center gap-3">
@@ -208,6 +240,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
           </form>
         </FormProvider>
       </div>
+      <Modal open={isModalOpen} onOpenChange={setIsModalOpen} title={modalInfo.title} content={modalInfo.description} />
     </div>
   );
 };
