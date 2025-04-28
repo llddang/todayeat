@@ -85,11 +85,11 @@ const TimePicker = ({ currentTime, onTimeChange }: TimePickerProps) => {
 };
 
 export default TimePicker;
+//  TODO: 공통 상수로 변경하기 
+export const hours = Array.from({ length: 13 }, (_, i) => String(i).padStart(2, '0'));
+export const minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'));
 
-const hours = Array.from({ length: 13 }, (_, i) => String(i).padStart(2, '0'));
-const minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'));
-
-const selections = {
+export const selections = {
   meridiem: ['오전', '오후'],
   hours: hours,
   minutes: minutes
