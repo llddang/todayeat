@@ -1,9 +1,10 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Typography } from '@/components/ui/typography';
+import { FormEvent } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
 import { useUserStore } from '@/store/user-store';
 
@@ -11,7 +12,8 @@ const FirstSection = ({ setCookie }: { setCookie: () => void }) => {
   const user = useUserStore((state) => state.user);
   const router = useRouter();
 
-  const handleClickCtaButton = () => {
+  const handleClickCtaButton = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
     setCookie();
     if (!!user.id) {
       router.push(SITE_MAP.HOME);
@@ -30,7 +32,7 @@ const FirstSection = ({ setCookie }: { setCookie: () => void }) => {
         <br />
         귀찮은 식단 기록, 이제 투데잇이 대신해 드릴게요!
       </Typography>
-      <form action={handleClickCtaButton}>
+      <form onSubmit={handleClickCtaButton}>
         <Button type="submit" className="mt-8">
           사진 올리고 분석 시작하기
         </Button>
