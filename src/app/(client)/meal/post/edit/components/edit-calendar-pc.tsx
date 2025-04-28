@@ -26,7 +26,7 @@ const EditCalendarPc = ({ onDateChange }: EditCalendarPcProps) => {
       <DialogTrigger className="flex flex-1 items-center justify-between gap-2 rounded-lg border-[1px] border-gray-300 bg-white py-[0.81rem] pl-4 pr-3 after:block after:aspect-square after:w-[1.375rem] after:bg-down-line-gray-600-icon after:bg-center after:content-['']">
         <Typography as="span" variant="body1">{`${date.getMonth() + 1}월 ${date.getDate()}일`}</Typography>
       </DialogTrigger>
-      <DialogContent className="absolute top-full z-[1000] w-[21.25rem] rounded-3xl bg-white p-5 shadow-modal">
+      <DialogContent className="absolute top-full z-modal w-[21.25rem] rounded-3xl bg-white p-5 shadow-modal">
         <div className="sr-only">
           <DialogTitle>날짜 선택</DialogTitle>
           <Typography>섭취 정보를 조회할 날짜를 선택하세요.</Typography>

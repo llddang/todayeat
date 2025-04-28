@@ -161,7 +161,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
                   {mealCardList.length}
                 </Typography>
               </Typography>
-              <div className="flex grid-cols-2 flex-col xl:grid xl:gap-3">
+              <div className="flex flex-col gap-3 xl:grid xl:grid-cols-2">
                 {mealCardList.map((meal, idx) => (
                   <EditCard key={meal.id} idx={idx} mealDetail={meal} onRemove={() => handleRemoveMeal(idx)} />
                 ))}
