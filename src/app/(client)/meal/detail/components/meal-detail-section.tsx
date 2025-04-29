@@ -90,7 +90,7 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-6 px-4 pb-4 pt-2 desktop-width xl:w-full xl:flex-row xl:gap-5 xl:px-[3.125rem]">
+    <div className="flex flex-col gap-6 px-4 pb-4 pt-2 desktop-width xl:w-full xl:flex-row xl:gap-5 xl:px-[3.125rem] xl:pb-0 xl:pt-0">
       <MealImageCarousel imageList={imageList} />
       <div className="flex flex-col gap-10 xl:mx-auto xl:w-[45rem]">
         <TotalNutritionChart totalNutrition={totalNutrition} />
@@ -101,7 +101,7 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps) => {
               식사 시간
             </Typography>
             <GlassBackground className="min-h-auto flex w-full flex-col items-start gap-3 rounded-2xl border-none p-4">
-              <div className="scrollbar-hidden flex w-full items-start justify-between gap-2 overflow-x-auto">
+              <div className="scrollbar-hidden flex w-full gap-2 overflow-x-auto">
                 {MEAL_CATEGORY.map((option) => (
                   <TagSelectItem
                     key={option.value}
