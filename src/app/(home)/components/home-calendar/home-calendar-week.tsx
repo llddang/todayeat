@@ -4,7 +4,7 @@ import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/componen
 import { getAllMyDailyCalories } from '@/apis/meal.api';
 import { useDateContext } from '@/app/(home)/contexts/date.context';
 import { CALENDAR_STAND_COUNT } from '@/app/(home)/constants/calendar.constant';
-import { getFirstDayInWeek, getPeriodInCarouselWeek, getWeekDates } from '@/app/(home)/utils/calendar.util';
+import { getCalendarStartDate, getPeriodInCarouselWeek, getWeekDates } from '@/app/(home)/utils/calendar.util';
 import DayLabel from './day-label';
 import HomeCalendarWeekItem from './home-calendar-week-item';
 import { CarouselWeek } from '../../types/calendar.type';
@@ -72,7 +72,7 @@ const HomeCalendarWeek = () => {
       <Carousel setApi={setApi} opts={{ startIndex: CALENDAR_STAND_COUNT }}>
         <CarouselContent>
           {weeks.map((week) => {
-            const firstDay = getFirstDayInWeek(week.dates);
+            const firstDay = getCalendarStartDate(week.dates);
             return (
               <CarouselItem key={formatDateWithDash(firstDay)}>
                 <HomeCalendarWeekItem

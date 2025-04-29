@@ -5,8 +5,9 @@ import { Day, CarouselMonth, CarouselWeek } from '../types/calendar.type';
 import { DailyMealCalories } from '@/types/nutrition.type';
 import { addDays, isSameMonth, startOfMonth, startOfWeek } from 'date-fns';
 
-export const getCalendarStartDate = (month: Day[][]): Date => {
-  return month[0][0].day ?? new Date();
+export const getCalendarStartDate = (calendarData: Day[][] | Day[]): Date => {
+  if (Array.isArray(calendarData[0])) return calendarData[0][0].day ?? new Date();
+  else return calendarData[0].day ?? new Date();
 };
 
 export const getCalendarEndDate = (month: Day[][]): Date => {
@@ -82,10 +83,6 @@ export const getPeriodInCarouselMonth = (
   const lastDay = flatMonth[weekLast][dayLast].day;
 
   return [firstDay, lastDay];
-};
-
-export const getFirstDayInWeek = (week: Day[]): Date => {
-  return week[0].day ?? new Date();
 };
 
 export const getWeekDates = (date: Date): CarouselWeek[] => {
