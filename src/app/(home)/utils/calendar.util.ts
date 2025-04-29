@@ -1,4 +1,4 @@
-import { CALENDAR_RANGE_OFFSET, DAY, MAX_WEEK } from '@/app/(home)/constants/calendar.constant';
+import { CALENDAR_RANGE_OFFSET, MAX_WEEK } from '@/app/(home)/constants/calendar.constant';
 import { formatDateWithDash } from '@/utils/format.util';
 
 import { Day, CarouselMonth, CarouselWeek } from '../types/calendar.type';
@@ -88,22 +88,17 @@ export const getPeriodInCarouselMonth = (
 export const getWeeks = (date: Date): CarouselWeek[] => {
   const allWeeks = CALENDAR_RANGE_OFFSET.map((weekOffset) => ({
     id: weekOffset,
-    dates: calculateWeekDates(addWeeks(date, weekOffset))
+    dates: getWeekCalendarDays(addWeeks(date, weekOffset))
   }));
 
   return allWeeks;
 };
 
-export const calculateWeekDates = (date: Date): Day[] => {
-  const day = date.getDay();
-  const diff = date.getDate() - day + (day === 0 ? -6 : 1);
-  const monday = new Date(date);
-  monday.setDate(diff);
-
-  const standTime = monday.getTime();
+export const getWeekCalendarDays = (date: Date): Day[] => {
+  const monday = startOfWeek(date, { weekStartsOn: 1 });
 
   return Array.from({ length: 7 }, (_, dayOffset) => ({
-    day: new Date(standTime + dayOffset * DAY),
+    day: addDays(monday, dayOffset),
     dayOutside: false
   }));
 };
