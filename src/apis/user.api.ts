@@ -67,7 +67,7 @@ export const updateUserPersonalInfo = async (
 };
 
 /**
- * 유저의 일일 목표 칼로리을 조회하는 함수
+ * 유저의 일일 목표 칼로리를 조회하는 함수
  *
  * @returns {Promise<number>} 일일 목표 칼로리
  */

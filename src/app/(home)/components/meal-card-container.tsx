@@ -19,27 +19,27 @@ const MealCardContainer = ({ meals, onMealsChange }: MealCardContainerProps) => 
   const [isEditMode, setIsEditMode] = useState(false);
   const [isConfirmModalOpen, setConfirmIsModalOpen] = useState(false);
   const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
-  const [willDeleteId, setWillDeleteId] = useState<string[]>([]);
+  const [idsToDelete, setIdsToDelete] = useState<string[]>([]);
 
   const { selectedDate } = useDashboard();
   const { setDailyMealCalories } = useCalendar();
 
-  const filteredMeals = meals.filter((meal) => !willDeleteId.includes(meal.id));
+  const filteredMeals = meals.filter((meal) => !idsToDelete.includes(meal.id));
 
   const deleteMealCard = (mealId: string) => {
-    setWillDeleteId((prev) => [...prev, mealId]);
+    setIdsToDelete((prev) => [...prev, mealId]);
   };
 
   const handleToggleDeleteMeal = () => {
     setIsEditMode((prev) => !prev);
-    setWillDeleteId([]);
+    setIdsToDelete([]);
   };
 
   const handleDeleteMealConfirm = async () => {
     setIsEditMode(false);
 
     try {
-      await deleteMeals(willDeleteId);
+      await deleteMeals(idsToDelete);
       onMealsChange(filteredMeals);
       const calories = filteredMeals.flatMap((meal) => meal.mealDetails).reduce((acc, meal) => acc + meal.calories, 0);
       setDailyMealCalories({ [formatDateWithDash(selectedDate)]: calories });

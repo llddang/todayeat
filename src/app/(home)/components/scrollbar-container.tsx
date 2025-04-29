@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { cn } from '@/lib/shadcn';
 import React, { HTMLAttributes, ReactNode, useRef, useState, useEffect, useCallback } from 'react';
 

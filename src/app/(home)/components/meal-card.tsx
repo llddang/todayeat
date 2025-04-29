@@ -8,8 +8,6 @@ import MacronutrientGroup from '@/components/commons/macronutrient-group';
 import { formatTimeToHHMM, formatTimeWithMeridiem } from '@/utils/format.util';
 import Link from 'next/link';
 import SITE_MAP from '@/constants/site-map.constant';
-import CLOSE_LINE_ICON from '@/../public/icons/close-line-white.svg';
-import Image from 'next/image';
 
 type MealCardProps = {
   meal: MealDTO;
@@ -89,8 +87,8 @@ const MealCard = ({ meal, editMode, onDelete }: MealCardProps) => {
           onClick={() => onDelete(meal.id)}
           className="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center"
         >
-          <Image
-            src={CLOSE_LINE_ICON}
+          <img
+            src="/icons/close-line-white.svg"
             alt="닫기"
             className="h-6 w-6 rounded-full bg-gray-800/70 p-1.5 hover:bg-gray-800/90"
           />
