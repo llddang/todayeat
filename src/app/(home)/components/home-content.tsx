@@ -2,7 +2,7 @@
 import CtaExampleFeedbackBanner from '@/components/commons/cta-example-feedback-banner';
 import GlassBackground from '@/components/commons/glass-background';
 import { getMyMealByDate } from '@/apis/meal.api';
-import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
+import { useDateContext } from '@/app/(home)/contexts/date.context';
 import { calculateTotalNutrition } from '@/utils/nutrition-calculator.util';
 import { useUserStore } from '@/store/user-store';
 import { MealDTO } from '@/types/DTO/meal.dto';
@@ -14,7 +14,7 @@ import ScrollbarContainer from './scrollbar-container';
 import MealCardContainer from './meal-card-container';
 
 const HomeContent = () => {
-  const { selectedDate } = useDashboard();
+  const { selectedDate } = useDateContext();
   const user = useUserStore((state) => state.user);
 
   const [meals, setMeals] = useState<MealDTO[]>([]);

@@ -3,8 +3,7 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { formatDateWithDash } from '@/utils/format.util';
 import { getAllMyDailyCalories } from '@/apis/meal.api';
-import { useCalendar } from '@/app/(home)/contexts/calendar.context';
-import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
+import { useDateContext } from '@/app/(home)/contexts/date.context';
 import { getFirstDayInMonth, getMonthDates, getPeriodInCarouselMonth } from '@/app/(home)/utils/calendar.util';
 import { CALENDAR_STAND_COUNT } from '@/app/(home)/constants/calendar.constant';
 import DayLabel from './day-label';
@@ -13,8 +12,7 @@ import { CarouselMonth } from '../../types/calendar.type';
 import { useUserStore } from '@/store/user-store';
 
 const HomeCalendarMonth = () => {
-  const { selectedDate } = useDashboard();
-  const { currentDate, dailyMealCalories, setCurrentDate, setDailyMealCalories } = useCalendar();
+  const { selectedDate, currentDate, dailyMealCalories, setCurrentDate, setDailyMealCalories } = useDateContext();
 
   const { personalInfo } = useUserStore((state) => state.user);
 

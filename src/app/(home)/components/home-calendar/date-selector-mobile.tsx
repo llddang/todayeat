@@ -3,8 +3,7 @@ import { ko } from 'date-fns/locale';
 import Calendar from '@/components/ui/calendar';
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
-import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
-import { useCalendar } from '@/app/(home)/contexts/calendar.context';
+import { useDateContext } from '@/app/(home)/contexts/date.context';
 import { formatDateToLocaleKR } from '@/utils/format.util';
 
 type DateSelectorMobileProps = {
@@ -12,8 +11,7 @@ type DateSelectorMobileProps = {
   onOpenChange: (open: boolean) => void;
 };
 const DateSelectorMobile = ({ open, onOpenChange }: DateSelectorMobileProps) => {
-  const { selectedDate, setSelectedDate } = useDashboard();
-  const { setCurrentDate } = useCalendar();
+  const { selectedDate, setCurrentDate, setSelectedDate } = useDateContext();
 
   const [date, setDate] = useState<Date>(selectedDate);
 

@@ -2,8 +2,7 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { getAllMyDailyCalories } from '@/apis/meal.api';
-import { useCalendar } from '@/app/(home)/contexts/calendar.context';
-import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
+import { useDateContext } from '@/app/(home)/contexts/date.context';
 import { CALENDAR_STAND_COUNT } from '@/app/(home)/constants/calendar.constant';
 import { getFirstDayInWeek, getPeriodInCarouselWeek, getWeekDates } from '@/app/(home)/utils/calendar.util';
 import DayLabel from './day-label';
@@ -14,8 +13,7 @@ import { addWeeks } from 'date-fns';
 import { useUserStore } from '@/store/user-store';
 
 const HomeCalendarWeek = () => {
-  const { selectedDate } = useDashboard();
-  const { currentDate, dailyMealCalories, setCurrentDate, setDailyMealCalories } = useCalendar();
+  const { selectedDate, currentDate, dailyMealCalories, setCurrentDate, setDailyMealCalories } = useDateContext();
 
   const { personalInfo } = useUserStore((state) => state.user);
 

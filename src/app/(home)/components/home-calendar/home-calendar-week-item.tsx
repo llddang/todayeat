@@ -5,8 +5,7 @@ import { Typography } from '@/components/ui/typography';
 import { cn } from '@/lib/shadcn';
 import { formatDateWithDash } from '@/utils/format.util';
 import { getPercentage } from '@/utils/nutrition-calculator.util';
-import { useCalendar } from '@/app/(home)/contexts/calendar.context';
-import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
+import { useDateContext } from '@/app/(home)/contexts/date.context';
 import { isSameDate } from '@/app/(home)/utils/calendar.util';
 import { DailyMealCalories } from '@/types/nutrition.type';
 import { Day } from '../../types/calendar.type';
@@ -23,8 +22,7 @@ const HomeCalendarWeekItem = ({
   dailyMealCalories,
   dailyCaloriesGoal
 }: HomeCalendarWeekItemProps) => {
-  const { setSelectedDate } = useDashboard();
-  const { setCurrentDate } = useCalendar();
+  const { setSelectedDate, setCurrentDate } = useDateContext();
 
   const handleDateClick = (newSelectedDate: Date): void => {
     if (isSameDate(newSelectedDate, selectedDate)) return;

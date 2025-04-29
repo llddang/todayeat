@@ -4,10 +4,10 @@
 import { useEffect, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { useCalendar } from '@/app/(home)/contexts/calendar.context';
 import HomeCalendarWeek from './home-calendar-week';
 import HomeCalendarMonth from './home-calendar-month';
 import DateSelectorMobile from './date-selector-mobile';
+import { useDateContext } from '../../contexts/date.context';
 import { formatDateToLocaleKR } from '@/utils/format.util';
 import { DailyMealCalories } from '@/types/nutrition.type';
 import useIsMobile from '@/hooks/use-is-mobile';
@@ -18,7 +18,7 @@ type HomeCalendarClientViewProps = {
   dailyMealCalories: DailyMealCalories;
 };
 const HomeCalendarClientView = ({ dailyMealCalories }: HomeCalendarClientViewProps) => {
-  const { currentDate, setDailyMealCalories } = useCalendar();
+  const { currentDate, setDailyMealCalories } = useDateContext();
   const [isOpen, setIsOpen] = useState(false);
   const [currentTab, setCurrentTab] = useState('week');
 

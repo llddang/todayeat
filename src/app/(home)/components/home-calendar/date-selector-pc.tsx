@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { ko } from 'date-fns/locale';
-import { useDashboard } from '../../contexts/dashboard.context';
-import { useCalendar } from '../../contexts/calendar.context';
+import { useDateContext } from '../../contexts/date.context';
 import { useEffect, useState } from 'react';
 import Calendar from '@/components/ui/calendar';
 import { formatDateToLocaleKR } from '@/utils/format.util';
@@ -13,8 +12,7 @@ type DateSelectorPcProps = {
   onOpenChange: (open: boolean) => void;
 };
 const DateSelectorPc = ({ open, onOpenChange }: DateSelectorPcProps) => {
-  const { selectedDate, setSelectedDate } = useDashboard();
-  const { setCurrentDate } = useCalendar();
+  const { selectedDate, setCurrentDate, setSelectedDate } = useDateContext();
 
   const [date, setDate] = useState<Date>(selectedDate);
 
