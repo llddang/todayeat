@@ -48,19 +48,19 @@ export const camelToSnakeString = (str: string): string => str.replace(/[A-Z]/g,
  * @param {any} obj - 변환할 객체
  * @returns {any} - 키가 snake_case로 변환된 객체
  */
-export const camelToSnakeObject = <T extends object>(obj: T): SnakeCaseObject<T> => {
+export const camelToSnake = <T extends object>(obj: T): SnakeCaseObject<T> => {
   if (obj === null || typeof obj !== 'object') {
     return obj;
   }
 
   if (Array.isArray(obj)) {
-    return obj.map((item) => camelToSnakeObject(item)) as unknown as SnakeCaseObject<T>;
+    return obj.map((item) => camelToSnake(item)) as unknown as SnakeCaseObject<T>;
   }
 
   const result: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(obj)) {
     const newKey = camelToSnakeString(key);
-    if (typeof value === 'object') result[newKey] = camelToSnakeObject(value);
+    if (typeof value === 'object') result[newKey] = camelToSnake(value);
     else result[newKey] = value;
   }
 

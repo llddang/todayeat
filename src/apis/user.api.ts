@@ -1,7 +1,7 @@
 'use server';
 
 import { getAuth } from '@/apis/auth-server.api';
-import { camelToSnakeObject, snakeToCamel } from '@/utils/camelize.util';
+import { camelToSnake, snakeToCamel } from '@/utils/camelize.util';
 import { getServerClient } from '@/lib/supabase/server';
 import { UpdateUserDTO, UpdateUserPersonalInfoDTO, UserDTO, UserPersonalInfoDTO } from '@/types/DTO/user.dto';
 
@@ -33,7 +33,7 @@ export const getUser = async (): Promise<UserDTO> => {
 export const updateUser = async (userInfo: Partial<UpdateUserDTO>): Promise<UserDTO> => {
   const supabase = getServerClient();
   const { id: userId } = await getAuth();
-  const userInfoSnakeCase = camelToSnakeObject(userInfo);
+  const userInfoSnakeCase = camelToSnake(userInfo);
   const { data, error } = await supabase.from('users').update(userInfoSnakeCase).eq('id', userId).select().single();
   if (error) throw error;
   return snakeToCamel(data);
@@ -52,7 +52,7 @@ export const updateUserPersonalInfo = async (
   const { id: userId } = await getAuth();
 
   const userPersonalInfoSnakeCase = {
-    ...camelToSnakeObject(userPersonalInfo),
+    ...camelToSnake(userPersonalInfo),
     user_id: userId
   };
 

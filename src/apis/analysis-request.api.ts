@@ -1,6 +1,6 @@
 'use server';
 
-import { camelToSnakeObject, snakeToCamel } from '@/utils/camelize.util';
+import { camelToSnake, snakeToCamel } from '@/utils/camelize.util';
 import { getServerClient } from '@/lib/supabase/server';
 import {
   AiRequestDTO,
@@ -98,9 +98,7 @@ export const createAiResponses = async (
 }> => {
   const supabase = getServerClient();
 
-  const { error } = await supabase
-    .from('ai_responses')
-    .insert(camelToSnakeObject<CreateAiFullResponseDTO[]>(insertPayload));
+  const { error } = await supabase.from('ai_responses').insert(camelToSnake<CreateAiFullResponseDTO[]>(insertPayload));
 
   return { error };
 };
@@ -115,7 +113,7 @@ export const createAiResponses = async (
 export const createAiResponse = async (food: CreateAiPartialResponseDTO): Promise<AiResponseDTO> => {
   const supabase = getServerClient();
 
-  const { data, error } = await supabase.from('ai_responses').insert(camelToSnakeObject(food)).select().single();
+  const { data, error } = await supabase.from('ai_responses').insert(camelToSnake(food)).select().single();
 
   if (error) throw error;
 
@@ -131,7 +129,7 @@ export const createAiResponse = async (food: CreateAiPartialResponseDTO): Promis
 export const updateCaloriesAnalysisResult = async (food: AiResponseDTO): Promise<{ error: PostgrestError | null }> => {
   const supabase = getServerClient();
   const { id } = food;
-  const { error } = await supabase.from('ai_responses').update(camelToSnakeObject(food)).eq('id', id);
+  const { error } = await supabase.from('ai_responses').update(camelToSnake(food)).eq('id', id);
 
   return { error };
 };
