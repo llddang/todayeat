@@ -10,8 +10,7 @@ type MacronutrientBoxProps = {
 
 const MacronutrientBox = ({ variety, value, goal }: MacronutrientBoxProps) => {
   const percent = getPercentage(value, goal);
-  const barColor = MACRONUTRIENT_OPTIONS[variety].color || 'bg-gray-300';
-  const label = MACRONUTRIENT_OPTIONS[variety].label;
+  const { color: barColor, label } = MACRONUTRIENT_OPTIONS[variety];
 
   return (
     <div className="flex flex-1 flex-col gap-1.5 rounded-2xl bg-white p-4">
@@ -23,7 +22,6 @@ const MacronutrientBox = ({ variety, value, goal }: MacronutrientBoxProps) => {
           <span className="mr-0.5">{goal}</span>g
         </div>
       </div>
-
       <div className="my-1.5 h-2.5 w-full overflow-hidden rounded-md bg-gray-200">
         <div className={`h-full rounded-md ${barColor}`} style={{ width: `${percent}%` }}></div>
       </div>
