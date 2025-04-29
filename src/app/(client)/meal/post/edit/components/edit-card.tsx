@@ -7,17 +7,13 @@ import { Button } from '@/components/ui/button';
 import { MacronutrientEnum } from '@/types/nutrition.type';
 import {} from '@/types/DTO/meal.dto';
 import { AiResponseDTO } from '@/types/DTO/ai_analysis.dto';
-import dynamic from 'next/dynamic';
 import { Input } from '@/components/ui/input';
 import { parseGeminiResponse } from '@/lib/gemini';
 import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
 import { Typography } from '@/components/ui/typography';
 import { formatNumberWithComma } from '@/utils/format.util';
 import { MAX_MENU_NAME_LENGTH, MAX_NUMERIC_LENGTH } from '../constants/meal-edit.constant';
-
-const AiLoaderWithoutBg = dynamic(() => import('./ai-loader-without-bg'), {
-  ssr: false
-});
+import AiLoaderLottie from '@/components/commons/ai-loader-lottie';
 
 type EditCardProps = {
   mealDetail: AiResponseDTO;
@@ -68,7 +64,7 @@ const EditCard = ({ mealDetail, idx, onRemove, onHandleError }: EditCardProps) =
     <div className="flex w-full flex-col items-center justify-center gap-2 self-stretch rounded-2xl bg-white/50 p-2 backdrop-blur-[50px]">
       {isLoading ? (
         <div className="flex h-[11.875rem] w-full flex-col items-center justify-center rounded-xl bg-white">
-          <AiLoaderWithoutBg />
+          <AiLoaderLottie withBackground={false} />
           <Typography as="span" variant="subTitle1" className="w-full text-center">
             AI가 다시 분석하고 있어요!
           </Typography>

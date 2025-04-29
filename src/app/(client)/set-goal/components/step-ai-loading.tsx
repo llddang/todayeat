@@ -1,10 +1,6 @@
-import dynamic from 'next/dynamic';
-import { Typography } from '@/components/ui/typography';
 import { useEffect } from 'react';
-
-const AiLoaderLottie = dynamic(() => import('@/components/commons/ai-loader-lottie'), {
-  ssr: false
-});
+import { Typography } from '@/components/ui/typography';
+import AiLoaderLottie from '@/components/commons/ai-loader-lottie';
 
 type StepAiLoadingProps = {
   nextStep: () => void;

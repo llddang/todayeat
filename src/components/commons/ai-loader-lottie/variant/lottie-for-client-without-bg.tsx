@@ -1,10 +1,14 @@
-import Lottie from 'react-lottie-player';
+'use client';
+
+import { lazy } from 'react';
 import AiLoaderStar from '@/../public/lottie/ai-loader-star.json';
 
-const AiLoaderWithoutBg = () => {
+const LazyLottieComponent = lazy(() => import('react-lottie-player'));
+
+const LottieForClientWithoutBg = () => {
   return (
-    <div className="relative flex aspect-square w-20 items-center justify-center">
-      <Lottie
+    <div className="relative h-20 w-20">
+      <LazyLottieComponent
         loop
         play
         animationData={AiLoaderStar}
@@ -14,4 +18,4 @@ const AiLoaderWithoutBg = () => {
   );
 };
 
-export default AiLoaderWithoutBg;
+export default LottieForClientWithoutBg;
