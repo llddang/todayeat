@@ -51,7 +51,6 @@ const AddMealCardPc = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: AddM
   const onSubmit = async (data: FoodFormValues) => {
     try {
       setIsAnalyzing(true);
-
       const generatedTextResult = await generateCaloriesAnalysisByText(
         data.menuName,
         data.weight ? Number(data.weight) : 0
@@ -59,7 +58,6 @@ const AddMealCardPc = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: AddM
       const [aiResult] = parseGeminiResponse(generatedTextResult);
       if (!aiResult) {
         onModalInfoChange(ERROR_MESSAGES.AI_ANALYSIS_FAILED);
-        setIsAnalyzing(false);
         return onOpenModalChange(true);
       }
 
@@ -71,13 +69,13 @@ const AddMealCardPc = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: AddM
 
       onAddMeal(newMeal);
       form.reset();
-      setIsAnalyzing(false);
       setIsOpen(false);
     } catch (err) {
       console.error('에러 발생:', err);
-      setIsAnalyzing(false);
       onModalInfoChange(ERROR_MESSAGES.AI_ANALYSIS_FAILED_DEFAULT);
       return onOpenModalChange(true);
+    } finally {
+      setIsAnalyzing(false);
     }
   };
 
