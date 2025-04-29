@@ -9,6 +9,7 @@ const SITE_MAP = {
   REPORT: '/report',
   MEAL_POST_EDIT: '/meal/post/edit',
   MEAL_DETAIL: '/meal/detail',
-  SET_GOAL: '/set-goal'
+  SET_GOAL: '/set-goal',
+  ONBOARDING: '/onboarding'
 } as const;
 export default SITE_MAP;

@@ -4,12 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
 import { GenderType } from '@/types/user-personal-info.type';
 import { GOAL_OPTIONS } from '../constants/funnel.constant';
+import { useUserStore } from '@/store/user-store';
 
 type StepGenderProps = {
-  userName: string;
   nextStep: (data: GenderType) => void;
 };
-const StepGender = ({ userName, nextStep }: StepGenderProps) => {
+
+const StepGender = ({ nextStep }: StepGenderProps) => {
+  const { nickname: userName } = useUserStore((state) => state.user);
   const [selectedOption, setSelectedOption] = useState<GenderType | null>(null);
 
   const handleSelectOption = (e: React.ChangeEvent<HTMLInputElement>) => {

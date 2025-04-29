@@ -38,6 +38,9 @@
     --carbohydrate: #e3c0fa;
     --protein: #9be7d6;
     --fat: #c2ebff;
+    --bar-previous: #fff5cc;
+    --bar-current: #ffe37e;
+    --reference-line: #ffb800;
   }
   .dark {
     --background: 240 10% 3.9%;

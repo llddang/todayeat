@@ -1,6 +1,8 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
-import { FormControl, FormField, FormItem, FormLabel, Form } from '@/components/ui/form';
+import { FormControl, FormField, FormItem, FormLabel, Form, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { MAX_MENU_NAME_LENGTH, MAX_NUMERIC_LENGTH } from '../edit/constants/meal-edit.constant';
 import { formatNumberWithComma } from '@/utils/format.util';
@@ -12,35 +14,41 @@ import { parseGeminiResponse } from '@/lib/gemini';
 import { Typography } from '@/components/ui/typography';
 import IconButton from '@/components/commons/icon-button';
 import AddMealAiLoading from './add-meal-ai-loading';
-import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createAiRequestByText, createFoodAnalysisRequestDetail } from '@/apis/analysis-request.api';
 import { useRouter } from 'next/navigation';
+import Modal from '@/components/commons/modal';
+import { ERROR_MESSAGES } from '../constants/analysis-error.constant';
+import { FoodFormValues, formSchema } from '../schemas/add-meal.schema';
 
 const AddMealDrawer = () => {
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
+  const [modalInfo, setModalInfo] = useState<{ title: string; content: string }>({
+    title: '',
+    content: ''
+  });
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const router = useRouter();
   const form = useForm<FoodFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       menuName: ''
-    }
+    },
+    mode: 'onBlur'
   });
-
-  const isSubmit = form.watch('menuName')?.trim().length > 0;
 
   const onSubmit = async (data: FoodFormValues) => {
     setIsAnalyzing(true);
 
-    if (!data.menuName) {
-      setIsAnalyzing(false);
-      return alert('메뉴명을 입력해주세요.');
-    }
-
     try {
       const { error } = await createAiRequestByText();
       if (error) {
-        throw new Error(ERROR_MESSAGES.LOGIN_REQUIRED);
+        setModalInfo({
+          title: ERROR_MESSAGES.LOGIN_REQUIRED.title,
+          content: ERROR_MESSAGES.LOGIN_REQUIRED.content
+        });
+        setIsAnalyzing(false);
+        return setIsModalOpen(true);
       }
 
       const generatedTextResult = await generateCaloriesAnalysisByText(
@@ -49,8 +57,12 @@ const AddMealDrawer = () => {
       );
       const [parsedResult] = parseGeminiResponse(generatedTextResult);
       if (!parsedResult) {
-        // TODO: 분석 실패시 문구 수정 및 유저 확인용 모달 추가
-        throw new Error(ERROR_MESSAGES.AI_ANALYSIS_FAILED);
+        setModalInfo({
+          title: ERROR_MESSAGES.AI_ANALYSIS_FAILED.title,
+          content: ERROR_MESSAGES.AI_ANALYSIS_FAILED.content
+        });
+        setIsAnalyzing(false);
+        return setIsModalOpen(true);
       }
       const newMeal = {
         ...parsedResult,
@@ -61,14 +73,12 @@ const AddMealDrawer = () => {
     } catch (err) {
       setIsAnalyzing(false);
       if (err instanceof Error) {
-        if (err.message === ERROR_MESSAGES.LOGIN_REQUIRED) {
-          return alert(err.message);
-        }
-        if (err.message === ERROR_MESSAGES.AI_ANALYSIS_FAILED) {
-          return alert(err.message);
-        }
+        setModalInfo({
+          title: ERROR_MESSAGES.SERVICE_ERROR.title,
+          content: ERROR_MESSAGES.SERVICE_ERROR.content
+        });
+        return setIsModalOpen(true);
       }
-      return alert(ERROR_MESSAGES.SERVICE_ERROR);
     }
   };
 
@@ -112,6 +122,7 @@ const AddMealDrawer = () => {
                             {...field}
                           />
                         </FormControl>
+                        <FormMessage />
                       </FormItem>
                     )}
                   />
@@ -141,7 +152,7 @@ const AddMealDrawer = () => {
                 </div>
 
                 <DrawerFooter>
-                  <Button type="submit" className="w-full typography-subTitle4" disabled={!isSubmit}>
+                  <Button type="submit" className="w-full typography-subTitle4" disabled={!form.formState.isValid}>
                     분석 시작하기
                   </Button>
                 </DrawerFooter>
@@ -150,21 +161,9 @@ const AddMealDrawer = () => {
           )}
         </div>
       </DrawerContent>
+      <Modal open={isModalOpen} onOpenChange={setIsModalOpen} {...modalInfo} />
     </Drawer>
   );
 };
 
 export default AddMealDrawer;
-
-const ERROR_MESSAGES = {
-  LOGIN_REQUIRED: 'AI 요청 실패하였습니다. 로그인 상태를 확인해주세요.',
-  AI_ANALYSIS_FAILED: 'AI 분석에 실패하였습니다. 메뉴명이 올바른지 확인해주세요.',
-  SERVICE_ERROR: '서비스에 일시적인 문제가 발생했습니다. 잠시 후 다시 시도해주세요.'
-} as const;
-
-const formSchema = z.object({
-  menuName: z.string().min(1, '메뉴명을 입력해주세요'),
-  weight: z.coerce.number().optional()
-});
-
-type FoodFormValues = z.infer<typeof formSchema>;

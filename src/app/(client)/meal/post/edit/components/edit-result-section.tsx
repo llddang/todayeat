@@ -40,11 +40,6 @@ type EditResultSectionProps = {
   initialMealList: Omit<AiResponseDTO, 'id'>[];
 };
 
-type ErrorMessage = {
-  title: string;
-  description: string;
-};
-
 const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProps): JSX.Element => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -227,6 +222,10 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
 
 export default EditResultSection;
 
+type ErrorMessage = {
+  title: string;
+  description: string;
+};
 const mealListSchema = z.object({
   userId: z.string(),
   menuName: z.string(),

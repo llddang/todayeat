@@ -28,19 +28,22 @@ const EditCalendarDrawer = ({ onDateChange }: EditCalendarDrawerProps) => {
         <DrawerHeader className="sr-only">
           <DrawerTitle>식사 시간 설정</DrawerTitle>
         </DrawerHeader>
-        <Calendar
-          locale={ko}
-          selected={date}
-          onDayClick={setDate}
-          weekStartsOn={1}
-          fixedWeeks
-          defaultMonth={date}
-          formatters={{ formatCaption: formatDateToLocaleKR }}
-        />
-        <div className="!mt-2 w-full pb-4 pt-2 layout-container">
-          <Button onClick={handleSelectDate} className="w-full">
-            날짜 선택 완료
-          </Button>
+        {/* TODO: DESKTOP 모달창 구현시 삭제 */}
+        <div className="mx-auto flex flex-col justify-center gap-2 desktop-width">
+          <Calendar
+            locale={ko}
+            selected={date}
+            onDayClick={setDate}
+            weekStartsOn={1}
+            fixedWeeks
+            defaultMonth={date}
+            formatters={{ formatCaption: formatDateToLocaleKR }}
+          />
+          <div className="!mt-2 w-full pb-4 pt-2 layout-container">
+            <Button onClick={handleSelectDate} className="w-full">
+              날짜 선택 완료
+            </Button>
+          </div>
         </div>
       </DrawerContent>
     </Drawer>

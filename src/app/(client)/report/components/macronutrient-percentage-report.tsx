@@ -10,15 +10,27 @@ import { MacronutrientEnum, MacronutrientEnumType, MealNutrition } from '@/types
 import { MacronutrientComparison } from '../types/nutrition.type';
 import { PeriodUnit } from '../types/chart.type';
 import { AMOUNT_CHART_OPTIONS } from '../constants/chart.constant';
+import useIsMobile from '@/hooks/use-is-mobile';
+import PieChartSkeleton from './pie-chart-skeleton';
+import { cn } from '@/lib/shadcn';
 
 type MacronutrientPercentageReportProps = {
   unit: PeriodUnit;
   total: MealNutrition;
   average: MealNutrition;
   personalInfo: UserPersonalInfoDTO | null;
+  isLoading: boolean;
 };
 
-const MacronutrientPercentageReport = ({ unit, total, average, personalInfo }: MacronutrientPercentageReportProps) => {
+const MacronutrientPercentageReport = ({
+  unit,
+  total,
+  average,
+  personalInfo,
+  isLoading
+}: MacronutrientPercentageReportProps) => {
+  const isMobile = useIsMobile();
+
   const totalMacronutrient = total.carbohydrate + total.protein + total.fat;
   const nutrientRatio: MacronutrientComparison = {
     CARBOHYDRATE: {
@@ -48,8 +60,12 @@ const MacronutrientPercentageReport = ({ unit, total, average, personalInfo }: M
     goal
   );
 
+  if (isLoading) {
+    return <PieChartSkeleton />;
+  }
+
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col xl:flex-1">
       {!personalInfo && (
         <CtaExampleFeedbackBanner
           title="건강 목표가 아직 설정되지 않았어요"
@@ -65,9 +81,13 @@ const MacronutrientPercentageReport = ({ unit, total, average, personalInfo }: M
           {beforeBreak} <br /> {afterBreak}
         </Typography>
       )}
-      <div className="flex">
-        <MacroNutrientPieChart data={total} />
-        <div className="m-auto flex flex-col gap-4">
+      <div className="flex xl:w-full xl:flex-col xl:items-center xl:gap-6">
+        <MacroNutrientPieChart
+          data={total}
+          innerRadius={isMobile ? MOBILE_INNER_RADIUS : personalInfo ? PC_INNER_RADIUS_LARGE : PC_INNER_RADIUS_SMALL}
+          className={cn(personalInfo ? 'xl:h-[18.75rem]' : 'xl:h-[12.5rem]', 'h-[13.1875rem]')}
+        />
+        <div className="m-auto flex flex-col gap-4 xl:w-full xl:px-10 xl:pb-6">
           <MacronutrientPercentageBox
             variety={MacronutrientEnum.CARBOHYDRATE}
             value={nutrientRatio.CARBOHYDRATE.consumed}
@@ -90,3 +110,7 @@ const MacronutrientPercentageReport = ({ unit, total, average, personalInfo }: M
 };
 
 export default MacronutrientPercentageReport;
+
+const MOBILE_INNER_RADIUS = 56;
+const PC_INNER_RADIUS_LARGE = 80;
+const PC_INNER_RADIUS_SMALL = 53;
