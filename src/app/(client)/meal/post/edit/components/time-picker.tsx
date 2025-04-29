@@ -85,7 +85,7 @@ const TimePicker = ({ currentTime, onTimeChange }: TimePickerProps) => {
 };
 
 export default TimePicker;
-//  TODO: 공통 상수로 변경하기 
+//  TODO: 공통 상수로 변경하기
 export const hours = Array.from({ length: 13 }, (_, i) => String(i).padStart(2, '0'));
 export const minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'));
 
