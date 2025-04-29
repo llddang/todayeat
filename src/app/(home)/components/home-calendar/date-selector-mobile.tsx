@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ko } from 'date-fns/locale';
 import Calendar from '@/components/ui/calendar';
 import { Button } from '@/components/ui/button';
@@ -11,22 +10,11 @@ import {
   DrawerTitle,
   DrawerTrigger
 } from '@/components/ui/drawer';
-import { useDateContext } from '@/app/(home)/contexts/date.context';
 import { formatDateToLocaleKR } from '@/utils/format.util';
+import useDateSelector from '../../hooks/use-date-selector';
 
 const DateSelectorMobile = () => {
-  const { selectedDate, currentDate, setCurrentDate, setSelectedDate } = useDateContext();
-
-  const [date, setDate] = useState<Date>(selectedDate);
-
-  const handleSelectDate = () => {
-    setSelectedDate(date);
-    setCurrentDate(date);
-  };
-
-  const handleOpen = () => {
-    setDate(selectedDate);
-  };
+  const { currentDate, date, setDate, handleOpen, handleClose } = useDateSelector();
 
   return (
     <Drawer>
@@ -56,7 +44,7 @@ const DateSelectorMobile = () => {
             formatters={{ formatCaption: formatDateToLocaleKR }}
           />
           <DrawerClose asChild className="!mt-2 w-full pb-4 pt-2">
-            <Button onClick={handleSelectDate} className="w-full">
+            <Button onClick={handleClose} className="w-full">
               날짜 선택 완료
             </Button>
           </DrawerClose>

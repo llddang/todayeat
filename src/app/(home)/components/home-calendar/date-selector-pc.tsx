@@ -1,7 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { ko } from 'date-fns/locale';
-import { useDateContext } from '../../contexts/date.context';
-import { useState } from 'react';
 import Calendar from '@/components/ui/calendar';
 import { formatDateToLocaleKR } from '@/utils/format.util';
 import {
@@ -14,20 +12,10 @@ import {
 } from '@radix-ui/react-dialog';
 import { Typography } from '@/components/ui/typography';
 import { DrawerTrigger } from '@/components/ui/drawer';
+import useDateSelector from '../../hooks/use-date-selector';
 
 const DateSelectorPc = () => {
-  const { selectedDate, currentDate, setCurrentDate, setSelectedDate } = useDateContext();
-
-  const [date, setDate] = useState<Date>(selectedDate);
-
-  const handleSelectDate = () => {
-    setSelectedDate(date);
-    setCurrentDate(date);
-  };
-
-  const handleOpen = () => {
-    setDate(selectedDate);
-  };
+  const { currentDate, date, setDate, handleOpen, handleClose } = useDateSelector();
 
   return (
     <Dialog>
@@ -62,7 +50,7 @@ const DateSelectorPc = () => {
           classNames={{ month: 'space-y-3' }}
         />
         <DialogClose asChild className="!mt-2 w-full py-2 layout-container">
-          <Button onClick={handleSelectDate} className="w-full">
+          <Button onClick={handleClose} className="w-full">
             날짜 선택 완료
           </Button>
         </DialogClose>
