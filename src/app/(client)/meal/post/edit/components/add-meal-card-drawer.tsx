@@ -16,6 +16,7 @@ import { AiResponseDTO } from '@/types/DTO/ai_analysis.dto';
 import { formatNumberWithComma } from '@/utils/format.util';
 import { MAX_MENU_NAME_LENGTH, MAX_NUMERIC_LENGTH } from '../constants/meal-edit.constant';
 import { parseNumber } from '../utils/meal-edit.util';
+import { ERROR_MESSAGES } from '../constants/error-message.constant';
 
 type FoodFormValues = {
   menuName: string;
@@ -24,9 +25,11 @@ type FoodFormValues = {
 
 type AddMealCardDrawerProps = {
   onAddMeal: (meal: Omit<AiResponseDTO, 'id'>) => void;
+  onOpenModalChange: (isOpen: boolean) => void;
+  onModalInfoChange: (modalInfo: { title: string; description: string }) => void;
 };
 
-const AddMealCardDrawer = ({ onAddMeal }: AddMealCardDrawerProps) => {
+const AddMealCardDrawer = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: AddMealCardDrawerProps) => {
   const user = useUserStore((state) => state.user);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +41,7 @@ const AddMealCardDrawer = ({ onAddMeal }: AddMealCardDrawerProps) => {
     }
   });
 
-  const canSubmit = form.watch('menuName')?.trim().length > 0;
+  const canSubmit = form.watch('menuName').trim().length > 0;
 
   const onSubmit = async (data: FoodFormValues) => {
     try {
@@ -48,22 +51,17 @@ const AddMealCardDrawer = ({ onAddMeal }: AddMealCardDrawerProps) => {
         data.menuName,
         data.weight ? Number(data.weight) : 0
       );
-      const parsedResult = parseGeminiResponse(generatedTextResult);
-      if (parsedResult.length === 0) {
-        alert('AI 분석에 실패하였습니다. 메뉴명을 다시 입력해주세요.');
+      const [aiResult] = parseGeminiResponse(generatedTextResult);
+      if (!aiResult) {
+        onModalInfoChange(ERROR_MESSAGES.AI_ANALYSIS_FAILED);
         setIsAnalyzing(false);
-        return;
+        return onOpenModalChange(true);
       }
-      const aiResult = parsedResult[0];
 
       const newMeal = {
+        ...aiResult,
         userId: user.id,
-        menuName: data.menuName,
-        weight: aiResult.weight,
-        calories: aiResult.calories,
-        carbohydrate: aiResult.carbohydrate,
-        protein: aiResult.protein,
-        fat: aiResult.fat
+        menuName: data.menuName
       };
 
       onAddMeal(newMeal);
@@ -73,7 +71,8 @@ const AddMealCardDrawer = ({ onAddMeal }: AddMealCardDrawerProps) => {
     } catch (err) {
       console.error('에러 발생:', err);
       setIsAnalyzing(false);
-      alert('AI 분석 중 문제가 발생했어요. 다시 시도해 주세요.');
+      onModalInfoChange(ERROR_MESSAGES.AI_ANALYSIS_FAILED_DEFAULT);
+      return onOpenModalChange(true);
     }
   };
 
@@ -86,7 +85,7 @@ const AddMealCardDrawer = ({ onAddMeal }: AddMealCardDrawerProps) => {
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
-        <div className="flex cursor-pointer flex-col items-center gap-3 rounded-2xl bg-white px-4 py-5">
+        <div className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl bg-white px-4 py-5 xl:min-h-[16.125rem]">
           <IconButton
             size="md"
             icon="before:bg-add-line-icon"
