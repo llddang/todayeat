@@ -43,6 +43,8 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="ko">
+      <link rel="preload" href="/lottie/ai-loader-star.json" as="fetch" type="application/json" />
+      <link rel="preload" href="/lottie/ai-loader-bg.json" as="fetch" type="application/json" />
       <body className={`${wantedSans.className} text-gray-900 antialiased`}>
         <Suspense>
           <ErrorHandler />
