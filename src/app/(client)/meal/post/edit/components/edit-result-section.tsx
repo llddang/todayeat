@@ -83,7 +83,11 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
 
   const handleAddMeal = useCallback((newMeal: Omit<AiResponseDTO, 'id'>) => append(newMeal), [append]);
   const handleRemoveMeal = useCallback((index: number) => remove(index), [remove]);
-
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
   const handleDayChange = (day: Date) => mealFormMethods.setValue('date.day', day);
   const handleTimeChange = (time: TimeFields) => {
     mealFormMethods.setValue('date.meridiem', time.meridiem);
@@ -134,7 +138,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
         </div>
 
         <FormProvider {...mealFormMethods}>
-          <form onSubmit={mealFormMethods.handleSubmit(onSubmit)}>
+          <form onSubmit={mealFormMethods.handleSubmit(onSubmit)} onKeyDown={handleKeyDown}>
             <section className="flex flex-col gap-3">
               <Typography className="pl-1">
                 음식 정보
