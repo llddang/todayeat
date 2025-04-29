@@ -17,25 +17,25 @@ import { Typography } from '@/components/ui/typography';
 import GlassBackground from '@/components/commons/glass-background';
 import TagSelectItem from '@/components/commons/tag-select-item';
 import { Button } from '@/components/ui/button';
-import TimePicker, { DateFields, TimeFields } from './time-picker';
 import SITE_MAP from '@/constants/site-map.constant';
 import MacronutrientBox from '@/components/commons/macronutrient-box';
 import MacronutrientPieChart from '@/components/commons/macronutrient-pie-chart';
 import { MacronutrientEnum } from '@/types/nutrition.type';
-import EditCalendarDrawer from './edit-calendar-drawer';
 import AddMealCardDrawer from './add-meal-card-drawer';
 import { MAX_MEMO_LENGTH } from '../constants/meal-edit.constant';
 import { MEAL_CATEGORY } from '../../../constants/category.constant';
 import MemoBox from '../../../detail/components/memo-box';
 import Responsive from '@/components/commons/responsive';
-import EditCalendarPc from './edit-calendar-pc';
-import TimePickerPc from './time-picker-pc';
+import TimePickerPc from '../../../components/time-picker-pc';
 import AddMealCardPc from './add-meal-card-pc';
 import Modal from '@/components/commons/modal';
 import { ERROR_MESSAGES } from '../constants/error-message.constant';
 import { CreateMealDTO } from '@/types/DTO/meal.dto';
 import { deleteAnalysisData } from '@/apis/analysis-request.api';
 import { ErrorMessage, handleError } from '../../../utils/error.util';
+import MealCalendarPc from '../../../components/meal-calendar-pc';
+import MealCalendarDrawer from '../../../components/meal-calendar-drawer';
+import TimePicker, { DateFields, TimeFields } from '../../../components/time-picker';
 
 type EditResultSectionProps = {
   imageList: string[];
@@ -201,8 +201,8 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
                 </div>
                 <div className="flex w-full gap-2">
                   <Responsive
-                    pc={<EditCalendarPc date={day} onDateChange={handleDayChange} />}
-                    mobile={<EditCalendarDrawer date={day} onDateChange={handleDayChange} />}
+                    pc={<MealCalendarPc date={day} onDateChange={handleDayChange} />}
+                    mobile={<MealCalendarDrawer date={day} onDateChange={handleDayChange} />}
                     mode="js"
                   />
                   <Responsive
@@ -215,7 +215,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
             </section>
             <MemoBox maxLength={MAX_MEMO_LENGTH} {...mealFormMethods.register('memo')} />
             <div className="flex w-full justify-end">
-              <Button type="submit" className="mt-3" disabled={isLoading}>
+              <Button type="submit" className="mt-3 w-full xl:w-auto" disabled={isLoading}>
                 기록 저장하기
               </Button>
             </div>

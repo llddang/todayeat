@@ -12,20 +12,20 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Typography } from '@/components/ui/typography';
 import GlassBackground from '@/components/commons/glass-background';
-import TimePicker, { TimeFields } from '../../post/edit/components/time-picker';
 import { Button } from '@/components/ui/button';
 import { formatTimestamp } from '@/utils/format.util';
 import { updateMeal } from '@/apis/meal.api';
 import { MEAL_CATEGORY } from '../../constants/category.constant';
 import { ChangeEvent, useMemo, useState } from 'react';
-import EditCalendarDrawer from '../../post/edit/components/edit-calendar-drawer';
 import MemoBox from './memo-box';
-import EditCalendarPc from '../../post/edit/components/edit-calendar-pc';
 import Responsive from '@/components/commons/responsive';
-import TimePickerPc from '../../post/edit/components/time-picker-pc';
+import TimePickerPc from '../../components/time-picker-pc';
 import { ERROR_MESSAGES } from '../../post/edit/constants/error-message.constant';
 import { ErrorMessage } from '../../utils/error.util';
 import Modal from '@/components/commons/modal';
+import MealCalendarDrawer from '../../components/meal-calendar-drawer';
+import MealCalendarPc from '../../components/meal-calendar-pc';
+import TimePicker, { TimeFields } from '../../components/time-picker';
 
 type MealDetailSectionProps = {
   meal: MealDTO;
@@ -117,8 +117,8 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps) => {
               </div>
               <div className="flex w-full gap-2">
                 <Responsive
-                  pc={<EditCalendarPc date={day} onDateChange={handleDayChange} />}
-                  mobile={<EditCalendarDrawer date={day} onDateChange={handleDayChange} />}
+                  pc={<MealCalendarPc date={day} onDateChange={handleDayChange} />}
+                  mobile={<MealCalendarDrawer date={day} onDateChange={handleDayChange} />}
                   mode="js"
                 />
                 <Responsive
@@ -132,7 +132,7 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps) => {
           <MemoBox maxLength={200} {...register('memo')} />
         </form>
         <div className="flex w-full justify-end">
-          <Button type="submit" variant="primary" className="" form="mealDetailForm">
+          <Button type="submit" variant="primary" className="w-full xl:w-auto" form="mealDetailForm">
             기록 저장하기
           </Button>
         </div>
