@@ -15,9 +15,9 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="py-layout layout-container xl:pb-0 xl:pt-20">
+    <div className="layout-container">
       <Header variant="withProfile" />
-      <div className="py-layout">
+      <div className="py-layout xl:pt-20">
         <main className="mx-auto flex h-full w-full justify-center layout-container">{children}</main>
         <Footer />
       </div>
