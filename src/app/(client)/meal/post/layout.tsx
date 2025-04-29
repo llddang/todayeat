@@ -15,10 +15,10 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="layout-container">
+    <div className="py-layout layout-container xl:pb-0 xl:pt-20">
       <Header variant="withProfile" />
-      <div className="py-layout">
-        <main className="mx-auto desktop-width">{children}</main>
+      <div className="mx-auto flex h-full w-full flex-col desktop-width">
+        <main>{children}</main>
         <Footer />
       </div>
       <GlobalNavigationBar />
