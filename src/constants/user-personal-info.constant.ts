@@ -19,8 +19,8 @@ export const NUTRITION_PURPOSE_OPTIONS: Record<PurposeType, PurposeValue> = {
     name: '🎯 체지방 줄이기',
     factor: 0.8,
     ratio: {
-      carbohydrate: 0.3,
-      protein: 0.4,
+      carbohydrate: 0.4,
+      protein: 0.3,
       fat: 0.3
     }
   },
@@ -28,17 +28,17 @@ export const NUTRITION_PURPOSE_OPTIONS: Record<PurposeType, PurposeValue> = {
     name: '🔒 현재 상태 유지하기',
     factor: 1,
     ratio: {
-      carbohydrate: 0.45,
-      protein: 0.3,
-      fat: 0.25
+      carbohydrate: 0.5,
+      protein: 0.2,
+      fat: 0.3
     }
   },
   MUSCLE_GAIN: {
     name: '💪 근육 키우기',
     factor: 1.1,
     ratio: {
-      carbohydrate: 0.4,
-      protein: 0.4,
+      carbohydrate: 0.45,
+      protein: 0.35,
       fat: 0.2
     }
   }
