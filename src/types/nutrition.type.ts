@@ -41,5 +41,5 @@ export type MacronutrientValues = {
 };
 
 export type DailyMealCalories = {
-  [key in string]: { calories: number; caloriesGoal: number };
+  [key in string]: number;
 };

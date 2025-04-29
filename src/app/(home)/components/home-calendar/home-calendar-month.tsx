@@ -10,10 +10,13 @@ import { CALENDAR_STAND_COUNT } from '@/app/(home)/constants/calendar.constant';
 import DayLabel from './day-label';
 import HomeCalendarMonthItem from './home-calendar-month-item';
 import { CarouselMonth } from '../../types/calendar.type';
+import { useUserStore } from '@/store/user-store';
 
 const HomeCalendarMonth = () => {
   const { selectedDate } = useDashboard();
   const { currentDate, dailyMealCalories, setCurrentDate, setDailyMealCalories } = useCalendar();
+
+  const { personalInfo } = useUserStore((state) => state.user);
 
   const [months, setMonths] = useState<CarouselMonth[]>(getMonthDates(currentDate));
   const [monthDate, setMonthDate] = useState<Date>(currentDate);
@@ -81,6 +84,7 @@ const HomeCalendarMonth = () => {
                   month={month.dates}
                   selectedDate={selectedDate}
                   dailyMealCalories={dailyMealCalories}
+                  dailyCaloriesGoal={personalInfo?.dailyCaloriesGoal ?? 0}
                 />
               </CarouselItem>
             );

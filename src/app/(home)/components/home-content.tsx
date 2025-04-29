@@ -1,10 +1,8 @@
 'use client';
 import CtaExampleFeedbackBanner from '@/components/commons/cta-example-feedback-banner';
 import GlassBackground from '@/components/commons/glass-background';
-import { Typography } from '@/components/ui/typography';
 import { getMyMealByDate } from '@/apis/meal.api';
 import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
-import { formatDateWithDash } from '@/utils/format.util';
 import { calculateTotalNutrition } from '@/utils/nutrition-calculator.util';
 import { useUserStore } from '@/store/user-store';
 import { MealDTO } from '@/types/DTO/meal.dto';
@@ -12,9 +10,8 @@ import { useEffect, useState } from 'react';
 import AiFeedbackText from './ai-feedback-text';
 import CaloriesSummaryCard from './calories-summary-card';
 import MacronutrientGroup from './macronutrient-group';
-import MealEmptyCard from './meal-empty-card';
-import MealCard from './meal-card';
 import ScrollbarContainer from './scrollbar-container';
+import MealCardContainer from './meal-card-container';
 
 const HomeContent = () => {
   const { selectedDate } = useDashboard();
@@ -24,13 +21,12 @@ const HomeContent = () => {
   const nutrient = calculateTotalNutrition(meals);
 
   useEffect(() => {
-    const formattedDate = formatDateWithDash(selectedDate);
-    getMyMealByDate(formattedDate).then(setMeals);
+    getMyMealByDate(selectedDate).then(setMeals);
   }, [selectedDate]);
 
   return (
-    <GlassBackground className="flex min-h-0 flex-1 flex-col gap-7 rounded-[2rem] pb-8 pt-6 xl:flex-row xl:gap-8 xl:py-6 xl:pl-6 xl:pr-3">
-      <ScrollbarContainer className="xl:flex-1 xl:pr-4" contentClassName="space-y-4">
+    <GlassBackground className="flex min-h-0 flex-1 flex-col gap-7 rounded-[2rem] pb-8 pr-3 pt-6 xl:flex-row xl:gap-8 xl:py-6 xl:pl-6 xl:pr-2">
+      <ScrollbarContainer className="pr-2 xl:flex-1 xl:pr-4" contentClassName="space-y-4">
         <AiFeedbackText nutritionData={nutrient} nutritionGoal={user.personalInfo} />
         {!user.personalInfo && (
           <CtaExampleFeedbackBanner
@@ -49,20 +45,7 @@ const HomeContent = () => {
           <MacronutrientGroup total={nutrient} goal={user.personalInfo} />
         </div>
       </ScrollbarContainer>
-      <ScrollbarContainer className="xl:flex-1 xl:pr-4">
-        <Typography as="h3" variant="subTitle2" className="mb-4 text-gray-900">
-          식단 기록
-        </Typography>
-        {meals.length === 0 ? (
-          <MealEmptyCard />
-        ) : (
-          <ul className="flex flex-col gap-4">
-            {meals.map((meal) => (
-              <MealCard key={meal.id} meal={meal} />
-            ))}
-          </ul>
-        )}
-      </ScrollbarContainer>
+      <MealCardContainer meals={meals} onMealsChange={setMeals} />
     </GlassBackground>
   );
 };

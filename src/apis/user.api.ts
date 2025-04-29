@@ -39,6 +39,12 @@ export const updateUser = async (userInfo: Partial<UpdateUserDTO>): Promise<User
   return snakeToCamelObject(data);
 };
 
+/**
+ * 유저의 개인 정보를 변경하는 함수
+ *
+ * @param {UpdateUserPersonalInfoDTO} userPersonalInfo 수정할 정보
+ * @returns {Promise<UserPersonalInfoDTO>} 변경 이후 수정된 값
+ */
 export const updateUserPersonalInfo = async (
   userPersonalInfo: UpdateUserPersonalInfoDTO
 ): Promise<UserPersonalInfoDTO> => {
@@ -58,4 +64,23 @@ export const updateUserPersonalInfo = async (
 
   if (error) throw error;
   return snakeToCamelObject(data);
+};
+
+/**
+ * 유저의 일일 목표 칼로리를 조회하는 함수
+ *
+ * @returns {Promise<number>} 일일 목표 칼로리
+ */
+export const getMyDailyCaloriesGoal = async (): Promise<number> => {
+  const supabase = getServerClient();
+
+  const { data: userData, error: userError } = await supabase
+    .from('user_personal_infos')
+    .select('daily_calories_goal')
+    .single();
+
+  if (userError && userError.code === 'PGRST116') return 0;
+  if (userError) throw userError;
+
+  return userData.daily_calories_goal;
 };
