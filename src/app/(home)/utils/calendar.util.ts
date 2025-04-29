@@ -3,6 +3,7 @@ import { formatDateWithDash } from '@/utils/format.util';
 
 import { Day, CarouselMonth, CarouselWeek } from '../types/calendar.type';
 import { DailyMealCalories } from '@/types/nutrition.type';
+import { addDays, isSameMonth, startOfMonth, startOfWeek } from 'date-fns';
 
 export const isSameDate = (d1: Date, d2: Date): boolean => formatDateWithDash(d1) === formatDateWithDash(d2);
 
@@ -27,7 +28,7 @@ export const getMonthDates = (date: Date): CarouselMonth[] => {
 
     return {
       id: monthOffset,
-      dates: calculateMonthDates(newDate)
+      dates: getMonthCalendarDays(newDate)
     };
   });
 
@@ -39,25 +40,25 @@ export const getMonthDates = (date: Date): CarouselMonth[] => {
  * @param {Date} date 기준 날짜
  * @returns {Month} 6주 캘린더 데이터 (Date[][] 형태)
  */
-export const calculateMonthDates = (date: Date): Day[][] => {
-  const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-
-  const firstDayDiff = firstDayOfMonth.getDate() - firstDayOfMonth.getDay() + (firstDayOfMonth.getDay() === 0 ? -6 : 1);
-  const firstDay = new Date(firstDayOfMonth);
-  firstDay.setDate(firstDayDiff);
+export const getMonthCalendarDays = (date: Date, offset: number = MAX_WEEK): Day[][] => {
+  const firstDayOfMonth = startOfMonth(date);
+  const monday = startOfWeek(firstDayOfMonth);
 
   const month = [];
 
-  const standMonth = date.getMonth();
-  const tempFirstDay = new Date(firstDay);
-  for (let weekOffset = 0; weekOffset < MAX_WEEK; weekOffset++) {
-    const currentWeek = [];
-    for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
-      const newData = { day: new Date(tempFirstDay), dayOutside: tempFirstDay.getMonth() !== standMonth };
-      currentWeek.push(newData);
-      tempFirstDay.setDate(tempFirstDay.getDate() + 1);
+  let currentDate = new Date(monday);
+  for (let week = 0; week < offset; week++) {
+    const weekDays = [];
+
+    for (let day = 0; day < 7; day++) {
+      weekDays.push({
+        day: new Date(currentDate),
+        dayOutside: !isSameMonth(currentDate, date)
+      });
+      currentDate = addDays(currentDate, 1);
     }
-    month.push(currentWeek);
+
+    month.push(weekDays);
   }
 
   return month;
