@@ -1,6 +1,7 @@
 'use client';
+
+import { ComponentProps, ComponentType, ReactNode } from 'react';
 import useIsClient from '@/hooks/use-is-client';
-import { ReactNode } from 'react';
 
 /**
  * ClientOnly 컴포넌트
@@ -11,14 +12,30 @@ type ClientOnlyProps = {
   children: ReactNode;
   fallback: ReactNode;
 };
-const ClientOnly = ({ children, fallback }: ClientOnlyProps) => {
-  const isClient = useIsClient();
 
-  if (!isClient) {
-    return fallback;
+type PropsWithoutChildren<T> = Omit<T, 'children'>;
+
+const ClientOnly = Object.assign(
+  ({ children, fallback }: ClientOnlyProps) => {
+    return <>{useIsClient() ? children : fallback}</>;
+  },
+  {
+    displayName: 'ClientOnly',
+    with: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+      clientOnlyProps: PropsWithoutChildren<ClientOnlyProps>,
+      Component: ComponentType<TProps>
+    ) =>
+      Object.assign(
+        (props: TProps) => (
+          <ClientOnly {...clientOnlyProps}>
+            <Component {...props} />
+          </ClientOnly>
+        ),
+        {
+          displayName: `${ClientOnly.displayName}.with(${Component.displayName || Component.name || 'Component'})`
+        }
+      )
   }
-
-  return children;
-};
+);
 
 export default ClientOnly;
