@@ -13,13 +13,13 @@ export const snakeToCamelString = (str: string): string =>
  * @param {any} obj - 변환할 객체
  * @returns {any} - 키가 camelCase로 변환된 객체
  */
-export const snakeToCamelObject = <T>(obj: T): CamelCaseObject<T> => {
+export const snakeToCamel = <T>(obj: T): CamelCaseObject<T> => {
   if (obj === null || obj === undefined) {
     return obj as unknown as CamelCaseObject<T>;
   }
 
   if (Array.isArray(obj)) {
-    return obj.map((item) => snakeToCamelObject(item)) as unknown as CamelCaseObject<T>;
+    return obj.map((item) => snakeToCamel(item)) as unknown as CamelCaseObject<T>;
   }
 
   if (typeof obj !== 'object') {
@@ -29,7 +29,7 @@ export const snakeToCamelObject = <T>(obj: T): CamelCaseObject<T> => {
   const result: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(obj)) {
     const newKey = snakeToCamelString(key);
-    if (typeof value === 'object') result[newKey] = snakeToCamelObject(value);
+    if (typeof value === 'object') result[newKey] = snakeToCamel(value);
     else result[newKey] = value;
   }
 

@@ -1,6 +1,6 @@
 'use server';
 
-import { camelToSnakeObject, snakeToCamelObject } from '@/utils/camelize.util';
+import { camelToSnakeObject, snakeToCamel } from '@/utils/camelize.util';
 import { getServerClient } from '@/lib/supabase/server';
 import {
   AiRequestDTO,
@@ -25,7 +25,7 @@ export const getFoodImagesById = async (
 
   const { data, error } = await supabase.from('ai_requests').select().eq('user_id', userId).single();
 
-  return { data: snakeToCamelObject(data), error };
+  return { data: snakeToCamel(data), error };
 };
 
 /**
@@ -82,7 +82,7 @@ export const getAiResponses = async (): Promise<AiResponseDTO[]> => {
   if (!id) return [];
   const { data, error } = await supabase.from('ai_responses').select('*').eq('user_id', id);
   if (error) throw error;
-  return snakeToCamelObject(data);
+  return snakeToCamel(data);
 };
 
 /**
@@ -119,7 +119,7 @@ export const createAiResponse = async (food: CreateAiPartialResponseDTO): Promis
 
   if (error) throw error;
 
-  return snakeToCamelObject(data);
+  return snakeToCamel(data);
 };
 
 /**

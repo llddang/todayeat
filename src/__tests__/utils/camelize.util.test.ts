@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import { snakeToCamelString, snakeToCamelObject, camelToSnake, camelToSnakeObject } from '../../utils/camelize.util';
+import { snakeToCamelString, snakeToCamel, camelToSnake, camelToSnakeObject } from '../../utils/camelize.util';
 import { snakeCaseFixtures, camelCaseFixtures } from '../fixtures/camelize.fixture';
 
 describe('camelize.util', () => {
@@ -19,17 +19,17 @@ describe('camelize.util', () => {
   describe('snakeToCamelObject', () => {
     it('단순 객체의 키를 snake_case에서 camelCase로 변환해야 합니다', () => {
       const { input, expected } = snakeCaseFixtures.simple;
-      expect(snakeToCamelObject(input)).toEqual(expected);
+      expect(snakeToCamel(input)).toEqual(expected);
     });
 
     it('중첩된 객체의 키를 snake_case에서 camelCase로 변환해야 합니다', () => {
       const { input, expected } = snakeCaseFixtures.nested;
-      expect(snakeToCamelObject(input)).toEqual(expected);
+      expect(snakeToCamel(input)).toEqual(expected);
     });
 
     it('배열 내부의 객체도 변환해야 합니다', () => {
       const { input, expected } = snakeCaseFixtures.array;
-      expect(snakeToCamelObject(input)).toEqual(expected);
+      expect(snakeToCamel(input)).toEqual(expected);
     });
   });
 
