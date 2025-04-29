@@ -55,7 +55,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
     defaultValues: {
       mealImages: imageList,
       mealList: initialMealList,
-      date: { day: new Date(), ...getTimeFieldsFromDate() },
+      date: getTimeFieldsFromDate(),
       mealCategory: MealCategory.BREAKFAST,
       memo: ''
     },
@@ -303,5 +303,5 @@ const getTimeFieldsFromDate = (date: Date = new Date()): TimeFields => {
   const formattedHours = String(hours % 12 || 12).padStart(2, '0');
   const formattedMinutes = String(minutes).padStart(2, '0');
 
-  return { meridiem, hours: formattedHours, minutes: formattedMinutes };
+  return { day: date, meridiem, hours: formattedHours, minutes: formattedMinutes };
 };
