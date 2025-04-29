@@ -1,3 +1,5 @@
+'use client';
+
 import { lazy } from 'react';
 import AiLoaderStar from '@/../public/lottie/ai-loader-star.json';
 
