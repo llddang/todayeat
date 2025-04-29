@@ -1,4 +1,3 @@
-
 export const handleError = (errorMessage: ErrorMessage) => {
   throw errorMessage;
 };
