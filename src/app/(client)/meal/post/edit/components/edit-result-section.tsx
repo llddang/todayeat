@@ -92,7 +92,6 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
 
   const onSubmit = async (form: MealEditFormData) => {
     setIsLoading(true);
-    console.log(form);
     try {
       const { date, memo, mealCategory, mealList, mealImages } = form;
       const ateAt = formatTimestamp(date);
@@ -108,9 +107,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
     } catch (error) {
       const isKnownError = typeof error === 'object' && error !== null && 'title' in error && 'description' in error;
       error = isKnownError ? error : ERROR_MESSAGES.AI_ANALYSIS_FAILED_DEFAULT;
-
       setModalInfo(error as ErrorMessage);
-
       setIsModalOpen(true);
     } finally {
       setIsLoading(false);
@@ -177,7 +174,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
               <Typography as="h3" variant="body1" className="pl-1">
                 식사 시간
               </Typography>
-              <GlassBackground className="flex w-full flex-col items-start gap-3 rounded-2xl border-none p-4">
+              <GlassBackground className="flex min-h-full w-full flex-col items-start gap-3 rounded-2xl border-none p-4">
                 <div className="scrollbar-hidden flex w-full items-start gap-2 overflow-x-auto">
                   {MEAL_CATEGORY.map((option) => (
                     <TagSelectItem
@@ -279,7 +276,16 @@ const uploadMealImages = async (imageUrls: string[]): Promise<string[]> => {
 
 const createMeal = async (newMeals: CreateMealDTO, mealList: Omit<AiResponseDTO, 'id'>[]) => {
   try {
-    return await createMealWithDetails(newMeals, mealList);
+    const mealDetails = mealList.map((meal) => ({
+      menuName: meal.menuName,
+      weight: meal.weight,
+      calories: meal.calories,
+      carbohydrate: meal.carbohydrate,
+      protein: meal.protein,
+      fat: meal.fat
+    }));
+
+    return await createMealWithDetails(newMeals, mealDetails);
   } catch (error) {
     console.error('식사 생성 중 오류:', error);
     handleError(ERROR_MESSAGES.MEAL_POST_FAILED);

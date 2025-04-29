@@ -20,6 +20,7 @@ import { useRouter } from 'next/navigation';
 import Modal from '@/components/commons/modal';
 import { ERROR_MESSAGES } from '../constants/analysis-error.constant';
 import { FoodFormValues, formSchema } from '../schemas/add-meal.schema';
+import { revalidate } from '../utils/revalidate';
 
 const AddMealDrawer = () => {
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
@@ -69,6 +70,7 @@ const AddMealDrawer = () => {
         menuName: data.menuName
       };
       await createFoodAnalysisRequestDetail(newMeal);
+      revalidate();
       router.push('/meal/post/edit');
     } catch (err) {
       setIsAnalyzing(false);
