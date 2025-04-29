@@ -41,7 +41,7 @@ export const getMonths = (date: Date): CarouselMonth[] => {
  */
 export const getMonthCalendarDays = (date: Date, offset: number = MAX_WEEK): Day[][] => {
   const firstDayOfMonth = startOfMonth(date);
-  const monday = startOfWeek(firstDayOfMonth);
+  const monday = startOfWeek(firstDayOfMonth, { weekStartsOn: 1 });
 
   const month = [];
 
