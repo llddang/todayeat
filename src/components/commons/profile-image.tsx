@@ -37,7 +37,7 @@ const ProfileImage = ({
   const imageUrl = src || DEFAULT_PROFILE;
 
   useEffect(() => {
-    setIsImageLoading(true);
+    if (!!src) setIsImageLoading(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [src]);
 

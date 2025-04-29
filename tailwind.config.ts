@@ -193,7 +193,8 @@ const config: Config = {
         'onboarding-recommend-1': 'url(/illustrations/onboarding-recommend-img-1.svg)',
         'onboarding-recommend-2': 'url(/illustrations/onboarding-recommend-img-2.svg)',
         'onboarding-recommend-3': 'url(/illustrations/onboarding-recommend-img-3.svg)',
-        'onboarding-bg': 'url(/images/onboarding-bg.png)'
+        'onboarding-bg': 'url(/images/onboarding-bg.png)',
+        'user-fill-icon': 'url(/icons/user-fill.svg)'
       },
       letterSpacing: {
         snug: '-0.0175rem'

@@ -7,6 +7,7 @@ import LOGO from '@/../public/logo.svg';
 import Link from 'next/link';
 import SITE_MAP from '@/constants/site-map.constant';
 import GlassBackground from '@/components/commons/glass-background';
+import AnonymousSignInButton from './components/anonymous-sign-in-button';
 
 const SignInPage = () => {
   return (
@@ -24,6 +25,7 @@ const SignInPage = () => {
       <GlassBackground className="min-h-0 space-y-6 rounded-[2rem] px-5 pb-8 pt-7 xl:p-10">
         <SignInForm />
         <div className="flex flex-col gap-2">
+          <AnonymousSignInButton />
           <KakaoSignInButton />
           <GoogleSignInButton />
         </div>
