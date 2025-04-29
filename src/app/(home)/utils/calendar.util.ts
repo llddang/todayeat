@@ -5,8 +5,6 @@ import { Day, CarouselMonth, CarouselWeek } from '../types/calendar.type';
 import { DailyMealCalories } from '@/types/nutrition.type';
 import { addDays, isSameMonth, startOfMonth, startOfWeek } from 'date-fns';
 
-export const isSameDate = (d1: Date, d2: Date): boolean => formatDateWithDash(d1) === formatDateWithDash(d2);
-
 export const getFirstDayInMonth = (month: Day[][]): Date => {
   return month[0][0].day ?? new Date();
 };
