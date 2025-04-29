@@ -148,7 +148,16 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
               </Typography>
               <div className="flex flex-col gap-3 xl:grid xl:grid-cols-2">
                 {mealCardList.map((meal, idx) => (
-                  <EditCard key={meal.id} idx={idx} mealDetail={meal} onRemove={() => handleRemoveMeal(idx)} />
+                  <EditCard
+                    key={meal.id}
+                    idx={idx}
+                    mealDetail={meal}
+                    onRemove={() => handleRemoveMeal(idx)}
+                    onHandleError={() => {
+                      setModalInfo(ERROR_MESSAGES.AI_ANALYSIS_FAILED);
+                      setIsModalOpen(true);
+                    }}
+                  />
                 ))}
                 <Responsive
                   pc={
@@ -247,6 +256,7 @@ const mealEditFormSchema = z.object({
   memo: z.string()
 });
 type MealEditFormData = z.infer<typeof mealEditFormSchema>;
+
 const handleError = (errorMessage: { title: string; description: string }) => {
   throw errorMessage;
 };

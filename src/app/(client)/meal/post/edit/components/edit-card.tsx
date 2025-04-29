@@ -23,9 +23,10 @@ type EditCardProps = {
   mealDetail: AiResponseDTO;
   idx: number;
   onRemove: () => void;
+  onHandleError: () => void;
 };
 
-const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
+const EditCard = ({ mealDetail, idx, onRemove, onHandleError }: EditCardProps) => {
   const { control, register, watch, setValue, getValues } = useFormContext();
   const [isLoading, setIsLoading] = useState(false);
   const menuName = watch(`mealList.${idx}.menuName`);
@@ -44,15 +45,14 @@ const EditCard = ({ mealDetail, idx, onRemove }: EditCardProps) => {
     setIsLoading(true);
     try {
       const generatedTextResult = await generateCaloriesAnalysisByText(menuName, weight);
-      const parsedResult = parseGeminiResponse(generatedTextResult);
-      const aiResult = parsedResult[0];
-
+      const [aiResult] = parseGeminiResponse(generatedTextResult);
+      if (!aiResult) onHandleError();
       const meal = getValues(`mealList.${idx}`);
       const newDetail = { ...meal, ...aiResult };
       setValue(`mealList.${idx}`, newDetail);
     } catch (error) {
       console.error('식단 분석요청에 실패하였습니다.', error);
-      alert('분석에 실패했습니다. 다시 시도해주세요.');
+      onHandleError();
     } finally {
       setIsLoading(false);
     }
