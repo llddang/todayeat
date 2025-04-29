@@ -17,6 +17,7 @@ import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
 import { parseGeminiResponse } from '@/lib/gemini';
 import { ERROR_MESSAGES } from '../constants/analysis-error.constant';
 import { FoodFormValues, formSchema } from '../schemas/add-meal.schema';
+import { revalidate } from '../utils/revalidate';
 
 type AddMealModalProps = {
   onModalOpenChange: (isModalOpen: boolean) => void;
@@ -66,6 +67,7 @@ const AddMealModal = ({ onLoadingChange, onModalOpenChange, onModalInfoChange }:
         menuName: data.menuName
       };
       await createAiResponse(newMeal);
+      revalidate();
       router.push('/meal/post/edit');
     } catch (err) {
       onLoadingChange(false);
