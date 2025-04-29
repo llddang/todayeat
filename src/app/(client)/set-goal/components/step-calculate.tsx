@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, MouseEvent, useState } from 'react';
+import { ChangeEvent, MouseEvent, Suspense, useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import formSchema from '@/app/schemas/form-schema.schema';
@@ -17,16 +17,10 @@ import MacronutrientBox from './macronutrient-box';
 import { StepCompleteType } from '../types/funnel.type';
 import { formatNumberWithComma } from '@/utils/format.util';
 import { useClientCalculation } from '../hooks/use-client-calculation';
-import calculateMacronutrientData from '../utils/calculate-macronutrient-data.ts';
 
 type StepCalculateProps = {
   nextStep: (data: string) => void;
   data: StepCompleteType;
-};
-
-export type PersonalMacronutrientData = {
-  grams: number;
-  percentage: number;
 };
 
 const caloriesFormSchema = z.object({
@@ -45,14 +39,15 @@ const StepCalculate = ({ nextStep, data }: StepCalculateProps) => {
     ...userPersonalGoal
   });
 
+  const defaultRatio = { carbohydrate: 0, protein: 0, fat: 0 };
+  const purposeRatio = data.purpose ? NUTRITION_PURPOSE_OPTIONS[data.purpose]?.ratio : defaultRatio;
+
   const form = useForm<FormValues>({
     resolver: zodResolver(caloriesFormSchema),
     defaultValues: {
       calories: String(userPersonalInfos.dailyCaloriesGoal) || ''
     }
   });
-
-  const macronutrientData = calculateMacronutrientData(userPersonalInfos);
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -124,9 +119,15 @@ const StepCalculate = ({ nextStep, data }: StepCalculateProps) => {
           목표 칼로리 기준 영양소 권장량
         </Typography>
         <div className="grid grid-cols-2 gap-2">
-          <MacronutrientBox label="CARBOHYDRATE" data={macronutrientData.carbohydrate} />
-          <MacronutrientBox label="PROTEIN" data={macronutrientData.protein} />
-          <MacronutrientBox label="FAT" data={macronutrientData.fat} />
+          <Suspense>
+            <MacronutrientBox
+              label="CARBOHYDRATE"
+              gram={userPersonalInfos.dailyCarbohydrateGoal}
+              ratio={purposeRatio.carbohydrate}
+            />
+            <MacronutrientBox label="PROTEIN" gram={userPersonalInfos.dailyProteinGoal} ratio={purposeRatio.protein} />
+            <MacronutrientBox label="FAT" gram={userPersonalInfos.dailyFatGoal} ratio={purposeRatio.fat} />
+          </Suspense>
         </div>
       </div>
       <div className="fixed bottom-[calc(env(safe-area-inset-bottom,1.5rem)+1.5rem)] left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2 xl:relative xl:bottom-auto xl:left-auto xl:mt-6 xl:w-full xl:-translate-x-0">
