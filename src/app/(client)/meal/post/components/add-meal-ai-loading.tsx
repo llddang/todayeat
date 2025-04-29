@@ -1,9 +1,5 @@
-import dynamic from 'next/dynamic';
 import { Typography } from '@/components/ui/typography';
-
-const AiLoaderLottie = dynamic(() => import('@/components/commons/ai-loader-lottie'), {
-  ssr: false
-});
+import AiLoaderLottie from '@/components/commons/ai-loader-lottie';
 
 const AddMealAiLoading = () => {
   return (
