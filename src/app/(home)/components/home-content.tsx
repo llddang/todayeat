@@ -9,7 +9,7 @@ import { MealDTO } from '@/types/DTO/meal.dto';
 import { useEffect, useState } from 'react';
 import AiFeedbackText from './ai-feedback-text';
 import CaloriesSummaryCard from './calories-summary-card';
-import MacroNutrientGroup from './macronutrient-group';
+import MacronutrientGroup from './macronutrient-group';
 import ScrollbarContainer from './scrollbar-container';
 import MealCardContainer from './meal-card-container';
 
@@ -42,7 +42,7 @@ const HomeContent = () => {
         )}
         <div className="space-y-3">
           <CaloriesSummaryCard total={nutrient.calories} goal={user.personalInfo?.dailyCaloriesGoal || 0} />
-          <MacroNutrientGroup total={nutrient} goal={user.personalInfo} />
+          <MacronutrientGroup total={nutrient} goal={user.personalInfo} />
         </div>
       </ScrollbarContainer>
       <MealCardContainer meals={meals} onMealsChange={setMeals} />

@@ -1,12 +1,12 @@
 import { Macronutrient, MacronutrientEnum, MacronutrientGoal } from '@/types/nutrition.type';
 import MacronutrientBox from './macronutrient-box';
 
-type MacroNutrientGroupProps = {
+type MacronutrientGroupProps = {
   total: Macronutrient;
   goal: MacronutrientGoal | null;
 };
 
-const MacroNutrientGroup = ({ total, goal }: MacroNutrientGroupProps) => {
+const MacronutrientGroup = ({ total, goal }: MacronutrientGroupProps) => {
   return (
     <div className="flex gap-3 xl:flex-col">
       <MacronutrientBox
@@ -24,4 +24,4 @@ const MacroNutrientGroup = ({ total, goal }: MacroNutrientGroupProps) => {
   );
 };
 
-export default MacroNutrientGroup;
+export default MacronutrientGroup;

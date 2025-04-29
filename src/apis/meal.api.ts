@@ -13,7 +13,6 @@ import {
   MealOverviewSnakeCaseDTO,
   MealSnakeCaseDTO
 } from '@/types/DTO/meal.dto';
-import { getUser } from './user.api';
 import { endOfMonth, startOfMonth } from 'date-fns';
 import { DailyMealCalories } from '@/types/nutrition.type';
 import { getDateTimeRange } from '@/utils/date.util';
@@ -165,21 +164,6 @@ export const deleteMeals = async (mealIds: string[]) => {
   if (error) throw error;
 };
 
-// TODO: deleteMealAnalysisDetail 함수 analysis-request.api.ts로 위치 이동 & 함수 주석 수정
-/**
- * 분석시 저장한 상세 식사 데이터를 데이터베이스에서 삭제합니다.
- *
- * @param {string}  id 로그인한 유저 id
- * @throws {Error} 데이터베이스 오류 발생 시 에러를 던집니다
- */
-export const deleteMealAnalysisDetail = async () => {
-  const supabase = getServerClient();
-  const { id } = await getUser();
-  const { error: requestsError } = await supabase.from('ai_requests').delete().eq('user_id', id);
-  const { error: requestsDetailError } = await supabase.from('ai_responses').delete().eq('user_id', id);
-  if (requestsDetailError || requestsError) throw new Error('등록된 식사정보 삭제에 실패하였습니다. ');
-};
-
 /**
  * 특정 기간 내의 사용자의 하루 섭취 칼로리 양 및 목표 칼로리 양을 조회합니다.
  *
@@ -212,24 +196,6 @@ export const getAllMyDailyCalories = async (startDate: Date, endDate: Date): Pro
   }, initialValue);
 
   return mealCalories;
-};
-
-// TODO: createFoodAnalysisRequestDetail 함수 analysis-request.api.ts로 위치 이동
-/**
- * 임시식사의 상세 항목을 데이터베이스에 추가합니다.
- *
- * @param {Partial<Pick<MealDetailDTO, 'calories' | 'menuName' | 'weight'>>} meal 삽입할 식단 상세 정보 (일부 필드만 포함 가능).
- * @returns {Promise<MealDetailSnakeCaseDTO>}  생성된 식사 상세 정보
- * @throws {Error} Supabase 요청 중 오류 발생 시 예러를 던집니다.
- */
-export const createFoodAnalysisRequestDetail = async (
-  meal: Partial<Pick<MealDetailDTO, 'calories' | 'menuName' | 'weight'>>
-): Promise<MealDetailDTO> => {
-  const supabase = getServerClient();
-  const mealDetailRequest = camelToSnakeObject(meal);
-  const { data, error } = await supabase.from('ai_responses').insert(mealDetailRequest).select().single();
-  if (error) throw error;
-  return snakeToCamelObject<MealDetailSnakeCaseDTO>(data);
 };
 
 /**
