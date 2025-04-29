@@ -5,19 +5,19 @@ import { Day, CarouselMonth, CarouselWeek } from '../types/calendar.type';
 import { DailyMealCalories } from '@/types/nutrition.type';
 import { addDays, isSameMonth, startOfMonth, startOfWeek } from 'date-fns';
 
-export const getFirstDayInMonth = (month: Day[][]): Date => {
+export const getCalendarStartDate = (month: Day[][]): Date => {
   return month[0][0].day ?? new Date();
 };
 
-export const getLastDayInMonth = (month: Day[][]): Date => {
+export const getCalendarEndDate = (month: Day[][]): Date => {
   return month.at(-1)?.at(-1)?.day ?? new Date();
 };
 
-export const getFirstDayAndLastDayInMonth = (month: Day[][]): [Date, Date] => {
-  return [getFirstDayInMonth(month), getLastDayInMonth(month)];
+export const getCalendarDateRange = (month: Day[][]): [Date, Date] => {
+  return [getCalendarStartDate(month), getCalendarEndDate(month)];
 };
 
-export const getMonthDates = (date: Date): CarouselMonth[] => {
+export const getMonths = (date: Date): CarouselMonth[] => {
   const baseYear = date.getFullYear();
   const baseMonth = date.getMonth();
 
@@ -67,7 +67,7 @@ export const getPeriodInCarouselMonth = (
   dailyMealCalories: DailyMealCalories
 ): [Date | null, Date | null] => {
   const filteredMonths = months.filter((month) => {
-    const firstDay = getFirstDayInMonth(month.dates);
+    const firstDay = getCalendarStartDate(month.dates);
     const key = formatDateWithDash(firstDay);
     return dailyMealCalories[key] === undefined;
   });

@@ -4,7 +4,7 @@ import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/componen
 import { formatDateWithDash } from '@/utils/format.util';
 import { getAllMyDailyCalories } from '@/apis/meal.api';
 import { useDateContext } from '@/app/(home)/contexts/date.context';
-import { getFirstDayInMonth, getMonthDates, getPeriodInCarouselMonth } from '@/app/(home)/utils/calendar.util';
+import { getCalendarStartDate, getMonths, getPeriodInCarouselMonth } from '@/app/(home)/utils/calendar.util';
 import { CALENDAR_STAND_COUNT } from '@/app/(home)/constants/calendar.constant';
 import DayLabel from './day-label';
 import HomeCalendarMonthItem from './home-calendar-month-item';
@@ -16,13 +16,13 @@ const HomeCalendarMonth = () => {
 
   const { personalInfo } = useUserStore((state) => state.user);
 
-  const [months, setMonths] = useState<CarouselMonth[]>(getMonthDates(currentDate));
+  const [months, setMonths] = useState<CarouselMonth[]>(getMonths(currentDate));
   const [monthDate, setMonthDate] = useState<Date>(currentDate);
   const [api, setApi] = useState<CarouselApi>();
 
   useEffect(() => {
     setMonthDate(selectedDate);
-    setMonths(getMonthDates(selectedDate));
+    setMonths(getMonths(selectedDate));
   }, [selectedDate]);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const HomeCalendarMonth = () => {
       const baseMonth = currentDate.getMonth();
 
       const newDate = new Date(baseYear, baseMonth, 1);
-      setMonths(getMonthDates(newDate));
+      setMonths(getMonths(newDate));
       setMonthDate(newDate);
     };
     const onSelect = (): void => {
@@ -75,7 +75,7 @@ const HomeCalendarMonth = () => {
       <Carousel setApi={setApi} opts={{ startIndex: CALENDAR_STAND_COUNT }}>
         <CarouselContent>
           {months.map((month) => {
-            const firstDay = getFirstDayInMonth(month.dates);
+            const firstDay = getCalendarStartDate(month.dates);
             return (
               <CarouselItem key={formatDateWithDash(firstDay)}>
                 <HomeCalendarMonthItem
