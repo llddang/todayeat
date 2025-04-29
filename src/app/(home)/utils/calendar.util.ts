@@ -1,9 +1,9 @@
-import { CALENDAR_RANGE_OFFSET, DAY, MAX_WEEK, WEEK } from '@/app/(home)/constants/calendar.constant';
+import { CALENDAR_RANGE_OFFSET, DAY, MAX_WEEK } from '@/app/(home)/constants/calendar.constant';
 import { formatDateWithDash } from '@/utils/format.util';
 
 import { Day, CarouselMonth, CarouselWeek } from '../types/calendar.type';
 import { DailyMealCalories } from '@/types/nutrition.type';
-import { addDays, isSameMonth, startOfMonth, startOfWeek } from 'date-fns';
+import { addDays, addWeeks, isSameMonth, startOfMonth, startOfWeek } from 'date-fns';
 
 export const getCalendarStartDate = (calendarData: Day[][] | Day[]): Date => {
   if (Array.isArray(calendarData[0])) return calendarData[0][0].day ?? new Date();
@@ -85,12 +85,10 @@ export const getPeriodInCarouselMonth = (
   return [firstDay, lastDay];
 };
 
-export const getWeekDates = (date: Date): CarouselWeek[] => {
-  const standTime = date.getTime();
-
+export const getWeeks = (date: Date): CarouselWeek[] => {
   const allWeeks = CALENDAR_RANGE_OFFSET.map((weekOffset) => ({
     id: weekOffset,
-    dates: calculateWeekDates(new Date(standTime + weekOffset * WEEK))
+    dates: calculateWeekDates(addWeeks(date, weekOffset))
   }));
 
   return allWeeks;

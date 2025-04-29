@@ -4,7 +4,7 @@ import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/componen
 import { getAllMyDailyCalories } from '@/apis/meal.api';
 import { useDateContext } from '@/app/(home)/contexts/date.context';
 import { CALENDAR_STAND_COUNT } from '@/app/(home)/constants/calendar.constant';
-import { getCalendarStartDate, getPeriodInCarouselWeek, getWeekDates } from '@/app/(home)/utils/calendar.util';
+import { getCalendarStartDate, getPeriodInCarouselWeek, getWeeks } from '@/app/(home)/utils/calendar.util';
 import DayLabel from './day-label';
 import HomeCalendarWeekItem from './home-calendar-week-item';
 import { CarouselWeek } from '../../types/calendar.type';
@@ -17,13 +17,13 @@ const HomeCalendarWeek = () => {
 
   const { personalInfo } = useUserStore((state) => state.user);
 
-  const [weeks, setWeeks] = useState<CarouselWeek[]>(getWeekDates(currentDate));
+  const [weeks, setWeeks] = useState<CarouselWeek[]>(getWeeks(currentDate));
   const [weekDate, setWeekDate] = useState<Date>(currentDate);
   const [api, setApi] = useState<CarouselApi>();
 
   useEffect(() => {
     setWeekDate(selectedDate);
-    setWeeks(getWeekDates(selectedDate));
+    setWeeks(getWeeks(selectedDate));
   }, [selectedDate]);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const HomeCalendarWeek = () => {
 
     const onSettle = (): void => {
       const newDate = new Date(currentDate);
-      setWeeks(getWeekDates(newDate));
+      setWeeks(getWeeks(newDate));
       setWeekDate(newDate);
     };
     const onSelect = (): void => {
