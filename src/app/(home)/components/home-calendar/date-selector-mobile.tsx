@@ -24,6 +24,10 @@ const DateSelectorMobile = () => {
     setCurrentDate(date);
   };
 
+  const handleOpen = () => {
+    setDate(selectedDate);
+  };
+
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -31,6 +35,7 @@ const DateSelectorMobile = () => {
           variant="icon"
           size="lg"
           className="after:bg-down-line-gray-600-icon hover:after:bg-down-line-gray-800-icon disabled:after:bg-down-line-gray-400-icon xl:pl-1"
+          onClick={handleOpen}
         >
           {formatDateToLocaleKR(currentDate)}
         </Button>

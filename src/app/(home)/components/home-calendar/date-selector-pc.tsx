@@ -25,6 +25,10 @@ const DateSelectorPc = () => {
     setCurrentDate(date);
   };
 
+  const handleOpen = () => {
+    setDate(selectedDate);
+  };
+
   return (
     <Dialog>
       <DrawerTrigger asChild>
@@ -32,6 +36,7 @@ const DateSelectorPc = () => {
           variant="icon"
           size="lg"
           className="after:bg-down-line-gray-600-icon hover:after:bg-down-line-gray-800-icon disabled:after:bg-down-line-gray-400-icon xl:pl-1"
+          onClick={handleOpen}
         >
           {formatDateToLocaleKR(currentDate)}
         </Button>
