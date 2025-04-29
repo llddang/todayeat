@@ -6,11 +6,11 @@ import { useState } from 'react';
 import { Typography } from '@/components/ui/typography';
 import { formatDateToLocaleKR } from '@/utils/format.util';
 
-type EditCalendarDrawerProps = {
+type MealCalendarDrawerProps = {
   date: Date;
   onDateChange: (date: Date) => void;
 };
-const EditCalendarDrawer = ({ onDateChange }: EditCalendarDrawerProps) => {
+const MealCalendarDrawer = ({ onDateChange }: MealCalendarDrawerProps) => {
   const [date, setDate] = useState<Date>(new Date());
   const [isOpen, setIsOpen] = useState(false);
 
@@ -49,4 +49,4 @@ const EditCalendarDrawer = ({ onDateChange }: EditCalendarDrawerProps) => {
     </Drawer>
   );
 };
-export default EditCalendarDrawer;
+export default MealCalendarDrawer;

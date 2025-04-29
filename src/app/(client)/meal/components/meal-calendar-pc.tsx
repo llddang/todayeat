@@ -7,12 +7,12 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@radix-ui/rea
 import { ko } from 'date-fns/locale';
 import React, { useState } from 'react';
 
-type EditCalendarPcProps = {
+type MealCalendarPcProps = {
   date: Date;
   onDateChange: (date: Date) => void;
 };
 
-const EditCalendarPc = ({ onDateChange }: EditCalendarPcProps) => {
+const MealCalendarPc = ({ onDateChange }: MealCalendarPcProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [date, setDate] = useState<Date>(new Date());
 
@@ -51,4 +51,4 @@ const EditCalendarPc = ({ onDateChange }: EditCalendarPcProps) => {
   );
 };
 
-export default EditCalendarPc;
+export default MealCalendarPc;
