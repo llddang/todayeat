@@ -1,32 +1,40 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ko } from 'date-fns/locale';
 import Calendar from '@/components/ui/calendar';
 import { Button } from '@/components/ui/button';
-import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger
+} from '@/components/ui/drawer';
 import { useDateContext } from '@/app/(home)/contexts/date.context';
 import { formatDateToLocaleKR } from '@/utils/format.util';
 
-type DateSelectorMobileProps = {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-};
-const DateSelectorMobile = ({ open, onOpenChange }: DateSelectorMobileProps) => {
-  const { selectedDate, setCurrentDate, setSelectedDate } = useDateContext();
+const DateSelectorMobile = () => {
+  const { selectedDate, currentDate, setCurrentDate, setSelectedDate } = useDateContext();
 
   const [date, setDate] = useState<Date>(selectedDate);
 
   const handleSelectDate = () => {
     setSelectedDate(date);
     setCurrentDate(date);
-    onOpenChange(false);
   };
 
-  useEffect(() => {
-    if (open) setDate(selectedDate);
-  }, [open, selectedDate]);
-
   return (
-    <Drawer open={open} onOpenChange={onOpenChange}>
+    <Drawer>
+      <DrawerTrigger asChild>
+        <Button
+          variant="icon"
+          size="lg"
+          className="after:bg-down-line-gray-600-icon hover:after:bg-down-line-gray-800-icon disabled:after:bg-down-line-gray-400-icon xl:pl-1"
+        >
+          {formatDateToLocaleKR(currentDate)}
+        </Button>
+      </DrawerTrigger>
       <DrawerContent>
         <div className="w-full layout-container">
           <DrawerHeader className="sr-only">
@@ -42,11 +50,11 @@ const DateSelectorMobile = ({ open, onOpenChange }: DateSelectorMobileProps) => 
             defaultMonth={date}
             formatters={{ formatCaption: formatDateToLocaleKR }}
           />
-          <div className="!mt-2 w-full pb-4 pt-2">
+          <DrawerClose asChild className="!mt-2 w-full pb-4 pt-2">
             <Button onClick={handleSelectDate} className="w-full">
               날짜 선택 완료
             </Button>
-          </div>
+          </DrawerClose>
         </div>
       </DrawerContent>
     </Drawer>
