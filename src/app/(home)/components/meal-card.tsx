@@ -11,14 +11,16 @@ import SITE_MAP from '@/constants/site-map.constant';
 
 type MealCardProps = {
   meal: MealDTO;
+  editMode: boolean;
+  onDelete: (mealId: string) => void;
 };
-const MealCard = ({ meal }: MealCardProps) => {
+const MealCard = ({ meal, editMode, onDelete }: MealCardProps) => {
   const { calories, ...macronutrients } = calculateTotalNutrition([meal]);
 
   const { name: mealLabel, icon: mealIcon } = MEAL_CATEGORY_OPTIONS[meal.mealCategory];
 
   return (
-    <li className="flex gap-3">
+    <li className="relative flex gap-3 overflow-visible">
       <div
         className={cn(
           'flex flex-col items-center pt-1 text-center',
@@ -80,6 +82,18 @@ const MealCard = ({ meal }: MealCardProps) => {
           </div>
         )}
       </Link>
+      {editMode && (
+        <button
+          onClick={() => onDelete(meal.id)}
+          className="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center"
+        >
+          <img
+            src="/icons/close-line-white.svg"
+            alt="닫기"
+            className="h-6 w-6 rounded-full bg-gray-800/70 p-1.5 hover:bg-gray-800/90"
+          />
+        </button>
+      )}
     </li>
   );
 };

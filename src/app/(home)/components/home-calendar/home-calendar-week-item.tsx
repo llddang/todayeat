@@ -15,8 +15,14 @@ type HomeCalendarWeekItemProps = {
   selectedDate: Date;
   week: Day[];
   dailyMealCalories: DailyMealCalories;
+  dailyCaloriesGoal: number;
 };
-const HomeCalendarWeekItem = ({ selectedDate, week, dailyMealCalories }: HomeCalendarWeekItemProps) => {
+const HomeCalendarWeekItem = ({
+  selectedDate,
+  week,
+  dailyMealCalories,
+  dailyCaloriesGoal
+}: HomeCalendarWeekItemProps) => {
   const { setSelectedDate } = useDashboard();
   const { setCurrentDate } = useCalendar();
 
@@ -37,11 +43,8 @@ const HomeCalendarWeekItem = ({ selectedDate, week, dailyMealCalories }: HomeCal
     <div className="flex w-full justify-between xl:justify-stretch xl:gap-3">
       {week.map(({ day, dayOutside }) => {
         const isSelected = isSameDate(day, selectedDate);
-        const { calories, caloriesGoal } = dailyMealCalories[formatDateWithDash(day)] ?? {
-          calories: 0,
-          caloriesGoal: 0
-        };
-        const progress = getPercentage(calories, caloriesGoal);
+        const calories = dailyMealCalories[formatDateWithDash(day)] ?? 0;
+        const progress = getPercentage(calories, dailyCaloriesGoal);
         return (
           <button
             key={formatDateWithDash(day)}
