@@ -35,6 +35,7 @@ import Modal from '@/components/commons/modal';
 import { ERROR_MESSAGES } from '../constants/error-message.constant';
 import { CreateMealDTO } from '@/types/DTO/meal.dto';
 import { deleteAnalysisData } from '@/apis/analysis-request.api';
+import { ErrorMessage, handleError } from '../../../utils/error.util';
 
 type EditResultSectionProps = {
   imageList: string[];
@@ -213,9 +214,11 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
               </GlassBackground>
             </section>
             <MemoBox maxLength={MAX_MEMO_LENGTH} {...mealFormMethods.register('memo')} />
-            <Button type="submit" className="mt-3 w-full" disabled={isLoading}>
-              제출하기
-            </Button>
+            <div className="flex w-full justify-end">
+              <Button type="submit" className="mt-3" disabled={isLoading}>
+                기록 저장하기
+              </Button>
+            </div>
           </form>
         </FormProvider>
       </div>
@@ -227,10 +230,6 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
 
 export default EditResultSection;
 
-type ErrorMessage = {
-  title: string;
-  description: string;
-};
 const mealListSchema = z.object({
   userId: z.string(),
   menuName: z.string(),
@@ -255,11 +254,8 @@ const mealEditFormSchema = z.object({
   mealCategory: z.nativeEnum(MealCategory),
   memo: z.string()
 });
-type MealEditFormData = z.infer<typeof mealEditFormSchema>;
 
-const handleError = (errorMessage: { title: string; description: string }) => {
-  throw errorMessage;
-};
+type MealEditFormData = z.infer<typeof mealEditFormSchema>;
 
 const uploadMealImages = async (imageUrls: string[]): Promise<string[]> => {
   const files = await Promise.all(imageUrls.map((url, idx) => urlToFile(url, idx)));

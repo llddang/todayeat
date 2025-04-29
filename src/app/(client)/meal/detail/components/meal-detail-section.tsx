@@ -17,9 +17,15 @@ import { Button } from '@/components/ui/button';
 import { formatTimestamp } from '@/utils/format.util';
 import { updateMeal } from '@/apis/meal.api';
 import { MEAL_CATEGORY } from '../../constants/category.constant';
-import { ChangeEvent, useMemo } from 'react';
+import { ChangeEvent, useMemo, useState } from 'react';
 import EditCalendarDrawer from '../../post/edit/components/edit-calendar-drawer';
 import MemoBox from './memo-box';
+import EditCalendarPc from '../../post/edit/components/edit-calendar-pc';
+import Responsive from '@/components/commons/responsive';
+import TimePickerPc from '../../post/edit/components/time-picker-pc';
+import { ERROR_MESSAGES } from '../../post/edit/constants/error-message.constant';
+import { ErrorMessage } from '../../utils/error.util';
+import Modal from '@/components/commons/modal';
 
 type MealDetailSectionProps = {
   meal: MealDTO;
@@ -28,6 +34,11 @@ type MealDetailSectionProps = {
 const MealDetailSection = ({ meal }: MealDetailSectionProps) => {
   const { id, ateAt, mealCategory, memo, foodImages, mealDetails } = meal;
   const ateAtDate = useMemo(() => new Date(ateAt), [ateAt]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalInfo, setModalInfo] = useState<ErrorMessage>({
+    title: '',
+    description: ''
+  });
   const { register, handleSubmit, setValue, watch, getValues, reset } = useForm<MealDetailFormData>({
     resolver: zodResolver(mealDetailFormSchema),
     defaultValues: {
@@ -70,16 +81,18 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps) => {
       });
       alert('식사 정보가 수정되었습니다.');
     } catch (error) {
-      alert('식사 정보 수정에 실패했습니다.');
-      console.error('Failed to update meal:', error);
+      const isKnownError = typeof error === 'object' && error !== null && 'title' in error && 'description' in error;
+      error = isKnownError ? error : ERROR_MESSAGES.MEAL_POST_FAILED;
+      setModalInfo(error as ErrorMessage);
+      setIsModalOpen(true);
       reset();
     }
   };
 
   return (
-    <div className="flex flex-col gap-6 px-4 pb-4 pt-2">
+    <div className="flex flex-col gap-6 px-4 pb-4 pt-2 desktop-width xl:w-full xl:flex-row xl:gap-5 xl:px-[3.125rem]">
       <MealImageCarousel imageList={imageList} />
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-10 xl:mx-auto xl:w-[45rem]">
         <TotalNutritionChart totalNutrition={totalNutrition} />
         <MealList mealDetails={mealDetails} />
         <form onSubmit={handleSubmit(onSubmit)} id="mealDetailForm" className="mt-4 flex flex-col gap-10">
@@ -103,17 +116,28 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps) => {
                 ))}
               </div>
               <div className="flex w-full gap-2">
-                <EditCalendarDrawer date={day} onDateChange={handleDayChange} />
-                <TimePicker currentTime={time} onTimeChange={handleTimeChange} />
+                <Responsive
+                  pc={<EditCalendarPc date={day} onDateChange={handleDayChange} />}
+                  mobile={<EditCalendarDrawer date={day} onDateChange={handleDayChange} />}
+                  mode="js"
+                />
+                <Responsive
+                  pc={<TimePickerPc currentTime={time} onTimeChange={handleTimeChange} />}
+                  mobile={<TimePicker currentTime={time} onTimeChange={handleTimeChange} />}
+                  mode="js"
+                />
               </div>
             </GlassBackground>
           </section>
           <MemoBox maxLength={200} {...register('memo')} />
         </form>
+        <div className="flex w-full justify-end">
+          <Button type="submit" variant="primary" className="" form="mealDetailForm">
+            기록 저장하기
+          </Button>
+        </div>
       </div>
-      <Button type="submit" variant="primary" className="w-full" form="mealDetailForm">
-        기록 저장하기
-      </Button>
+      <Modal open={isModalOpen} onOpenChange={setIsModalOpen} title={modalInfo.title} content={modalInfo.description} />
     </div>
   );
 };
