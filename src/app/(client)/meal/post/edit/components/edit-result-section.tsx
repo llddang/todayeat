@@ -95,14 +95,9 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
     try {
       const { date, memo, mealCategory, mealList, mealImages } = form;
       const ateAt = formatTimestamp(date);
-
       const storedImageUrls = await uploadMealImages(mealImages);
       const newMeals = { foodImages: storedImageUrls, ateAt, mealCategory, memo };
-
-      const meal = await createMeal(newMeals, mealList);
-      if (!meal) handleError(ERROR_MESSAGES.MEAL_POST_FAILED);
-
-      await deleteAnalysis();
+      await Promise.all([createMeal(newMeals, mealList), deleteAnalysis()]);
       router.push(SITE_MAP.HOME);
     } catch (error) {
       const isKnownError = typeof error === 'object' && error !== null && 'title' in error && 'description' in error;
@@ -204,7 +199,6 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
               </GlassBackground>
             </section>
             <MemoBox maxLength={MAX_MEMO_LENGTH} {...mealFormMethods.register('memo')} />
-
             <Button type="submit" className="mt-3 w-full" disabled={isLoading}>
               제출하기
             </Button>
