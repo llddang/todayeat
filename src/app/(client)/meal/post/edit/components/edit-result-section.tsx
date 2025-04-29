@@ -17,7 +17,7 @@ import { Typography } from '@/components/ui/typography';
 import GlassBackground from '@/components/commons/glass-background';
 import TagSelectItem from '@/components/commons/tag-select-item';
 import { Button } from '@/components/ui/button';
-import TimePicker, { TimeFields } from './time-picker';
+import TimePicker, { DateFields, TimeFields } from './time-picker';
 import SITE_MAP from '@/constants/site-map.constant';
 import MacronutrientBox from '@/components/commons/macronutrient-box';
 import MacronutrientPieChart from '@/components/commons/macronutrient-pie-chart';
@@ -118,7 +118,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
   return (
     <div className="flex w-full flex-col gap-6 px-4 pb-4 pt-2 desktop-width xl:w-full xl:flex-row xl:gap-5 xl:px-[3.125rem]">
       <MealImageCarousel imageList={imageList} />
-      <div className="flex flex-col gap-10 xl:flex-1">
+      <div className="flex flex-col gap-10 xl:mx-auto xl:w-[45rem]">
         <div className="flex flex-col gap-3 xl:min-h-[13.125rem]">
           <Typography as="p" variant="body1" className="px-1">
             총 영양 정보
@@ -171,7 +171,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
                 식사 시간
               </Typography>
               <GlassBackground className="flex min-h-full w-full flex-col items-start gap-3 rounded-2xl border-none p-4">
-                <div className="scrollbar-hidden flex w-full items-start gap-2 overflow-x-auto">
+                <div className="scrollbar-hidden flex h-11 w-full gap-2 overflow-x-auto">
                   {MEAL_CATEGORY.map((option) => (
                     <TagSelectItem
                       key={option.value}
@@ -296,7 +296,7 @@ const deleteAnalysis = async () => {
   }
 };
 
-const getTimeFieldsFromDate = (date: Date = new Date()): TimeFields => {
+const getTimeFieldsFromDate = (date: Date = new Date()): DateFields => {
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const meridiem = hours < 12 ? '오전' : '오후';

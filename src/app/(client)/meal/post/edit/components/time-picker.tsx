@@ -12,9 +12,9 @@ import {
 import { Typography } from '@/components/ui/typography';
 import { useState } from 'react';
 import Picker from 'react-mobile-picker';
-import { dateSchema } from './edit-result-section';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
+import { dateSchema } from '../../../detail/components/meal-detail-section';
 
 type TimePickerProps = {
   currentTime: TimeFields;
@@ -96,3 +96,4 @@ export const selections = {
 };
 
 export type TimeFields = Omit<z.infer<typeof dateSchema>, 'day'>;
+export type DateFields = z.infer<typeof dateSchema>;
