@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import { snakeToCamelString, snakeToCamel, camelToSnake, camelToSnakeObject } from '../../utils/camelize.util';
+import { snakeToCamelString, snakeToCamel, camelToSnakeString, camelToSnakeObject } from '../../utils/camelize.util';
 import { snakeCaseFixtures, camelCaseFixtures } from '../fixtures/camelize.fixture';
 
 describe('camelize.util', () => {
@@ -35,14 +35,14 @@ describe('camelize.util', () => {
 
   describe('camelToSnake', () => {
     it('camelCase를 snake_case로 변환해야 합니다', () => {
-      expect(camelToSnake('helloWorld')).toBe('hello_world');
-      expect(camelToSnake('firstNameLastName')).toBe('first_name_last_name');
-      expect(camelToSnake('userId')).toBe('user_id');
+      expect(camelToSnakeString('helloWorld')).toBe('hello_world');
+      expect(camelToSnakeString('firstNameLastName')).toBe('first_name_last_name');
+      expect(camelToSnakeString('userId')).toBe('user_id');
     });
 
     it('이미 snake_case인 문자열은 변경하지 않아야 합니다', () => {
-      expect(camelToSnake('hello_world')).toBe('hello_world');
-      expect(camelToSnake('first_name')).toBe('first_name');
+      expect(camelToSnakeString('hello_world')).toBe('hello_world');
+      expect(camelToSnakeString('first_name')).toBe('first_name');
     });
   });
 
