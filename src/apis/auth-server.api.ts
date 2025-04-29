@@ -47,6 +47,19 @@ export const signIn = async (email: string, password: string): Promise<ErrorResp
 };
 
 /**
+ * 게스트로 로그인하는 함수
+ * @throws {AuthError} supabase에서 전송하는 에러
+ * @returns {SupabaseAuthDTO} 슈퍼베이스의 유저, 세션 정보
+ */
+export const signInAnonymously = async (): Promise<ErrorResponse<SupabaseAuthDTO>> => {
+  const supabase = getServerClient();
+  const { data, error } = await supabase.auth.signInAnonymously();
+
+  if (error) return { data: null, error: categoriesError(error) };
+  return { data, error };
+};
+
+/**
  * 로그아웃하는 함수
  * @throws {AuthError} supabase에서 전송하는 에러
  */

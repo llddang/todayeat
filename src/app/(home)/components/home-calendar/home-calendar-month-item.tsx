@@ -10,8 +10,14 @@ type HomeCalendarWeekItemProps = {
   month: Day[][];
   selectedDate: Date;
   dailyMealCalories: DailyMealCalories;
+  dailyCaloriesGoal: number;
 };
-const HomeCalendarMonthItem = ({ selectedDate, month, dailyMealCalories }: HomeCalendarWeekItemProps) => {
+const HomeCalendarMonthItem = ({
+  selectedDate,
+  month,
+  dailyMealCalories,
+  dailyCaloriesGoal
+}: HomeCalendarWeekItemProps) => {
   return (
     <div className="flex w-full flex-col gap-3">
       {month.map((week) => (
@@ -20,6 +26,7 @@ const HomeCalendarMonthItem = ({ selectedDate, month, dailyMealCalories }: HomeC
           selectedDate={selectedDate}
           week={week}
           dailyMealCalories={dailyMealCalories}
+          dailyCaloriesGoal={dailyCaloriesGoal}
         />
       ))}
       {Array.from({ length: MAX_WEEK - month.length }, (_, i) => i).map((id) => (

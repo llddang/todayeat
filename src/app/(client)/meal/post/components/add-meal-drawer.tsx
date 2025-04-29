@@ -15,7 +15,7 @@ import { Typography } from '@/components/ui/typography';
 import IconButton from '@/components/commons/icon-button';
 import AddMealAiLoading from './add-meal-ai-loading';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createAiRequestByText, createFoodAnalysisRequestDetail } from '@/apis/analysis-request.api';
+import { createAiRequestByText, createAiResponse } from '@/apis/analysis-request.api';
 import { useRouter } from 'next/navigation';
 import Modal from '@/components/commons/modal';
 import { ERROR_MESSAGES } from '../constants/analysis-error.constant';
@@ -69,7 +69,7 @@ const AddMealDrawer = () => {
         ...parsedResult,
         menuName: data.menuName
       };
-      await createFoodAnalysisRequestDetail(newMeal);
+      await createAiResponse(newMeal);
       revalidate();
       router.push('/meal/post/edit');
     } catch (err) {

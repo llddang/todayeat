@@ -12,7 +12,7 @@ import { formatNumberWithComma } from '@/utils/format.util';
 import { parseNumber } from '../edit/utils/meal-edit.util';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createAiRequestByText, createFoodAnalysisRequestDetail } from '@/apis/analysis-request.api';
+import { createAiRequestByText, createAiResponse } from '@/apis/analysis-request.api';
 import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
 import { parseGeminiResponse } from '@/lib/gemini';
 import { ERROR_MESSAGES } from '../constants/analysis-error.constant';
@@ -66,7 +66,7 @@ const AddMealModal = ({ onLoadingChange, onModalOpenChange, onModalInfoChange }:
         ...parsedResult,
         menuName: data.menuName
       };
-      await createFoodAnalysisRequestDetail(newMeal);
+      await createAiResponse(newMeal);
       revalidate();
       router.push('/meal/post/edit');
     } catch (err) {

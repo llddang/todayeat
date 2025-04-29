@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Charts from './components/charts';
 import { PeriodUnitEnum } from './types/chart.type';
 
-const Report = () => {
+const ReportPage = () => {
   return (
     <Tabs defaultValue={PeriodUnitEnum.WEEKLY} className="mt-2">
       <TabsList className="flex w-full xl:mx-auto xl:w-44">
@@ -29,4 +29,4 @@ const Report = () => {
   );
 };
 
-export default Report;
+export default ReportPage;

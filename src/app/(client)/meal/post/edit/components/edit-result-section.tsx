@@ -2,7 +2,7 @@
 
 import { AiResponseDTO } from '@/types/DTO/ai_analysis.dto';
 import { MealCategory } from '@/types/meal-category.type';
-import { createMealWithDetails, deleteMealAnalysisDetail } from '@/apis/meal.api';
+import { createMealWithDetails } from '@/apis/meal.api';
 import { uploadImage } from '@/apis/storage.api';
 import { formatTimestamp } from '@/utils/format.util';
 import { urlToFile } from '../../../utils/file.util';
@@ -20,7 +20,7 @@ import { Button } from '@/components/ui/button';
 import TimePicker, { TimeFields } from './time-picker';
 import SITE_MAP from '@/constants/site-map.constant';
 import MacronutrientBox from '@/components/commons/macronutrient-box';
-import MacroNutrientPieChart from '@/components/commons/macronutrient-pie-chart';
+import MacronutrientPieChart from '@/components/commons/macronutrient-pie-chart';
 import { MacronutrientEnum } from '@/types/nutrition.type';
 import EditCalendarDrawer from './edit-calendar-drawer';
 import AddMealCardDrawer from './add-meal-card-drawer';
@@ -34,6 +34,7 @@ import AddMealCardPc from './add-meal-card-pc';
 import Modal from '@/components/commons/modal';
 import { ERROR_MESSAGES } from '../constants/error-message.constant';
 import { CreateMealDTO } from '@/types/DTO/meal.dto';
+import { deleteAnalysisData } from '@/apis/analysis-request.api';
 
 type EditResultSectionProps = {
   imageList: string[];
@@ -123,7 +124,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
             총 영양 정보
           </Typography>
           <div className="min-w-auto flex min-h-[13.125rem] w-full items-center justify-center gap-3 rounded-2xl bg-white/50 p-3 backdrop-blur-[50px] xl:p-0">
-            <MacroNutrientPieChart data={totalNutrient} displayCalories={true} className="w-[14.5625rem]" />
+            <MacronutrientPieChart data={totalNutrient} displayCalories={true} className="w-[14.5625rem]" />
             <div className="flex w-[5.75rem] flex-col items-start justify-center gap-4 px-1">
               <MacronutrientBox variety={MacronutrientEnum.CARBOHYDRATE} value={totalNutrient.carbohydrate} />
               <MacronutrientBox variety={MacronutrientEnum.PROTEIN} value={totalNutrient.protein} />
@@ -288,7 +289,7 @@ const createMeal = async (newMeals: CreateMealDTO, mealList: Omit<AiResponseDTO,
 
 const deleteAnalysis = async () => {
   try {
-    await deleteMealAnalysisDetail();
+    await deleteAnalysisData();
   } catch (error) {
     console.error('분석 데이터 삭제 중 오류:', error);
     handleError(ERROR_MESSAGES.MEAL_DELETE_FAILED);

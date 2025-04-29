@@ -23,19 +23,19 @@ const chartConfig = {
   }
 } as const satisfies ChartConfig;
 
-type MacroNutrientPieChartProps = {
+type MacronutrientPieChartProps = {
   data: MacronutrientData;
   displayCalories?: boolean;
   innerRadius?: number;
   className?: string;
 };
 
-const MacroNutrientPieChart = ({
+const MacronutrientPieChart = ({
   data,
   displayCalories = false,
   innerRadius,
   className
-}: MacroNutrientPieChartProps) => {
+}: MacronutrientPieChartProps) => {
   const chartData: ChartData[] = Object.entries(data)
     .filter(([key]) => key !== 'calories')
     .map(([key, value]) => ({
@@ -114,4 +114,4 @@ type ChartData = {
   amount: number;
 };
 
-export default MacroNutrientPieChart;
+export default MacronutrientPieChart;

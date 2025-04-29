@@ -11,10 +11,13 @@ import HomeCalendarWeekItem from './home-calendar-week-item';
 import { CarouselWeek } from '../../types/calendar.type';
 import { formatDateWithDash } from '@/utils/format.util';
 import { addWeeks } from 'date-fns';
+import { useUserStore } from '@/store/user-store';
 
 const HomeCalendarWeek = () => {
   const { selectedDate } = useDashboard();
   const { currentDate, dailyMealCalories, setCurrentDate, setDailyMealCalories } = useCalendar();
+
+  const { personalInfo } = useUserStore((state) => state.user);
 
   const [weeks, setWeeks] = useState<CarouselWeek[]>(getWeekDates(currentDate));
   const [weekDate, setWeekDate] = useState<Date>(currentDate);
@@ -78,6 +81,7 @@ const HomeCalendarWeek = () => {
                   selectedDate={selectedDate}
                   week={week.dates}
                   dailyMealCalories={dailyMealCalories}
+                  dailyCaloriesGoal={personalInfo?.dailyCaloriesGoal ?? 0}
                 />
               </CarouselItem>
             );
