@@ -79,9 +79,9 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps) => {
         ateAt: formatTimestamp(form.date)
       });
       toast({
-        title: '수정 완료',
         description: '식사 정보가 성공적으로 수정되었습니다.',
-        variant: 'default' // or 'success' if 커스텀된 게 있다면
+        variant: 'success',
+        icon: 'before:bg-toast-success'
       });
     } catch (error) {
       const isKnownError = typeof error === 'object' && error !== null && 'title' in error && 'description' in error;

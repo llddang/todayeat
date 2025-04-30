@@ -16,6 +16,7 @@ import { Typography } from '@/components/ui/typography';
 import DefaultProfile from '@/../public/illustrations/default-profile.svg';
 import { useUserStore } from '@/store/user.store';
 import { uploadProfileImage } from '../_utils/upload-profile-image.util';
+import { useToast } from '@/hooks/use-toast';
 
 const editProfileFormSchema = z.object({
   nickname: formSchema.NICKNAME_SCHEMA,
@@ -29,6 +30,8 @@ type EditProfileProps = {
 };
 
 const EditProfile = ({ setOpen }: EditProfileProps) => {
+  const { toast } = useToast();
+
   const { user, setUser } = useUserStore();
 
   const [profileState, setProfileState] = useState({
@@ -108,8 +111,11 @@ const EditProfile = ({ setOpen }: EditProfileProps) => {
 
   const handleProfileUpdateSuccess = async (nickname: string, newImageUrl: string | null) => {
     form.reset({ nickname, newProfileImage: null });
-    // TODO - 프로필 수정 성공 토스트 메시지 추가
-
+    toast({
+      description: '프로필이 성공적으로 수정되었습니다.',
+      variant: 'success',
+      icon: 'before:bg-toast-success'
+    });
     setProfileState((prev) => ({
       ...prev,
       profilePreviewUrl: newImageUrl
