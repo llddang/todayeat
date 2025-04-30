@@ -1,5 +1,5 @@
 import useFunnel from '@/hooks/use-funnel';
-import { FindPasswordFunnelStep, FindPasswordFunnelType } from '../types/funnel-type';
+import { FindPasswordFunnelStep, FindPasswordFunnelType } from '../_types/funnel.type';
 import StepVerifyingEmail from './step-verifying-email';
 import StepPassword from './step-password';
 import StepComplete from './step-complete';

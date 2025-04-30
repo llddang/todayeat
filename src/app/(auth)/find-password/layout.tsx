@@ -1,6 +1,6 @@
 import Header from '@/components/layouts/header';
 import { Suspense } from 'react';
-import TabVisibilityHandler from './components/tab-visibility-handler';
+import TabVisibilityHandler from './_components/tab-visibility-handler';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
