@@ -7,7 +7,7 @@ import { cleanupBlobUrl } from '@/utils/cleanup-blob-url.util';
 import SITE_MAP from '@/constants/site-map.constant';
 import PIC_LINE from '@/../public/icons/pic_line.svg';
 import CLOSE_LINE from '@/../public/icons/close_line.svg';
-import { getFileId } from '../../utils/file.util';
+import { getFileId } from '../../_utils/file.util';
 
 type AddImageListProps = {
   onImagesChange?: (files: File[]) => void;
