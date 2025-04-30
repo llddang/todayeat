@@ -8,11 +8,11 @@ import { addMonths, addWeeks, isSameDay } from 'date-fns';
 import { CarouselMonth, CarouselWeek } from '../types/calendar.type';
 import { getMonths, getWeeks, getPeriodInCarouselMonth, getPeriodInCarouselWeek } from '../utils/calendar.util';
 
-const useCalendarCarousel = (type: 'month' | 'week') => {
+const useCalendarCarousel = <T extends CarouselMonth[] | CarouselWeek[]>(type: 'month' | 'week') => {
   const { selectedDate, currentDate, dailyMealCalories, setCurrentDate, setDailyMealCalories } = useDateContext();
 
-  const [items, setItems] = useState<CarouselMonth[] | CarouselWeek[]>(
-    type === 'month' ? getMonths(currentDate) : getWeeks(currentDate)
+  const [items, setItems] = useState<T>(
+    type === 'month' ? (getMonths(currentDate) as T) : (getWeeks(currentDate) as T)
   );
   const [baseDate, setBaseDate] = useState<Date>(currentDate);
   const [api, setApi] = useState<CarouselApi>();
@@ -23,7 +23,7 @@ const useCalendarCarousel = (type: 'month' | 'week') => {
     prevSelectedDate.current = selectedDate;
 
     setBaseDate(selectedDate);
-    setItems(type === 'month' ? getMonths(selectedDate) : getWeeks(selectedDate));
+    setItems(type === 'month' ? (getMonths(selectedDate) as T) : (getWeeks(selectedDate) as T));
   }, [selectedDate]);
 
   useEffect(() => {
@@ -42,10 +42,10 @@ const useCalendarCarousel = (type: 'month' | 'week') => {
 
     const onSettle = (): void => {
       if (type === 'month') {
-        setItems(getMonths(currentDate));
+        setItems(getMonths(currentDate) as T);
         setBaseDate(currentDate);
       } else {
-        setItems(getWeeks(currentDate));
+        setItems(getWeeks(currentDate) as T);
         setBaseDate(currentDate);
       }
     };

@@ -13,9 +13,7 @@ import useCalendarCarousel from '../../hooks/use-calendar-carousel';
 const HomeCalendarMonth = () => {
   const { selectedDate, dailyMealCalories } = useDateContext();
   const { personalInfo } = useUserStore((state) => state.user);
-  const { setApi, items } = useCalendarCarousel('month');
-
-  const months = items as CarouselMonth[];
+  const { setApi, items: months } = useCalendarCarousel<CarouselMonth[]>('month');
 
   return (
     <div className="space-y-3">

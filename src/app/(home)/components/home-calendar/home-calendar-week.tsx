@@ -12,9 +12,7 @@ import useCalendarCarousel from '../../hooks/use-calendar-carousel';
 const HomeCalendarWeek = () => {
   const { selectedDate, dailyMealCalories } = useDateContext();
   const { personalInfo } = useUserStore((state) => state.user);
-  const { setApi, items } = useCalendarCarousel('week');
-
-  const weeks = items as CarouselWeek[];
+  const { setApi, items: weeks } = useCalendarCarousel<CarouselWeek[]>('week');
 
   return (
     <div className="space-y-3">
