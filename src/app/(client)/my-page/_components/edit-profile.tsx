@@ -114,7 +114,8 @@ const EditProfile = ({ setOpen }: EditProfileProps) => {
     toast({
       description: '프로필이 성공적으로 수정되었습니다.',
       variant: 'success',
-      icon: 'before:bg-toast-success'
+      icon: 'before:bg-toast-success',
+      duration: 3000
     });
     setProfileState((prev) => ({
       ...prev,
