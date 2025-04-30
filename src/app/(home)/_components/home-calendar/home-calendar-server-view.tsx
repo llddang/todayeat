@@ -7,12 +7,13 @@ import HomeCalendarWeekItem from './home-calendar-week-item';
 import HomeCalendarMonthItem from './home-calendar-month-item';
 import { DailyMealCalories } from '@/types/nutrition.type';
 import { getMyDailyCaloriesGoal } from '@/apis/user.api';
+import { getKoreaTime } from '@/utils/date.util';
 
 type HomeCalendarServerViewProps = {
   dailyMealCalories: DailyMealCalories;
 };
 const HomeCalendarServerView = async ({ dailyMealCalories }: HomeCalendarServerViewProps) => {
-  const today = new Date();
+  const today = getKoreaTime();
   const week = getWeekCalendarDays(today);
   const month = getMonthCalendarDays(today);
   const dailyCaloriesGoal = await getMyDailyCaloriesGoal();
