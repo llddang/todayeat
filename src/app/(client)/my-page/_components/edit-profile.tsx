@@ -89,7 +89,11 @@ const EditProfile = ({ setOpen }: EditProfileProps) => {
     }
 
     if (formData.nickname === user.nickname && profilePreviewUrl === user.profileImage) {
-      alert('변경된 정보가 없습니다.');
+      toast({
+        description: '변경된 정보가 없습니다.',
+        icon: 'before:bg-toast-fail',
+        duration: 3000
+      });
       return setIsUploading(false);
     }
 
@@ -109,7 +113,6 @@ const EditProfile = ({ setOpen }: EditProfileProps) => {
     form.reset({ nickname, newProfileImage: null });
     toast({
       description: '프로필이 성공적으로 수정되었습니다.',
-      variant: 'success',
       icon: 'before:bg-toast-success',
       duration: 3000
     });

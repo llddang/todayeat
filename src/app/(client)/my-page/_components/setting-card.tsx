@@ -5,12 +5,18 @@ import { useRouter } from 'next/navigation';
 import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
 import { signOut } from '@/apis/auth-server.api';
+import { useToast } from '@/hooks/use-toast';
 
 const SettingCard = () => {
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleLogout = async () => {
-    alert('로그아웃 되었습니다.');
+    toast({
+      description: '로그아웃 되었습니다.',
+      icon: 'before:bg-toast-success',
+      duration: 3000
+    });
     await signOut();
     router.push(SITE_MAP.HOME);
   };

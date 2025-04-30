@@ -80,7 +80,6 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps) => {
       });
       toast({
         description: '식사 정보가 성공적으로 수정되었습니다.',
-        variant: 'success',
         icon: 'before:bg-toast-success',
         duration: 3000
       });
