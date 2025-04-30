@@ -3,7 +3,7 @@ import HomeCalendar from './_components/home-calendar';
 import HomeContent from './_components/home-content';
 import AppUseSummary from './_components/app-use-summary';
 
-const HomePage = async () => {
+const HomePage = () => {
   return (
     <DateProvider>
       <div>

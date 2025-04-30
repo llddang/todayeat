@@ -8,13 +8,12 @@ import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
 import { useUserStore } from '@/store/user.store';
 
-const FirstSection = ({ setCookie }: { setCookie: () => Promise<void> }) => {
+const FirstSection = () => {
   const user = useUserStore((state) => state.user);
   const router = useRouter();
 
-  const handleClickCtaButton = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleClickCtaButton = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await setCookie();
     if (user.id) {
       router.push(SITE_MAP.HOME);
     } else {
