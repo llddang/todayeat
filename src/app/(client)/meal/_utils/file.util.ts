@@ -46,6 +46,6 @@ export const urlToFile = async (url: string, idx: number): Promise<File> => {
   const blob = await response.blob();
   const contentType = response.headers.get('Content-Type') || 'application/octet-stream';
   const ext = mimeTypeToExtension(contentType);
-  const filename = `image_${getKoreaTime()}.${idx}.${ext}`;
+  const filename = `image_${getKoreaTime().getTime()}.${idx}.${ext}`;
   return new File([blob], filename, { type: contentType });
 };
