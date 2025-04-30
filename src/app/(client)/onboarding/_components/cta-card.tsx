@@ -7,13 +7,12 @@ import { useUserStore } from '@/store/user.store';
 import SITE_MAP from '@/constants/site-map.constant';
 import { FormEvent } from 'react';
 
-const CtaCard = ({ setCookie }: { setCookie: () => Promise<void> }) => {
+const CtaCard = () => {
   const user = useUserStore((state) => state.user);
   const router = useRouter();
 
-  const handleClickCtaButton = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleClickCtaButton = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await setCookie();
     if (user.id) {
       router.push(SITE_MAP.HOME);
     } else {
