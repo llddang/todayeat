@@ -35,7 +35,7 @@ import { deleteAnalysisData } from '@/apis/analysis-request.api';
 import { ErrorMessage, handleError } from '../../../utils/error.util';
 import MealCalendarPc from '../../../components/meal-calendar-pc';
 import MealCalendarDrawer from '../../../components/meal-calendar-drawer';
-import TimePicker, { DateFields, TimeFields } from '../../../components/time-picker';
+import TimePicker, { TimeFields } from '../../../components/time-picker';
 
 type EditResultSectionProps = {
   imageList: string[];
@@ -305,6 +305,8 @@ const deleteAnalysis = async () => {
     handleError(ERROR_MESSAGES.MEAL_DELETE_FAILED);
   }
 };
+
+type DateFields = z.infer<typeof dateSchema>;
 
 const getTimeFieldsFromDate = (date: Date = new Date()): DateFields => {
   const hours = date.getHours();
