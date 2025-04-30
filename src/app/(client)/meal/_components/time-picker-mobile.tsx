@@ -17,12 +17,12 @@ import { Button } from '@/components/ui/button';
 import { dateSchema } from '../[id]/_components/meal-detail-section';
 import { dateSelections } from '../post/edit/_utils/time-picker.util';
 
-type TimePickerProps = {
+type TimePickerMobileProps = {
   currentTime: TimeFields;
   onTimeChange: (currentTime: TimeFields) => void;
 };
 
-const TimePicker = ({ currentTime, onTimeChange }: TimePickerProps) => {
+const TimePickerMobile = ({ currentTime, onTimeChange }: TimePickerMobileProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [time, setTime] = useState<TimeFields>({
     meridiem: currentTime.meridiem,
@@ -51,7 +51,7 @@ const TimePicker = ({ currentTime, onTimeChange }: TimePickerProps) => {
           </Typography>
           <DrawerDescription className="sr-only">식사시간을 설정 할 수 있습니다.</DrawerDescription>
           <DrawerClose asChild>
-            <IconButton icon="before:bg-close-line-icon" alt="닫기" />
+            <IconButton icon="before:bg-close-line-icon" title="닫기" />
           </DrawerClose>
         </DrawerTitle>
 
@@ -85,7 +85,7 @@ const TimePicker = ({ currentTime, onTimeChange }: TimePickerProps) => {
   );
 };
 
-export default TimePicker;
+export default TimePickerMobile;
 
 const selections = dateSelections();
 export type TimeFields = Omit<z.infer<typeof dateSchema>, 'day'>;

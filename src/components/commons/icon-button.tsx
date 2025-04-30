@@ -20,13 +20,12 @@ const iconButtonVariants = cva(
 
 export type IconButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'children'> &
   VariantProps<typeof iconButtonVariants> & {
-    alt: string;
+    title: string;
     icon: string;
   };
 
-// TODO - alt를 title로 변경
 const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ size, icon, alt, className, ...props }, ref) => {
+  ({ size, icon, title, className, ...props }, ref) => {
     return (
       <button
         ref={ref}
@@ -34,7 +33,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
         className={cn(icon, iconButtonVariants({ size }), className)}
         {...props}
       >
-        <span className="sr-only">{alt}</span>
+        <span className="sr-only">{title}</span>
       </button>
     );
   }

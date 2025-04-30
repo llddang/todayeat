@@ -124,7 +124,7 @@ const EditCard = ({ mealDetail, idx, onRemove, onHandleError }: EditCardProps) =
         </div>
       )}
       <div className="flex items-start justify-center gap-2 self-stretch">
-        <IconButton icon="before:bg-delete-2-line-icon" alt="삭제 버튼" onClick={handleDelete} />
+        <IconButton icon="before:bg-delete-2-line-icon" title="삭제 버튼" onClick={handleDelete} />
         <Button
           variant="primary"
           type="button"

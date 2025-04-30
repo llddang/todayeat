@@ -3,7 +3,7 @@
 import * as Sentry from '@sentry/nextjs';
 import { useEffect } from 'react';
 
-export default function Error({ error }: { error: Error & { digest?: string } }): JSX.Element {
+const Error = ({ error }: { error: Error & { digest?: string } }) => {
   useEffect(() => {
     Sentry.captureException(error);
   }, [error]);
@@ -14,4 +14,6 @@ export default function Error({ error }: { error: Error & { digest?: string } })
       <p className="mb-6">죄송합니다. 요청을 처리하는 중에 오류가 발생했습니다.</p>
     </div>
   );
-}
+};
+
+export default Error;

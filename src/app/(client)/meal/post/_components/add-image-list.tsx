@@ -1,5 +1,5 @@
 'use client';
-import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, MouseEvent, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useUserStore } from '@/store/user.store';
@@ -8,6 +8,7 @@ import SITE_MAP from '@/constants/site-map.constant';
 import PIC_LINE from '@/../public/icons/pic_line.svg';
 import CLOSE_LINE from '@/../public/icons/close_line.svg';
 import { getFileId } from '../../_utils/file.util';
+import Modal from '@/components/commons/modal';
 
 type AddImageListProps = {
   onImagesChange?: (files: File[]) => void;
@@ -17,7 +18,10 @@ const AddImageList = ({ onImagesChange }: AddImageListProps) => {
   const user = useUserStore((state) => state.user);
   const router = useRouter();
   const inputFileRef = useRef<HTMLInputElement>(null);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalInfo, setModalInfo] = useState({
+    title: ''
+  });
   const [imageFiles, setImageFiles] = useState<File[]>([]);
 
   const previewImages = useMemo<ImagePreview[]>(
@@ -50,21 +54,24 @@ const AddImageList = ({ onImagesChange }: AddImageListProps) => {
 
     const validationError = validateFiles(fileArray, imageFiles);
     if (validationError) {
-      alert(validationError);
-      return;
+      setModalInfo({
+        title: validationError
+      });
+      return setIsModalOpen(true);
     }
 
     handleImageFilesChange([...imageFiles, ...fileArray]);
   };
 
-  const handleUploadButtonClick = (e: React.MouseEvent) => {
+  const handleUploadButtonClick = (e: MouseEvent) => {
     e.preventDefault();
 
-    // TODO: 비로그인 유저도 식사 기록할 수 있도록 삭제
     if (!user.id) {
-      alert(ALERT_MESSAGES.LOGIN_REQUIRED);
-      router.push(SITE_MAP.SIGN_IN);
-      return;
+      setModalInfo({
+        title: ALERT_MESSAGES.LOGIN_REQUIRED
+      });
+      setIsModalOpen(true);
+      return router.push(SITE_MAP.SIGN_IN);
     }
 
     inputFileRef.current?.click();
@@ -129,6 +136,7 @@ const AddImageList = ({ onImagesChange }: AddImageListProps) => {
           ))}
         </ul>
       )}
+      <Modal title={modalInfo.title} content="" open={isModalOpen} onOpenChange={setIsModalOpen} />
     </div>
   );
 };

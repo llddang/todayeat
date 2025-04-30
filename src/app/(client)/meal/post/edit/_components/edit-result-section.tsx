@@ -21,7 +21,6 @@ import SITE_MAP from '@/constants/site-map.constant';
 import MacronutrientBox from '@/components/commons/macronutrient-box';
 import MacronutrientPieChart from '@/components/commons/macronutrient-pie-chart';
 import { MacronutrientEnum } from '@/types/nutrition.type';
-import AddMealCardDrawer from './add-meal-card-drawer';
 import { MAX_MEMO_LENGTH } from '../_constants/meal-edit.constant';
 import { MEAL_CATEGORY } from '../../../_constants/category.constant';
 import MemoBox from '../../../[id]/_components/memo-box';
@@ -34,9 +33,10 @@ import { CreateMealDTO } from '@/types/DTO/meal.dto';
 import { deleteAnalysisData } from '@/apis/analysis-request.api';
 import { ErrorMessage, handleError } from '../../../_utils/error.util';
 import MealCalendarPc from '../../../_components/meal-calendar-pc';
-import MealCalendarDrawer from '../../../_components/meal-calendar-drawer';
-import TimePicker, { TimeFields } from '../../../_components/time-picker';
 import { getTimeFieldsFromDate } from '@/utils/date.util';
+import AddMealCardMobile from './add-meal-card-mobile';
+import MealCalendarMobile from '../../../_components/meal-calendar-mobile';
+import TimePickerMobile, { TimeFields } from '../../../_components/time-picker-mobile';
 
 type EditResultSectionProps = {
   imageList: string[];
@@ -170,7 +170,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
                     />
                   }
                   mobile={
-                    <AddMealCardDrawer
+                    <AddMealCardMobile
                       onAddMeal={handleAddMeal}
                       onOpenModalChange={setIsModalOpen}
                       onModalInfoChange={setModalInfo}
@@ -203,12 +203,12 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
                 <div className="flex w-full gap-2">
                   <Responsive
                     pc={<MealCalendarPc date={day} onDateChange={handleDayChange} />}
-                    mobile={<MealCalendarDrawer date={day} onDateChange={handleDayChange} />}
+                    mobile={<MealCalendarMobile date={day} onDateChange={handleDayChange} />}
                     mode="js"
                   />
                   <Responsive
                     pc={<TimePickerPc currentTime={date} onTimeChange={handleTimeChange} />}
-                    mobile={<TimePicker currentTime={date} onTimeChange={handleTimeChange} />}
+                    mobile={<TimePickerMobile currentTime={date} onTimeChange={handleTimeChange} />}
                     mode="js"
                   />
                 </div>

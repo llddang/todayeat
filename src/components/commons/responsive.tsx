@@ -19,7 +19,8 @@ const Responsive = ({ pc, mobile, mode = 'css' }: ResponsiveProps) => {
       </>
     );
 
-  if (isMobile) return mobile;
-  return pc;
+  return isMobile ? mobile : pc;
 };
+Responsive.displayName = 'Responsive';
+
 export default Responsive;
