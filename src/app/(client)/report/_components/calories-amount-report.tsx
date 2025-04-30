@@ -1,10 +1,10 @@
 import { Typography } from '@/components/ui/typography';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { PERIOD_UNIT_TEXT } from '../constants/unit.constant';
+import { PERIOD_UNIT_TEXT } from '../_constants/unit.constant';
 import { Bar, BarChart, Cell, ReferenceLine, XAxis, YAxis } from 'recharts';
-import { calculateDiffCalories, makePeriodMessage } from '../utils/nutrition-diff.util';
+import { calculateDiffCalories, makePeriodMessage } from '../_utils/nutrition-diff.util';
 import { formatNumberWithComma } from '@/utils/format.util';
-import { BarChartDataType, PeriodUnit, PeriodUnitEnum } from '../types/chart.type';
+import { BarChartDataType, PeriodUnit, PeriodUnitEnum } from '../_types/chart.type';
 import { MealNutrition } from '@/types/nutrition.type';
 import { UserPersonalInfoDTO } from '@/types/DTO/user.dto';
 import BarChartSkeleton from './bar-chart-skeleton';

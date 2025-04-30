@@ -1,7 +1,7 @@
 import { Typography } from '@/components/ui/typography';
-import { AmountBarChartType, PeriodUnit } from '../types/chart.type';
-import { PERIOD_UNIT_TEXT } from '../constants/unit.constant';
-import { AMOUNT_CHART_OPTIONS } from '../constants/chart.constant';
+import { AmountBarChartType, PeriodUnit } from '../_types/chart.type';
+import { PERIOD_UNIT_TEXT } from '../_constants/unit.constant';
+import { AMOUNT_CHART_OPTIONS } from '../_constants/chart.constant';
 import { cn } from '@/lib/shadcn';
 
 type MacronutrientAmountBoxProps = {

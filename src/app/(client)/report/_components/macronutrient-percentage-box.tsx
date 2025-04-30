@@ -1,5 +1,5 @@
 import { Typography } from '@/components/ui/typography';
-import { AMOUNT_CHART_OPTIONS } from '../constants/chart.constant';
+import { AMOUNT_CHART_OPTIONS } from '../_constants/chart.constant';
 import { MacronutrientEnumType } from '@/types/nutrition.type';
 import { cn } from '@/lib/shadcn';
 

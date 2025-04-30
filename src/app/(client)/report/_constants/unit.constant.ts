@@ -1,4 +1,4 @@
-import { PeriodUnitEnum } from '../types/chart.type';
+import { PeriodUnitEnum } from '../_types/chart.type';
 
 export const PERIOD_UNIT_TEXT = {
   [PeriodUnitEnum.DAILY]: {

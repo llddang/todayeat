@@ -3,13 +3,13 @@ import CtaExampleFeedbackBanner from '@/components/commons/cta-example-feedback-
 import { Typography } from '@/components/ui/typography';
 import MacronutrientPercentageBox from './macronutrient-percentage-box';
 import { getPercentage } from '@/utils/nutrition-calculator.util';
-import { calculateMaxDiffNutrient, makeFeedbackMessage } from '../utils/nutrition-diff.util';
+import { calculateMaxDiffNutrient, makeFeedbackMessage } from '../_utils/nutrition-diff.util';
 import { NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
 import { UserPersonalInfoDTO } from '@/types/DTO/user.dto';
 import { MacronutrientEnum, MacronutrientEnumType, MealNutrition } from '@/types/nutrition.type';
-import { MacronutrientComparison } from '../types/nutrition.type';
-import { PeriodUnit } from '../types/chart.type';
-import { AMOUNT_CHART_OPTIONS } from '../constants/chart.constant';
+import { MacronutrientComparison } from '../_types/nutrition.type';
+import { PeriodUnit } from '../_types/chart.type';
+import { AMOUNT_CHART_OPTIONS } from '../_constants/chart.constant';
 import useIsMobile from '@/hooks/use-is-mobile';
 import PieChartSkeleton from './pie-chart-skeleton';
 import { cn } from '@/lib/shadcn';

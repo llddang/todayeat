@@ -1,6 +1,6 @@
 'use client';
 
-import { PeriodUnit } from '../types/chart.type';
+import { PeriodUnit } from '../_types/chart.type';
 
 type FetchReportResponse = {
   barChart: {

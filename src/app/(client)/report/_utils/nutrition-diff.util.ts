@@ -1,7 +1,7 @@
 import { getPercentage } from '@/utils/nutrition-calculator.util';
-import { PERIOD_UNIT_TEXT } from '../constants/unit.constant';
-import { BarChartDataType, PeriodUnit } from '../types/chart.type';
-import { MacronutrientComparison } from '../types/nutrition.type';
+import { PERIOD_UNIT_TEXT } from '../_constants/unit.constant';
+import { BarChartDataType, PeriodUnit } from '../_types/chart.type';
+import { MacronutrientComparison } from '../_types/nutrition.type';
 import { MealNutrition } from '@/types/nutrition.type';
 import { UserPersonalInfoDTO } from '@/types/DTO/user.dto';
 

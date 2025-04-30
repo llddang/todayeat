@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { BarChartDataType, PeriodUnit, PeriodUnitEnum } from '@/app/(client)/report/types/chart.type';
+import { BarChartDataType, PeriodUnit, PeriodUnitEnum } from '@/app/(client)/report/_types/chart.type';
 import {
   subWeeks,
   subDays,
@@ -13,10 +13,10 @@ import {
   format
 } from 'date-fns';
 import { calculateNutritionAverage, calculateTotalNutrition } from '@/utils/nutrition-calculator.util';
-import { PERIOD_UNIT_TEXT } from '@/app/(client)/report/constants/unit.constant';
+import { PERIOD_UNIT_TEXT } from '@/app/(client)/report/_constants/unit.constant';
 import { getAllMyMealsByPeriod } from '@/apis/meal.api';
 import { MealNutrition } from '@/types/nutrition.type';
-import { INITIAL_NUTRITION_VALUE } from '@/app/(client)/report/constants/chart.constant';
+import { INITIAL_NUTRITION_VALUE } from '@/app/(client)/report/_constants/chart.constant';
 
 const getDateRanges = (unit: PeriodUnit) => {
   const today = new Date();

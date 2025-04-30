@@ -1,4 +1,4 @@
-import { AmountBarChartType } from '@/app/(client)/report/types/chart.type';
+import { AmountBarChartType } from '@/app/(client)/report/_types/chart.type';
 import { MacronutrientValues } from '@/types/nutrition.type';
 
 export const AMOUNT_CHART_OPTIONS: Record<AmountBarChartType, MacronutrientValues> = {

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { BarChartDataType, PeriodUnit } from '../types/chart.type';
+import { BarChartDataType, PeriodUnit } from '../_types/chart.type';
 import { MealNutrition } from '@/types/nutrition.type';
-import { fetchReport } from '../apis/fetch-report.api';
-import { INITIAL_NUTRITION_VALUE } from '../constants/chart.constant';
+import { fetchReport } from '../_apis/fetch-report.api';
+import { INITIAL_NUTRITION_VALUE } from '../_constants/chart.constant';
 
 export const useFetchReport = (userId: string | null, unit: PeriodUnit) => {
   const [barChart, setBarChart] = useState<BarChartDataType[]>([]);

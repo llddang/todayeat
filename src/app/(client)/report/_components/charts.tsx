@@ -5,8 +5,8 @@ import { useUserStore } from '@/store/user-store';
 import MacronutrientPercentageReport from './macronutrient-percentage-report';
 import MacronutrientAmountReport from './macronutrient-amount-report';
 import CaloriesAmountReport from './calories-amount-report';
-import { useFetchReport } from '../hooks/use-fetch-report';
-import { PeriodUnit } from '../types/chart.type';
+import { useFetchReport } from '../_hooks/use-fetch-report';
+import { PeriodUnit } from '../_types/chart.type';
 
 const Charts = ({ unit }: { unit: PeriodUnit }) => {
   const { id: userId, personalInfo } = useUserStore((state) => state.user);

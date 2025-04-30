@@ -1,10 +1,10 @@
 import { Typography } from '@/components/ui/typography';
 import { MacronutrientEnumType, MealNutrition } from '@/types/nutrition.type';
-import { PeriodUnit } from '../types/chart.type';
+import { PeriodUnit } from '../_types/chart.type';
 import { UserPersonalInfoDTO } from '@/types/DTO/user.dto';
 import MacronutrientAmountBox from './macronutrient-amount-box';
 import { MACRONUTRIENT_OPTIONS } from '@/constants/nutrition.constant';
-import { MACRONUTRIENT_GOAL_MAP, MACRONUTRIENT_MAP } from '../constants/chart.constant';
+import { MACRONUTRIENT_GOAL_MAP, MACRONUTRIENT_MAP } from '../_constants/chart.constant';
 import { getPercentage } from '@/utils/nutrition-calculator.util';
 
 type MacronutrientAmountReportProps = {
