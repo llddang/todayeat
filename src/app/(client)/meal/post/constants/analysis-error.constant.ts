@@ -4,7 +4,7 @@ export const ERROR_MESSAGES = {
     content: '서비스 이용을 위해 로그인 후 다시 시도해주세요.'
   },
   AI_ANALYSIS_FAILED: {
-    title: '메뉴 분석에 실패했습니다',
+    title: 'AI가 분석하기 어려운 메뉴입니다.',
     content: '메뉴명이 정확한지 확인 후 다시 시도해주세요.'
   },
   SERVICE_ERROR: {
