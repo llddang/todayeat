@@ -9,6 +9,7 @@ const PROTECTED_PATHS = [SITE_MAP.MY_PAGE, SITE_MAP.SET_GOAL, SITE_MAP.CHANGE_PA
 const EXCLUDED_PATHS = [SITE_MAP.ONBOARDING];
 const ALL_MANAGED_PATHS = [...PUBLIC_AUTH_PATHS, ...PROTECTED_PATHS];
 const ONBOARDING_COOKIE_NAME = 'isOnboarded';
+const EXPIRED_COOKIE_ONE_YEAR = 60 * 60 * 24 * 365;
 
 const shouldRedirectToOnboarding = (pathname: string, isOnboarded: boolean): boolean => {
   if (isOnboarded) return false;
@@ -33,6 +34,26 @@ export const middleware = async (request: NextRequest) => {
   }
 
   if (EXCLUDED_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`))) {
+    if (pathname.startsWith(SITE_MAP.ONBOARDING)) {
+      const isOnboarded = request.cookies.get(ONBOARDING_COOKIE_NAME)?.value === 'true';
+
+      if (!isOnboarded) {
+        const response = NextResponse.next();
+        response.cookies.set({
+          name: ONBOARDING_COOKIE_NAME,
+          value: 'true',
+          path: '/',
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax',
+          maxAge: EXPIRED_COOKIE_ONE_YEAR
+        });
+
+        response.headers.set('x-middleware-cache', 'no-cache');
+        return response;
+      }
+    }
+
     return NextResponse.next();
   }
 
@@ -67,6 +88,7 @@ export const config = {
   matcher: [
     ...ALL_MANAGED_PATHS.map((path) => `${path}/:path*`),
     SITE_MAP.HOME,
+    SITE_MAP.ONBOARDING,
     '/((?!_next/|static/|api/|favicon.ico).*)'
   ]
 };
