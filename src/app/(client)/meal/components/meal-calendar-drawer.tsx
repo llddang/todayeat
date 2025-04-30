@@ -28,7 +28,6 @@ const MealCalendarDrawer = ({ onDateChange }: MealCalendarDrawerProps) => {
         <DrawerHeader className="sr-only">
           <DrawerTitle>식사 시간 설정</DrawerTitle>
         </DrawerHeader>
-        {/* TODO: DESKTOP 모달창 구현시 삭제 */}
         <div className="mx-auto flex flex-col justify-center gap-2 desktop-width">
           <Calendar
             locale={ko}
