@@ -1,7 +1,7 @@
 import { ENV, ENV_ERROR } from '@/constants/env.constant';
 import { MetadataRoute } from 'next';
 
-export const robots = (): MetadataRoute.Robots => {
+const robots = (): MetadataRoute.Robots => {
   if (!ENV.PROJECT_URL) throw new Error(ENV_ERROR.PROJECT_URL);
   return {
     rules: [
@@ -14,3 +14,5 @@ export const robots = (): MetadataRoute.Robots => {
     sitemap: `${ENV.PROJECT_URL}/sitemap.xml`
   };
 };
+
+export default robots;

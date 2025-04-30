@@ -46,7 +46,6 @@ const EditProfile = ({ setOpen }: EditProfileProps) => {
   });
 
   useEffect(() => {
-    // profilePreviewUrl 변경 또는 언마운트 시 Blob URL 정리 → 메모리 누수 방지
     return () => {
       cleanupBlobUrl(profileState.profilePreviewUrl);
     };

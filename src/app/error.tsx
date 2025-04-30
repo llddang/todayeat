@@ -3,7 +3,7 @@
 import * as Sentry from '@sentry/nextjs';
 import { useEffect } from 'react';
 
-export const Error = ({ error }: { error: Error & { digest?: string } }) => {
+const Error = ({ error }: { error: Error & { digest?: string } }) => {
   useEffect(() => {
     Sentry.captureException(error);
   }, [error]);
@@ -15,3 +15,5 @@ export const Error = ({ error }: { error: Error & { digest?: string } }) => {
     </div>
   );
 };
+
+export default Error;

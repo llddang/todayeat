@@ -54,7 +54,7 @@ const CaloriesAmountReport = ({ total, unit, barChart, personalInfo, isLoading }
                   return (
                     <text
                       x={x}
-                      y={y + 12} // 위치 보정
+                      y={y + 12} 
                       textAnchor="middle"
                       className={cn(
                         isCurrent ? '!fill-gray-900 typography-caption3' : '!fill-gray-500 typography-caption2'

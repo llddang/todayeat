@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-export const TabVisibilityHandler = () => {
+const TabVisibilityHandler = () => {
   const router = useRouter();
 
   useEffect(() => {
@@ -21,3 +21,5 @@ export const TabVisibilityHandler = () => {
 
   return null;
 };
+
+export default TabVisibilityHandler;
