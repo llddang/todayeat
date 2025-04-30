@@ -2,7 +2,7 @@
 
 import { MealDTO } from '@/types/DTO/meal.dto';
 import { ChangeEvent, useMemo, useState } from 'react';
-import { ErrorMessage } from '../../utils/error.util';
+import { ErrorMessage } from '../../_utils/error.util';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { calculateTotalNutrition } from '@/utils/nutrition-calculator.util';
@@ -10,7 +10,7 @@ import { MealCategory, MealCategoryType } from '@/types/meal-category.type';
 import TimePicker, { TimeFields } from '../../_components/time-picker';
 import { updateMeal } from '@/apis/meal.api';
 import { formatTimestamp } from '@/utils/format.util';
-import { ERROR_MESSAGES } from '../../post/edit/constants/error-message.constant';
+import { ERROR_MESSAGES } from '../../post/edit/_constants/error-message.constant';
 import MealImageCarousel from '../../_components/meal-images-carousel';
 import TotalNutritionChart from './total-nutrition-chart';
 import MealList from './meal-list';

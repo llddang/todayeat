@@ -14,7 +14,7 @@ import { TimeFields } from './time-picker';
 import IconButton from '@/components/commons/icon-button';
 import Picker from 'react-mobile-picker';
 import { Button } from '@/components/ui/button';
-import { dateSelections } from '../post/edit/utils/time-picker.util';
+import { dateSelections } from '../post/edit/_utils/time-picker.util';
 
 type TimePickerPcProps = {
   currentTime: TimeFields;

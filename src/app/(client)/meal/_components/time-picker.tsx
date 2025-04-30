@@ -15,7 +15,7 @@ import Picker from 'react-mobile-picker';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { dateSchema } from '../[id]/_components/meal-detail-section';
-import { dateSelections } from '../post/edit/utils/time-picker.util';
+import { dateSelections } from '../post/edit/_utils/time-picker.util';
 
 type TimePickerProps = {
   currentTime: TimeFields;
