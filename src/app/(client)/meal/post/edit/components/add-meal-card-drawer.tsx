@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import IconButton from '@/components/commons/icon-button';
 import { Typography } from '@/components/ui/typography';
-import MealPostAddMealAiLoading from '@/app/(client)/meal/post/components/add-meal-ai-loading';
+import MealPostAddMealAiLoading from '@/app/(client)/meal/post/_components/add-meal-ai-loading';
 import { useUserStore } from '@/store/user-store';
 import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
 import { parseGeminiResponse } from '@/lib/gemini';

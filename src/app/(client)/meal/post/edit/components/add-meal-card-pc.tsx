@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@radix-ui/react-dialog';
-import AddMealAiLoading from '../../components/add-meal-ai-loading';
+import AddMealAiLoading from '../../_components/add-meal-ai-loading';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { MAX_MENU_NAME_LENGTH, MAX_NUMERIC_LENGTH } from '../constants/meal-edit.constant';

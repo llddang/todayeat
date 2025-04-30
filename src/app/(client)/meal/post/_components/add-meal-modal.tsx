@@ -15,9 +15,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createAiRequestByText, createAiResponse } from '@/apis/analysis-request.api';
 import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
 import { parseGeminiResponse } from '@/lib/gemini';
-import { ERROR_MESSAGES } from '../constants/analysis-error.constant';
-import { FoodFormValues, formSchema } from '../schemas/add-meal.schema';
-import { revalidate } from '../utils/revalidate';
+import { ERROR_MESSAGES } from '../_constants/analysis-error.constant';
+import { FoodFormValues, formSchema } from '../_schemas/add-meal.schema';
+import { revalidate } from '../_utils/revalidate.util';
 
 type AddMealModalProps = {
   onModalOpenChange: (isModalOpen: boolean) => void;

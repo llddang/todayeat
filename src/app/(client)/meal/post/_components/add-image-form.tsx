@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { getUser } from '@/apis/user.api';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
-import AddImageList from '@/app/(client)/meal/post/components/add-image-list';
+import AddImageList from '@/app/(client)/meal/post/_components/add-image-list';
 
 type AddImageFormProps = {
   onLoadingChange: (isLoading: boolean) => void;

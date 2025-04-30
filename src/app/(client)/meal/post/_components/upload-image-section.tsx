@@ -2,7 +2,7 @@
 import { Typography } from '@/components/ui/typography';
 import React, { useState } from 'react';
 import AddImageForm from './add-image-form';
-import useRestoreAnalysisModal from '../hooks/use-restore-analysis-modal';
+import useRestoreAnalysisModal from '../_hooks/use-restore-analysis-modal';
 import RestoreAnalysisModal from './restore-analysis-modal';
 import AddMealAiLoading from './add-meal-ai-loading';
 import AddMealDrawer from './add-meal-drawer';
