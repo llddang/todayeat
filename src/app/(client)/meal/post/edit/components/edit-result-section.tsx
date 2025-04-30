@@ -12,7 +12,7 @@ import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useState, useCallback, KeyboardEvent } from 'react';
 import EditCard from './edit-card';
-import MealImageCarousel from '../../../components/meal-images-carousel';
+import MealImageCarousel from '../../../_components/meal-images-carousel';
 import { Typography } from '@/components/ui/typography';
 import GlassBackground from '@/components/commons/glass-background';
 import TagSelectItem from '@/components/commons/tag-select-item';
@@ -23,19 +23,19 @@ import MacronutrientPieChart from '@/components/commons/macronutrient-pie-chart'
 import { MacronutrientEnum } from '@/types/nutrition.type';
 import AddMealCardDrawer from './add-meal-card-drawer';
 import { MAX_MEMO_LENGTH } from '../constants/meal-edit.constant';
-import { MEAL_CATEGORY } from '../../../constants/category.constant';
-import MemoBox from '../../../detail/components/memo-box';
+import { MEAL_CATEGORY } from '../../../_constants/category.constant';
+import MemoBox from '../../../[id]/_components/memo-box';
 import Responsive from '@/components/commons/responsive';
-import TimePickerPc from '../../../components/time-picker-pc';
+import TimePickerPc from '../../../_components/time-picker-pc';
 import AddMealCardPc from './add-meal-card-pc';
 import Modal from '@/components/commons/modal';
 import { ERROR_MESSAGES } from '../constants/error-message.constant';
 import { CreateMealDTO } from '@/types/DTO/meal.dto';
 import { deleteAnalysisData } from '@/apis/analysis-request.api';
 import { ErrorMessage, handleError } from '../../../utils/error.util';
-import MealCalendarPc from '../../../components/meal-calendar-pc';
-import MealCalendarDrawer from '../../../components/meal-calendar-drawer';
-import TimePicker, { TimeFields } from '../../../components/time-picker';
+import MealCalendarPc from '../../../_components/meal-calendar-pc';
+import MealCalendarDrawer from '../../../_components/meal-calendar-drawer';
+import TimePicker, { TimeFields } from '../../../_components/time-picker';
 import { getTimeFieldsFromDate } from '@/utils/date.util';
 
 type EditResultSectionProps = {

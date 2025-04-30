@@ -36,7 +36,7 @@ const MealCard = ({ meal, editMode, onDelete }: MealCardProps) => {
         </Typography>
       </div>
       <Link
-        href={`${SITE_MAP.MEAL_DETAIL}/${meal.id}`}
+        href={`${SITE_MAP.MEAL}/${meal.id}`}
         className="flex w-full flex-1 flex-col gap-4 overflow-hidden rounded-2xl bg-white p-4"
       >
         <div className="flex items-center justify-between">

@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getMyMealById } from '@/apis/meal.api';
-import MealDetailSection from '../components/meal-detail-section';
+import MealDetailSection from './_components/meal-detail-section';
 
 type MealDetailPageProps = {
   params: {

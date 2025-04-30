@@ -8,7 +8,7 @@ const SITE_MAP = {
   MY_PAGE: '/my-page',
   REPORT: '/report',
   MEAL_POST_EDIT: '/meal/post/edit',
-  MEAL_DETAIL: '/meal/detail',
+  MEAL: '/meal',
   SET_GOAL: '/set-goal',
   ONBOARDING: '/onboarding'
 } as const;
