@@ -1,7 +1,7 @@
 import { ENV, ENV_ERROR } from '@/constants/env.constant';
 import { MetadataRoute } from 'next';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const sitemap = (): MetadataRoute.Sitemap => {
   if (!ENV.PROJECT_URL) throw new Error(ENV_ERROR.PROJECT_URL);
   const baseUrl = ENV.PROJECT_URL;
   const currentDate = new Date();
@@ -52,4 +52,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   return routes;
-}
+};

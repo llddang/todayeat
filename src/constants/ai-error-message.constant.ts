@@ -54,9 +54,9 @@ export const AI_ERROR_MESSAGE = {
 
 export type AIErrorMessageType = keyof typeof AI_ERROR_MESSAGE;
 
-export function isAIErrorResponse(key: AIErrorMessageType) {
+export const isAIErrorResponse = (key: AIErrorMessageType) => {
   return {
     error: AI_ERROR_MESSAGE[key].message,
     action: AI_ERROR_MESSAGE[key].action
   };
-}
+};
