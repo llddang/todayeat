@@ -2,17 +2,17 @@
   <img alt="투데잇" src="https://github.com/user-attachments/assets/e6e42c1e-b10e-43fe-bdfd-9ba4535c10e0" />
 </div>
 
-
 <br>
 <br>
 
 ## 💬 프로젝트 소개
+
 **먹기 전에 찰칵! 사진 한 장으로 내 식단을 똑똑하게 분석해주는 스마트 식단 관리 서비스 🥙**
 <br>
+
 - 음식 사진 촬영만으로 AI가 자동으로 영양 정보를 분석하고 시각화해주는 서비스입니다.
 - AI 피드백으로 건강한 식습관을 형성하고, 직관적인 데이터 시각화로 자신의 영양 섭취 패턴을 쉽게 파악할 수 있습니다.
 
- 
 > - **기획 및 와이어프레임 제작** : 2025. 03. 28 ~ 2025. 04. 03
 > - **개발 기간** : 2025. 04. 04 ~ 진행중
 > - **배포 주소** : https://jiwooda-main.vercel.app/
@@ -20,8 +20,8 @@
 <br />
 <br />
 
-
 ## 👩‍👩‍👧‍👧 프로젝트 멤버 소개
+
 <table>
   <tbody>
     <tr>
@@ -90,8 +90,11 @@
 <br />
 
 ## ⚙ 프로젝트 기능 소개
+
 > ### ✨ 주요 기능 한 눈에 보기
-> *AI 기반 이미지 인식, 자동 영양 분석, 상태 관리, 폼 검증, 에러 모니터링, 반응형 UI 제공*
+>
+> _AI 기반 이미지 인식, 자동 영양 분석, 상태 관리, 폼 검증, 에러 모니터링, 반응형 UI 제공_
+
 - **Next.js 기반 웹 애플리케이션**으로 서버 컴포넌트와 클라이언트 컴포넌트를 효과적으로 분리하여 최적화된 성능을 제공합니다.
 - **앱 라우팅(App Router)** 시스템을 활용하여 직관적인 페이지 구조와 효율적인 라우팅을 구현했습니다.
 - **Gemini API**를 활용한 이미지 인식 기능으로 음식 사진을 분석하여 자동으로 영양 정보를 추출하고 기록합니다.
@@ -106,6 +109,7 @@
 <br />
 
 ## 🔗 협업 프로세스
+
 - ### 기능 단위 작업 관리
   - [각 컴포넌트/기능별 이슈](https://github.com/llddang/todayeat/issues) 생성
   - 유형별 브랜치 운영 (`Feature/#이슈번호-이슈명`, `Refactor/#이슈번호-이슈명`)
@@ -124,49 +128,51 @@
 <br><br>
 
 ## 💌 프로젝트 기록
+
 - ### 팀 블로그 운영
   - [지우다 기술 블로그 바로가기](https://jiwooda.palms.blog/)
 
-
 <br />
 <br />
-
 
 ## 📁 프로젝트 구조
+
 ```markdown
 📁
-├─ public                      // 🖼 정적 리소스(이미지, 글꼴, 아이콘 등)
+├─ public // 🖼 정적 리소스(이미지, 글꼴, 아이콘 등)
 ├─ src
-│  ├─ app                      // 🧩 Next.js App Router 기반 페이지 구조
-│  │  ├─ (auth)                // 🔐 인증 관련 페이지(로그인, 회원가입 등)
-│  │  ├─ (client)              // 👤 인증된 사용자 페이지(마이페이지, 식단기록 등)
-│  │  ├─ (home)                // 🏠 메인 홈 페이지
-│  │  ├─ api                   // 🚀 서버리스 API 엔드포인트
-│  │  ├─ error.tsx             // ⚠️ 에러 핸들링 컴포넌트
-│  │  ├─ layout.tsx            // 📐 전체 레이아웃 구성
-│  ├─ components               // 🧱 컴포넌트 구성
-│  │  ├─ _page                 // 📄 페이지별 컴포넌트 폴더 네이밍
-│  │  ├─ commons               // 🔄 공통 컴포넌트
-│  │  ├─ layouts               // 📏 레이아웃 컴포넌트
-│  │  ├─ ui                    // 🎨 UI 기본 컴포넌트(shadcn/ui 기반)
-│  ├─ constants                // 📌 상수 정의
-│  ├─ lib                      // 📚 유틸리티 및 라이브러리
-│  │  ├─ apis                  // 🌐 API 호출 함수
-│  │  ├─ contexts              // 🔄 컨텍스트 API
-│  │  ├─ hooks                 // 🪝 커스텀 훅
-│  │  ├─ utils                 // 🛠️ 유틸리티 함수
-│  ├─ store                    // 🏪 전역 상태 관리(Zustand)
-│  ├─ types                    // 📝 TypeScript 타입 정의
-│  │  ├─ DTO                   // 📦 데이터 전송 객체 타입
+│ ├─ app // 🧩 Next.js App Router 기반 페이지 구조
+│ │ ├─ (auth) // 🔐 인증 관련 페이지(로그인, 회원가입 등)
+│ │ ├─ (client) // 👤 인증된 사용자 페이지(마이페이지, 식단기록 등)
+│ │ ├─ (home) // 🏠 메인 홈 페이지
+│ │ ├─ api // 🚀 서버리스 API 엔드포인트
+│ │ ├─ error.tsx // ⚠️ 에러 핸들링 컴포넌트
+│ │ ├─ layout.tsx // 📐 전체 레이아웃 구성
+│ ├─ components // 🧱 컴포넌트 구성
+│ │ ├─ \_page // 📄 페이지별 컴포넌트 폴더 네이밍
+│ │ ├─ commons // 🔄 공통 컴포넌트
+│ │ ├─ layouts // 📏 레이아웃 컴포넌트
+│ │ ├─ ui // 🎨 UI 기본 컴포넌트(shadcn/ui 기반)
+│ ├─ constants // 📌 상수 정의
+│ ├─ lib // 📚 유틸리티 및 라이브러리
+│ │ ├─ apis // 🌐 API 호출 함수
+│ │ ├─ contexts // 🔄 컨텍스트 API
+│ │ ├─ hooks // 🪝 커스텀 훅
+│ │ ├─ utils // 🛠️ 유틸리티 함수
+│ ├─ store // 🏪 전역 상태 관리(Zustand)
+│ ├─ types // 📝 TypeScript 타입 정의
+│ │ ├─ DTO // 📦 데이터 전송 객체 타입
 └─
 ```
 
 <br />
 
 ## 🧶 기술 스택
+
 <div align="left">
 
 ### Environment
+
 <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" />
 <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" />
 <img src="https://img.shields.io/badge/sentry-362D59?style=for-the-badge&amp;logo=sentry&amp;logoColor=white">
@@ -175,6 +181,7 @@
 <br>
 
 ### Development
+
 <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=Next.js&logoColor=white"/>
 <img src="https://img.shields.io/badge/Typescript-3178C6?style=for-the-badge&amp;logo=Typescript&amp;logoColor=white">
 <img src="https://img.shields.io/badge/Zustand-82612C?style=for-the-badge&logo=&logoColor=white">      
@@ -184,10 +191,7 @@
 <img src="https://img.shields.io/badge/zod-3E67B1?style=for-the-badge&amp;logo=zod&amp;logoColor=white">
 <img src="https://img.shields.io/badge/reacthookform-EC5990?style=for-the-badge&amp;logo=reacthookform&amp;logoColor=white">
 
-
 </div>
 
 <br />
 <br />
-
-

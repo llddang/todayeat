@@ -39,7 +39,7 @@ const Modal = ({
       <AlertDialogPortal>
         <AlertDialogOverlay
           onClick={() => onClose?.()}
-          className="z-modal fixed inset-0 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+          className="fixed inset-0 z-modal bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
         />
         <AlertDialogContent
           className={cn(
