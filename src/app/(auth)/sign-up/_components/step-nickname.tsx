@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useRef, useState } from 'react';
 import { StepNicknameType } from '@/app/(auth)/sign-up/_types/funnel.type';
 import { signUp } from '@/apis/auth-server.api';
+import Modal from '@/components/commons/modal';
 
 const nicknameSchema = z.object({
   nickname: formSchema.NICKNAME_SCHEMA
@@ -21,9 +22,12 @@ type StepNicknameProps = {
   clear: () => void;
 };
 
+const defaultModalInfo = { title: '', content: '' };
+
 const StepNickname = ({ data, nextStep, clear }: StepNicknameProps) => {
   const [isPending, setIsPending] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [modalInfo, setModalInfo] = useState(defaultModalInfo);
 
   const form = useForm<NicknameSchemaType>({
     mode: 'onBlur',
@@ -44,7 +48,7 @@ const StepNickname = ({ data, nextStep, clear }: StepNicknameProps) => {
     setIsPending(true);
     const { error } = await signUp(data.email, data.password, nickname);
     setIsPending(false);
-    if (error) return alert(`${error.action} ${error.message}`);
+    if (error) return setModalInfo({ title: error.message, content: error.action });
     nextStep();
     clear();
   };
@@ -79,6 +83,7 @@ const StepNickname = ({ data, nextStep, clear }: StepNicknameProps) => {
           </Button>
         </form>
       </Form>
+      <Modal open={!!modalInfo.title} onOpenChange={() => setModalInfo(defaultModalInfo)} {...modalInfo} />
     </>
   );
 };

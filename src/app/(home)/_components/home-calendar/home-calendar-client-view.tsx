@@ -37,7 +37,7 @@ const HomeCalendarClientView = ({ dailyMealCalories }: HomeCalendarClientViewPro
         className="space-y-5 px-4 py-7 pt-2 xl:max-w-[23.75rem] xl:space-y-2"
       >
         <div className="relative flex w-full justify-between">
-          <Responsive mobile={<DateSelectorMobile />} pc={<DateSelectorPc />} />
+          <Responsive mobile={<DateSelectorMobile />} pc={<DateSelectorPc />} mode="js" />
           <TabsList className="xl:hidden">
             <TabsTrigger value="week">주간</TabsTrigger>
             <TabsTrigger value="month">월간</TabsTrigger>

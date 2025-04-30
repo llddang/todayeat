@@ -12,7 +12,7 @@ type PropsWithoutChildren<T> = Omit<T, 'children'>;
 
 const ClientOnly = Object.assign(
   ({ children, fallback }: ClientOnlyProps) => {
-    return <>{useIsClient() ? children : fallback}</>;
+    return useIsClient() ? children : fallback;
   },
   {
     displayName: 'ClientOnly',
