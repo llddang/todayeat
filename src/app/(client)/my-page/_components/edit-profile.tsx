@@ -16,6 +16,7 @@ import { Typography } from '@/components/ui/typography';
 import DefaultProfile from '@/../public/illustrations/default-profile.svg';
 import { useUserStore } from '@/store/user.store';
 import { uploadProfileImage } from '../_utils/upload-profile-image.util';
+import { useToast } from '@/hooks/use-toast';
 import Modal from '@/components/commons/modal';
 
 const editProfileFormSchema = z.object({
@@ -30,6 +31,8 @@ type EditProfileProps = {
 };
 
 const EditProfile = ({ setOpen }: EditProfileProps) => {
+  const { toast } = useToast();
+
   const { user, setUser } = useUserStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [profileState, setProfileState] = useState({
@@ -86,7 +89,11 @@ const EditProfile = ({ setOpen }: EditProfileProps) => {
     }
 
     if (formData.nickname === user.nickname && profilePreviewUrl === user.profileImage) {
-      alert('변경된 정보가 없습니다.');
+      toast({
+        description: '변경된 정보가 없습니다.',
+        icon: 'before:bg-toast-fail',
+        duration: 3000
+      });
       return setIsUploading(false);
     }
 
@@ -104,8 +111,11 @@ const EditProfile = ({ setOpen }: EditProfileProps) => {
 
   const handleProfileUpdateSuccess = async (nickname: string, newImageUrl: string | null) => {
     form.reset({ nickname, newProfileImage: null });
-    // TODO - 프로필 수정 성공 토스트 메시지 추가
-
+    toast({
+      description: '프로필이 성공적으로 수정되었습니다.',
+      icon: 'before:bg-toast-success',
+      duration: 3000
+    });
     setProfileState((prev) => ({
       ...prev,
       profilePreviewUrl: newImageUrl

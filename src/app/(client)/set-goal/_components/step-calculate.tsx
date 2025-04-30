@@ -17,6 +17,7 @@ import MacronutrientBox from './macronutrient-box';
 import { StepCompleteType } from '../_types/funnel.type';
 import { formatNumberWithComma } from '@/utils/format.util';
 import { useClientCalculation } from '../_hooks/use-client-calculation';
+import { useToast } from '@/hooks/use-toast';
 
 type StepCalculateProps = {
   nextStep: (data: string) => void;
@@ -30,6 +31,7 @@ const caloriesFormSchema = z.object({
 type FormValues = z.infer<typeof caloriesFormSchema>;
 
 const StepCalculate = ({ nextStep, data }: StepCalculateProps) => {
+  const { toast } = useToast();
   const userName = useUserStore((state) => state.user?.nickname);
   const setUser = useUserStore((state) => state.setUser);
 
@@ -58,6 +60,11 @@ const StepCalculate = ({ nextStep, data }: StepCalculateProps) => {
       setUser(user);
       nextStep('complete');
     } catch (error) {
+      toast({
+        description: '목표 계산 및 업데이트 중 문제가 생겼습니다.',
+        icon: 'before:bg-toast-fail',
+        duration: 3000
+      });
       console.error('목표 계산 및 업데이트 중 오류 발생:', error);
     }
   };

@@ -6,6 +6,7 @@ import './globals.css';
 import MainBackground from '@/components/layouts/main-background';
 import UserInitialize from '@/components/commons/user-initializer';
 import { ENV } from '@/constants/env.constant';
+import { Toaster } from '@/components/ui/toaster';
 
 const wantedSans = localFont({
   src: '../../public/fonts/WantedSansVariable.woff2',
@@ -51,6 +52,7 @@ const RootLayout = ({
         </Suspense>
         <MainBackground>{children}</MainBackground>
         <UserInitialize />
+        <Toaster />
       </body>
     </html>
   );
