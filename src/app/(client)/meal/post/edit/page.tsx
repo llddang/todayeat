@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import { getAiResponses, getFoodImagesById } from '@/apis/analysis-request.api';
 import { getUser } from '@/apis/user.api';
-import EditResultSection from './components/edit-result-section';
+import EditResultSection from './_components/edit-result-section';
 
 const MealPostEditPage = async () => {
   const { id: userId } = await getUser();

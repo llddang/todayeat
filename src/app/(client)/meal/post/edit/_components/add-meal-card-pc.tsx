@@ -12,9 +12,9 @@ import {
 import AddMealAiLoading from '../../_components/add-meal-ai-loading';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { MAX_MENU_NAME_LENGTH, MAX_NUMERIC_LENGTH } from '../constants/meal-edit.constant';
+import { MAX_MENU_NAME_LENGTH, MAX_NUMERIC_LENGTH } from '../_constants/meal-edit.constant';
 import { formatNumberWithComma } from '@/utils/format.util';
-import { parseNumber } from '../utils/meal-edit.util';
+import { parseNumber } from '../_utils/meal-edit.util';
 import { Button } from '@/components/ui/button';
 import { parseGeminiResponse } from '@/lib/gemini';
 import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
@@ -22,7 +22,7 @@ import { useUserStore } from '@/store/user-store';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiResponseDTO } from '@/types/DTO/ai_analysis.dto';
-import { ERROR_MESSAGES } from '../constants/error-message.constant';
+import { ERROR_MESSAGES } from '../_constants/error-message.constant';
 type FoodFormValues = {
   menuName: string;
   weight: string;

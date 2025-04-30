@@ -12,7 +12,7 @@ import { parseGeminiResponse } from '@/lib/gemini';
 import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
 import { Typography } from '@/components/ui/typography';
 import { formatNumberWithComma } from '@/utils/format.util';
-import { MAX_MENU_NAME_LENGTH, MAX_NUMERIC_LENGTH } from '../constants/meal-edit.constant';
+import { MAX_MENU_NAME_LENGTH, MAX_NUMERIC_LENGTH } from '../_constants/meal-edit.constant';
 import AiLoaderLottie from '@/components/commons/ai-loader-lottie';
 
 type EditCardProps = {
