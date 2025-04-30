@@ -10,7 +10,6 @@ const MealPostEditPage = async () => {
   const imageList = initialImageList?.imageUrls || [];
 
   if (!userId || aiResponses.length === 0) {
-    alert('등록 중인 식사가 없습니다.');
     redirect('/meal/post');
   }
 

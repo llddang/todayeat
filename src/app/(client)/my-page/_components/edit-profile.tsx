@@ -16,6 +16,7 @@ import { Typography } from '@/components/ui/typography';
 import DefaultProfile from '@/../public/illustrations/default-profile.svg';
 import { useUserStore } from '@/store/user.store';
 import { uploadProfileImage } from '../_utils/upload-profile-image.util';
+import Modal from '@/components/commons/modal';
 
 const editProfileFormSchema = z.object({
   nickname: formSchema.NICKNAME_SCHEMA,
@@ -30,7 +31,7 @@ type EditProfileProps = {
 
 const EditProfile = ({ setOpen }: EditProfileProps) => {
   const { user, setUser } = useUserStore();
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [profileState, setProfileState] = useState({
     isUploading: false,
     profilePreviewUrl: user?.profileImage || null
@@ -76,11 +77,7 @@ const EditProfile = ({ setOpen }: EditProfileProps) => {
         const uploadResult = await uploadProfileImage(newProfileImageFile);
         profilePreviewUrl = uploadResult;
       } catch (error) {
-        if (error && typeof error === 'object' && 'message' in error) {
-          alert(error.message);
-        } else {
-          alert('알 수 없는 오류가 발생했습니다.');
-        }
+        setIsModalOpen(true);
         console.error(error);
         return;
       } finally {
@@ -188,6 +185,12 @@ const EditProfile = ({ setOpen }: EditProfileProps) => {
           </Button>
         </form>
       </Form>
+      <Modal
+        title="이미지 업로드하지 못했습니다."
+        content="잠시후 다시 시도해주세요."
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+      />
     </div>
   );
 };
