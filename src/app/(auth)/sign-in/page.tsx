@@ -1,13 +1,13 @@
-import SignInForm from '@/app/(auth)/sign-in/components/sign-in-form';
-import GoogleSignInButton from '@/app/(auth)/sign-in/components/google-sign-in-button';
-import KakaoSignInButton from '@/app/(auth)/sign-in/components/kakao-sign-in-button';
+import SignInForm from '@/app/(auth)/sign-in/_components/sign-in-form';
+import GoogleSignInButton from '@/app/(auth)/sign-in/_components/google-sign-in-button';
+import KakaoSignInButton from '@/app/(auth)/sign-in/_components/kakao-sign-in-button';
 import { Typography } from '@/components/ui/typography';
 import Image from 'next/image';
 import LOGO from '@/../public/logo.svg';
 import Link from 'next/link';
 import SITE_MAP from '@/constants/site-map.constant';
 import GlassBackground from '@/components/commons/glass-background';
-import AnonymousSignInButton from './components/anonymous-sign-in-button';
+import AnonymousSignInButton from './_components/anonymous-sign-in-button';
 
 const SignInPage = () => {
   return (

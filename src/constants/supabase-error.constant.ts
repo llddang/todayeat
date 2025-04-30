@@ -117,9 +117,9 @@ export const AUTH_ERROR_MESSAGE = {
   }
 };
 export type AuthErrorMessageType = keyof typeof AUTH_ERROR_MESSAGE;
-export function isAuthErrorMessageType(code: string): code is AuthErrorMessageType {
+export const isAuthErrorMessageType = (code: string): code is AuthErrorMessageType => {
   return code in AUTH_ERROR_MESSAGE;
-}
+};
 
 export const STORAGE_ERROR_MESSAGE = {
   '400': {
@@ -172,6 +172,6 @@ export const STORAGE_ERROR_MESSAGE = {
   }
 } as const;
 export type StorageErrorMessageType = keyof typeof STORAGE_ERROR_MESSAGE;
-export function isStorageErrorMessageType(code: string): code is StorageErrorMessageType {
+export const isStorageErrorMessageType = (code: string): code is StorageErrorMessageType => {
   return code in STORAGE_ERROR_MESSAGE;
-}
+};

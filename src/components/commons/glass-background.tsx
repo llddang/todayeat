@@ -1,5 +1,5 @@
 import { cn } from '@/lib/shadcn';
-import React, { HTMLAttributes, ReactNode } from 'react';
+import { HTMLAttributes, ReactNode } from 'react';
 
 type GlassBackgroundProps = {
   children: ReactNode;

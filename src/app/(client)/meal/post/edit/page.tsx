@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import { getAiResponses, getFoodImagesById } from '@/apis/analysis-request.api';
 import { getUser } from '@/apis/user.api';
-import EditResultSection from './components/edit-result-section';
+import EditResultSection from './_components/edit-result-section';
 
 const MealPostEditPage = async () => {
   const { id: userId } = await getUser();
@@ -10,7 +10,6 @@ const MealPostEditPage = async () => {
   const imageList = initialImageList?.imageUrls || [];
 
   if (!userId || aiResponses.length === 0) {
-    alert('등록 중인 식사가 없습니다.');
     redirect('/meal/post');
   }
 

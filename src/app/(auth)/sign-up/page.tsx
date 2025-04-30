@@ -1,9 +1,9 @@
 'use client';
 
-import SignUpFunnel from '@/app/(auth)/sign-up/components/sign-up-funnel';
+import SignUpFunnel from '@/app/(auth)/sign-up/_components/sign-up-funnel';
 import GlassBackground from '@/components/commons/glass-background';
 import { getPercentage } from '@/utils/nutrition-calculator.util';
-import { SignUpFunnelStep } from '@/app/(auth)/sign-up/types/funnel-type';
+import { SignUpFunnelStep } from '@/app/(auth)/sign-up/_types/funnel.type';
 import { useSearchParams } from 'next/navigation';
 import FunnelProgressSection from '@/components/commons/funnel-progress-section';
 import { cn } from '@/lib/shadcn';
