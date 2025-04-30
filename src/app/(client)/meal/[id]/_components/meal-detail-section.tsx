@@ -27,6 +27,7 @@ import { Button } from '@/components/ui/button';
 import Modal from '@/components/commons/modal';
 import { z } from 'zod';
 import { getTimeFieldsFromDate } from '@/utils/date.util';
+import { useToast } from '@/hooks/use-toast';
 
 type MealDetailSectionProps = {
   meal: MealDTO;
@@ -48,6 +49,8 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps) => {
       memo: memo || ''
     }
   });
+
+  const { toast } = useToast();
 
   const imageList = validateFoodImages(foodImages);
   const totalNutrition = calculateTotalNutrition([meal]);
@@ -75,7 +78,11 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps) => {
         memo: form.memo,
         ateAt: formatTimestamp(form.date)
       });
-      alert('식사 정보가 수정되었습니다.');
+      toast({
+        title: '수정 완료',
+        description: '식사 정보가 성공적으로 수정되었습니다.',
+        variant: 'default' // or 'success' if 커스텀된 게 있다면
+      });
     } catch (error) {
       const isKnownError = typeof error === 'object' && error !== null && 'title' in error && 'description' in error;
       error = isKnownError ? error : ERROR_MESSAGES.MEAL_POST_FAILED;
