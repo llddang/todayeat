@@ -1,7 +1,7 @@
 import { getMyMealCountByMonth, getMyMealsCount } from '@/apis/meal.api';
-import React from 'react';
 import { getAuth } from '@/apis/auth-server.api';
 import AuthUserSummary from './auth-user-summary';
+import { memo } from 'react';
 
 const AppUseSummary = async () => {
   const { isAuthenticated } = await getAuth();
@@ -17,4 +17,4 @@ const AppUseSummary = async () => {
   return null;
 };
 
-export default React.memo(AppUseSummary);
+export default memo(AppUseSummary);

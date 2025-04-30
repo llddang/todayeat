@@ -5,7 +5,7 @@ import { Typography } from '@/components/ui/typography';
 import { formatDateToLocaleKR } from '@/utils/format.util';
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@radix-ui/react-dialog';
 import { ko } from 'date-fns/locale';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 type MealCalendarPcProps = {
   date: Date;

@@ -1,11 +1,11 @@
 import useFunnel from '@/hooks/use-funnel';
-import React from 'react';
 import StepComplete from './step-complete';
 import StepNewPassword from './step-new-password';
 import StepCurrentPassword from './step-current-password';
 import { ChangePasswordFunnelStep, ChangePasswordFunnelType, StepNewPasswordType } from '../types/funnel-type';
 import { z } from 'zod';
 import formSchema from '@/app/schemas/form-schema.schema';
+import { memo } from 'react';
 
 const ChangePasswordFunnel = () => {
   const { Funnel } = useFunnel<ChangePasswordFunnelType, ChangePasswordFunnelStep>(
@@ -32,7 +32,7 @@ const ChangePasswordFunnel = () => {
     />
   );
 };
-export default React.memo(ChangePasswordFunnel);
+export default memo(ChangePasswordFunnel);
 
 const changePasswordValidateFn = {
   step1: () => true,
