@@ -1,5 +1,6 @@
 import { ActivityLevel, Gender, Purpose } from '@/types/user-personal-info.type';
 import { MealDTO } from '@/types/DTO/meal.dto';
+import { getKoreaTime } from '@/utils/date.util';
 
 // BMR 테스트
 export const bmrFixtures = {
@@ -72,12 +73,12 @@ export const totalNutritionFixture = {
   meals: [
     {
       id: '1',
-      createdAt: new Date().toISOString(),
+      createdAt: getKoreaTime().toISOString(),
       userId: '1',
       foodImages: [],
       mealCategory: 'BREAKFAST',
       memo: '오늘의 식사',
-      ateAt: new Date().toISOString(),
+      ateAt: getKoreaTime().toISOString(),
       mealDetails: [
         {
           id: '1',
@@ -105,7 +106,7 @@ export const uniqueDatesFixture = {
   meals: [
     {
       id: '1',
-      createdAt: new Date().toISOString(),
+      createdAt: getKoreaTime().toISOString(),
       userId: '1',
       foodImages: [],
       mealCategory: 'BREAKFAST',
@@ -115,7 +116,7 @@ export const uniqueDatesFixture = {
     },
     {
       id: '2',
-      createdAt: new Date().toISOString(),
+      createdAt: getKoreaTime().toISOString(),
       userId: '1',
       foodImages: [],
       mealCategory: 'BREAKFAST',
@@ -132,7 +133,7 @@ export const nutritionAverageFixtures = {
   emptyMealDetails: [
     {
       id: '1',
-      createdAt: new Date().toISOString(),
+      createdAt: getKoreaTime().toISOString(),
       userId: '1',
       foodImages: [],
       mealCategory: 'BREAKFAST',
@@ -144,7 +145,7 @@ export const nutritionAverageFixtures = {
   multiDayMeals: [
     {
       id: '1',
-      createdAt: new Date().toISOString(),
+      createdAt: getKoreaTime().toISOString(),
       userId: '1',
       foodImages: [],
       mealCategory: 'BREAKFAST',
@@ -165,7 +166,7 @@ export const nutritionAverageFixtures = {
     },
     {
       id: '2',
-      createdAt: new Date().toISOString(),
+      createdAt: getKoreaTime().toISOString(),
       userId: '1',
       foodImages: [],
       mealCategory: 'BREAKFAST',
@@ -234,7 +235,7 @@ export const nutritionRatioFixtures = {
     meals: [
       {
         id: '1',
-        createdAt: new Date().toISOString(),
+        createdAt: getKoreaTime().toISOString(),
         userId: '1',
         foodImages: [],
         mealCategory: 'BREAKFAST',

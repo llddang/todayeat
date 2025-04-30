@@ -1,5 +1,6 @@
 'use client';
 import { DailyMealCalories } from '@/types/nutrition.type';
+import { getKoreaTime } from '@/utils/date.util';
 import { createContext, useState, ReactNode, useContext } from 'react';
 
 type DateContextProps = {
@@ -12,8 +13,8 @@ type DateContextProps = {
 };
 
 const defaultContextValue: DateContextProps = {
-  selectedDate: new Date(),
-  currentDate: new Date(),
+  selectedDate: getKoreaTime(),
+  currentDate: getKoreaTime(),
   dailyMealCalories: {},
   setSelectedDate: () => {},
   setCurrentDate: () => {},
@@ -22,9 +23,9 @@ const defaultContextValue: DateContextProps = {
 
 export const DateContext = createContext<DateContextProps>(defaultContextValue);
 
-const DateProvider = ({ children }: { children: ReactNode }) => {
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+const DateProvider = ({ children, today }: { children: ReactNode; today: Date }) => {
+  const [selectedDate, setSelectedDate] = useState<Date>(today);
+  const [currentDate, setCurrentDate] = useState<Date>(today);
   const [dailyMealCalories, setDailyMealCalories] = useState<DailyMealCalories>({});
 
   const value = {

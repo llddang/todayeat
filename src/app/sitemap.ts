@@ -1,10 +1,11 @@
 import { ENV, ENV_ERROR } from '@/constants/env.constant';
+import { getKoreaTime } from '@/utils/date.util';
 import { MetadataRoute } from 'next';
 
 const sitemap = (): MetadataRoute.Sitemap => {
   if (!ENV.PROJECT_URL) throw new Error(ENV_ERROR.PROJECT_URL);
   const baseUrl = ENV.PROJECT_URL;
-  const currentDate = new Date();
+  const currentDate = getKoreaTime();
 
   const routes = [
     {

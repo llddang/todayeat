@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/button';
 import Calendar from '@/components/ui/calendar';
 import { Typography } from '@/components/ui/typography';
+import { getKoreaTime } from '@/utils/date.util';
 import { formatDateToLocaleKR } from '@/utils/format.util';
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@radix-ui/react-dialog';
 import { ko } from 'date-fns/locale';
@@ -14,7 +15,7 @@ type MealCalendarPcProps = {
 
 const MealCalendarPc = ({ onDateChange }: MealCalendarPcProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [date, setDate] = useState<Date>(new Date());
+  const [date, setDate] = useState<Date>(getKoreaTime());
 
   const handleSelectDate = () => {
     onDateChange(date);

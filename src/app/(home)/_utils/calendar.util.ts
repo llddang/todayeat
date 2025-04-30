@@ -4,14 +4,15 @@ import { formatDateWithDash } from '@/utils/format.util';
 import { Day, CarouselMonth, CarouselWeek } from '../_types/calendar.type';
 import { DailyMealCalories } from '@/types/nutrition.type';
 import { addDays, addWeeks, isSameMonth, startOfMonth, startOfWeek } from 'date-fns';
+import { getKoreaTime } from '@/utils/date.util';
 
 export const getCalendarStartDate = (calendarData: Day[][] | Day[]): Date => {
-  if (Array.isArray(calendarData[0])) return calendarData[0][0].day ?? new Date();
-  else return calendarData[0].day ?? new Date();
+  if (Array.isArray(calendarData[0])) return calendarData[0][0].day;
+  else return calendarData[0].day;
 };
 
 export const getCalendarEndDate = (month: Day[][]): Date => {
-  return month.at(-1)?.at(-1)?.day ?? new Date();
+  return month.at(-1)?.at(-1)?.day ?? getKoreaTime();
 };
 
 export const getCalendarDateRange = (month: Day[][]): [Date, Date] => {

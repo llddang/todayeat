@@ -50,7 +50,6 @@ export const getDateTimeRange = (startDate: Date | string, endDate?: Date | stri
  * - `hours`: 12시간제 형식의 시각 (두 자리 문자열)
  * - `minutes`: 분 (두 자리 문자열)
  */
-
 export const getTimeFieldsFromDate = (date: Date = new Date()): DateFields => {
   const hours = date.getHours();
   const minutes = date.getMinutes();
@@ -66,4 +65,12 @@ type DateFields = {
   meridiem: '오전' | '오후';
   hours: string;
   minutes: string;
+};
+
+export const getKoreaTime = () => {
+  const now = new Date();
+  const utc = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+  const koreaTimeDiff = 9 * 60 * 60 * 1000;
+  const korNow = new Date(utc + koreaTimeDiff);
+  return korNow;
 };

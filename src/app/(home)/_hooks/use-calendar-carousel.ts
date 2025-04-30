@@ -27,17 +27,6 @@ const useCalendarCarousel = <T extends CarouselMonth[] | CarouselWeek[]>(type: '
   }, [selectedDate]);
 
   useEffect(() => {
-    const [startDay, endDay] =
-      type === 'month'
-        ? getPeriodInCarouselMonth(items as CarouselMonth[], dailyMealCalories)
-        : getPeriodInCarouselWeek(items as CarouselWeek[], dailyMealCalories);
-
-    if (!startDay || !endDay) return;
-
-    getAllMyDailyCalories(startDay, endDay).then(setDailyMealCalories).catch();
-  }, [items, dailyMealCalories, setDailyMealCalories, type]);
-
-  useEffect(() => {
     if (!api) return;
 
     const onSettle = (): void => {
@@ -48,6 +37,15 @@ const useCalendarCarousel = <T extends CarouselMonth[] | CarouselWeek[]>(type: '
         setItems(getWeeks(currentDate) as T);
         setBaseDate(currentDate);
       }
+
+      const [startDay, endDay] =
+        type === 'month'
+          ? getPeriodInCarouselMonth(items as CarouselMonth[], dailyMealCalories)
+          : getPeriodInCarouselWeek(items as CarouselWeek[], dailyMealCalories);
+
+      if (!startDay || !endDay) return;
+
+      getAllMyDailyCalories(startDay, endDay).then(setDailyMealCalories).catch();
     };
 
     const onSelect = (): void => {
