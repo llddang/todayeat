@@ -7,7 +7,7 @@ import { z } from 'zod';
 import formSchema from '@/app/schemas/form-schema.schema';
 import { useForm } from 'react-hook-form';
 import { useEffect, useRef, useState } from 'react';
-import { StepNicknameType } from '@/app/(auth)/sign-up/types/funnel-type';
+import { StepNicknameType } from '@/app/(auth)/sign-up/_types/funnel.type';
 import { signUp } from '@/apis/auth-server.api';
 
 const nicknameSchema = z.object({

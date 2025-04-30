@@ -1,9 +1,9 @@
 'use client';
 
-import StepComplete from '@/app/(auth)/sign-up/components/step-complete';
-import StepEmail from '@/app/(auth)/sign-up/components/step-email';
-import StepNickname from '@/app/(auth)/sign-up/components/step-nickname';
-import StepPassword from '@/app/(auth)/sign-up/components/step-password';
+import StepComplete from '@/app/(auth)/sign-up/_components/step-complete';
+import StepEmail from '@/app/(auth)/sign-up/_components/step-email';
+import StepNickname from '@/app/(auth)/sign-up/_components/step-nickname';
+import StepPassword from '@/app/(auth)/sign-up/_components/step-password';
 import formSchema from '@/app/schemas/form-schema.schema';
 import useFunnel from '@/hooks/use-funnel';
 import {
@@ -13,7 +13,7 @@ import {
   StepEmailType,
   StepPasswordType,
   StepNicknameType
-} from '@/app/(auth)/sign-up/types/funnel-type';
+} from '@/app/(auth)/sign-up/_types/funnel.type';
 import { z } from 'zod';
 
 const SignUpFunnel = () => {

@@ -8,7 +8,7 @@ import { z } from 'zod';
 import formSchema from '@/app/schemas/form-schema.schema';
 import { useForm } from 'react-hook-form';
 import { checkEmailExists } from '@/apis/auth-server.api';
-import { StepEmailType } from '@/app/(auth)/sign-up/types/funnel-type';
+import { StepEmailType } from '@/app/(auth)/sign-up/_types/funnel.type';
 
 const emailSchema = z.object({
   email: formSchema.EMAIL_SCHEMA
