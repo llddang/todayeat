@@ -5,9 +5,9 @@ import { Typography } from '@/components/ui/typography';
 import { cn } from '@/lib/shadcn';
 import { formatDateWithDash } from '@/utils/format.util';
 import { getPercentage } from '@/utils/nutrition-calculator.util';
-import { useDateContext } from '@/app/(home)/contexts/date.context';
+import { useDateContext } from '@/app/(home)/_contexts/date.context';
 import { DailyMealCalories } from '@/types/nutrition.type';
-import { Day } from '../../types/calendar.type';
+import { Day } from '../../_types/calendar.type';
 import { isSameDay } from 'date-fns';
 
 type HomeCalendarWeekItemProps = {

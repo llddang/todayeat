@@ -11,7 +11,7 @@ import {
   DrawerTrigger
 } from '@/components/ui/drawer';
 import { formatDateToLocaleKR } from '@/utils/format.util';
-import useDateSelector from '../../hooks/use-date-selector';
+import useDateSelector from '../../_hooks/use-date-selector';
 
 const DateSelectorMobile = () => {
   const { currentDate, date, setDate, handleOpen, handleClose } = useDateSelector();

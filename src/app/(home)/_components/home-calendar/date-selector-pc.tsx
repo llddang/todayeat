@@ -12,7 +12,7 @@ import {
   DialogTrigger
 } from '@radix-ui/react-dialog';
 import { Typography } from '@/components/ui/typography';
-import useDateSelector from '../../hooks/use-date-selector';
+import useDateSelector from '../../_hooks/use-date-selector';
 
 const DateSelectorPc = () => {
   const { currentDate, date, setDate, handleOpen, handleClose } = useDateSelector();

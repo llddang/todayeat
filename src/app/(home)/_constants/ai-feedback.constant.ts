@@ -1,4 +1,4 @@
-import { MacronutrientDiffItem } from '@/app/(home)/types/diff.type';
+import { MacronutrientDiffItem } from '@/app/(home)/_types/diff.type';
 
 export const RADIUS = 44;
 export const CIRCUMFERENCE = 2 * Math.PI * RADIUS;

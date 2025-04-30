@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import HomeCalendarWeek from './home-calendar-week';
 import HomeCalendarMonth from './home-calendar-month';
 import DateSelectorMobile from './date-selector-mobile';
-import { useDateContext } from '../../contexts/date.context';
+import { useDateContext } from '../../_contexts/date.context';
 import { DailyMealCalories } from '@/types/nutrition.type';
 import useIsMobile from '@/hooks/use-is-mobile';
 import Responsive from '@/components/commons/responsive';

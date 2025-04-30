@@ -1,7 +1,7 @@
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { formatDateToLocaleKR } from '@/utils/format.util';
-import { getMonthCalendarDays, getWeekCalendarDays } from '../../utils/calendar.util';
+import { getMonthCalendarDays, getWeekCalendarDays } from '../../_utils/calendar.util';
 import DayLabel from './day-label';
 import HomeCalendarWeekItem from './home-calendar-week-item';
 import HomeCalendarMonthItem from './home-calendar-month-item';

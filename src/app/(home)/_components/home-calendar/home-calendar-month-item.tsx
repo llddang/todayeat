@@ -1,10 +1,10 @@
 'use client';
 
-import { MAX_WEEK } from '@/app/(home)/constants/calendar.constant';
+import { MAX_WEEK } from '@/app/(home)/_constants/calendar.constant';
 import { formatDateWithDash } from '@/utils/format.util';
 import HomeCalendarWeekItem from './home-calendar-week-item';
 import { DailyMealCalories } from '@/types/nutrition.type';
-import { Day } from '../../types/calendar.type';
+import { Day } from '../../_types/calendar.type';
 
 type HomeCalendarWeekItemProps = {
   month: Day[][];

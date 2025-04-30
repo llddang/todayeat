@@ -1,5 +1,5 @@
 import { Typography } from '@/components/ui/typography';
-import { DAY_LABELS } from '@/app/(home)/constants/calendar.constant';
+import { DAY_LABELS } from '@/app/(home)/_constants/calendar.constant';
 
 const DayLabel = () => {
   return (

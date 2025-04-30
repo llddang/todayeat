@@ -1,7 +1,7 @@
-import { CALENDAR_RANGE_OFFSET, MAX_WEEK } from '@/app/(home)/constants/calendar.constant';
+import { CALENDAR_RANGE_OFFSET, MAX_WEEK } from '@/app/(home)/_constants/calendar.constant';
 import { formatDateWithDash } from '@/utils/format.util';
 
-import { Day, CarouselMonth, CarouselWeek } from '../types/calendar.type';
+import { Day, CarouselMonth, CarouselWeek } from '../_types/calendar.type';
 import { DailyMealCalories } from '@/types/nutrition.type';
 import { addDays, addWeeks, isSameMonth, startOfMonth, startOfWeek } from 'date-fns';
 

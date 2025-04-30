@@ -2,11 +2,11 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { CarouselApi } from '@/components/ui/carousel';
 import { getAllMyDailyCalories } from '@/apis/meal.api';
-import { useDateContext } from '@/app/(home)/contexts/date.context';
-import { CALENDAR_STAND_COUNT } from '@/app/(home)/constants/calendar.constant';
+import { useDateContext } from '@/app/(home)/_contexts/date.context';
+import { CALENDAR_STAND_COUNT } from '@/app/(home)/_constants/calendar.constant';
 import { addMonths, addWeeks, isSameDay } from 'date-fns';
-import { CarouselMonth, CarouselWeek } from '../types/calendar.type';
-import { getMonths, getWeeks, getPeriodInCarouselMonth, getPeriodInCarouselWeek } from '../utils/calendar.util';
+import { CarouselMonth, CarouselWeek } from '../_types/calendar.type';
+import { getMonths, getWeeks, getPeriodInCarouselMonth, getPeriodInCarouselWeek } from '../_utils/calendar.util';
 
 const useCalendarCarousel = <T extends CarouselMonth[] | CarouselWeek[]>(type: 'month' | 'week') => {
   const { selectedDate, currentDate, dailyMealCalories, setCurrentDate, setDailyMealCalories } = useDateContext();

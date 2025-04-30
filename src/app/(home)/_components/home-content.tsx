@@ -2,7 +2,7 @@
 import CtaExampleFeedbackBanner from '@/components/commons/cta-example-feedback-banner';
 import GlassBackground from '@/components/commons/glass-background';
 import { getMyMealByDate } from '@/apis/meal.api';
-import { useDateContext } from '@/app/(home)/contexts/date.context';
+import { useDateContext } from '@/app/(home)/_contexts/date.context';
 import { calculateTotalNutrition } from '@/utils/nutrition-calculator.util';
 import { useUserStore } from '@/store/user-store';
 import { MealDTO } from '@/types/DTO/meal.dto';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDateContext } from '../contexts/date.context';
+import { useDateContext } from '../_contexts/date.context';
 
 const useDateSelector = () => {
   const { selectedDate, currentDate, setCurrentDate, setSelectedDate } = useDateContext();

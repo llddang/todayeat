@@ -7,7 +7,7 @@ import { useState } from 'react';
 import ScrollbarContainer from './scrollbar-container';
 import Modal from '@/components/commons/modal';
 import { deleteMeals } from '@/apis/meal.api';
-import { useDateContext } from '../contexts/date.context';
+import { useDateContext } from '../_contexts/date.context';
 import { formatDateWithDash } from '@/utils/format.util';
 
 type MealCardContainerProps = {

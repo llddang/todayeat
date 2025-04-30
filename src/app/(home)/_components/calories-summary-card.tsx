@@ -1,4 +1,4 @@
-import { CIRCUMFERENCE, RADIUS } from '@/app/(home)/constants/ai-feedback.constant';
+import { CIRCUMFERENCE, RADIUS } from '@/app/(home)/_constants/ai-feedback.constant';
 import { formatNumberWithComma } from '@/utils/format.util';
 import { getPercentage } from '@/utils/nutrition-calculator.util';
 
