@@ -5,11 +5,11 @@ import AddImageForm from './add-image-form';
 import useRestoreAnalysisModal from '../_hooks/use-restore-analysis-modal';
 import RestoreAnalysisModal from './restore-analysis-modal';
 import AddMealAiLoading from './add-meal-ai-loading';
-import AddMealDrawer from './add-meal-drawer';
-import AddMealModal from './add-meal-modal';
+import AddMealPc from './add-meal-pc';
 import Responsive from '@/components/commons/responsive';
 import RetryErrorModal from './retry-error-modal';
 import Modal from '@/components/commons/modal';
+import AddMealMobile from './add-meal-mobile';
 
 type UploadImageSectionProps = {
   isRecorded: boolean;
@@ -46,9 +46,9 @@ const UploadImageSection = ({ isRecorded }: UploadImageSectionProps) => {
       <div className="flex w-full flex-col items-center justify-center gap-2">
         <AddImageForm onLoadingChange={setIsLoading} onOpenRetryErrorModalChange={setIsError} />
         <Responsive
-          mobile={<AddMealDrawer />}
+          mobile={<AddMealMobile />}
           pc={
-            <AddMealModal
+            <AddMealPc
               onLoadingChange={setIsLoading}
               onModalOpenChange={setIsModalOpen}
               onModalInfoChange={setModalInfo}

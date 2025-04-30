@@ -23,13 +23,13 @@ type FoodFormValues = {
   weight: string;
 };
 
-type AddMealCardDrawerProps = {
+type AddMealCardMobileProps = {
   onAddMeal: (meal: Omit<AiResponseDTO, 'id'>) => void;
   onOpenModalChange: (isOpen: boolean) => void;
   onModalInfoChange: (modalInfo: { title: string; description: string }) => void;
 };
 
-const AddMealCardDrawer = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: AddMealCardDrawerProps) => {
+const AddMealCardMobile = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: AddMealCardMobileProps) => {
   const user = useUserStore((state) => state.user);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -171,4 +171,4 @@ const AddMealCardDrawer = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: 
   );
 };
 
-export default AddMealCardDrawer;
+export default AddMealCardMobile;

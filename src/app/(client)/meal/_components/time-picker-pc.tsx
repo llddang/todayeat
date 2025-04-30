@@ -10,7 +10,7 @@ import {
   DialogTrigger
 } from '@radix-ui/react-dialog';
 import { useState } from 'react';
-import { TimeFields } from './time-picker';
+import { TimeFields } from './time-picker-mobile';
 import IconButton from '@/components/commons/icon-button';
 import Picker from 'react-mobile-picker';
 import { Button } from '@/components/ui/button';
