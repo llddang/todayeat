@@ -1,6 +1,6 @@
 'use client';
 import { Typography } from '@/components/ui/typography';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import AddImageForm from './add-image-form';
 import useRestoreAnalysisModal from '../_hooks/use-restore-analysis-modal';
 import RestoreAnalysisModal from './restore-analysis-modal';

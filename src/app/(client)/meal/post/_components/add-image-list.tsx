@@ -1,5 +1,5 @@
 'use client';
-import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, MouseEvent, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useUserStore } from '@/store/user.store';
@@ -57,7 +57,7 @@ const AddImageList = ({ onImagesChange }: AddImageListProps) => {
     handleImageFilesChange([...imageFiles, ...fileArray]);
   };
 
-  const handleUploadButtonClick = (e: React.MouseEvent) => {
+  const handleUploadButtonClick = (e: MouseEvent) => {
     e.preventDefault();
 
     // TODO: 비로그인 유저도 식사 기록할 수 있도록 삭제

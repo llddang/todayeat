@@ -19,7 +19,7 @@ import { Button } from '@/components/ui/button';
 import { parseGeminiResponse } from '@/lib/gemini';
 import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
 import { useUserStore } from '@/store/user.store';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiResponseDTO } from '@/types/DTO/ai_analysis.dto';
 import { ERROR_MESSAGES } from '../_constants/error-message.constant';
@@ -79,7 +79,7 @@ const AddMealCardPc = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: AddM
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
     form.handleSubmit(onSubmit)(e);

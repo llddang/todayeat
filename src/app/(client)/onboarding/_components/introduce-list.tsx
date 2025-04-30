@@ -1,9 +1,10 @@
 import { Typography } from '@/components/ui/typography';
 import Image, { StaticImageData } from 'next/image';
+import { ReactNode } from 'react';
 
 type IntroduceListProps = {
   order: string;
-  description: React.ReactNode;
+  description: ReactNode;
   image: StaticImageData;
 };
 
