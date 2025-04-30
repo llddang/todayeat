@@ -26,6 +26,7 @@ import MemoBox from './memo-box';
 import { Button } from '@/components/ui/button';
 import Modal from '@/components/commons/modal';
 import { z } from 'zod';
+import { getTimeFieldsFromDate } from '@/utils/date.util';
 
 type MealDetailSectionProps = {
   meal: MealDTO;
@@ -43,12 +44,7 @@ const MealDetailSection = ({ meal }: MealDetailSectionProps) => {
     resolver: zodResolver(mealDetailFormSchema),
     defaultValues: {
       mealCategory,
-      date: {
-        day: ateAtDate,
-        meridiem: ateAtDate.getHours() < 12 ? '오전' : '오후',
-        hours: String(ateAtDate.getHours() % 12 || 12).padStart(2, '0'),
-        minutes: String(ateAtDate.getMinutes()).padStart(2, '0')
-      },
+      date: getTimeFieldsFromDate(ateAtDate),
       memo: memo || ''
     }
   });

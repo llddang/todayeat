@@ -36,6 +36,7 @@ import { ErrorMessage, handleError } from '../../../utils/error.util';
 import MealCalendarPc from '../../../components/meal-calendar-pc';
 import MealCalendarDrawer from '../../../components/meal-calendar-drawer';
 import TimePicker, { TimeFields } from '../../../components/time-picker';
+import { getTimeFieldsFromDate } from '@/utils/date.util';
 
 type EditResultSectionProps = {
   imageList: string[];
@@ -304,16 +305,4 @@ const deleteAnalysis = async () => {
     console.error('분석 데이터 삭제 중 오류:', error);
     handleError(ERROR_MESSAGES.MEAL_DELETE_FAILED);
   }
-};
-
-type DateFields = z.infer<typeof dateSchema>;
-
-const getTimeFieldsFromDate = (date: Date = new Date()): DateFields => {
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const meridiem = hours < 12 ? '오전' : '오후';
-  const formattedHours = String(hours % 12 || 12).padStart(2, '0');
-  const formattedMinutes = String(minutes).padStart(2, '0');
-
-  return { day: date, meridiem, hours: formattedHours, minutes: formattedMinutes };
 };
