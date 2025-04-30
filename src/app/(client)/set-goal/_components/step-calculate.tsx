@@ -3,7 +3,7 @@
 import { ChangeEvent, MouseEvent, Suspense, useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import formSchema from '@/app/schemas/form-schema.schema';
+import formSchema from '@/schemas/form-schema.schema';
 import { NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.constant';
 import { getUser, updateUserPersonalInfo } from '@/apis/user.api';
 import { calculateDailyNutrition } from '@/utils/nutrition-calculator.util';
@@ -12,7 +12,7 @@ import { ControllerRenderProps, useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useUserStore } from '@/store/user-store';
+import { useUserStore } from '@/store/user.store';
 import MacronutrientBox from './macronutrient-box';
 import { StepCompleteType } from '../_types/funnel.type';
 import { formatNumberWithComma } from '@/utils/format.util';

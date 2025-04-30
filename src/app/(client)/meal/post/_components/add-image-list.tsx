@@ -2,7 +2,7 @@
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useUserStore } from '@/store/user-store';
+import { useUserStore } from '@/store/user.store';
 import { cleanupBlobUrl } from '@/utils/cleanup-blob-url.util';
 import SITE_MAP from '@/constants/site-map.constant';
 import PIC_LINE from '@/../public/icons/pic_line.svg';

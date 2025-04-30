@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
 import Link from 'next/link';
-import { useUserStore } from '@/store/user-store';
+import { useUserStore } from '@/store/user.store';
 
 const StepComplete = () => {
   const { nickname: userName } = useUserStore((state) => state.user);

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import formSchema from '@/app/schemas/form-schema.schema';
+import formSchema from '@/schemas/form-schema.schema';
 import { useForm } from 'react-hook-form';
 import { checkEmailExists } from '@/apis/auth-server.api';
 import { StepEmailType } from '@/app/(auth)/sign-up/_types/funnel.type';

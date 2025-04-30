@@ -7,7 +7,7 @@ import { CALENDAR_STAND_COUNT } from '@/app/(home)/_constants/calendar.constant'
 import DayLabel from './day-label';
 import HomeCalendarMonthItem from './home-calendar-month-item';
 import { CarouselMonth } from '../../_types/calendar.type';
-import { useUserStore } from '@/store/user-store';
+import { useUserStore } from '@/store/user.store';
 import useCalendarCarousel from '../../_hooks/use-calendar-carousel';
 
 const HomeCalendarMonth = () => {

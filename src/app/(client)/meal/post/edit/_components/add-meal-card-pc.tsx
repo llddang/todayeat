@@ -18,7 +18,7 @@ import { parseNumber } from '../_utils/meal-edit.util';
 import { Button } from '@/components/ui/button';
 import { parseGeminiResponse } from '@/lib/gemini';
 import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
-import { useUserStore } from '@/store/user-store';
+import { useUserStore } from '@/store/user.store';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiResponseDTO } from '@/types/DTO/ai_analysis.dto';

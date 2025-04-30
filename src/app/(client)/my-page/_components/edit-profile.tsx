@@ -9,12 +9,12 @@ import { getUser, updateUser } from '@/apis/user.api';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import formSchema from '@/app/schemas/form-schema.schema';
+import formSchema from '@/schemas/form-schema.schema';
 import { cleanupBlobUrl } from '@/utils/cleanup-blob-url.util';
 import IconButton from '@/components/commons/icon-button';
 import { Typography } from '@/components/ui/typography';
 import DefaultProfile from '@/../public/illustrations/default-profile.svg';
-import { useUserStore } from '@/store/user-store';
+import { useUserStore } from '@/store/user.store';
 import { uploadProfileImage } from '../_utils/upload-profile-image.util';
 
 const editProfileFormSchema = z.object({

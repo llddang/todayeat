@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import formSchema from '@/app/schemas/form-schema.schema';
+import formSchema from '@/schemas/form-schema.schema';
 import { checkEmailExists, resetPasswordByEmail } from '@/apis/auth-server.api';
 import { Typography } from '@/components/ui/typography';
 import Modal from '@/components/commons/modal';

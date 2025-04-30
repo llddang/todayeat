@@ -4,7 +4,7 @@ import StepComplete from '@/app/(auth)/sign-up/_components/step-complete';
 import StepEmail from '@/app/(auth)/sign-up/_components/step-email';
 import StepNickname from '@/app/(auth)/sign-up/_components/step-nickname';
 import StepPassword from '@/app/(auth)/sign-up/_components/step-password';
-import formSchema from '@/app/schemas/form-schema.schema';
+import formSchema from '@/schemas/form-schema.schema';
 import useFunnel from '@/hooks/use-funnel';
 import {
   StepCompleteType,

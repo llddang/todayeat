@@ -2,7 +2,7 @@
 
 import { Typography } from '@/components/ui/typography';
 import { HorizontalSkeleton } from '@/components/commons/horizontal-skeleton';
-import { useUserStore } from '@/store/user-store';
+import { useUserStore } from '@/store/user.store';
 import ProfileImage from '@/components/commons/profile-image';
 import EditProfileDrawer from './edit-profile-drawer';
 

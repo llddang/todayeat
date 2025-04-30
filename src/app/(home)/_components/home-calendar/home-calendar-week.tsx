@@ -6,7 +6,7 @@ import DayLabel from './day-label';
 import HomeCalendarWeekItem from './home-calendar-week-item';
 import { CarouselWeek } from '../../_types/calendar.type';
 import { formatDateWithDash } from '@/utils/format.util';
-import { useUserStore } from '@/store/user-store';
+import { useUserStore } from '@/store/user.store';
 import useCalendarCarousel from '../../_hooks/use-calendar-carousel';
 
 const HomeCalendarWeek = () => {

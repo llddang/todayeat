@@ -1,7 +1,7 @@
 'use client';
 
 import { differenceInDays, getDaysInMonth } from 'date-fns';
-import { useUserStore } from '@/store/user-store';
+import { useUserStore } from '@/store/user.store';
 import GlassBackground from '@/components/commons/glass-background';
 import { Typography } from '@/components/ui/typography';
 import { cn } from '@/lib/shadcn';

@@ -4,7 +4,7 @@ import StepNewPassword from './step-new-password';
 import StepCurrentPassword from './step-current-password';
 import { ChangePasswordFunnelStep, ChangePasswordFunnelType, StepNewPasswordType } from '../_types/funnel.type';
 import { z } from 'zod';
-import formSchema from '@/app/schemas/form-schema.schema';
+import formSchema from '@/schemas/form-schema.schema';
 import { memo } from 'react';
 
 const ChangePasswordFunnel = () => {

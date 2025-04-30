@@ -2,11 +2,11 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Typography } from '@/components/ui/typography';
-import formSchema from '@/app/schemas/form-schema.schema';
+import formSchema from '@/schemas/form-schema.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { useUserStore } from '@/store/user-store';
+import { useUserStore } from '@/store/user.store';
 
 type StepHeightProps = {
   nextStep: (data: number) => void;

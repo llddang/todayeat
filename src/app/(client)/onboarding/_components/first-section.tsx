@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
-import { useUserStore } from '@/store/user-store';
+import { useUserStore } from '@/store/user.store';
 
 const FirstSection = ({ setCookie }: { setCookie: () => Promise<void> }) => {
   const user = useUserStore((state) => state.user);

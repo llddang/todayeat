@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
-import { useUserStore } from '@/store/user-store';
+import { useUserStore } from '@/store/user.store';
 import SITE_MAP from '@/constants/site-map.constant';
 import { FormEvent } from 'react';
 

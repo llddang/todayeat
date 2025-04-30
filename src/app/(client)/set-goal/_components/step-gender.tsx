@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
 import { GenderType } from '@/types/user-personal-info.type';
 import { GOAL_OPTIONS } from '../_constants/funnel.constant';
-import { useUserStore } from '@/store/user-store';
+import { useUserStore } from '@/store/user.store';
 
 type StepGenderProps = {
   nextStep: (data: GenderType) => void;

@@ -1,7 +1,7 @@
 'use client';
 
 import GlassBackground from '@/components/commons/glass-background';
-import { useUserStore } from '@/store/user-store';
+import { useUserStore } from '@/store/user.store';
 import MacronutrientPercentageReport from './macronutrient-percentage-report';
 import MacronutrientAmountReport from './macronutrient-amount-report';
 import CaloriesAmountReport from './calories-amount-report';
