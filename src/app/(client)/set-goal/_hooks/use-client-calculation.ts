@@ -1,6 +1,6 @@
-import { userPhysicalProfileSchema } from '../schemas/user-physical-profile.schema';
+import { userPhysicalProfileSchema } from '../_schemas/user-physical-profile.schema';
 import { calculateDailyNutritionGoal } from '@/utils/nutrition-calculator.util';
-import { StepCompleteType } from '../types/funnel.type';
+import { StepCompleteType } from '../_types/funnel.type';
 import { UpdateUserPersonalGoalDTO } from '@/types/DTO/user.dto';
 import useIsClient from '@/hooks/use-is-client';
 

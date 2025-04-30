@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
 import { PurposeType } from '@/types/user-personal-info.type';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { GOAL_OPTIONS } from '../constants/funnel.constant';
+import { GOAL_OPTIONS } from '../_constants/funnel.constant';
 import { useUserStore } from '@/store/user-store';
 
 type StepPurposeProps = {

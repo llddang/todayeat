@@ -3,7 +3,7 @@ import OptionSelectCard from '@/components/commons/option-select-card';
 import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
 import { GenderType } from '@/types/user-personal-info.type';
-import { GOAL_OPTIONS } from '../constants/funnel.constant';
+import { GOAL_OPTIONS } from '../_constants/funnel.constant';
 import { useUserStore } from '@/store/user-store';
 
 type StepGenderProps = {

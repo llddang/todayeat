@@ -22,9 +22,9 @@ import {
   StepHeightType,
   StepPurposeType,
   StepWeightType
-} from '../types/funnel.type';
-import { userPhysicalProfileSchema } from '../schemas/user-physical-profile.schema';
-import useScrollToTop from '../hooks/use-scroll-to-top';
+} from '../_types/funnel.type';
+import { userPhysicalProfileSchema } from '../_schemas/user-physical-profile.schema';
+import useScrollToTop from '../_hooks/use-scroll-to-top';
 
 const SetGoalFunnel = () => {
   const { Funnel } = useFunnel<validateStep, FunnelStep>('step1', validateFn, 'session-key');

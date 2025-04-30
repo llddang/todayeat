@@ -14,9 +14,9 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useUserStore } from '@/store/user-store';
 import MacronutrientBox from './macronutrient-box';
-import { StepCompleteType } from '../types/funnel.type';
+import { StepCompleteType } from '../_types/funnel.type';
 import { formatNumberWithComma } from '@/utils/format.util';
-import { useClientCalculation } from '../hooks/use-client-calculation';
+import { useClientCalculation } from '../_hooks/use-client-calculation';
 
 type StepCalculateProps = {
   nextStep: (data: string) => void;
