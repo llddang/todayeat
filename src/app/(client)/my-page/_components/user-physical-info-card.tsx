@@ -2,7 +2,7 @@ import { UserDTO } from '@/types/DTO/user.dto';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Typography } from '@/components/ui/typography';
 import { ACTIVITY_LEVEL_OPTIONS, GENDER_OPTIONS } from '@/constants/user-personal-info.constant';
-import UserInfoList from '@/app/(client)/my-page/components/user-info-list';
+import UserInfoList from '@/app/(client)/my-page/_components/user-info-list';
 
 type UserPhysicalInfoCardProps = {
   userInfo: UserDTO;

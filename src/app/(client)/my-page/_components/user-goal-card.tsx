@@ -6,7 +6,7 @@ import { NUTRITION_PURPOSE_OPTIONS } from '@/constants/user-personal-info.consta
 import { UserPersonalInfoDTO } from '@/types/DTO/user.dto';
 import MacronutrientCard from './macronutrient-card';
 import { formatNumberWithComma } from '@/utils/format.util';
-import { calculateMacronutrientRatio } from '../utils/calculate-macronutrient-ratio';
+import { calculateMacronutrientRatio } from '../_utils/calculate-macronutrient-ratio.util';
 
 type UserGoalCardProps = {
   userInfo: UserPersonalInfoDTO | null;

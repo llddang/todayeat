@@ -1,10 +1,10 @@
 import CtaExampleFeedbackBanner from '@/components/commons/cta-example-feedback-banner';
 import GlassBackground from '@/components/commons/glass-background';
 import { getUser } from '@/apis/user.api';
-import ProfileBar from './components/profile-bar';
-import UserGoalCard from './components/user-goal-card';
-import UserPhysicalInfoCard from './components/user-physical-info-card';
-import SettingCard from './components/setting-card';
+import ProfileBar from './_components/profile-bar';
+import UserGoalCard from './_components/user-goal-card';
+import UserPhysicalInfoCard from './_components/user-physical-info-card';
+import SettingCard from './_components/setting-card';
 
 const MyPage = async () => {
   const userInfo = await getUser();

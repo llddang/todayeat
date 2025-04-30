@@ -15,7 +15,7 @@ import IconButton from '@/components/commons/icon-button';
 import { Typography } from '@/components/ui/typography';
 import DefaultProfile from '@/../public/illustrations/default-profile.svg';
 import { useUserStore } from '@/store/user-store';
-import { uploadProfileImage } from '../utils/upload-profile-image';
+import { uploadProfileImage } from '../_utils/upload-profile-image.util';
 
 const editProfileFormSchema = z.object({
   nickname: formSchema.NICKNAME_SCHEMA,
