@@ -50,7 +50,7 @@ const TimePickerPc = ({ currentTime, onTimeChange }: TimePickerPcProps) => {
           </Typography>
           <DialogDescription className="sr-only">식사시간을 설정 할 수 있습니다.</DialogDescription>
           <DialogClose asChild>
-            <IconButton icon="before:bg-close-line-icon" alt="닫기" />
+            <IconButton icon="before:bg-close-line-icon" title="닫기" />
           </DialogClose>
         </DialogTitle>
 

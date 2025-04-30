@@ -20,7 +20,7 @@ const iconButtonVariants = cva(
 
 export type IconButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'children'> &
   VariantProps<typeof iconButtonVariants> & {
-    alt: string;
+    title: string;
     icon: string;
   };
 

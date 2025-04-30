@@ -98,7 +98,7 @@ const AddMealDrawer = () => {
               </Typography>
             </DrawerTitle>
             <DrawerClose className="" asChild>
-              <IconButton icon="before:bg-close-line-icon" alt="닫기 버튼" />
+              <IconButton icon="before:bg-close-line-icon" title="닫기 버튼" />
             </DrawerClose>
           </div>
           <Typography as="span" variant="body2" className="text-gray-700">

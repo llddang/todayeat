@@ -51,7 +51,7 @@ const TimePicker = ({ currentTime, onTimeChange }: TimePickerProps) => {
           </Typography>
           <DrawerDescription className="sr-only">식사시간을 설정 할 수 있습니다.</DrawerDescription>
           <DrawerClose asChild>
-            <IconButton icon="before:bg-close-line-icon" alt="닫기" />
+            <IconButton icon="before:bg-close-line-icon" title="닫기" />
           </DrawerClose>
         </DrawerTitle>
 

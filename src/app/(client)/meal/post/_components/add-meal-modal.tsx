@@ -95,7 +95,7 @@ const AddMealModal = ({ onLoadingChange, onModalOpenChange, onModalInfoChange }:
               </Typography>
             </DialogTitle>
             <DialogClose className="" asChild>
-              <IconButton icon="before:bg-close-line-icon" alt="닫기 버튼" />
+              <IconButton icon="before:bg-close-line-icon" title="닫기 버튼" />
             </DialogClose>
           </div>
           <div className="flex flex-col gap-6">

@@ -143,7 +143,7 @@ const EditProfile = ({ setOpen }: EditProfileProps) => {
                       />
                     </div>
                     <IconButton
-                      alt="프로필 사진 수정하기"
+                      title="프로필 사진 수정하기"
                       size="sm"
                       icon="before:bg-add-info-icon"
                       className="absolute bottom-0 right-0 h-6 w-6 bg-gray-500 hover:bg-gray-500"

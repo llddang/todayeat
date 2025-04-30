@@ -89,7 +89,7 @@ const AddMealCardDrawer = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: 
           <IconButton
             size="md"
             icon="before:bg-add-line-icon"
-            alt="음식 추가"
+            title="음식 추가"
             className="bg-gray-100 hover:bg-gray-100"
           />
           <Typography as="span" variant="body3" className="text-gray-800">
@@ -106,7 +106,7 @@ const AddMealCardDrawer = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: 
             </Typography>
           </DrawerTitle>
           <DrawerClose className="" asChild>
-            <IconButton icon="before:bg-close-line-icon" alt="닫기 버튼" />
+            <IconButton icon="before:bg-close-line-icon" title="닫기 버튼" />
           </DrawerClose>
         </div>
 
