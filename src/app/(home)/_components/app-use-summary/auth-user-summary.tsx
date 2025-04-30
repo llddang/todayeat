@@ -11,11 +11,10 @@ import { memo } from 'react';
 type AuthUserSummaryProps = {
   allMealCount: number;
   thisMonthMealCount: number;
+  today: Date;
 };
-const AuthUserSummary = ({ allMealCount, thisMonthMealCount }: AuthUserSummaryProps) => {
+const AuthUserSummary = ({ allMealCount, thisMonthMealCount, today }: AuthUserSummaryProps) => {
   const user = useUserStore((state) => state.user);
-
-  const today = new Date();
 
   const daysDiff = differenceInDays(today, user.createdAt) || 0;
   const percent = getPercentage(thisMonthMealCount, getDaysInMonth(today));
