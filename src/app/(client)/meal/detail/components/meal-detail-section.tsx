@@ -1,31 +1,31 @@
 'use client';
 
 import { MealDTO } from '@/types/DTO/meal.dto';
-import MealImageCarousel from '../../components/meal-images-carousel';
+import { ChangeEvent, useMemo, useState } from 'react';
+import { ErrorMessage } from '../../utils/error.util';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import { calculateTotalNutrition } from '@/utils/nutrition-calculator.util';
 import { MealCategory, MealCategoryType } from '@/types/meal-category.type';
-import TagSelectItem from '@/components/commons/tag-select-item';
+import TimePicker, { TimeFields } from '../../components/time-picker';
+import { updateMeal } from '@/apis/meal.api';
+import { formatTimestamp } from '@/utils/format.util';
+import { ERROR_MESSAGES } from '../../post/edit/constants/error-message.constant';
+import MealImageCarousel from '../../components/meal-images-carousel';
 import TotalNutritionChart from './total-nutrition-chart';
 import MealList from './meal-list';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Typography } from '@/components/ui/typography';
 import GlassBackground from '@/components/commons/glass-background';
-import { Button } from '@/components/ui/button';
-import { formatTimestamp } from '@/utils/format.util';
-import { updateMeal } from '@/apis/meal.api';
 import { MEAL_CATEGORY } from '../../constants/category.constant';
-import { ChangeEvent, useMemo, useState } from 'react';
-import MemoBox from './memo-box';
+import TagSelectItem from '@/components/commons/tag-select-item';
 import Responsive from '@/components/commons/responsive';
-import TimePickerPc from '../../components/time-picker-pc';
-import { ERROR_MESSAGES } from '../../post/edit/constants/error-message.constant';
-import { ErrorMessage } from '../../utils/error.util';
-import Modal from '@/components/commons/modal';
-import MealCalendarDrawer from '../../components/meal-calendar-drawer';
 import MealCalendarPc from '../../components/meal-calendar-pc';
-import TimePicker, { TimeFields } from '../../components/time-picker';
+import MealCalendarDrawer from '../../components/meal-calendar-drawer';
+import TimePickerPc from '../../components/time-picker-pc';
+import MemoBox from './memo-box';
+import { Button } from '@/components/ui/button';
+import Modal from '@/components/commons/modal';
+import { z } from 'zod';
 
 type MealDetailSectionProps = {
   meal: MealDTO;
