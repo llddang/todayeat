@@ -24,7 +24,7 @@ const GlobalNavigationBar = ({ className, ...props }: GlobalNavigationBarProps) 
   return (
     <nav
       className={cn(
-        'fixed bottom-4 left-4 right-4 rounded-[6.25rem] bg-gray-200/[0.64] p-2 backdrop-blur-[30px] layout-container xl:hidden',
+        'fixed bottom-4 left-4 right-4 z-layout rounded-[6.25rem] bg-gray-200/[0.64] p-2 backdrop-blur-[30px] layout-container xl:hidden',
         className
       )}
       {...props}
