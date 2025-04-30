@@ -14,7 +14,7 @@ import { Typography } from '@/components/ui/typography';
 import SITE_MAP from '@/constants/site-map.constant';
 import PUBLIC_ERROR_MESSAGE from '@/constants/public-error-message.constant';
 import Modal from '@/components/commons/modal';
-import { StepNewPasswordType } from '../_types/funnel-type';
+import { StepNewPasswordType } from '../_types/funnel.type';
 import { useUserStore } from '@/store/user-store';
 
 const passwordSchema = z.object({
