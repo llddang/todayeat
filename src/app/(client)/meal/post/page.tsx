@@ -1,5 +1,5 @@
 import { getAiResponses } from '@/apis/analysis-request.api';
-import UploadImageSection from './components/upload-image-section';
+import UploadImageSection from './_components/upload-image-section';
 
 const MealPostPage = async () => {
   const data = await getAiResponses();

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import SITE_MAP from '@/constants/site-map.constant';
 import LOGO from '@/../public/logo.svg';
-import { useUserStore } from '@/store/user-store';
+import { useUserStore } from '@/store/user.store';
 import ProfileImage from '@/components/commons/profile-image';
 
 const WithProfile = () => {

@@ -3,9 +3,9 @@
 import GlassBackground from '@/components/commons/glass-background';
 import { useSearchParams } from 'next/navigation';
 import { getPercentage } from '@/utils/nutrition-calculator.util';
-import SetGoalFunnel from './components/set-goal-funnel';
-import { LAST_STEP_FOR_USER_INPUT, STEP_UI_CONFIG } from './constants/funnel.constant';
-import { FunnelStep } from './types/funnel.type';
+import SetGoalFunnel from './_components/set-goal-funnel';
+import { LAST_STEP_FOR_USER_INPUT, STEP_UI_CONFIG } from './_constants/funnel.constant';
+import { FunnelStep } from './_types/funnel.type';
 import FunnelProgressSection from '@/components/commons/funnel-progress-section';
 
 const SetGoalPage = () => {

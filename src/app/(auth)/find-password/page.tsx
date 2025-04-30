@@ -3,8 +3,8 @@
 import { useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/shadcn';
 import GlassBackground from '@/components/commons/glass-background';
-import FindPasswordFunnel from './components/find-password-funnel';
-import { FindPasswordFunnelStep } from './types/funnel-type';
+import FindPasswordFunnel from './_components/find-password-funnel';
+import { FindPasswordFunnelStep } from './_types/funnel.type';
 
 const FindPasswordPage = () => {
   const params = useSearchParams();

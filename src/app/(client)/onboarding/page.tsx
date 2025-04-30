@@ -1,8 +1,8 @@
 import { cookies } from 'next/headers';
-import FirstSection from './components/first-section';
-import SecondSection from './components/second-section';
-import ThirdSection from './components/third-section';
-import CtaCard from './components/cta-card';
+import FirstSection from './_components/first-section';
+import SecondSection from './_components/second-section';
+import ThirdSection from './_components/third-section';
+import CtaCard from './_components/cta-card';
 
 const EXPIRED_COOKIE_ONE_YEAR = 60 * 60 * 24 * 365;
 const setOnboardedCookie = async () => {

@@ -17,7 +17,7 @@ const Layout = ({
   return (
     <div className="layout-container">
       <Header />
-      <div className="desktop-width mx-auto pt-layout xl:pt-20">
+      <div className="mx-auto pt-layout desktop-width xl:pt-20">
         <Suspense>{children}</Suspense>
         <Footer />
       </div>
