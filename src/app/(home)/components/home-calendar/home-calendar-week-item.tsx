@@ -5,11 +5,10 @@ import { Typography } from '@/components/ui/typography';
 import { cn } from '@/lib/shadcn';
 import { formatDateWithDash } from '@/utils/format.util';
 import { getPercentage } from '@/utils/nutrition-calculator.util';
-import { useCalendar } from '@/app/(home)/contexts/calendar.context';
-import { useDashboard } from '@/app/(home)/contexts/dashboard.context';
-import { isSameDate } from '@/app/(home)/utils/calendar.util';
+import { useDateContext } from '@/app/(home)/contexts/date.context';
 import { DailyMealCalories } from '@/types/nutrition.type';
 import { Day } from '../../types/calendar.type';
+import { isSameDay } from 'date-fns';
 
 type HomeCalendarWeekItemProps = {
   selectedDate: Date;
@@ -23,11 +22,10 @@ const HomeCalendarWeekItem = ({
   dailyMealCalories,
   dailyCaloriesGoal
 }: HomeCalendarWeekItemProps) => {
-  const { setSelectedDate } = useDashboard();
-  const { setCurrentDate } = useCalendar();
+  const { setSelectedDate, setCurrentDate } = useDateContext();
 
   const handleDateClick = (newSelectedDate: Date): void => {
-    if (isSameDate(newSelectedDate, selectedDate)) return;
+    if (isSameDay(newSelectedDate, selectedDate)) return;
     setSelectedDate(new Date(newSelectedDate));
     setCurrentDate(new Date(newSelectedDate));
   };
@@ -42,9 +40,9 @@ const HomeCalendarWeekItem = ({
   return (
     <div className="flex w-full justify-between xl:justify-stretch xl:gap-3">
       {week.map(({ day, dayOutside }) => {
-        const isSelected = isSameDate(day, selectedDate);
+        const isSelected = isSameDay(day, selectedDate);
         const calories = dailyMealCalories[formatDateWithDash(day)] ?? 0;
-        const progress = getPercentage(calories, dailyCaloriesGoal);
+        const progress = getPercentage(calories, dailyCaloriesGoal, false);
         return (
           <button
             key={formatDateWithDash(day)}

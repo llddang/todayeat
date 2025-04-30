@@ -1,6 +1,6 @@
 'use server';
 
-import { camelToSnakeObject, snakeToCamelObject } from '@/utils/camelize.util';
+import { camelToSnake, snakeToCamel } from '@/utils/camelize.util';
 import { formatDateWithDash } from '@/utils/format.util';
 import { getServerClient } from '@/lib/supabase/server';
 import {
@@ -38,7 +38,7 @@ export const getAllMyMealsByPeriod = async (startDate: Date, endDate: Date): Pro
     .order('ate_at', { ascending: false });
   if (error) throw error;
 
-  return snakeToCamelObject<MealSnakeCaseDTO[]>(data);
+  return snakeToCamel<MealSnakeCaseDTO[]>(data);
 };
 
 /**
@@ -62,7 +62,7 @@ export const getMyMealByDate = async (date: Date): Promise<MealDTO[]> => {
 
   if (error) throw error;
 
-  return snakeToCamelObject<MealSnakeCaseDTO[]>(data);
+  return snakeToCamel<MealSnakeCaseDTO[]>(data);
 };
 
 /**
@@ -83,7 +83,7 @@ export const getMyMealById = async (mealId: string): Promise<MealDTO> => {
     .single();
   if (error) throw error;
 
-  return snakeToCamelObject<MealSnakeCaseDTO>(data);
+  return snakeToCamel<MealSnakeCaseDTO>(data);
 };
 
 /**
@@ -95,10 +95,10 @@ export const getMyMealById = async (mealId: string): Promise<MealDTO> => {
  */
 const createMeal = async (meal: CreateMealDTO): Promise<MealOverviewDTO> => {
   const supabase = getServerClient();
-  const mealSnakeCase = camelToSnakeObject(meal);
+  const mealSnakeCase = camelToSnake(meal);
   const { data, error } = await supabase.from('meals').insert(mealSnakeCase).select().single();
   if (error) throw error;
-  return snakeToCamelObject<MealOverviewSnakeCaseDTO>(data);
+  return snakeToCamel<MealOverviewSnakeCaseDTO>(data);
 };
 
 /**
@@ -111,10 +111,10 @@ const createMeal = async (meal: CreateMealDTO): Promise<MealOverviewDTO> => {
  */
 const createMealDetails = async (mealId: string, mealDetails: CreateMealDetailDTO[]): Promise<MealDetailDTO[]> => {
   const supabase = getServerClient();
-  const mealDetailsRequest = mealDetails.map((mealDetail) => ({ meal_id: mealId, ...camelToSnakeObject(mealDetail) }));
+  const mealDetailsRequest = mealDetails.map((mealDetail) => ({ meal_id: mealId, ...camelToSnake(mealDetail) }));
   const { data, error } = await supabase.from('meal_details').insert(mealDetailsRequest).select();
   if (error) throw error;
-  return snakeToCamelObject<MealDetailSnakeCaseDTO[]>(data);
+  return snakeToCamel<MealDetailSnakeCaseDTO[]>(data);
 };
 
 /**
@@ -144,10 +144,10 @@ export const createMealWithDetails = async (
  */
 export const updateMeal = async (mealId: string, meal: Partial<CreateMealDTO>): Promise<MealOverviewDTO> => {
   const supabase = getServerClient();
-  const mealSnakeCase = camelToSnakeObject(meal);
+  const mealSnakeCase = camelToSnake(meal);
   const { data, error } = await supabase.from('meals').update(mealSnakeCase).eq('id', mealId).select().single();
   if (error) throw error;
-  return snakeToCamelObject<MealOverviewSnakeCaseDTO>(data);
+  return snakeToCamel<MealOverviewSnakeCaseDTO>(data);
 };
 
 /**

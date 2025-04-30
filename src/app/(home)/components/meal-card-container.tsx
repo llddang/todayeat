@@ -7,8 +7,7 @@ import { useState } from 'react';
 import ScrollbarContainer from './scrollbar-container';
 import Modal from '@/components/commons/modal';
 import { deleteMeals } from '@/apis/meal.api';
-import { useCalendar } from '../contexts/calendar.context';
-import { useDashboard } from '../contexts/dashboard.context';
+import { useDateContext } from '../contexts/date.context';
 import { formatDateWithDash } from '@/utils/format.util';
 
 type MealCardContainerProps = {
@@ -21,8 +20,7 @@ const MealCardContainer = ({ meals, onMealsChange }: MealCardContainerProps) => 
   const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
   const [idsToDelete, setIdsToDelete] = useState<string[]>([]);
 
-  const { selectedDate } = useDashboard();
-  const { setDailyMealCalories } = useCalendar();
+  const { selectedDate, setDailyMealCalories } = useDateContext();
 
   const filteredMeals = meals.filter((meal) => !idsToDelete.includes(meal.id));
 

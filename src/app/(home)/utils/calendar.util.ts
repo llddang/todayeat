@@ -1,24 +1,24 @@
-import { CALENDAR_RANGE_OFFSET, DAY, MAX_WEEK, WEEK } from '@/app/(home)/constants/calendar.constant';
+import { CALENDAR_RANGE_OFFSET, MAX_WEEK } from '@/app/(home)/constants/calendar.constant';
 import { formatDateWithDash } from '@/utils/format.util';
 
 import { Day, CarouselMonth, CarouselWeek } from '../types/calendar.type';
 import { DailyMealCalories } from '@/types/nutrition.type';
+import { addDays, addWeeks, isSameMonth, startOfMonth, startOfWeek } from 'date-fns';
 
-export const isSameDate = (d1: Date, d2: Date): boolean => formatDateWithDash(d1) === formatDateWithDash(d2);
-
-export const getFirstDayInMonth = (month: Day[][]): Date => {
-  return month[0][0].day ?? new Date();
+export const getCalendarStartDate = (calendarData: Day[][] | Day[]): Date => {
+  if (Array.isArray(calendarData[0])) return calendarData[0][0].day ?? new Date();
+  else return calendarData[0].day ?? new Date();
 };
 
-export const getLastDayInMonth = (month: Day[][]): Date => {
+export const getCalendarEndDate = (month: Day[][]): Date => {
   return month.at(-1)?.at(-1)?.day ?? new Date();
 };
 
-export const getFirstDayAndLastDayInMonth = (month: Day[][]): [Date, Date] => {
-  return [getFirstDayInMonth(month), getLastDayInMonth(month)];
+export const getCalendarDateRange = (month: Day[][]): [Date, Date] => {
+  return [getCalendarStartDate(month), getCalendarEndDate(month)];
 };
 
-export const getMonthDates = (date: Date): CarouselMonth[] => {
+export const getMonths = (date: Date): CarouselMonth[] => {
   const baseYear = date.getFullYear();
   const baseMonth = date.getMonth();
 
@@ -27,7 +27,7 @@ export const getMonthDates = (date: Date): CarouselMonth[] => {
 
     return {
       id: monthOffset,
-      dates: calculateMonthDates(newDate)
+      dates: getMonthCalendarDays(newDate)
     };
   });
 
@@ -39,25 +39,25 @@ export const getMonthDates = (date: Date): CarouselMonth[] => {
  * @param {Date} date 기준 날짜
  * @returns {Month} 6주 캘린더 데이터 (Date[][] 형태)
  */
-export const calculateMonthDates = (date: Date): Day[][] => {
-  const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-
-  const firstDayDiff = firstDayOfMonth.getDate() - firstDayOfMonth.getDay() + (firstDayOfMonth.getDay() === 0 ? -6 : 1);
-  const firstDay = new Date(firstDayOfMonth);
-  firstDay.setDate(firstDayDiff);
+export const getMonthCalendarDays = (date: Date, offset: number = MAX_WEEK): Day[][] => {
+  const firstDayOfMonth = startOfMonth(date);
+  const monday = startOfWeek(firstDayOfMonth, { weekStartsOn: 1 });
 
   const month = [];
 
-  const standMonth = date.getMonth();
-  const tempFirstDay = new Date(firstDay);
-  for (let weekOffset = 0; weekOffset < MAX_WEEK; weekOffset++) {
-    const currentWeek = [];
-    for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
-      const newData = { day: new Date(tempFirstDay), dayOutside: tempFirstDay.getMonth() !== standMonth };
-      currentWeek.push(newData);
-      tempFirstDay.setDate(tempFirstDay.getDate() + 1);
+  let currentDate = new Date(monday);
+  for (let week = 0; week < offset; week++) {
+    const weekDays = [];
+
+    for (let day = 0; day < 7; day++) {
+      weekDays.push({
+        day: new Date(currentDate),
+        dayOutside: !isSameMonth(currentDate, date)
+      });
+      currentDate = addDays(currentDate, 1);
     }
-    month.push(currentWeek);
+
+    month.push(weekDays);
   }
 
   return month;
@@ -68,7 +68,7 @@ export const getPeriodInCarouselMonth = (
   dailyMealCalories: DailyMealCalories
 ): [Date | null, Date | null] => {
   const filteredMonths = months.filter((month) => {
-    const firstDay = getFirstDayInMonth(month.dates);
+    const firstDay = getCalendarStartDate(month.dates);
     const key = formatDateWithDash(firstDay);
     return dailyMealCalories[key] === undefined;
   });
@@ -85,31 +85,20 @@ export const getPeriodInCarouselMonth = (
   return [firstDay, lastDay];
 };
 
-export const getFirstDayInWeek = (week: Day[]): Date => {
-  return week[0].day ?? new Date();
-};
-
-export const getWeekDates = (date: Date): CarouselWeek[] => {
-  const standTime = date.getTime();
-
+export const getWeeks = (date: Date): CarouselWeek[] => {
   const allWeeks = CALENDAR_RANGE_OFFSET.map((weekOffset) => ({
     id: weekOffset,
-    dates: calculateWeekDates(new Date(standTime + weekOffset * WEEK))
+    dates: getWeekCalendarDays(addWeeks(date, weekOffset))
   }));
 
   return allWeeks;
 };
 
-export const calculateWeekDates = (date: Date): Day[] => {
-  const day = date.getDay();
-  const diff = date.getDate() - day + (day === 0 ? -6 : 1);
-  const monday = new Date(date);
-  monday.setDate(diff);
-
-  const standTime = monday.getTime();
+export const getWeekCalendarDays = (date: Date): Day[] => {
+  const monday = startOfWeek(date, { weekStartsOn: 1 });
 
   return Array.from({ length: 7 }, (_, dayOffset) => ({
-    day: new Date(standTime + dayOffset * DAY),
+    day: addDays(monday, dayOffset),
     dayOutside: false
   }));
 };

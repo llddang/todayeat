@@ -2,41 +2,48 @@
 import { DailyMealCalories } from '@/types/nutrition.type';
 import { createContext, useState, ReactNode, useContext } from 'react';
 
-type CalendarContextProps = {
+type DateContextProps = {
+  selectedDate: Date;
   currentDate: Date;
   dailyMealCalories: DailyMealCalories;
+  setSelectedDate: (date: Date) => void;
   setCurrentDate: (date: Date) => void;
   setDailyMealCalories: (newData: DailyMealCalories) => void;
 };
 
-const defaultContextValue: CalendarContextProps = {
+const defaultContextValue: DateContextProps = {
+  selectedDate: new Date(),
   currentDate: new Date(),
   dailyMealCalories: {},
+  setSelectedDate: () => {},
   setCurrentDate: () => {},
   setDailyMealCalories: () => {}
 };
 
-export const CalendarContext = createContext<CalendarContextProps>(defaultContextValue);
+export const DateContext = createContext<DateContextProps>(defaultContextValue);
 
-const CalendarProvider = ({ children }: { children: ReactNode }) => {
+const DateProvider = ({ children }: { children: ReactNode }) => {
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [dailyMealCalories, setDailyMealCalories] = useState<DailyMealCalories>({});
 
   const value = {
+    selectedDate,
     currentDate,
     dailyMealCalories,
+    setSelectedDate,
     setCurrentDate,
     setDailyMealCalories: (newData: DailyMealCalories) => setDailyMealCalories((prev) => ({ ...prev, ...newData }))
   };
 
-  return <CalendarContext.Provider value={value}>{children}</CalendarContext.Provider>;
+  return <DateContext.Provider value={value}>{children}</DateContext.Provider>;
 };
-export default CalendarProvider;
+export default DateProvider;
 
-export const useCalendar = () => {
-  const context = useContext(CalendarContext);
+export const useDateContext = () => {
+  const context = useContext(DateContext);
   if (context === undefined) {
-    throw new Error('useCalendar must be used within a CalendarProvider');
+    throw new Error('useDateContext must be used within a DateProvider');
   }
   return context;
 };
