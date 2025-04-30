@@ -72,8 +72,8 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
     control: mealFormMethods.control,
     name: 'mealList'
   });
-
-  const totalNutrient = mealCardList.reduce(
+  const mealList = mealFormMethods.watch('mealList');
+  const totalNutrient = mealList.reduce(
     (acc, meal) => ({
       calories: acc.calories + meal.calories,
       carbohydrate: acc.carbohydrate + meal.carbohydrate,
