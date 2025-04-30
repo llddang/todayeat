@@ -26,8 +26,8 @@ export const metadata: Metadata = {
     siteName: '투데잇',
     images: {
       url: `${ENV.PROJECT_URL}/site-thumbnail.svg`,
-      width: 1521,
-      height: 1080,
+      width: 1900,
+      height: 1000,
       alt: '투데잇 서비스 설명 이미지'
     }
   }
