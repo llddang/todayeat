@@ -1,7 +1,7 @@
 import GlassBackground from '@/components/commons/glass-background';
 import Textarea from '@/components/commons/textarea';
 import { Typography } from '@/components/ui/typography';
-import React, { TextareaHTMLAttributes, forwardRef } from 'react';
+import { TextareaHTMLAttributes, forwardRef } from 'react';
 
 type MemoBoxProps = Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'maxLength'> & {
   maxLength: number;

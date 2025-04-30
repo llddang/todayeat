@@ -19,7 +19,7 @@ import { Button } from '@/components/ui/button';
 import { parseGeminiResponse } from '@/lib/gemini';
 import { generateCaloriesAnalysisByText } from '@/apis/gemini.api';
 import { useUserStore } from '@/store/user.store';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiResponseDTO } from '@/types/DTO/ai_analysis.dto';
 import { ERROR_MESSAGES } from '../_constants/error-message.constant';
@@ -79,7 +79,7 @@ const AddMealCardPc = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: AddM
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
     form.handleSubmit(onSubmit)(e);
@@ -92,7 +92,7 @@ const AddMealCardPc = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: AddM
           <IconButton
             size="md"
             icon="before:bg-add-line-icon"
-            alt="음식 추가"
+            title="음식 추가"
             className="bg-gray-100 hover:bg-gray-100"
           />
           <Typography as="span" variant="body3" className="text-gray-800">
@@ -110,7 +110,7 @@ const AddMealCardPc = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: AddM
                 </Typography>
               </DialogTitle>
               <DialogClose className="" asChild>
-                <IconButton icon="before:bg-close-line-icon" alt="닫기 버튼" />
+                <IconButton icon="before:bg-close-line-icon" title="닫기 버튼" />
               </DialogClose>
             </div>
 

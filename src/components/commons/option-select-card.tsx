@@ -1,15 +1,16 @@
 'use client';
 
 import { Typography } from '@/components/ui/typography';
+import { ChangeEvent, InputHTMLAttributes } from 'react';
 
 type OptionSelectCardProps = {
   groupName: 'PURPOSE' | 'GENDER' | 'ACTIVITY_LEVEL_OPTIONS';
   title: string;
   value: string;
   checked: boolean;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   description?: string;
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'name' | 'defaultChecked'>;
+} & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'name' | 'defaultChecked'>;
 
 const OptionSelectCard = ({
   groupName,

@@ -9,8 +9,8 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@radix-ui/react-dialog';
-import React, { useState } from 'react';
-import { TimeFields } from './time-picker';
+import { useState } from 'react';
+import { TimeFields } from './time-picker-mobile';
 import IconButton from '@/components/commons/icon-button';
 import Picker from 'react-mobile-picker';
 import { Button } from '@/components/ui/button';
@@ -50,7 +50,7 @@ const TimePickerPc = ({ currentTime, onTimeChange }: TimePickerPcProps) => {
           </Typography>
           <DialogDescription className="sr-only">식사시간을 설정 할 수 있습니다.</DialogDescription>
           <DialogClose asChild>
-            <IconButton icon="before:bg-close-line-icon" alt="닫기" />
+            <IconButton icon="before:bg-close-line-icon" title="닫기" />
           </DialogClose>
         </DialogTitle>
 

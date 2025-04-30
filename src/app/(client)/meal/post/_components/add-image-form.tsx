@@ -17,10 +17,6 @@ const AddImageForm = ({ onLoadingChange, onOpenRetryErrorModalChange }: AddImage
   const router = useRouter();
   const handleAnalyzeSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    if (images.length === 0) {
-      alert('이미지를 최소 1개 이상 선택해 주세요.');
-      return;
-    }
 
     try {
       onLoadingChange(true);
