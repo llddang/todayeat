@@ -1,3 +1,5 @@
+import { getKoreaTime } from '@/utils/date.util';
+
 /**
  * 파일의 고유 식별자(ID)를 생성하는 함수
  *
@@ -44,6 +46,6 @@ export const urlToFile = async (url: string, idx: number): Promise<File> => {
   const blob = await response.blob();
   const contentType = response.headers.get('Content-Type') || 'application/octet-stream';
   const ext = mimeTypeToExtension(contentType);
-  const filename = `image_${Date.now()}.${idx}.${ext}`;
+  const filename = `image_${getKoreaTime()}.${idx}.${ext}`;
   return new File([blob], filename, { type: contentType });
 };
