@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 /**
  * 숫자나 숫자 문자열의 천 단위마다 콤마(,)를 붙이는 함수입니다.
  * 문자열 입력의 경우 내부 콤마를 제거하고 숫자로 변환한 후 포맷팅합니다.
@@ -30,15 +32,7 @@ export const formatDateToLocaleKR = (date: Date): string => {
  * @returns {string} 'YYYY-MM-DD' 형식의 문자열
  */
 export const formatDateWithDash = (date: Date): string => {
-  const formattedDate = new Intl.DateTimeFormat('en-CA', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  })
-    .format(date)
-    .replace(/\//g, '-');
-
-  return formattedDate;
+  return format(date, 'yyyy-MM-dd');
 };
 
 /**
