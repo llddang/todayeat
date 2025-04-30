@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="투데잇" src="https://github.com/user-attachments/assets/e6e42c1e-b10e-43fe-bdfd-9ba4535c10e0" />
+  <img alt="투데잇" src="https://github.com/user-attachments/assets/78dcd200-3c11-444f-81f6-3de3a3e941be" />
 </div>
 
 <br>
@@ -14,8 +14,8 @@
 - AI 피드백으로 건강한 식습관을 형성하고, 직관적인 데이터 시각화로 자신의 영양 섭취 패턴을 쉽게 파악할 수 있습니다.
 
 > - **기획 및 와이어프레임 제작** : 2025. 03. 28 ~ 2025. 04. 03
-> - **개발 기간** : 2025. 04. 04 ~ 진행중
-> - **배포 주소** : https://jiwooda-main.vercel.app/
+> - **개발 기간** : 2025. 04. 04 ~ 2025. 04. 30
+> - **배포 주소** : https://jiwooda.vercel.app/
 
 <br />
 <br />
@@ -202,45 +202,45 @@
 │  ├─ images
 │  └─ lottie
 └─ src
-  ├─ **tests** # 📋 유틸리티 함수 테스트
-  ├─ apis # 🌐 API 호출 함수
+  ├─ **tests**           # 📋 유틸리티 함수 테스트
+  ├─ apis                # 🌐 API 호출 함수
   ├─ app
-  │  ├─ (auth) # 🔐 인증 관련 페이지(로그인, 회원가입 등)
-  │  ├─ (client) # 👤 인증된 사용자 페이지(마이페이지, 식단기록 등)
+  │  ├─ (auth)           # 🔐 인증 관련 페이지(로그인, 회원가입 등)
+  │  ├─ (client)         # 👤 인증된 사용자 페이지(마이페이지, 식단기록 등)
   │  ├─ (home)
-  │  │  ├─ _components # 🧱 컴포넌트 구성
-  │  │  ├─ _constants # 📌 상수 정의
-  │  │  ├─ _contexts # 🔄 컨텍스트 API
-  │  │  ├─ _hooks # 🪝 커스텀 훅
-  │  │  ├─ _types # 📝 TypeScript 타입 정의
-  │  │  ├─ _utils # 🛠️ 유틸리티 함수
+  │  │  ├─ _components   # 🧱 컴포넌트 구성
+  │  │  ├─ _constants    # 📌 상수 정의
+  │  │  ├─ _contexts     # 🔄 컨텍스트 API
+  │  │  ├─ _hooks        # 🪝 커스텀 훅
+  │  │  ├─ _types        # 📝 TypeScript 타입 정의
+  │  │  ├─ _utils        # 🛠️ 유틸리티 함수
   │  │  ├─ layout.tsx
   │  │  └─ page.tsx
-  │  ├─ api # 🚀 서버리스 API 엔드포인트
+  │  ├─ api              # 🚀 서버리스 API 엔드포인트
   │  │  ├─ auth
   │  │  ├─ gemini
   │  │  └─ report
-  │  ├─ error.tsx # ⚠️ 에러 핸들링 컴포넌트
+  │  ├─ error.tsx        # ⚠️ 에러 핸들링 컴포넌트
   │  ├─ global-error.tsx
-  │  ├─ layout.tsx # 📐 전체 레이아웃 구성
-  │  ├─ robots.ts # 🤖 크롤링에서 접근 가능한 구성
-  │  └─ sitemap.ts # 🗺️ 검색 엔진 크롤러의 색인 보조
+  │  ├─ layout.tsx       # 📐 전체 레이아웃 구성
+  │  ├─ robots.ts        # 🤖 크롤링에서 접근 가능한 구성
+  │  └─ sitemap.ts       # 🗺️ 검색 엔진 크롤러의 색인 보조
   ├─ components
-  │  ├─ commons # 🔄 공통 컴포넌트
-  │  ├─ layouts # 📏 레이아웃 컴포넌트
-  │  └─ ui # 🎨 UI 기본 컴포넌트(shadcn/ui 기반)
-  ├─ constants # 📌 상수 정의
-  ├─ hooks # 🪝 커스텀 훅
-  ├─ lib # 📚 외부 라이브러리
+  │  ├─ commons          # 🔄 공통 컴포넌트
+  │  ├─ layouts          # 📏 레이아웃 컴포넌트
+  │  └─ ui               # 🎨 UI 기본 컴포넌트(shadcn/ui 기반)
+  ├─ constants           # 📌 상수 정의
+  ├─ hooks               # 🪝 커스텀 훅
+  ├─ lib                 # 📚 외부 라이브러리
   │  ├─ gemini.ts
   │  ├─ sentry.ts
   │  ├─ shadcn.ts
   │  └─ supabase
-  ├─ schemas # 🔍 폼의 zod 검증 로직 (example.schema.ts)
-  ├─ store # 🏪 전역 상태 관리(Zustand) (example.store.ts)
-  ├─ types # 📝 TypeScript 타입 정의 (example.type.ts)
-  │  └─ DTO # 📦 데이터 전송 객체 타입 (example.dto.ts)
-  ├─ utils # 🛠️ 유틸리티 함수 (example.util.ts)
+  ├─ schemas             # 🔍 폼의 zod 검증 로직 (example.schema.ts)
+  ├─ store               # 🏪 전역 상태 관리(Zustand) (example.store.ts)
+  ├─ types               # 📝 TypeScript 타입 정의 (example.type.ts)
+  │  └─ DTO              # 📦 데이터 전송 객체 타입 (example.dto.ts)
+  ├─ utils               # 🛠️ 유틸리티 함수 (example.util.ts)
   └─ middleware.ts
 ```
 
@@ -277,8 +277,8 @@
 
 ### 배포 및 CI
 
-<img src="https://img.shields.io/badge/githubactions-2088FF?style=for-the-badge&amp;logo=githubactions&amp;logoColor=white">
 <img src="https://img.shields.io/badge/vercel-000000?style=for-the-badge&amp;logo=vercel&amp;logoColor=white">
+<img src="https://img.shields.io/badge/githubactions-2088FF?style=for-the-badge&amp;logo=githubactions&amp;logoColor=white">
 
 ### 협업
 
