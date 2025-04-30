@@ -17,7 +17,7 @@ export const AI_ERROR_MESSAGE = {
   },
   GEMINI_GENERATION_FAILED: {
     status: 500,
-    message: 'AI 분석에 실패했습니다.',
+    message: 'AI가 분석하기 어려운 메뉴입니다.',
     action: '잠시 후 다시 시도해주세요.'
   },
   GEMINI_PARSE_FAILED: {
@@ -54,9 +54,9 @@ export const AI_ERROR_MESSAGE = {
 
 export type AIErrorMessageType = keyof typeof AI_ERROR_MESSAGE;
 
-export function isAIErrorResponse(key: AIErrorMessageType) {
+export const isAIErrorResponse = (key: AIErrorMessageType) => {
   return {
     error: AI_ERROR_MESSAGE[key].message,
     action: AI_ERROR_MESSAGE[key].action
   };
-}
+};

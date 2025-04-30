@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import SITE_MAP from '@/constants/site-map.constant';
 import LOGO from '@/../public/logo.svg';
-import { useUserStore } from '@/store/user-store';
+import { useUserStore } from '@/store/user.store';
 import ProfileImage from '@/components/commons/profile-image';
 
 const WithProfile = () => {
@@ -16,7 +16,7 @@ const WithProfile = () => {
       <Link href={SITE_MAP.HOME}>
         <Image src={LOGO} alt="투데잇 로고" />
       </Link>
-      <Link href={SITE_MAP.MY_PAGE}>
+      <Link href={user.id ? SITE_MAP.MY_PAGE : SITE_MAP.SIGN_IN}>
         <ProfileImage src={profileImage} size="sm" />
       </Link>
     </>

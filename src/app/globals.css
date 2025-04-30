@@ -35,6 +35,12 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --carbohydrate: #e3c0fa;
+    --protein: #9be7d6;
+    --fat: #c2ebff;
+    --bar-previous: #fff5cc;
+    --bar-current: #ffe37e;
+    --reference-line: #ffb800;
   }
   .dark {
     --background: 240 10% 3.9%;
@@ -82,4 +88,15 @@ input[type='number']::-webkit-outer-spin-button {
 /* Firefox */
 input[type='number'] {
   -moz-appearance: textfield;
+}
+
+@layer utilities {
+  .scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
 }

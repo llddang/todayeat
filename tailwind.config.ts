@@ -15,6 +15,9 @@ const config: Config = {
       maxWidth: {
         md: '440px'
       },
+      boxShadow: {
+        modal: '0px 6px 32px 0px rgba(87, 33, 211, 0.06), 0px 0px 0px 1px rgba(186, 55, 41, 0.10)'
+      },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
@@ -143,7 +146,9 @@ const config: Config = {
       },
       zIndex: {
         background: '-10',
-        layout: '10'
+        layout: '10',
+        modal: '50',
+        toast: '100'
       },
       padding: {
         layout: '4rem'
@@ -158,6 +163,7 @@ const config: Config = {
         'down-line-gray-800-icon': "url('/icons/down-line-gray-800.svg')",
         'sparkle-illustration': "url('/illustrations/cta-banner-sparkle.svg')",
         'image-upload-illustration': "url('/illustrations/image-upload.svg')",
+        'career-illustration': 'url(/illustrations/career.svg)',
         'ai-sparkle-1': "url('/illustrations/ai-sparkle-1.svg')",
         'ai-sparkle-2': "url('/illustrations/ai-sparkle-2.svg')",
         'delete-2-line-icon': 'url(/icons/delete_2_line.svg)',
@@ -181,7 +187,17 @@ const config: Config = {
         'edit-4-icon': 'url(/icons/edit-4-line.svg)',
         'default-profile': 'url(/illustrations/default_profile.svg)',
         'back-line-icon': 'url(/icons/back_line.svg)',
-        'add-line-icon': 'url(/icons/add_line.svg)'
+        'add-line-icon': 'url(/icons/add_line.svg)',
+        'illust-failed-img-1': 'url(/illustrations/illust-failed-img-1.svg)',
+        'illust-failed-img-2': 'url(/illustrations/illust-failed-img-2.svg)',
+        'illust-failed-img-3': 'url(/illustrations/illust-failed-img-3.svg)',
+        'onboarding-recommend-1': 'url(/illustrations/onboarding-recommend-img-1.svg)',
+        'onboarding-recommend-2': 'url(/illustrations/onboarding-recommend-img-2.svg)',
+        'onboarding-recommend-3': 'url(/illustrations/onboarding-recommend-img-3.svg)',
+        'onboarding-bg': 'url(/images/onboarding-bg.png)',
+        'user-fill-icon': 'url(/icons/user-fill.svg)',
+        'toast-success': 'url(/icons/toast-success.svg)',
+        'toast-fail': 'url(/icons/toast-fail.svg)'
       },
       letterSpacing: {
         snug: '-0.0175rem'
@@ -240,8 +256,14 @@ const config: Config = {
             #FDFDFD
           `
         },
+        '.bg-gradient-onboarding': {
+          background: `linear-gradient(180deg, #FBF6FE 16%, rgba(255, 255, 255, 0.00) 20%)`
+        },
         '.bg-gradient-radial-purple': {
           background: `radial-gradient(72.84% 72.84% at 50% 27.16%, rgba(255, 210, 214, 0.20) 0%, rgba(227, 192, 250, 0.20) 100%), #fff`
+        },
+        '.bg-gradient-radial-purple-2': {
+          background: `radial-gradient(72.84% 72.84% at 50% 27.16%, rgba(255, 210, 214, 0.08) 0%, rgba(227, 192, 250, 0.08) 100%), #fff`
         },
         '.bg-button-gradient': {
           background: `linear-gradient(149deg, rgba(255, 210, 214, 0.32) 4.14%, rgba(209, 149, 248, 0.32) 109.45%), #FFF`
@@ -256,6 +278,12 @@ const config: Config = {
           letterSpacing: '-0.02em'
         },
         '.typography-title2': {
+          fontSize: '1.875rem',
+          lineHeight: '136%',
+          fontWeight: '650',
+          letterSpacing: '-0.02em'
+        },
+        '.typography-title3': {
           fontSize: '1.25rem',
           lineHeight: '136%',
           fontWeight: '650',

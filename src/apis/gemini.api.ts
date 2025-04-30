@@ -3,7 +3,7 @@ import { ImageContent } from '@/types/gemini.type';
 
 export const generateFoodAnalysisByImage = async (imageParts: ImageContent[]): Promise<string> => {
   const model = getGenerativeAI().getGenerativeModel({
-    model: 'gemini-2.0-flash'
+    model: 'gemini-1.5-pro'
   });
 
   const result = await model.generateContent([...imageParts, FOOD_IMAGE_ANALYSIS_PROMPT]);
@@ -40,7 +40,9 @@ const FOOD_IMAGE_ANALYSIS_PROMPT = `
   2. 1인분 기준의 대략적인 예상 중량(g, "weight")
   3. 2번의 예상 중량 기준의 대략적인 예상 칼로리(kcal, "calories")
   4. 주요 영양성분 : 탄수화물(g, "carbohydrate"), 단백질(g, "protein"), 지방(g, "fat")
-  
+  5. 최종 분석결과는 반드시 정수로 응답해주세요.
+  6. 하나의 이미지에 여러 음식이 있을 경우, 나누어서 응답해주세요.
+
   예시와 같은 형식으로 응답하세요.
   ⚠️ 절대 마크다운 코드 블록(예: \`\`\`json)을 포함하지 마세요.
   반드시 예시 형식을 그대로 따라하세요. 형식을 지키지 않으면 응답이 무효 처리됩니다.
@@ -65,7 +67,8 @@ const CALORIES_ANALYSIS_PROMPT = `
 
   - 음식 중량이 함께 제공되었다면 해당 중량을 기준으로 추정된 영양 정보를 응답합니다.
   - 음식 중량이 제공되지 않았다면, 일반적인 성인 기준 1인분의 중량을 추정한 후 해당 중량과 추정된 영양 정보를 응답합니다.
-  - 음식이 아니라고 판단되면, 음식이 아니라고 평문으로 응답해주세요. 
+  - 음식이 아니라고 판단되면, 음식이 아니라고 평문으로 응답해주세요.
+  - 최종 분석결과는 반드시 정수로 응답해주세요.
 
   예시와 같은 형식으로 응답하세요.
   ⚠️ 절대 마크다운 코드 블록(예: \`\`\`json)을 포함하지 마세요.

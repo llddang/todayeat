@@ -29,7 +29,7 @@ const initialNutritionValue: MealNutrition = {
  * @description
  * 성별에 따라 다른 기초대사량 계산식을 적용합니다:
  */
-const calculateBMR = (weight: number, height: number, age: number, gender: GenderType): number => {
+export const calculateBMR = (weight: number, height: number, age: number, gender: GenderType): number => {
   const commonBMR = 10 * weight + 6.25 * height - 5 * age;
   return gender === Gender.MAN ? commonBMR + 5 : commonBMR - 161;
 };
@@ -63,7 +63,7 @@ export const calculateDailyNutrition = (dailyCalories: number, ratio: Macronutri
  * @param {number} purposeFactor - 목적(증량/감량/유지)에 따른 계수
  * @returns {number} 일일 권장 칼로리 (정수로 반올림)
  */
-const calculateDailyCalories = (bmr: number, activityFactor: number, purposeFactor: number): number => {
+export const calculateDailyCalories = (bmr: number, activityFactor: number, purposeFactor: number): number => {
   return Math.round(bmr * activityFactor * purposeFactor);
 };
 
@@ -127,7 +127,7 @@ export const calculateTotalNutrition = (meals: MealDTO[]): MealNutrition => {
  * @param {MealDTO[]} meals - 식사 데이터 배열
  * @returns {number} 고유한 날짜 수 (최소 1)
  */
-const countUniqueDates = (meals: MealDTO[]): number => {
+export const countUniqueDates = (meals: MealDTO[]): number => {
   const uniqueDates = new Set<string>();
 
   meals.forEach((meal) => {
@@ -170,11 +170,14 @@ export const calculateNutritionAverage = (meals: MealDTO[]): MealNutrition => {
  * @function getPercentage
  * @param {number} value - 실제 값
  * @param {number} base - 기준값 (0일 경우 0% 반환)
+ * @param {boolean} isLimited - 최대 100% 제한 여부
  * @returns {number} 기준 대비 백분율 (정수, 소수점 없음)
  */
-export const getPercentage = (value: number, base: number): number => {
+export const getPercentage = (value: number, base: number, isLimited: boolean = true): number => {
   if (!base) return 0;
-  return Math.round((value / base) * 100);
+
+  const percentage = Math.round((value / base) * 100);
+  return isLimited ? Math.min(percentage, 100) : percentage;
 };
 
 /**

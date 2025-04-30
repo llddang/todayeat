@@ -1,6 +1,6 @@
 'use client';
 
-import { initializeAuthListener } from '@/store/user-store';
+import { initializeAuthListener } from '@/store/user.store';
 import { useEffect } from 'react';
 
 const UserInitialize = () => {

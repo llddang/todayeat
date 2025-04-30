@@ -1,18 +1,17 @@
-import CalendarProvider from '@/app/(home)/contexts/calendar.context';
-import DashboardProvider from '@/app/(home)/contexts/dashboard.context';
-import HomeCalendar from './components/home-calendar';
-import HomeContent from './components/home-content';
+import DateProvider from '@/app/(home)/_contexts/date.context';
+import HomeCalendar from './_components/home-calendar';
+import HomeContent from './_components/home-content';
+import AppUseSummary from './_components/app-use-summary';
 
 const HomePage = async () => {
   return (
-    <div>
-      <DashboardProvider>
-        <CalendarProvider>
-          <HomeCalendar />
-        </CalendarProvider>
-        <HomeContent />
-      </DashboardProvider>
-    </div>
+    <DateProvider>
+      <div>
+        <HomeCalendar />
+        <AppUseSummary />
+      </div>
+      <HomeContent />
+    </DateProvider>
   );
 };
 
