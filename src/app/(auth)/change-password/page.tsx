@@ -2,8 +2,8 @@
 
 import { useSearchParams } from 'next/navigation';
 import GlassBackground from '@/components/commons/glass-background';
-import { ChangePasswordFunnelStep } from './types/funnel-type';
-import ChangePasswordFunnel from './components/change-password-funnel';
+import { ChangePasswordFunnelStep } from './_types/funnel-type';
+import ChangePasswordFunnel from './_components/change-password-funnel';
 
 const ResetPasswordPage = () => {
   const params = useSearchParams();
