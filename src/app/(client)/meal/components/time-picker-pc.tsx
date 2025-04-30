@@ -10,10 +10,11 @@ import {
   DialogTrigger
 } from '@radix-ui/react-dialog';
 import React, { useState } from 'react';
-import { selections, TimeFields } from './time-picker';
+import { TimeFields } from './time-picker';
 import IconButton from '@/components/commons/icon-button';
 import Picker from 'react-mobile-picker';
 import { Button } from '@/components/ui/button';
+import { dateSelections } from '../post/edit/utils/time-picker.util';
 
 type TimePickerPcProps = {
   currentTime: TimeFields;
@@ -80,5 +81,7 @@ const TimePickerPc = ({ currentTime, onTimeChange }: TimePickerPcProps) => {
     </Dialog>
   );
 };
+
+const selections = dateSelections();
 
 export default TimePickerPc;

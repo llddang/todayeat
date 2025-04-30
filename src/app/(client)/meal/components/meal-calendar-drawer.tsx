@@ -6,11 +6,11 @@ import { useState } from 'react';
 import { Typography } from '@/components/ui/typography';
 import { formatDateToLocaleKR } from '@/utils/format.util';
 
-type EditCalendarDrawerProps = {
+type MealCalendarDrawerProps = {
   date: Date;
   onDateChange: (date: Date) => void;
 };
-const EditCalendarDrawer = ({ onDateChange }: EditCalendarDrawerProps) => {
+const MealCalendarDrawer = ({ onDateChange }: MealCalendarDrawerProps) => {
   const [date, setDate] = useState<Date>(new Date());
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,7 +28,6 @@ const EditCalendarDrawer = ({ onDateChange }: EditCalendarDrawerProps) => {
         <DrawerHeader className="sr-only">
           <DrawerTitle>식사 시간 설정</DrawerTitle>
         </DrawerHeader>
-        {/* TODO: DESKTOP 모달창 구현시 삭제 */}
         <div className="mx-auto flex flex-col justify-center gap-2 desktop-width">
           <Calendar
             locale={ko}
@@ -49,4 +48,4 @@ const EditCalendarDrawer = ({ onDateChange }: EditCalendarDrawerProps) => {
     </Drawer>
   );
 };
-export default EditCalendarDrawer;
+export default MealCalendarDrawer;

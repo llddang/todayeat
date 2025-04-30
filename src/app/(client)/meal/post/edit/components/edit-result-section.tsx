@@ -17,24 +17,26 @@ import { Typography } from '@/components/ui/typography';
 import GlassBackground from '@/components/commons/glass-background';
 import TagSelectItem from '@/components/commons/tag-select-item';
 import { Button } from '@/components/ui/button';
-import TimePicker, { DateFields, TimeFields } from './time-picker';
 import SITE_MAP from '@/constants/site-map.constant';
 import MacronutrientBox from '@/components/commons/macronutrient-box';
 import MacronutrientPieChart from '@/components/commons/macronutrient-pie-chart';
 import { MacronutrientEnum } from '@/types/nutrition.type';
-import EditCalendarDrawer from './edit-calendar-drawer';
 import AddMealCardDrawer from './add-meal-card-drawer';
 import { MAX_MEMO_LENGTH } from '../constants/meal-edit.constant';
 import { MEAL_CATEGORY } from '../../../constants/category.constant';
 import MemoBox from '../../../detail/components/memo-box';
 import Responsive from '@/components/commons/responsive';
-import EditCalendarPc from './edit-calendar-pc';
-import TimePickerPc from './time-picker-pc';
+import TimePickerPc from '../../../components/time-picker-pc';
 import AddMealCardPc from './add-meal-card-pc';
 import Modal from '@/components/commons/modal';
 import { ERROR_MESSAGES } from '../constants/error-message.constant';
 import { CreateMealDTO } from '@/types/DTO/meal.dto';
 import { deleteAnalysisData } from '@/apis/analysis-request.api';
+import { ErrorMessage, handleError } from '../../../utils/error.util';
+import MealCalendarPc from '../../../components/meal-calendar-pc';
+import MealCalendarDrawer from '../../../components/meal-calendar-drawer';
+import TimePicker, { TimeFields } from '../../../components/time-picker';
+import { getTimeFieldsFromDate } from '@/utils/date.util';
 
 type EditResultSectionProps = {
   imageList: string[];
@@ -70,8 +72,8 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
     control: mealFormMethods.control,
     name: 'mealList'
   });
-
-  const totalNutrient = mealCardList.reduce(
+  const mealList = mealFormMethods.watch('mealList');
+  const totalNutrient = mealList.reduce(
     (acc, meal) => ({
       calories: acc.calories + meal.calories,
       carbohydrate: acc.carbohydrate + meal.carbohydrate,
@@ -200,8 +202,8 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
                 </div>
                 <div className="flex w-full gap-2">
                   <Responsive
-                    pc={<EditCalendarPc date={day} onDateChange={handleDayChange} />}
-                    mobile={<EditCalendarDrawer date={day} onDateChange={handleDayChange} />}
+                    pc={<MealCalendarPc date={day} onDateChange={handleDayChange} />}
+                    mobile={<MealCalendarDrawer date={day} onDateChange={handleDayChange} />}
                     mode="js"
                   />
                   <Responsive
@@ -213,9 +215,11 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
               </GlassBackground>
             </section>
             <MemoBox maxLength={MAX_MEMO_LENGTH} {...mealFormMethods.register('memo')} />
-            <Button type="submit" className="mt-3 w-full" disabled={isLoading}>
-              제출하기
-            </Button>
+            <div className="flex w-full justify-end">
+              <Button type="submit" className="mt-3 w-full xl:w-auto" disabled={isLoading}>
+                기록 저장하기
+              </Button>
+            </div>
           </form>
         </FormProvider>
       </div>
@@ -227,10 +231,6 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
 
 export default EditResultSection;
 
-type ErrorMessage = {
-  title: string;
-  description: string;
-};
 const mealListSchema = z.object({
   userId: z.string(),
   menuName: z.string(),
@@ -255,11 +255,8 @@ const mealEditFormSchema = z.object({
   mealCategory: z.nativeEnum(MealCategory),
   memo: z.string()
 });
-type MealEditFormData = z.infer<typeof mealEditFormSchema>;
 
-const handleError = (errorMessage: { title: string; description: string }) => {
-  throw errorMessage;
-};
+type MealEditFormData = z.infer<typeof mealEditFormSchema>;
 
 const uploadMealImages = async (imageUrls: string[]): Promise<string[]> => {
   const files = await Promise.all(imageUrls.map((url, idx) => urlToFile(url, idx)));
@@ -308,14 +305,4 @@ const deleteAnalysis = async () => {
     console.error('분석 데이터 삭제 중 오류:', error);
     handleError(ERROR_MESSAGES.MEAL_DELETE_FAILED);
   }
-};
-
-const getTimeFieldsFromDate = (date: Date = new Date()): DateFields => {
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const meridiem = hours < 12 ? '오전' : '오후';
-  const formattedHours = String(hours % 12 || 12).padStart(2, '0');
-  const formattedMinutes = String(minutes).padStart(2, '0');
-
-  return { day: date, meridiem, hours: formattedHours, minutes: formattedMinutes };
 };

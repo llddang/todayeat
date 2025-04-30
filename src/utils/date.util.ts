@@ -38,3 +38,32 @@ export const getDateTimeRange = (startDate: Date | string, endDate?: Date | stri
     end: getEndOfDay(endDate ?? startDate)
   };
 };
+
+/**
+ * 주어진 Date 객체에서 시간 관련 필드를 추출하여 형식화된 객체를 반환합니다.
+ *
+ * @function getTimeFieldsFromDate
+ * @param {Date} [date=new Date()] - 기준이 되는 날짜 객체. 전달하지 않으면 현재 시간이 사용됩니다.
+ * @returns {DateFields} 시간 정보를 포함하는 객체
+ * - `day`: 원본 Date 객체
+ * - `meridiem`: '오전' 또는 '오후'
+ * - `hours`: 12시간제 형식의 시각 (두 자리 문자열)
+ * - `minutes`: 분 (두 자리 문자열)
+ */
+
+export const getTimeFieldsFromDate = (date: Date = new Date()): DateFields => {
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const meridiem = hours < 12 ? '오전' : '오후';
+  const formattedHours = String(hours % 12 || 12).padStart(2, '0');
+  const formattedMinutes = String(minutes).padStart(2, '0');
+
+  return { day: date, meridiem, hours: formattedHours, minutes: formattedMinutes };
+};
+
+type DateFields = {
+  day: Date;
+  meridiem: '오전' | '오후';
+  hours: string;
+  minutes: string;
+};

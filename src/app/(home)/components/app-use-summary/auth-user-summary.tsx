@@ -6,7 +6,7 @@ import GlassBackground from '@/components/commons/glass-background';
 import { Typography } from '@/components/ui/typography';
 import { cn } from '@/lib/shadcn';
 import { getPercentage } from '@/utils/nutrition-calculator.util';
-import React from 'react';
+import { memo } from 'react';
 
 type AuthUserSummaryProps = {
   allMealCount: number;
@@ -57,4 +57,4 @@ const AuthUserSummary = ({ allMealCount, thisMonthMealCount }: AuthUserSummaryPr
   );
 };
 
-export default React.memo(AuthUserSummary);
+export default memo(AuthUserSummary);

@@ -1,9 +1,9 @@
 import useFunnel from '@/hooks/use-funnel';
-import React from 'react';
 import { FindPasswordFunnelStep, FindPasswordFunnelType } from '../types/funnel-type';
 import StepVerifyingEmail from './step-verifying-email';
 import StepPassword from './step-password';
 import StepComplete from './step-complete';
+import { memo } from 'react';
 
 const FindPasswordFunnel = () => {
   const { Funnel } = useFunnel<FindPasswordFunnelType, FindPasswordFunnelStep>(
@@ -20,7 +20,7 @@ const FindPasswordFunnel = () => {
     />
   );
 };
-export default React.memo(FindPasswordFunnel);
+export default memo(FindPasswordFunnel);
 
 const findPasswordValidateFn = {
   step1: () => true,

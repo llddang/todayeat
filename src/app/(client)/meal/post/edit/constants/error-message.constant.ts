@@ -1,7 +1,7 @@
 export const ERROR_MESSAGES = {
   AI_ANALYSIS_FAILED: {
-    title: 'AI 분석에 실패하였습니다.',
-    description: '메뉴명을 다시 입력해 주세요.'
+    title: 'AI가 분석하기 어려운 메뉴입니다.',
+    description: '메뉴명을 확인해 주세요.'
   },
   MEAL_POST_FAILED: {
     title: ' 식사 정보 등록에 실패했습니다.',
