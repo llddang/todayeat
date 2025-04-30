@@ -9,6 +9,7 @@ import formSchema from '@/schemas/form-schema.schema';
 import { useForm } from 'react-hook-form';
 import { checkEmailExists } from '@/apis/auth-server.api';
 import { StepEmailType } from '@/app/(auth)/sign-up/_types/funnel.type';
+import Modal from '@/components/commons/modal';
 
 const emailSchema = z.object({
   email: formSchema.EMAIL_SCHEMA
@@ -19,9 +20,12 @@ type StepEmailProps = {
   nextStep: (email: string) => void;
 };
 
+const defaultModalInfo = { title: '', content: '' };
+
 const StepEmail = ({ data, nextStep }: StepEmailProps) => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [isCheckingEmail, setIsCheckingEmail] = useState(false);
+  const [modalInfo, setModalInfo] = useState(defaultModalInfo);
 
   const form = useForm<EmailSchemaType>({
     mode: 'onBlur',
@@ -41,7 +45,7 @@ const StepEmail = ({ data, nextStep }: StepEmailProps) => {
     const { data, error } = await checkEmailExists(email);
     setIsCheckingEmail(false);
 
-    if (error) return alert(`${error.action} ${error.message}`);
+    if (error) return setModalInfo({ title: error.message, content: error.action });
     if (data) {
       form.setError('email', {
         type: 'manual',
@@ -100,6 +104,7 @@ const StepEmail = ({ data, nextStep }: StepEmailProps) => {
           </Button>
         </form>
       </Form>
+      <Modal open={!!modalInfo.title} onOpenChange={() => setModalInfo(defaultModalInfo)} {...modalInfo} />
     </>
   );
 };
