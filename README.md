@@ -188,31 +188,54 @@
 
 ## 📁 프로젝트 구조
 ```markdown
-📁
-├─ public                      // 🖼 정적 리소스(이미지, 글꼴, 아이콘 등)
-├─ src
-│  ├─ app                      // 🧩 Next.js App Router 기반 페이지 구조
-│  │  ├─ (auth)                // 🔐 인증 관련 페이지(로그인, 회원가입 등)
-│  │  ├─ (client)              // 👤 인증된 사용자 페이지(마이페이지, 식단기록 등)
-│  │  ├─ (home)                // 🏠 메인 홈 페이지
-│  │  ├─ api                   // 🚀 서버리스 API 엔드포인트
-│  │  ├─ error.tsx             // ⚠️ 에러 핸들링 컴포넌트
-│  │  ├─ layout.tsx            // 📐 전체 레이아웃 구성
-│  ├─ components               // 🧱 컴포넌트 구성
-│  │  ├─ _page                 // 📄 페이지별 컴포넌트 폴더 네이밍
-│  │  ├─ commons               // 🔄 공통 컴포넌트
-│  │  ├─ layouts               // 📏 레이아웃 컴포넌트
-│  │  ├─ ui                    // 🎨 UI 기본 컴포넌트(shadcn/ui 기반)
-│  ├─ constants                // 📌 상수 정의
-│  ├─ lib                      // 📚 유틸리티 및 라이브러리
-│  │  ├─ apis                  // 🌐 API 호출 함수
-│  │  ├─ contexts              // 🔄 컨텍스트 API
-│  │  ├─ hooks                 // 🪝 커스텀 훅
-│  │  ├─ utils                 // 🛠️ 유틸리티 함수
-│  ├─ store                    // 🏪 전역 상태 관리(Zustand)
-│  ├─ types                    // 📝 TypeScript 타입 정의
-│  │  ├─ DTO                   // 📦 데이터 전송 객체 타입
-└─
+📦 todayeat
+├─ public
+│  ├─ fonts
+│  ├─ icons
+│  ├─ illustrations
+│  ├─ images
+│  └─ lottie
+└─ src
+   ├─ __tests__         # 📋 유틸리티 함수 테스트
+   ├─ apis              # 🌐 API 호출 함수
+   ├─ app
+   │  ├─ (auth)         # 🔐 인증 관련 페이지(로그인, 회원가입 등)
+   │  ├─ (client)       # 👤 인증된 사용자 페이지(마이페이지, 식단기록 등)
+   │  ├─ (home)
+   │  │  ├─ _components # 🧱 컴포넌트 구성
+   │  │  ├─ _constants  # 📌 상수 정의
+   │  │  ├─ _contexts   # 🔄 컨텍스트 API
+   │  │  ├─ _hooks      # 🪝 커스텀 훅
+   │  │  ├─ _types      # 📝 TypeScript 타입 정의
+   │  │  ├─ _utils      # 🛠️ 유틸리티 함수
+   │  │  ├─ layout.tsx
+   │  │  └─ page.tsx
+   │  ├─ api            # 🚀 서버리스 API 엔드포인트
+   │  │  ├─ auth
+   │  │  ├─ gemini
+   │  │  └─ report
+   │  ├─ error.tsx      # ⚠️ 에러 핸들링 컴포넌트
+   │  ├─ global-error.tsx
+   │  ├─ layout.tsx     # 📐 전체 레이아웃 구성
+   │  ├─ robots.ts      # 🤖 크롤링에서 접근 가능한 구성
+   │  └─ sitemap.ts     # 🗺️ 검색 엔진 크롤러의 색인 보조
+   ├─ components
+   │  ├─ commons        # 🔄 공통 컴포넌트
+   │  ├─ layouts        # 📏 레이아웃 컴포넌트
+   │  └─ ui             # 🎨 UI 기본 컴포넌트(shadcn/ui 기반)
+   ├─ constants         # 📌 상수 정의
+   ├─ hooks             # 🪝 커스텀 훅 
+   ├─ lib               # 📚 외부 라이브러리
+   │  ├─ gemini.ts
+   │  ├─ sentry.ts
+   │  ├─ shadcn.ts
+   │  └─ supabase
+   ├─ schemas           # 🔍 폼의 zod 검증 로직 (example.schema.ts)
+   ├─ store             # 🏪 전역 상태 관리(Zustand) (example.store.ts)
+   ├─ types             # 📝 TypeScript 타입 정의 (example.type.ts)
+   │  └─ DTO            # 📦 데이터 전송 객체 타입 (example.dto.ts)
+   ├─ utils             # 🛠️ 유틸리티 함수 (example.util.ts)
+   └─ middleware.ts
 ```
 
 <br />
