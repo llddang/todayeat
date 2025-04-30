@@ -14,7 +14,9 @@ let nextConfig = {
       }
     ]
   },
+  swcMinify: false,
   webpack: (config) => {
+    config.optimization.minimize = false;
     if (process.env.SENTRY !== 'true') config.resolve.alias['@sentry/nextjs'] = require.resolve('./src/lib/sentry.ts');
     return config;
   }
