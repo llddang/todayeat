@@ -8,10 +8,10 @@ import {
   DialogContent,
   DialogDescription,
   DialogOverlay,
-  DialogTitle
+  DialogTitle,
+  DialogTrigger
 } from '@radix-ui/react-dialog';
 import { Typography } from '@/components/ui/typography';
-import { DrawerTrigger } from '@/components/ui/drawer';
 import useDateSelector from '../../hooks/use-date-selector';
 
 const DateSelectorPc = () => {
@@ -19,7 +19,7 @@ const DateSelectorPc = () => {
 
   return (
     <Dialog>
-      <DrawerTrigger asChild>
+      <DialogTrigger asChild>
         <Button
           variant="icon"
           size="lg"
@@ -28,7 +28,7 @@ const DateSelectorPc = () => {
         >
           {formatDateToLocaleKR(currentDate)}
         </Button>
-      </DrawerTrigger>
+      </DialogTrigger>
       <DialogOverlay className="bg-transparent" />
       <DialogContent className="absolute top-full z-layout w-[24.5rem] rounded-3xl bg-white p-5 shadow-modal">
         <div className="sr-only">
