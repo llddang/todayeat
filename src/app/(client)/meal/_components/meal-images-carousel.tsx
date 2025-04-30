@@ -31,7 +31,6 @@ const MealImageCarousel = ({ imageList, pagination = true }: { imageList: string
     if (api) api.scrollTo(index);
   };
 
-  // 페이지네이션이 사용 가능한 경우 - api 로드 완료 && 페이지네이션 사용 true && 이미지 1개 이상
   const isPaginationOn = isClient && api && pagination && count > 1;
 
   if (imageList.length === 0) return null;
@@ -52,7 +51,6 @@ const MealImageCarousel = ({ imageList, pagination = true }: { imageList: string
 
 export default MealImageCarousel;
 
-// 페이지네이션 컴포넌트
 const Pagination = ({
   current,
   count,

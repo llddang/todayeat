@@ -1,6 +1,6 @@
 'use client';
 
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
@@ -16,6 +16,7 @@ import { Typography } from '@/components/ui/typography';
 import DefaultProfile from '@/../public/illustrations/default-profile.svg';
 import { useUserStore } from '@/store/user.store';
 import { uploadProfileImage } from '../_utils/upload-profile-image.util';
+import Modal from '@/components/commons/modal';
 
 const editProfileFormSchema = z.object({
   nickname: formSchema.NICKNAME_SCHEMA,
@@ -30,7 +31,7 @@ type EditProfileProps = {
 
 const EditProfile = ({ setOpen }: EditProfileProps) => {
   const { user, setUser } = useUserStore();
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [profileState, setProfileState] = useState({
     isUploading: false,
     profilePreviewUrl: user?.profileImage || null
@@ -46,13 +47,12 @@ const EditProfile = ({ setOpen }: EditProfileProps) => {
   });
 
   useEffect(() => {
-    // profilePreviewUrl 변경 또는 언마운트 시 Blob URL 정리 → 메모리 누수 방지
     return () => {
       cleanupBlobUrl(profileState.profilePreviewUrl);
     };
   }, [profileState.profilePreviewUrl]);
 
-  const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleProfileImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
     if (!file) return;
@@ -77,11 +77,7 @@ const EditProfile = ({ setOpen }: EditProfileProps) => {
         const uploadResult = await uploadProfileImage(newProfileImageFile);
         profilePreviewUrl = uploadResult;
       } catch (error) {
-        if (error && typeof error === 'object' && 'message' in error) {
-          alert(error.message);
-        } else {
-          alert('알 수 없는 오류가 발생했습니다.');
-        }
+        setIsModalOpen(true);
         console.error(error);
         return;
       } finally {
@@ -144,7 +140,7 @@ const EditProfile = ({ setOpen }: EditProfileProps) => {
                       />
                     </div>
                     <IconButton
-                      alt="프로필 사진 수정하기"
+                      title="프로필 사진 수정하기"
                       size="sm"
                       icon="before:bg-add-info-icon"
                       className="absolute bottom-0 right-0 h-6 w-6 bg-gray-500 hover:bg-gray-500"
@@ -189,6 +185,12 @@ const EditProfile = ({ setOpen }: EditProfileProps) => {
           </Button>
         </form>
       </Form>
+      <Modal
+        title="이미지 업로드하지 못했습니다."
+        content="잠시후 다시 시도해주세요."
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+      />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { cn } from '@/lib/shadcn';
-import React, { HTMLAttributes, ReactNode, useRef, useState, useEffect, useCallback } from 'react';
+import { HTMLAttributes, ReactNode, useRef, useState, useEffect, useCallback, MouseEvent } from 'react';
 
 const TRACK_PADDING = 8;
 const MIN_SCROLLBAR_HEIGHT = 30;
@@ -68,7 +68,7 @@ const ScrollbarContainer = ({ children, className, contentClassName, ...props }:
   }, [updateScrollPosition]);
 
   const handleMouseDown = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: MouseEvent<HTMLDivElement>) => {
       e.preventDefault();
       setIsDragging(true);
       setStartMouseY(e.clientY - scrollPosition);
@@ -77,7 +77,7 @@ const ScrollbarContainer = ({ children, className, contentClassName, ...props }:
   );
 
   const handleMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: MouseEvent<HTMLDivElement>) => {
       if (!isDragging || !containerRef.current || !contentRef.current) return;
 
       const containerHeight = containerRef.current.clientHeight;

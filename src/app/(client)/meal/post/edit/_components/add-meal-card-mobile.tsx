@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Drawer, DrawerTrigger, DrawerContent, DrawerTitle, DrawerFooter, DrawerClose } from '@/components/ui/drawer';
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
@@ -23,13 +23,13 @@ type FoodFormValues = {
   weight: string;
 };
 
-type AddMealCardDrawerProps = {
+type AddMealCardMobileProps = {
   onAddMeal: (meal: Omit<AiResponseDTO, 'id'>) => void;
   onOpenModalChange: (isOpen: boolean) => void;
   onModalInfoChange: (modalInfo: { title: string; description: string }) => void;
 };
 
-const AddMealCardDrawer = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: AddMealCardDrawerProps) => {
+const AddMealCardMobile = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: AddMealCardMobileProps) => {
   const user = useUserStore((state) => state.user);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -76,7 +76,7 @@ const AddMealCardDrawer = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: 
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
     form.handleSubmit(onSubmit)(e);
@@ -89,7 +89,7 @@ const AddMealCardDrawer = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: 
           <IconButton
             size="md"
             icon="before:bg-add-line-icon"
-            alt="음식 추가"
+            title="음식 추가"
             className="bg-gray-100 hover:bg-gray-100"
           />
           <Typography as="span" variant="body3" className="text-gray-800">
@@ -106,7 +106,7 @@ const AddMealCardDrawer = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: 
             </Typography>
           </DrawerTitle>
           <DrawerClose className="" asChild>
-            <IconButton icon="before:bg-close-line-icon" alt="닫기 버튼" />
+            <IconButton icon="before:bg-close-line-icon" title="닫기 버튼" />
           </DrawerClose>
         </div>
 
@@ -171,4 +171,4 @@ const AddMealCardDrawer = ({ onAddMeal, onOpenModalChange, onModalInfoChange }: 
   );
 };
 
-export default AddMealCardDrawer;
+export default AddMealCardMobile;

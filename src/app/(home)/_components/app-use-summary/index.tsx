@@ -13,7 +13,6 @@ const AppUseSummary = async () => {
     return <AuthUserSummary allMealCount={allMealCount} thisMonthMealCount={thisMonthMealCount} />;
   }
 
-  // TODO: 비인가 회원에게 보여줄 내용 만들기
   return null;
 };
 

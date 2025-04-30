@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import OptionSelectCard from '@/components/commons/option-select-card';
 import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
@@ -13,7 +13,7 @@ const StepActivityLevel = ({ nextStep }: StepActivityLevelProps) => {
   const { nickname: userName } = useUserStore((state) => state.user);
   const [selectedOption, setSelectedOption] = useState<ActivityLevelType | null>(null);
 
-  const handleSelectOption = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSelectOption = (e: ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(e.target.value as ActivityLevelType);
   };
 

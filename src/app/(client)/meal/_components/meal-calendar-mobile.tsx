@@ -6,11 +6,11 @@ import { useState } from 'react';
 import { Typography } from '@/components/ui/typography';
 import { formatDateToLocaleKR } from '@/utils/format.util';
 
-type MealCalendarDrawerProps = {
+type MealCalendarMobileProps = {
   date: Date;
   onDateChange: (date: Date) => void;
 };
-const MealCalendarDrawer = ({ onDateChange }: MealCalendarDrawerProps) => {
+const MealCalendarMobile = ({ onDateChange }: MealCalendarMobileProps) => {
   const [date, setDate] = useState<Date>(new Date());
   const [isOpen, setIsOpen] = useState(false);
 
@@ -48,4 +48,4 @@ const MealCalendarDrawer = ({ onDateChange }: MealCalendarDrawerProps) => {
     </Drawer>
   );
 };
-export default MealCalendarDrawer;
+export default MealCalendarMobile;
