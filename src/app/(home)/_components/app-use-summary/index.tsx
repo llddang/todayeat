@@ -10,7 +10,7 @@ const AppUseSummary = async () => {
     const today = new Date();
     const [allMealCount, thisMonthMealCount] = await Promise.all([getMyMealsCount(), getMyMealCountByMonth(today)]);
 
-    return <AuthUserSummary allMealCount={allMealCount} thisMonthMealCount={thisMonthMealCount} />;
+    return <AuthUserSummary allMealCount={allMealCount} thisMonthMealCount={thisMonthMealCount} today={today} />;
   }
 
   return null;
