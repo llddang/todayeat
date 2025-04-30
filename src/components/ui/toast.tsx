@@ -15,23 +15,22 @@ const ToastViewport = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Viewport
     ref={ref}
-    className={cn('z-toast fixed left-1/2 top-4 max-h-screen max-w-[360px] -translate-x-1/2 p-5', className)}
+    className={cn('z-toast fixed left-1/2 top-4 max-h-screen w-[90%] max-w-[360px] -translate-x-1/2 p-5', className)}
     {...props}
   />
 ));
 ToastViewport.displayName = ToastPrimitives.Viewport.displayName;
 
 const toastVariants = cva(
-  `group pointer-events-auto relative flex w-full items-center justify-between space-x-2 overflow-hidden rounded-md border p-4 pr-6 shadow-lg transition-all 
+  `group pointer-events-auto relative flex w-full items-center space-x-2 overflow-hidden rounded-md border p-4 pr-6 shadow-lg transition-all 
   data-[swipe=cancel]:translate-y-0 data-[swipe=end]:translate-y-[var(--radix-toast-swipe-end-y)] data-[swipe=move]:translate-y-[var(--radix-toast-swipe-move-y)] data-[swipe=move]:transition-none 
   data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:slide-in-from-top-full data-[state=closed]:slide-out-to-top-full `,
 
   {
     variants: {
       variant: {
-        default: 'border bg-background text-foreground',
-        destructive: 'destructive group border-destructive bg-destructive text-destructive-foreground',
-        success: 'bg-gray-900/60 text-white'
+        default: 'bg-gray-900/60 text-white',
+        destructive: 'destructive group border-destructive bg-destructive text-destructive-foreground'
       }
     },
     defaultVariants: {
