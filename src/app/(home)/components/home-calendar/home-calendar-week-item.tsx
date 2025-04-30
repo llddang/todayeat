@@ -42,7 +42,7 @@ const HomeCalendarWeekItem = ({
       {week.map(({ day, dayOutside }) => {
         const isSelected = isSameDay(day, selectedDate);
         const calories = dailyMealCalories[formatDateWithDash(day)] ?? 0;
-        const progress = getPercentage(calories, dailyCaloriesGoal);
+        const progress = getPercentage(calories, dailyCaloriesGoal, false);
         return (
           <button
             key={formatDateWithDash(day)}
