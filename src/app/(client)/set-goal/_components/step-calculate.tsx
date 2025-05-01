@@ -9,7 +9,7 @@ import { getUser, updateUserPersonalInfo } from '@/apis/user.api';
 import { calculateDailyNutrition } from '@/utils/nutrition-calculator.util';
 import { Typography } from '@/components/ui/typography';
 import { ControllerRenderProps, useForm } from 'react-hook-form';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useUserStore } from '@/store/user.store';
@@ -25,7 +25,7 @@ type StepCalculateProps = {
 };
 
 const caloriesFormSchema = z.object({
-  calories: formSchema.ONLY_NUMBER_SCHEMA
+  calories: formSchema.CALORIES_SCHEMA
 });
 
 type FormValues = z.infer<typeof caloriesFormSchema>;
@@ -48,7 +48,8 @@ const StepCalculate = ({ nextStep, data }: StepCalculateProps) => {
     resolver: zodResolver(caloriesFormSchema),
     defaultValues: {
       calories: String(userPersonalInfos.dailyCaloriesGoal) || ''
-    }
+    },
+    mode: 'onBlur'
   });
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
@@ -114,6 +115,7 @@ const StepCalculate = ({ nextStep, data }: StepCalculateProps) => {
                         onChange={(e) => handleChangeCalories(e, field)}
                       />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 );
               }}
@@ -138,7 +140,7 @@ const StepCalculate = ({ nextStep, data }: StepCalculateProps) => {
         </div>
       </div>
       <div className="fixed bottom-[calc(env(safe-area-inset-bottom,1.5rem)+1.5rem)] left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2 xl:relative xl:bottom-auto xl:left-auto xl:mt-6 xl:w-full xl:-translate-x-0">
-        <Button onClick={handleSubmit} className="w-full">
+        <Button disabled={!form.formState.isValid} onClick={handleSubmit} className="w-full">
           목표 설정하기
         </Button>
         <Button

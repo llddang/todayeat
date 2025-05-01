@@ -13,7 +13,7 @@ type StepAgeProps = {
 };
 
 const ageFormSchema = z.object({
-  age: formSchema.ONLY_NUMBER_SCHEMA
+  age: formSchema.AGE_SCHEMA
 });
 
 type FormValues = z.infer<typeof ageFormSchema>;
@@ -24,7 +24,8 @@ const StepAge = ({ nextStep }: StepAgeProps) => {
     resolver: zodResolver(ageFormSchema),
     defaultValues: {
       age: ''
-    }
+    },
+    mode: 'onBlur'
   });
 
   const onSubmit = (data: FormValues) => {
@@ -48,25 +49,22 @@ const StepAge = ({ nextStep }: StepAgeProps) => {
               <FormField
                 control={form.control}
                 name="age"
-                render={({ field }) => {
-                  const hasError = !!form.formState.errors.age;
-                  return (
-                    <FormItem>
-                      <FormLabel className="sr-only">나이</FormLabel>
-                      <FormControl>
-                        <Input {...field} type="text" inputMode="numeric" className="mb-2" />
-                      </FormControl>
-                      {!hasError && <FormDescription>숫자만 입력해 주세요</FormDescription>}
-                      <FormMessage />
-                    </FormItem>
-                  );
-                }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="sr-only">나이</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="text" inputMode="numeric" className="mb-2" />
+                    </FormControl>
+                    {!form.getFieldState('age').invalid && <FormDescription>숫자만 입력해 주세요</FormDescription>}
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
             <Button
               type="submit"
               className="fixed bottom-[calc(env(safe-area-inset-bottom,1.5rem)+1.5rem)] left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2 xl:relative xl:bottom-auto xl:left-auto xl:mt-6 xl:w-full xl:-translate-x-0"
-              disabled={!form.watch('age')}
+              disabled={!form.formState.isValid}
             >
               다음
             </Button>

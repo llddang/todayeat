@@ -13,7 +13,7 @@ type StepHeightProps = {
 };
 
 const heightFormSchema = z.object({
-  height: formSchema.NUMBER_WITH_ONE_DECIMAL_SCHEMA
+  height: formSchema.HEIGHT_SCHEMA
 });
 
 type FormValues = z.infer<typeof heightFormSchema>;
@@ -24,7 +24,8 @@ const StepHeight = ({ nextStep }: StepHeightProps) => {
     resolver: zodResolver(heightFormSchema),
     defaultValues: {
       height: ''
-    }
+    },
+    mode: 'onBlur'
   });
 
   const onSubmit = (data: FormValues) => {
@@ -55,16 +56,7 @@ const StepHeight = ({ nextStep }: StepHeightProps) => {
                     <FormItem>
                       <FormLabel className="sr-only">키</FormLabel>
                       <FormControl>
-                        <Input
-                          {...field}
-                          type="number"
-                          inputMode="numeric"
-                          measure="cm"
-                          step="0.1"
-                          min="50"
-                          max="250"
-                          className="mb-2"
-                        />
+                        <Input {...field} type="number" inputMode="numeric" measure="cm" step="0.1" className="mb-2" />
                       </FormControl>
                       {!hasError && <FormDescription>최대 소수점 1자리수까지 입력할 수 있어요</FormDescription>}
                       <FormMessage />
@@ -76,7 +68,7 @@ const StepHeight = ({ nextStep }: StepHeightProps) => {
             <Button
               type="submit"
               className="fixed bottom-[calc(env(safe-area-inset-bottom,1.5rem)+1.5rem)] left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2 xl:relative xl:bottom-auto xl:left-auto xl:mt-6 xl:w-full xl:-translate-x-0"
-              disabled={!form.watch('height')}
+              disabled={!form.formState.isValid}
             >
               다음
             </Button>

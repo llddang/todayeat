@@ -13,7 +13,7 @@ type StepWeightProps = {
 };
 
 const weightFormSchema = z.object({
-  weight: formSchema.NUMBER_WITH_ONE_DECIMAL_SCHEMA
+  weight: formSchema.WEIGHT_SCHEMA
 });
 
 type FormValues = z.infer<typeof weightFormSchema>;
@@ -24,7 +24,8 @@ const StepWeight = ({ nextStep }: StepWeightProps) => {
     resolver: zodResolver(weightFormSchema),
     defaultValues: {
       weight: ''
-    }
+    },
+    mode: 'onBlur'
   });
 
   const onSubmit = (data: FormValues) => {
@@ -48,26 +49,24 @@ const StepWeight = ({ nextStep }: StepWeightProps) => {
               <FormField
                 control={form.control}
                 name="weight"
-                render={({ field }) => {
-                  const hasError = !!form.formState.errors.weight;
-
-                  return (
-                    <FormItem>
-                      <FormLabel className="sr-only">몸무게</FormLabel>
-                      <FormControl>
-                        <Input {...field} type="number" inputMode="numeric" measure="kg" className="mb-2" />
-                      </FormControl>
-                      {!hasError && <FormDescription>최대 소수점 1자리수까지 입력할 수 있어요</FormDescription>}
-                      <FormMessage />
-                    </FormItem>
-                  );
-                }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="sr-only">몸무게</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="number" inputMode="numeric" measure="kg" className="mb-2" />
+                    </FormControl>
+                    {!form.getFieldState('weight').invalid && (
+                      <FormDescription>최대 소수점 1자리수까지 입력할 수 있어요</FormDescription>
+                    )}
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
             <Button
               type="submit"
               className="fixed bottom-[calc(env(safe-area-inset-bottom,1.5rem)+1.5rem)] left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2 xl:relative xl:bottom-auto xl:left-auto xl:mt-6 xl:w-full xl:-translate-x-0"
-              disabled={!form.watch('weight')}
+              disabled={!form.formState.isValid}
             >
               다음
             </Button>
