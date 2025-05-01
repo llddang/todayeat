@@ -15,7 +15,7 @@ import {
 } from '@/types/DTO/meal.dto';
 import { endOfMonth, startOfMonth } from 'date-fns';
 import { DailyMealCalories } from '@/types/nutrition.type';
-import { getDateTimeRange } from '@/utils/date.util';
+import { convertDateToKoreaTime, getDateTimeRange } from '@/utils/date.util';
 
 /**
  * 특정 기간 내의 사용자 식사 기록을 모든 상세 정보와 함께 조회한다.
@@ -190,7 +190,7 @@ export const getAllMyDailyCalories = async (startDate: Date, endDate: Date): Pro
   const initialValue = initializeMyDailyCalories(start, end);
   const mealCalories = mealData.reduce<DailyMealCalories>((acc, meal) => {
     const caloriesSum = meal.meal_details.reduce((sum, mealDetail) => sum + mealDetail.calories, 0);
-    const ateAt = formatDateWithDash(new Date(meal.ate_at));
+    const ateAt = formatDateWithDash(convertDateToKoreaTime(new Date(meal.ate_at)));
     acc[ateAt] += caloriesSum;
     return acc;
   }, initialValue);
@@ -223,11 +223,13 @@ export const getMyMealsCount = async (): Promise<number> => {
 export const getMyMealCountByMonth = async (date: Date): Promise<number> => {
   const startDate = startOfMonth(date);
   const endDate = endOfMonth(date);
+
+  const { start, end } = getDateTimeRange(startDate, endDate);
   const supabase = getServerClient();
 
   const { data, error } = await supabase.rpc('count_unique_meal_dates', {
-    start_date: startDate.toISOString(),
-    end_date: endDate.toISOString()
+    start_date: start.toISOString(),
+    end_date: end.toISOString()
   });
 
   if (error) throw error;

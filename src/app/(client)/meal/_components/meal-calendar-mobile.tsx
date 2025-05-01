@@ -5,14 +5,12 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from 
 import { useState } from 'react';
 import { Typography } from '@/components/ui/typography';
 import { formatDateToLocaleKR } from '@/utils/format.util';
-import { getKoreaTime } from '@/utils/date.util';
 
 type MealCalendarMobileProps = {
   date: Date;
   onDateChange: (date: Date) => void;
 };
-const MealCalendarMobile = ({ onDateChange }: MealCalendarMobileProps) => {
-  const [date, setDate] = useState<Date>(getKoreaTime());
+const MealCalendarMobile = ({ onDateChange, date }: MealCalendarMobileProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSelectDate = () => {
@@ -33,7 +31,7 @@ const MealCalendarMobile = ({ onDateChange }: MealCalendarMobileProps) => {
           <Calendar
             locale={ko}
             selected={date}
-            onDayClick={setDate}
+            onDayClick={onDateChange}
             weekStartsOn={1}
             fixedWeeks
             defaultMonth={date}
