@@ -86,6 +86,8 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
   const handleAddMeal = useCallback((newMeal: Omit<AiResponseDTO, 'id'>) => append(newMeal), [append]);
   const handleRemoveMeal = useCallback((index: number) => remove(index), [remove]);
   const handleKeyDown = (e: KeyboardEvent<HTMLFormElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'TEXTAREA') return;
     if (e.key === 'Enter') {
       e.preventDefault();
     }
@@ -118,7 +120,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
 
   const mealCategoryField = mealFormMethods.register('mealCategory');
   const selectedMealCategory = mealFormMethods.watch('mealCategory');
-  const day = mealFormMethods.getValues('date.day');
+  const day = mealFormMethods.watch('date.day');
   const date = mealFormMethods.getValues('date');
 
   return (
