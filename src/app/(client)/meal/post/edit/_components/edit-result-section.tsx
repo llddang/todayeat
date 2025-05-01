@@ -86,6 +86,8 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
   const handleAddMeal = useCallback((newMeal: Omit<AiResponseDTO, 'id'>) => append(newMeal), [append]);
   const handleRemoveMeal = useCallback((index: number) => remove(index), [remove]);
   const handleKeyDown = (e: KeyboardEvent<HTMLFormElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'TEXTAREA') return;
     if (e.key === 'Enter') {
       e.preventDefault();
     }
