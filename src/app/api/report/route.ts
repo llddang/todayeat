@@ -17,10 +17,9 @@ import { PERIOD_UNIT_TEXT } from '@/app/(client)/report/_constants/unit.constant
 import { getAllMyMealsByPeriod } from '@/apis/meal.api';
 import { MealNutrition } from '@/types/nutrition.type';
 import { INITIAL_NUTRITION_VALUE } from '@/app/(client)/report/_constants/chart.constant';
-import { getKoreaTime } from '@/utils/date.util';
 
 const getDateRanges = (unit: PeriodUnit) => {
-  const today = getKoreaTime();
+  const today = new Date();
   const result = [];
 
   for (let i = NUBMER_OF_BAR - 1; i >= 0; i--) {
