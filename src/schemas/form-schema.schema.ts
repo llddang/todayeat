@@ -25,31 +25,83 @@ const formSchema = {
   CALORIES_SCHEMA: z
     .string()
     .nonempty('필수 입력 항목입니다')
-    .max(100, '최대 9999kcal까지 입력 가능합니다.')
     .refine((value) => /^[0-9]+$/.test(value), {
       message: '0 이상의 숫자만 입력해 주세요'
-    }),
+    })
+    .refine(
+      (value) => {
+        const num = parseInt(value, 10);
+        return num >= 0;
+      },
+      {
+        message: '0 이상의 숫자만 입력해 주세요'
+      }
+    )
+    .refine(
+      (value) => {
+        const num = parseInt(value, 10);
+        return num <= 9999;
+      },
+      {
+        message: '최대 9999kcal까지 입력 가능합니다.'
+      }
+    ),
   AGE_SCHEMA: z
     .string()
     .nonempty('필수 입력 항목입니다')
-    .max(100, '최대 100세까지 입력 가능합니다.')
     .refine((value) => /^[0-9]+$/.test(value), {
       message: '0 이상의 숫자만 입력해 주세요'
-    }),
+    })
+    .refine(
+      (value) => {
+        const num = parseInt(value, 10);
+        return num <= 100;
+      },
+      {
+        message: '최대 100세까지 입력 가능합니다.'
+      }
+    ),
+
   WEIGHT_SCHEMA: z
     .string()
     .nonempty('필수 입력 항목입니다')
-    .max(300, '최대 300kg까지 입력 가능합니다.')
-    .refine((value) => /^(0|[1-9]\d*)(\.\d{1})?$/.test(value), {
-      message: '0 이상의 숫자 또는 소수점 첫째 자리까지만 입력해 주세요'
-    }),
-  HEIGHT_SCHEMA: z
-    .string()
-    .nonempty('필수 입력 항목입니다')
-    .max(300, '최대 300cm까지 입력 가능합니다.')
     .refine((value) => /^(0|[1-9]\d*)(\.\d{1})?$/.test(value), {
       message: '0 이상의 숫자 또는 소수점 첫째 자리까지만 입력해 주세요'
     })
+    .refine(
+      (value) => {
+        const num = parseFloat(value);
+        return num <= 300;
+      },
+      {
+        message: '최대 300kg까지 입력 가능합니다.'
+      }
+    ),
+
+  HEIGHT_SCHEMA: z
+    .string()
+    .nonempty('필수 입력 항목입니다')
+    .refine((value) => /^(0|[1-9]\d*)(\.\d{1})?$/.test(value), {
+      message: '0 이상의 숫자 또는 소수점 첫째 자리까지만 입력해 주세요'
+    })
+    .refine(
+      (value) => {
+        const num = parseFloat(value);
+        return num >= 50;
+      },
+      {
+        message: '최소 50cm까지 입력 가능합니다.'
+      }
+    )
+    .refine(
+      (value) => {
+        const num = parseFloat(value);
+        return num <= 300;
+      },
+      {
+        message: '최대 300cm까지 입력 가능합니다.'
+      }
+    )
 };
 
 export default formSchema;
