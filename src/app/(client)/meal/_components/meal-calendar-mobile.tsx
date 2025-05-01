@@ -10,8 +10,9 @@ type MealCalendarMobileProps = {
   date: Date;
   onDateChange: (date: Date) => void;
 };
-const MealCalendarMobile = ({ onDateChange, date }: MealCalendarMobileProps) => {
+const MealCalendarMobile = ({ onDateChange, date: selectedDate }: MealCalendarMobileProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [date, setDate] = useState<Date>(selectedDate);
 
   const handleSelectDate = () => {
     onDateChange(date);
@@ -20,8 +21,14 @@ const MealCalendarMobile = ({ onDateChange, date }: MealCalendarMobileProps) => 
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerTrigger className="flex flex-1 items-center justify-between gap-2 rounded-lg border-[1px] border-gray-300 bg-white py-[0.81rem] pl-4 pr-3 after:block after:aspect-square after:w-[1.375rem] after:bg-down-line-gray-600-icon after:bg-center after:content-['']">
-        <Typography as="span" variant="body1">{`${date.getMonth() + 1}월 ${date.getDate()}일`}</Typography>
+      <DrawerTrigger
+        onClick={() => setDate(selectedDate)}
+        className="flex flex-1 items-center justify-between gap-2 rounded-lg border-[1px] border-gray-300 bg-white py-[0.81rem] pl-4 pr-3 after:block after:aspect-square after:w-[1.375rem] after:bg-down-line-gray-600-icon after:bg-center after:content-['']"
+      >
+        <Typography
+          as="span"
+          variant="body1"
+        >{`${selectedDate.getMonth() + 1}월 ${selectedDate.getDate()}일`}</Typography>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="sr-only">
@@ -31,7 +38,7 @@ const MealCalendarMobile = ({ onDateChange, date }: MealCalendarMobileProps) => 
           <Calendar
             locale={ko}
             selected={date}
-            onDayClick={onDateChange}
+            onDayClick={setDate}
             weekStartsOn={1}
             fixedWeeks
             defaultMonth={date}

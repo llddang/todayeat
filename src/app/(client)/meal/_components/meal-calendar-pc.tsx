@@ -12,8 +12,9 @@ type MealCalendarPcProps = {
   onDateChange: (date: Date) => void;
 };
 
-const MealCalendarPc = ({ onDateChange, date }: MealCalendarPcProps) => {
+const MealCalendarPc = ({ onDateChange, date: selectedDate }: MealCalendarPcProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [date, setDate] = useState<Date>(selectedDate);
 
   const handleSelectDate = () => {
     onDateChange(date);
@@ -22,8 +23,14 @@ const MealCalendarPc = ({ onDateChange, date }: MealCalendarPcProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger className="flex flex-1 items-center justify-between gap-2 rounded-lg border-[1px] border-gray-300 bg-white py-[0.81rem] pl-4 pr-3 after:block after:aspect-square after:w-[1.375rem] after:bg-down-line-gray-600-icon after:bg-center after:content-['']">
-        <Typography as="span" variant="body1">{`${date.getMonth() + 1}월 ${date.getDate()}일`}</Typography>
+      <DialogTrigger
+        onClick={() => setDate(selectedDate)}
+        className="flex flex-1 items-center justify-between gap-2 rounded-lg border-[1px] border-gray-300 bg-white py-[0.81rem] pl-4 pr-3 after:block after:aspect-square after:w-[1.375rem] after:bg-down-line-gray-600-icon after:bg-center after:content-['']"
+      >
+        <Typography
+          as="span"
+          variant="body1"
+        >{`${selectedDate.getMonth() + 1}월 ${selectedDate.getDate()}일`}</Typography>
       </DialogTrigger>
       <DialogContent className="absolute top-full z-modal w-[21.25rem] rounded-3xl bg-white p-5 shadow-modal">
         <div className="sr-only">
@@ -33,7 +40,7 @@ const MealCalendarPc = ({ onDateChange, date }: MealCalendarPcProps) => {
         <Calendar
           locale={ko}
           selected={date}
-          onDayClick={onDateChange}
+          onDayClick={setDate}
           weekStartsOn={1}
           defaultMonth={date}
           fixedWeeks
