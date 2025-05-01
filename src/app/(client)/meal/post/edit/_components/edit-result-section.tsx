@@ -118,7 +118,7 @@ const EditResultSection = ({ imageList, initialMealList }: EditResultSectionProp
 
   const mealCategoryField = mealFormMethods.register('mealCategory');
   const selectedMealCategory = mealFormMethods.watch('mealCategory');
-  const day = mealFormMethods.getValues('date.day');
+  const day = mealFormMethods.watch('date.day');
   const date = mealFormMethods.getValues('date');
 
   return (

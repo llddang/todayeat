@@ -22,15 +22,31 @@ const formSchema = {
     .regex(passwordRegex, { message: '영문, 숫자, 특수문자(~!@#$%^&*)를 최소 1개 이상 포함하여야 합니다.' }),
   CONFIRM_PASSWORD_SCHEMA: z.string().nonempty('필수 입력 항목입니다.'),
   IMAGE_FILE_SCHEMA: z.custom<File>((data) => data instanceof File, { message: '유효한 File 객체가 아닙니다.' }),
-  ONLY_NUMBER_SCHEMA: z
+  CALORIES_SCHEMA: z
     .string()
     .nonempty('필수 입력 항목입니다')
+    .max(100, '최대 9999kcal까지 입력 가능합니다.')
     .refine((value) => /^[0-9]+$/.test(value), {
       message: '0 이상의 숫자만 입력해 주세요'
     }),
-  NUMBER_WITH_ONE_DECIMAL_SCHEMA: z
+  AGE_SCHEMA: z
     .string()
     .nonempty('필수 입력 항목입니다')
+    .max(100, '최대 100세까지 입력 가능합니다.')
+    .refine((value) => /^[0-9]+$/.test(value), {
+      message: '0 이상의 숫자만 입력해 주세요'
+    }),
+  WEIGHT_SCHEMA: z
+    .string()
+    .nonempty('필수 입력 항목입니다')
+    .max(300, '최대 300kg까지 입력 가능합니다.')
+    .refine((value) => /^(0|[1-9]\d*)(\.\d{1})?$/.test(value), {
+      message: '0 이상의 숫자 또는 소수점 첫째 자리까지만 입력해 주세요'
+    }),
+  HEIGHT_SCHEMA: z
+    .string()
+    .nonempty('필수 입력 항목입니다')
+    .max(300, '최대 300cm까지 입력 가능합니다.')
     .refine((value) => /^(0|[1-9]\d*)(\.\d{1})?$/.test(value), {
       message: '0 이상의 숫자 또는 소수점 첫째 자리까지만 입력해 주세요'
     })

@@ -13,7 +13,7 @@ type StepWeightProps = {
 };
 
 const weightFormSchema = z.object({
-  weight: formSchema.NUMBER_WITH_ONE_DECIMAL_SCHEMA
+  weight: formSchema.WEIGHT_SCHEMA
 });
 
 type FormValues = z.infer<typeof weightFormSchema>;
@@ -67,7 +67,7 @@ const StepWeight = ({ nextStep }: StepWeightProps) => {
             <Button
               type="submit"
               className="fixed bottom-[calc(env(safe-area-inset-bottom,1.5rem)+1.5rem)] left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2 xl:relative xl:bottom-auto xl:left-auto xl:mt-6 xl:w-full xl:-translate-x-0"
-              disabled={!form.watch('weight')}
+              disabled={!form.formState.isValid}
             >
               다음
             </Button>

@@ -25,7 +25,7 @@ type StepCalculateProps = {
 };
 
 const caloriesFormSchema = z.object({
-  calories: formSchema.ONLY_NUMBER_SCHEMA
+  calories: formSchema.CALORIES_SCHEMA
 });
 
 type FormValues = z.infer<typeof caloriesFormSchema>;
@@ -138,7 +138,7 @@ const StepCalculate = ({ nextStep, data }: StepCalculateProps) => {
         </div>
       </div>
       <div className="fixed bottom-[calc(env(safe-area-inset-bottom,1.5rem)+1.5rem)] left-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2 xl:relative xl:bottom-auto xl:left-auto xl:mt-6 xl:w-full xl:-translate-x-0">
-        <Button onClick={handleSubmit} className="w-full">
+        <Button disabled={!form.formState.isValid} onClick={handleSubmit} className="w-full">
           목표 설정하기
         </Button>
         <Button
