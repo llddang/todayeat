@@ -9,7 +9,7 @@ import { getUser, updateUserPersonalInfo } from '@/apis/user.api';
 import { calculateDailyNutrition } from '@/utils/nutrition-calculator.util';
 import { Typography } from '@/components/ui/typography';
 import { ControllerRenderProps, useForm } from 'react-hook-form';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useUserStore } from '@/store/user.store';
@@ -48,7 +48,8 @@ const StepCalculate = ({ nextStep, data }: StepCalculateProps) => {
     resolver: zodResolver(caloriesFormSchema),
     defaultValues: {
       calories: String(userPersonalInfos.dailyCaloriesGoal) || ''
-    }
+    },
+    mode: 'onBlur'
   });
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
@@ -114,6 +115,7 @@ const StepCalculate = ({ nextStep, data }: StepCalculateProps) => {
                         onChange={(e) => handleChangeCalories(e, field)}
                       />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 );
               }}

@@ -24,7 +24,8 @@ const StepHeight = ({ nextStep }: StepHeightProps) => {
     resolver: zodResolver(heightFormSchema),
     defaultValues: {
       height: ''
-    }
+    },
+    mode: 'onBlur'
   });
 
   const onSubmit = (data: FormValues) => {
@@ -55,16 +56,7 @@ const StepHeight = ({ nextStep }: StepHeightProps) => {
                     <FormItem>
                       <FormLabel className="sr-only">키</FormLabel>
                       <FormControl>
-                        <Input
-                          {...field}
-                          type="number"
-                          inputMode="numeric"
-                          measure="cm"
-                          step="0.1"
-                          min="50"
-                          max="250"
-                          className="mb-2"
-                        />
+                        <Input {...field} type="number" inputMode="numeric" measure="cm" step="0.1" className="mb-2" />
                       </FormControl>
                       {!hasError && <FormDescription>최대 소수점 1자리수까지 입력할 수 있어요</FormDescription>}
                       <FormMessage />

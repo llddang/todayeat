@@ -24,7 +24,8 @@ const StepAge = ({ nextStep }: StepAgeProps) => {
     resolver: zodResolver(ageFormSchema),
     defaultValues: {
       age: ''
-    }
+    },
+    mode: 'onBlur'
   });
 
   const onSubmit = (data: FormValues) => {
@@ -48,19 +49,16 @@ const StepAge = ({ nextStep }: StepAgeProps) => {
               <FormField
                 control={form.control}
                 name="age"
-                render={({ field }) => {
-                  const hasError = !!form.formState.errors.age;
-                  return (
-                    <FormItem>
-                      <FormLabel className="sr-only">나이</FormLabel>
-                      <FormControl>
-                        <Input {...field} type="text" inputMode="numeric" className="mb-2" />
-                      </FormControl>
-                      {!hasError && <FormDescription>숫자만 입력해 주세요</FormDescription>}
-                      <FormMessage />
-                    </FormItem>
-                  );
-                }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="sr-only">나이</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="text" inputMode="numeric" className="mb-2" />
+                    </FormControl>
+                    {!form.getFieldState('age').invalid && <FormDescription>숫자만 입력해 주세요</FormDescription>}
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
             <Button
