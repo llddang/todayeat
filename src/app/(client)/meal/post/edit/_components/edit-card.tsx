@@ -90,7 +90,7 @@ const EditCard = ({ mealDetail, idx, onRemove, onHandleError }: EditCardProps) =
                   value={field.value ? formatNumberWithComma(field.value) : ''}
                   onChange={(e) => {
                     const value = e.target.value.replace(/[^0-9]/g, '');
-                    field.onChange(value ? Number(value) : undefined);
+                    field.onChange(value ? Number(value) : '');
                   }}
                   className="flex-1"
                 />
@@ -109,7 +109,7 @@ const EditCard = ({ mealDetail, idx, onRemove, onHandleError }: EditCardProps) =
                   value={field.value ? formatNumberWithComma(field.value) : ''}
                   onChange={(e) => {
                     const value = e.target.value.replace(/[^0-9]/g, '');
-                    field.onChange(value ? Number(value) : undefined);
+                    field.onChange(value ? Number(value) : '');
                   }}
                   className="flex-1"
                 />
