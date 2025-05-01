@@ -13,7 +13,7 @@ type StepHeightProps = {
 };
 
 const heightFormSchema = z.object({
-  height: formSchema.NUMBER_WITH_ONE_DECIMAL_SCHEMA
+  height: formSchema.HEIGHT_SCHEMA
 });
 
 type FormValues = z.infer<typeof heightFormSchema>;

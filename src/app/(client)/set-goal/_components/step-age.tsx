@@ -13,7 +13,7 @@ type StepAgeProps = {
 };
 
 const ageFormSchema = z.object({
-  age: formSchema.ONLY_NUMBER_SCHEMA
+  age: formSchema.AGE_SCHEMA
 });
 
 type FormValues = z.infer<typeof ageFormSchema>;

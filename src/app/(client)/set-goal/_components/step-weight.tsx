@@ -13,7 +13,7 @@ type StepWeightProps = {
 };
 
 const weightFormSchema = z.object({
-  weight: formSchema.NUMBER_WITH_ONE_DECIMAL_SCHEMA
+  weight: formSchema.WEIGHT_SCHEMA
 });
 
 type FormValues = z.infer<typeof weightFormSchema>;

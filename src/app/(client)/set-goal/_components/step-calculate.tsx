@@ -25,7 +25,7 @@ type StepCalculateProps = {
 };
 
 const caloriesFormSchema = z.object({
-  calories: formSchema.ONLY_NUMBER_SCHEMA
+  calories: formSchema.CALORIES_SCHEMA
 });
 
 type FormValues = z.infer<typeof caloriesFormSchema>;
