@@ -24,7 +24,8 @@ const StepWeight = ({ nextStep }: StepWeightProps) => {
     resolver: zodResolver(weightFormSchema),
     defaultValues: {
       weight: ''
-    }
+    },
+    mode: 'onBlur'
   });
 
   const onSubmit = (data: FormValues) => {
@@ -48,20 +49,18 @@ const StepWeight = ({ nextStep }: StepWeightProps) => {
               <FormField
                 control={form.control}
                 name="weight"
-                render={({ field }) => {
-                  const hasError = !!form.formState.errors.weight;
-
-                  return (
-                    <FormItem>
-                      <FormLabel className="sr-only">몸무게</FormLabel>
-                      <FormControl>
-                        <Input {...field} type="number" inputMode="numeric" measure="kg" className="mb-2" />
-                      </FormControl>
-                      {!hasError && <FormDescription>최대 소수점 1자리수까지 입력할 수 있어요</FormDescription>}
-                      <FormMessage />
-                    </FormItem>
-                  );
-                }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="sr-only">몸무게</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="number" inputMode="numeric" measure="kg" className="mb-2" />
+                    </FormControl>
+                    {!form.getFieldState('weight').invalid && (
+                      <FormDescription>최대 소수점 1자리수까지 입력할 수 있어요</FormDescription>
+                    )}
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
             <Button
