@@ -4,10 +4,16 @@
  * @param {Date | string} date - 변환할 날짜
  * @returns {Date} 해당 일의 시작 시간(00:00:00.000)으로 설정된 Date 객체
  */
-export const getStartOfDay = (date: Date | string): Date => {
-  const newDate = new Date(date);
-  newDate.setHours(0, 0, 0, 0);
-  return newDate;
+export const getStartOfDay = (date: Date): Date => {
+  const korNow = convertDateToKoreaTime(date);
+
+  const year = korNow.getFullYear();
+  const month = korNow.getMonth();
+  const day = korNow.getDate();
+
+  const utcDate = new Date(Date.UTC(year, month, day, 0, 0, 0, 0));
+
+  return new Date(utcDate.getTime() - 9 * 60 * 60 * 1000);
 };
 
 /**
@@ -16,10 +22,16 @@ export const getStartOfDay = (date: Date | string): Date => {
  * @param {Date | string} date - 변환할 날짜
  * @returns {Date} 해당 일의 끝 시간(23:59:59.999)으로 설정된 Date 객체
  */
-export const getEndOfDay = (date: Date | string): Date => {
-  const newDate = new Date(date);
-  newDate.setHours(23, 59, 59, 999);
-  return newDate;
+export const getEndOfDay = (date: Date): Date => {
+  const korNow = convertDateToKoreaTime(date);
+
+  const year = korNow.getFullYear();
+  const month = korNow.getMonth();
+  const day = korNow.getDate();
+
+  const utcDate = new Date(Date.UTC(year, month, day, 23, 59, 59, 999));
+
+  return new Date(utcDate.getTime() - 9 * 60 * 60 * 1000);
 };
 
 /**
@@ -32,7 +44,7 @@ export const getEndOfDay = (date: Date | string): Date => {
  * @returns {Date} start - 시작 시간으로 설정된 Date 객체
  * @returns {Date} end - 종료 시간으로 설정된 Date 객체
  */
-export const getDateTimeRange = (startDate: Date | string, endDate?: Date | string): { start: Date; end: Date } => {
+export const getDateTimeRange = (startDate: Date, endDate?: Date): { start: Date; end: Date } => {
   return {
     start: getStartOfDay(startDate),
     end: getEndOfDay(endDate ?? startDate)
@@ -70,6 +82,13 @@ type DateFields = {
 export const getKoreaTime = () => {
   const now = new Date();
   const utc = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+  const koreaTimeDiff = 9 * 60 * 60 * 1000;
+  const korNow = new Date(utc + koreaTimeDiff);
+  return korNow;
+};
+
+export const convertDateToKoreaTime = (date: Date) => {
+  const utc = date.getTime() + date.getTimezoneOffset() * 60 * 1000;
   const koreaTimeDiff = 9 * 60 * 60 * 1000;
   const korNow = new Date(utc + koreaTimeDiff);
   return korNow;
