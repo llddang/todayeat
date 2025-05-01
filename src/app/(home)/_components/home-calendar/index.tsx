@@ -3,10 +3,9 @@ import HomeCalendarClientView from './home-calendar-client-view';
 import HomeCalendarServerView from './home-calendar-server-view';
 import { getMonthCalendarDays, getCalendarDateRange } from '../../_utils/calendar.util';
 import { getAllMyDailyCalories } from '@/apis/meal.api';
-import { getKoreaTime } from '@/utils/date.util';
 
 const HomeCalendar = async () => {
-  const today = getKoreaTime();
+  const today = new Date();
   const month = getMonthCalendarDays(today);
   const [firstDay, lastDay] = getCalendarDateRange(month);
   const dailyMealCalories = await getAllMyDailyCalories(firstDay, lastDay);
